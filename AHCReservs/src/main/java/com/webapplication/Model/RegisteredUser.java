@@ -7,6 +7,7 @@ public class RegisteredUser extends User {
 
 	private List<RegisteredUser> friends;
 	
+	
 	public RegisteredUser() {
 		
 		super();
@@ -19,6 +20,7 @@ public class RegisteredUser extends User {
 		super(username, password, firstName, lastName, email);
 		this.friends = new ArrayList<RegisteredUser>();
 	}
+	
 	
 
 	public List<RegisteredUser> getFriends() {
