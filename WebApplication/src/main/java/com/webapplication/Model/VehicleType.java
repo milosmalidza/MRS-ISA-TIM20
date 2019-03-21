@@ -1,5 +1,5 @@
 package com.webapplication.Model;
 
-public enum TipVozila {
+public enum VehicleType {
 
 }
