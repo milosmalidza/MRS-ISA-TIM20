@@ -1,0 +1,183 @@
+@font-face {
+	font-family: 'Montserrat';
+    src: url(fonts/Montserrat-Regular.ttf) format("truetype");
+}
+
+html, body {
+	font-family: Montserrat;
+}
+
+#main-div {
+	position:absolute;
+	width: 100%;
+	left: 0;
+	top: 0;
+	opacity: 0;
+	
+	-webkit-transform: scale(1.04);
+	transform: scale(1.04);
+	
+	-webkit-transition: .8s;
+	transition: .8s;
+}
+
+.ui.dropdown {
+	width:100%;
+}
+
+.center-content {
+	position: absolute;
+	top:10%;
+	left: 25%;
+	right: 25%;
+}
+
+#dateinput {
+	font-size: 14px;
+	font-weight: bold;
+	border: 1px solid transparent;
+}
+
+#vehicle-number-of-people {
+	font-size: 14px;
+	font-weight: bold;
+	border: 1px solid transparent;
+}
+
+#dateinput.ui.input {
+	width: 100%;
+}
+
+.centered-text {
+	text-align:center;
+}
+
+.input:active {
+	border: 1px solid #821;
+}
+
+.vehicle-search-title {
+	width:100%;
+	text-align:left;
+	font-size: 55px;
+	letter-spacing: 2px;
+}
+
+.vehicle-search-text {
+	margin-top:40px;
+	text-align: justify;
+	letter-spacing: 1px;
+	font-size:14px;
+}
+
+.center-content > table {
+	position:relative;
+	width:100%;
+	font-size: 14px;
+	font-weight: bold;
+	letter-spacing:1px;
+}
+
+.center-content tr {
+	height: 60px;
+}
+
+
+#main-content-holder {
+	position: absolute;
+	width:100%;
+	height: calc(100% - 80px);
+	top: 140px;
+	left: 0;
+}
+
+#nav-bar {
+	position: fixed;
+	z-index: 9;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 80px;
+	border-bottom: 2px solid black;
+	background: rgba(25,25,45,1.00);
+	box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.6);
+}
+
+#nav-bar-selection-1 {
+	position: absolute;
+	left: 0px;
+	top: calc(50% - 42px);
+	list-style: none;
+	font-size: 14px;
+}
+
+#nav-bar-selection-1 > li {
+	float: left;
+	margin: 10px;
+	padding: 9px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: white;
+	border-bottom: 2px solid transparent;
+	cursor: pointer;
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+
+#nav-bar-selection-2 {
+	position: absolute;
+	right: 35px;
+	top: calc(50% - 42px);
+	list-style: none;
+	font-size: 14px;
+}
+
+#nav-bar-selection-2 > li {
+	float: left;
+	margin: 10px;
+	padding: 9px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	color: white;
+	border-bottom: 2px solid transparent;
+	cursor: pointer;
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+#nav-bar-selection-1 > li:hover {
+	border-bottom: 2px solid white;
+}
+
+#nav-bar-selection-2 > li:hover {
+	border-bottom: 2px solid white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

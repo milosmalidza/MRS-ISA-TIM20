@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		
+		<title>Search vehicles</title>
+		
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
+		<script type="text/javascript" src="js-libs/dropdown.js"></script>
+		<script type="text/javascript" src="main-script.js"></script>
+		
+		
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<!--<link rel="stylesheet" href="js-libs/dropdown.css" />
+		  <link rel="stylesheet" href="js-libs/input.css" />-->
+		<link rel="stylesheet" href="main-style.css" />
+		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
+		
+		
+		
+		
+	</head>
+	
+	<body style="overflow-y:auto;">
+		<div id="main-div">
+			<div id="nav-bar">
+				<ul id="nav-bar-selection-1">
+					<li>Airline companies</li>
+					<li>Hotels</li>
+					<li>Rent-a-car services</li>
+				</ul>
+				<ul id="nav-bar-selection-2">
+					<li>About</li>
+					<li>Register</li>
+					<li>Login</li>
+				</ul>
+			</div>
+			<div id="main-content-holder">
+			<div class="center-content">
+				<div style="margin-bottom: 55px;">
+					<h1 class="vehicle-search-title">Name of rent-a-car service</h1>
+					<p class="vehicle-search-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+					  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+					   sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				</div>
+				<table style="margin-bottom:50px;">
+					<tr>
+						<td>Date range: </td>
+						<td ><div id="dateinput" class="ui input"><input type="text" name="daterange"  /></div></td>
+					</tr>
+					
+					<tr>
+						<td>Number of doors: </td>
+						<td><select name="number-of-doors" class="ui dropdown" id="number-of-doors">
+							  <option value=""></option>
+							  <option value="3">3</option>
+							  <option value="5">5</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>Number of people </td>
+						<td ><div id="vehicle-number-of-people" class="ui input"><input type="number" min="1"/></div></td>
+					</tr>
+					
+					<tr>
+						<td>Type of vehicle: </td>
+						<td><select name="type-of-vehicle" class="ui dropdown" id="type-of-vehicle">
+							  <option value=""></option>
+							  <option value="Hatchback">Hatchback</option>
+							  <option value="Sedan">Sedan</option>
+							  <option value="MPV">MPV</option>
+							  <option value="SUV">SUV</option>
+							  <option value="Crossover">Crossover</option>
+							  <option value="Coupe">Coupe</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td></td>
+						<td><input style="width:150px;letter-spacing:1px;" class="ui button" type="submit" value="Search" /></td>
+					</tr>
+				
+				</table>
+				
+			</div>
+		</div>
+		</div>
+		
+		
+		
+		<script type="text/javascript">
+		$(function() {
+			  $('input[name="daterange"]').daterangepicker({
+				  timePicker: true,
+			    opens: 'left'
+			  }, function(start, end, label) {
+			    console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+			  });
+			});
+		$('#number-of-doors')
+		  .dropdown();
+		
+		$('#type-of-vehicle')
+		  .dropdown();
+		
+		</script>
+		
+	</body>
+
+</html>
