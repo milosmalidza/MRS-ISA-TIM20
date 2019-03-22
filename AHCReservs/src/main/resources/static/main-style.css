@@ -25,11 +25,114 @@ html, body {
 	width:100%;
 }
 
+.no-items-found {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	
+	font-size: 40px;
+	letter-spacing: 2px;
+	font-weight: bold;
+	
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
+}
+
 .center-content {
 	position: absolute;
 	top:10%;
 	left: 25%;
 	right: 25%;
+}
+
+.vehicle-item {
+	height: 400px;
+}
+
+.reserve-vehicle-button {
+	position: absolute;
+	width: 100%;
+	letter-spacing: 1px;
+	bottom: 0;
+}
+
+.vehicle-item-holder {
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	left: 50%;
+	top: 50%;
+	overflow: hidden;
+	
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
+}
+
+.vehicle-item-holder > div {
+	margin-bottom: 10px;
+	letter-spacing: 1px;
+}
+
+.vehicle-item-name {
+	font-weight: bold;
+	font-size: 22px;
+}
+
+.vehicle-item-description {
+	font-size: 12px;
+}
+
+.bold-font {
+	font-weight: bold;
+}
+
+#go-back-items-holder {
+	position: absolute;
+	font-weight: bold;
+	letter-spacing: 1px;
+	font-size: 20px;
+	left: 50px;
+	top: 50%;
+	cursor: pointer;
+	
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+#items-holder-utility{
+	position:absolute;
+	left: 0;
+	top: 0;
+	height: 100px;
+	width: 100%;
+	background: rgba(249,249,249,1.00);
+	box-shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.1);
+	z-index: 1;
+	
+}
+
+#vehicle-items-row {
+	position: absolute;
+	left: 0;
+	top:100px;
+	width: 100%;
+	height: calc(100% - 100px);
+	
+	background: white;
+	overflow-y:auto;
+	overflow-x:hidden;
+}
+
+#items-holder {
+	position: fixed;
+	left:100%;
+	top:80px;
+	width: 100%;
+	height: calc(100% - 80px);
+	
+	background: white;
+	-webkit-transition: 1s;
+	transition: 1s;
 }
 
 #dateinput {
@@ -70,7 +173,7 @@ html, body {
 	font-size:14px;
 }
 
-.center-content > table {
+.center-content table {
 	position:relative;
 	width:100%;
 	font-size: 14px;
@@ -106,7 +209,7 @@ html, body {
 #nav-bar-selection-1 {
 	position: absolute;
 	left: 0px;
-	top: calc(50% - 42px);
+	top: calc(50% - 30px);
 	list-style: none;
 	font-size: 14px;
 }
@@ -128,7 +231,7 @@ html, body {
 #nav-bar-selection-2 {
 	position: absolute;
 	right: 35px;
-	top: calc(50% - 42px);
+	top: calc(50% - 30px);
 	list-style: none;
 	font-size: 14px;
 }
