@@ -18,6 +18,10 @@ public class Hotel extends Company {
 		
 	}
 	
+	public Hotel(String name) {
+		super(name);
+	}
+	
 	public Hotel(int id, String name, String description, String address, double rating) {
 		
 		super(id, name, description, address, rating);

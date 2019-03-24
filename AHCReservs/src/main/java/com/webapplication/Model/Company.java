@@ -11,6 +11,10 @@ public abstract class Company {
 	public Company() {
 		
 	}
+	
+	public Company(String name) {
+		this.name = name;
+	}
 
 	public Company(int id, String name, String description, String address, double rating) {
 		

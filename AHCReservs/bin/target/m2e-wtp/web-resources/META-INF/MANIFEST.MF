@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: WebApplication
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: bojan
+Implementation-Vendor-Id: com.webapplication
+Build-Jdk: 1.8.0_131
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/WebApplication
+Created-By: Maven Integration for Eclipse
+
