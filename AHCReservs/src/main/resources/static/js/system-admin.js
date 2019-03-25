@@ -1,9 +1,10 @@
 var admins = null;
+var controllerPath = "/sysadmin";
 
 window.onload = function() {
 	
 	//get all available admins and add them to the select tag
-	axios.get('/getAvaiableAdmins')
+	axios.get(controllerPath + '/getAvaiableAdmins')
 		.then(response => {
 			let admins = response.data;
 			
@@ -28,7 +29,7 @@ function registerCompany() {
 	}
 	
 	
-	axios.post("/registerCompany", getCompanyJson())
+	axios.post(controllerPath + "/registerCompany", getCompanyJson())
 		.then(response => alert(response.data));
 }
 

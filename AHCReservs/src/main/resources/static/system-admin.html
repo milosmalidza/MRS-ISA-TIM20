@@ -5,9 +5,11 @@
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js-libs/axios.js"></script>
 		<script type="text/javascript" src="js-libs/toast.js"></script>
-		<script type="text/javascript" src="system-admin.js"></script>
 		
-		<link rel="stylesheet" href="system-admin.css" />
+		<script type="text/javascript" src="main-script.js"></script>
+		<script type="text/javascript" src="js/system-admin.js"></script>
+		
+		<link rel="stylesheet" href="css/system-admin.css" />
 		
 	</head>
 	
@@ -15,10 +17,14 @@
 		
 		<!-- System admin navigation bar -->
 		<div id="nav-bar-div">
-			<ul id="sys-admin-navbar">
+			<ul id="nav-bar-left-selection">
 				<li id="reg-company-selection" class="selection"> Register company </li>
 				<li id="admins-selection" class="selection"> Admins </li>
 				<li id="discounts-selection" class="selection"> Discounts </li>
+			</ul>
+			
+			<ul id="nav-bar-right-selection">
+				<li id="my-profile-selection" class="selection"> My profile </li>
 				<li id="logout-selection" class="selection"> Logout </li>		
 			</ul>
 		</div>
@@ -26,50 +32,52 @@
 		<br>
 		
 		<!-- Register company form -->
-		<div id="reg-company-div">
-			<table id="reg-company-table">
-			
-				<tr>
-					<td>
-						<h2> Company registration </h2>
-					</td>
-				</tr>
+		<div id="main-div">
+			<div id="reg-company-div">
+				<table id="reg-company-table">
 				
-				<tr>
-					<td> Company type: </td>
-					<td>
-						<select id="company-type">
-							<option value="airline"> Airline </option>
-							<option value="hotel"> Hotel </option>
-							<option value="rent-a-car"> Rent a car service </option>
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> Company name: </td>
-					<td>
-						<input type="text" id="company-name"/>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> Company admin: </td>
-					<td>
-						<select id="company-admin">
-						
-						</select>
-					</td>
-				</tr>
-				
-				<tr>
-					<td> </td>
-					<td>
-						<button id="register-company-btn" onclick="registerCompany()"> Register </button>
-					</td>
-				</tr>
-				
-			</table>
+					<tr>
+						<td>
+							<h2> Company registration </h2>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Company type: </td>
+						<td>
+							<select id="company-type">
+								<option value="airline"> Airline </option>
+								<option value="hotel"> Hotel </option>
+								<option value="rent-a-car"> Rent a car service </option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Company name: </td>
+						<td>
+							<input type="text" id="company-name"/>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Company admin: </td>
+						<td>
+							<select id="company-admin">
+							
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> </td>
+						<td>
+							<button id="register-company-btn" onclick="registerCompany()"> Register </button>
+						</td>
+					</tr>
+					
+				</table>
+			</div>
 		</div>
 	
 	</body>
