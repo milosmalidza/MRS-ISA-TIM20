@@ -15,6 +15,9 @@ window.onload = function() {
 		}
 		
 	});
+	
+	var fileName = location.href.split("/").slice(-1); 
+	console.log(fileName);
 }
 
 function saveChanges() {

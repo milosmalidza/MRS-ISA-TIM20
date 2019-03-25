@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'Montserrat';
-    src: url(fonts/Montserrat-Regular.ttf) format("truetype");
+    src: url(../fonts/Montserrat-Regular.ttf) format("truetype");
 }
 
 
@@ -29,7 +29,7 @@ div#nav-bar-div {
 	left: 0px;
 	top: calc(50% - 30px);
 	list-style: none;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 #nav-bar-left-selection > li {
@@ -51,7 +51,7 @@ div#nav-bar-div {
 	right: 35px;
 	top: calc(50% - 30px);
 	list-style: none;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 #nav-bar-right-selection> li {
