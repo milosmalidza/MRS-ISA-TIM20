@@ -1,6 +1,6 @@
 package com.webapplication.Model;
 
-public class HotelAdmin extends User {
+public class HotelAdmin extends AppUser {
 
 	
 	private Hotel hotel;

@@ -1,6 +1,6 @@
 package com.webapplication.Model;
 
-public class AirlineAdmin extends User {
+public class AirlineAdmin extends AppUser {
 	
 	private Airline airline;
 	

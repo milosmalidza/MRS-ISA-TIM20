@@ -1,6 +1,6 @@
 package com.webapplication.Model;
 
-public class RentACarAdmin extends User {
+public class RentACarAdmin extends AppUser {
 
 	private RentACar rentACar;
 	

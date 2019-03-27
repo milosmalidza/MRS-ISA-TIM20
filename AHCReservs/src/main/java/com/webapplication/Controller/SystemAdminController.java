@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.xml.ws.spi.http.HttpContext;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webapplication.JSONBeans.CompanyInfo;
-import com.webapplication.Model.Airline;
+import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Company;
-import com.webapplication.Model.Hotel;
-import com.webapplication.Model.RentACar;
-import com.webapplication.Model.User;
 
 
 @RestController
@@ -37,7 +33,7 @@ public class SystemAdminController {
 			value="/getAvaiableAdmins",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public Collection<User> getAvailableAdmins() {
+	public Collection<AppUser> getAvailableAdmins() {
 		
 		return null;
 	}
