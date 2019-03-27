@@ -13,6 +13,8 @@ import com.webapplication.Model.Hotel;
 public class HotelAdminController {
 
 	
+	//TODO: @Autowired service iz kog pozivam metode
+	
 	// ** DUMMY METHOD **//
 	@RequestMapping(
 			value="/getCompany",

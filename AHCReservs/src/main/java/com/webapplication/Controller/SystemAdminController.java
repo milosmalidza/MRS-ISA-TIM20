@@ -27,6 +27,8 @@ import com.webapplication.Model.RentACar;
 public class SystemAdminController {
 	
 	
+	//TODO: @Autowired service iz kog pozivam metode
+	
 	public List<Admin> admins = new ArrayList<Admin>();
 	public static List<Company> companies = new ArrayList<Company>();
 	
@@ -102,7 +104,6 @@ public class SystemAdminController {
 			companies.add(newCompany);
 		}
 		
-		context.
 		
 		return new ResponseEntity<String>("Successfully registered", HttpStatus.CREATED);
 	}
