@@ -4,8 +4,14 @@ var controllerPath = "/sysadmin";
 window.onload = function() {
 	
 	//get all available admins and add them to the select tag
-	axios.get(controllerPath + '/getAvaiableAdmins')
+	axios.get(controllerPath + '/getRegisteredUsers')
 		.then(response => {
+			
+			if(response.data === null) {
+				alert("Nema nista");
+				return;
+			}
+			
 			let admins = response.data;
 			
 			for(let i = 0; i < admins.length; i++) {

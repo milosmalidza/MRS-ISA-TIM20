@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import javax.xml.ws.spi.http.HttpContext;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Company;
+import com.webapplication.Model.RegisteredUser;
+import com.webapplication.Service.RegisteredUserService;
 
 
 @RestController
@@ -27,7 +28,18 @@ public class SystemAdminController {
 	//TODO: @Autowired service iz kog pozivam metode
 	public static List<Company> companies = new ArrayList<Company>();
 	
-	HttpContext context;
+	@Autowired
+	RegisteredUserService regUserSvc;
+	
+	
+	@RequestMapping(
+			value="/getRegisteredUsers",
+			method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public Collection<RegisteredUser> getRegisteredUsers() {
+		
+		return regUserSvc.findAll();
+	}
 	
 	@RequestMapping(
 			value="/getAvaiableAdmins",

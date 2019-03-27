@@ -12,18 +12,15 @@ import com.webapplication.Repository.RegisteredUserRepository;
 public class RegisteredUserService {
 
 	@Autowired
-	private RegisteredUserRepository registeredUser;
+	private RegisteredUserRepository registeredUserRep;
 	
-	public RegisteredUser findOne(String username) {
-		return registeredUser.findOne(username);
-	}
 	
 	public List<RegisteredUser> findAll() {
-		return registeredUser.findAll();
+		return registeredUserRep.findAll();
 	}
 	
 	public RegisteredUser save(RegisteredUser user) {
-		return registeredUser.save(user);
+		return registeredUserRep.save(user);
 	}
 	
 }

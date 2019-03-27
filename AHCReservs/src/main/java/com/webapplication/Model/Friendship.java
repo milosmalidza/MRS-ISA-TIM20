@@ -2,12 +2,15 @@ package com.webapplication.Model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 import org.springframework.data.annotation.Id;
 
 public class Friendship {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
 	@Column(nullable = false)

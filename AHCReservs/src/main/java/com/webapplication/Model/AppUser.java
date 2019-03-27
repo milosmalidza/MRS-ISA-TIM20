@@ -1,21 +1,21 @@
 package com.webapplication.Model;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.MappedSuperclass;
 
-import org.springframework.data.annotation.Id;
+import javax.persistence.Id;
 
 @MappedSuperclass
 public abstract class AppUser {
+	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
 	
-	@Column(name = "username", unique = true, nullable = false)
+	@Column(name = "username", nullable = false)
 	protected String username;
 	
 	@Column(name = "password", nullable = false)
