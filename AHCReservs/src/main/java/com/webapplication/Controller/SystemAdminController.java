@@ -102,8 +102,6 @@ public class SystemAdminController {
 			companies.add(newCompany);
 		}
 		
-		context.
-		
 		return new ResponseEntity<String>("Successfully registered", HttpStatus.CREATED);
 	}
 	
