@@ -1,18 +1,40 @@
 package com.webapplication.Model;
 
-public abstract class User {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.MappedSuperclass;
 
+import org.springframework.data.annotation.Id;
+
+@MappedSuperclass
+public abstract class AppUser {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	protected Long id;
+	
+	@Column(name = "username", unique = true, nullable = false)
 	protected String username;
+	
+	@Column(name = "password", nullable = false)
 	protected String password;
+	
+	@Column(name = "firstname", nullable = false)
 	protected String firstName;
+	
+	@Column(name = "lastname", nullable = false)
 	protected String lastName;
+	
+	@Column(name = "email", nullable = false)
 	protected String email;
 	
-	public User() {
+	public AppUser() {
 		
 	}
 
-	public User(String username, String password, String firstName, String lastName, String email) {
+	public AppUser(String username, String password, String firstName, String lastName, String email) {
 		
 		this.username = username;
 		this.password = password;

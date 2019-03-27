@@ -1,6 +1,6 @@
 package com.webapplication.Model;
 
-public class Admin extends User {
+public class Admin extends AppUser {
 
 	private Company company;
 	
