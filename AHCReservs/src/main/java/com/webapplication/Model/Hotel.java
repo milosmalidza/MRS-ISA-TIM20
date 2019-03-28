@@ -1,51 +1,48 @@
 package com.webapplication.Model;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+
+@Entity
 public class Hotel extends Company {
 	
-	private Map<Integer, List<Room>> rooms; //kljuc sprat hotela, vrednost lista soba na tom spratu
-	private Map<String, Double> prices; //kljuc usluga, vrednost cena te usluge
+	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<HotelAdmin> hotelAdmins;
 	
 	public Hotel() {
 		
 		super();
-		
-		this.rooms = new HashMap<Integer, List<Room>>();
-		this.prices = new HashMap<String, Double>();
+		this.hotelAdmins = new HashSet<HotelAdmin>();
 		
 	}
-	
+
 	public Hotel(String name) {
 		super(name);
+		this.hotelAdmins = new HashSet<HotelAdmin>();
 	}
 	
-	public Hotel(int id, String name, String description, String address, double rating) {
+	public Hotel(Long id, String name, String description, String address, double rating) {
 		
 		super(id, name, description, address, rating);
-		
-		this.rooms = new HashMap<Integer, List<Room>>();
-		this.prices = new HashMap<String, Double>();
-	}
-
-	public Map<Integer, List<Room>> getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(Map<Integer, List<Room>> rooms) {
-		this.rooms = rooms;
-	}
-
-	public Map<String, Double> getPrices() {
-		return prices;
-	}
-
-	public void setPrices(Map<String, Double> prices) {
-		this.prices = prices;
+		this.hotelAdmins = new HashSet<HotelAdmin>();
 	}
 	
 	
 
+	public Set<HotelAdmin> getHotelAdmins() {
+		return hotelAdmins;
+	}
+
+	public void setHotelAdmins(Set<HotelAdmin> hotelAdmins) {
+		this.hotelAdmins = hotelAdmins;
+	}
+
+	
+	
 }

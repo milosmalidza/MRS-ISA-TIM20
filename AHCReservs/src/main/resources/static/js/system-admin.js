@@ -7,11 +7,6 @@ window.onload = function() {
 	axios.get(controllerPath + '/getRegisteredUsers')
 		.then(response => {
 			
-			if(response.data === null) {
-				alert("Nema nista");
-				return;
-			}
-			
 			let admins = response.data;
 			
 			for(let i = 0; i < admins.length; i++) {

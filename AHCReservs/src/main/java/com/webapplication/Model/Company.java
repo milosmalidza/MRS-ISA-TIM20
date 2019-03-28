@@ -1,11 +1,29 @@
 package com.webapplication.Model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
 public abstract class Company {
 	
-	protected int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
+	protected Long id;
+	
+	@Column(name="name", unique=false, nullable=false)
 	protected String name;
+	
+	@Column(name="description", nullable=false)
 	protected String description;
+	
+	@Column(name="address", nullable=false)
 	protected String address;
+	
+	@Column(name="rating", nullable=false)
 	protected double rating;
 	
 	public Company() {
@@ -16,7 +34,7 @@ public abstract class Company {
 		this.name = name;
 	}
 
-	public Company(int id, String name, String description, String address, double rating) {
+	public Company(Long id, String name, String description, String address, double rating) {
 		
 		this.id = id;
 		this.name = name;
@@ -25,11 +43,11 @@ public abstract class Company {
 		this.rating = rating;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

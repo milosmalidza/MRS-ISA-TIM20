@@ -8,14 +8,15 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Id;
 
 @MappedSuperclass
-public abstract class AppUser {
+public class AppUser {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id", unique=true, nullable=false)
 	protected Long id;
 	
-	@Column(name = "username", nullable = false)
+	@Column(name = "username", unique = false, nullable = false)
 	protected String username;
 	
 	@Column(name = "password", nullable = false)
@@ -84,5 +85,10 @@ public abstract class AppUser {
 	}
 	
 	
+	@Override
+	public String toString() {
+		return this.username + "; " + this.password + "; " + this.firstName + "; " + this.lastName
+				+  "; " + this.email;
+	}
 	
 }
