@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Registration</title>
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="main-script.js"></script>
+		
+		
+		<link rel="stylesheet" href="bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="main-style.css" />
+	
+	</head>
+
+	<body style="overflow-y:auto;">
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home</li>
+				<li>Airline companies</li>
+				<li>Hotels</li>
+				<li>Rent-a-car services</li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
+			<div id="main-content-holder">	<!-- Sluzi da spusti malo sadrzaj zbog navigacionog bara -->
+				<div class="center-content"> <!-- Centrira sav sadrzaj na sredinu -->
+					<h1 class="content-title">AHC Registration</h1>	<!-- Naslov sadrzaja -->
+					<p class="content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					 nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident,
+					   sunt in culpa qui officia deserunt mollit anim id est laborum.</p><!-- Neki random tekst -->
+					   
+					 <form id="single-form">
+				<table style="margin-bottom:50px;">
+					<tr>
+						<td style="width:45%">Username:  </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="username" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Password:  </td>
+						<td>
+							<div class="ui input input-additional full-width-input">
+								<input id="password" type="password" name="password"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Confirm password:  </td>
+						<td >
+							<div class="ui input input-additional full-width-input">
+								<input id="confirm-password" type="password" name="confirm-password"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>First name: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="first-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Last name: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="last-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Valid E-mail: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="email" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="registerUser()" value="Register" /></td>
+					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
+				
+				</table>
+				</form>
+					   
+				</div>
+			
+			</div>
+		</div>
+		
+		<div id="exiting-page-animation">
+			
+			
+		</div>
+	
+	
+		<script type="text/javascript">
+		
+		$('#number-of-doors')
+		  .dropdown();
+		
+		$('#type-of-vehicle')
+		  .dropdown();
+		
+		</script>
+	
+	
+	</body>
+
+</html>
+
+
+
+
+
+
+

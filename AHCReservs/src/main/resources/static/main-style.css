@@ -25,6 +25,38 @@ html, body {
 	width:100%;
 }
 
+#exiting-page-animation {
+	position: fixed;
+	width: 0%;
+	height: 100%;
+	background: white;
+	left: 0;
+	top: 0;
+	z-index: 999;
+	
+	-webkit-transition: .7s;
+	transition: .7s;
+}
+
+#form-message {
+	
+	display: none;
+}
+
+#form-message {
+	position:absolute;
+}
+
+.input-additional {
+	font-size: 14px;
+	font-weight: bold;
+	border: 1px solid transparent !important;
+}
+
+.full-width-input {
+	width: 100%;
+}
+
 .no-items-found {
 	position: absolute;
 	top: 50%;
@@ -166,6 +198,20 @@ html, body {
 	letter-spacing: 2px;
 }
 
+.content-title {
+	width:100%;
+	text-align:left;
+	font-size: 55px;
+	letter-spacing: 2px;
+}
+
+.content-text {
+	margin-top:40px;
+	text-align: justify;
+	letter-spacing: 1px;
+	font-size:14px;
+}
+
 .vehicle-search-text {
 	margin-top:40px;
 	text-align: justify;
@@ -185,6 +231,9 @@ html, body {
 	height: 60px;
 }
 
+#data-loader {
+	display: none;
+}
 
 #main-content-holder {
 	position: absolute;
@@ -194,7 +243,7 @@ html, body {
 	left: 0;
 }
 
-#nav-bar {
+div#nav-bar {
 	position: fixed;
 	z-index: 9;
 	top: 0;
@@ -256,6 +305,68 @@ html, body {
 #nav-bar-selection-2 > li:hover {
 	border-bottom: 2px solid white;
 }
+
+
+#confirmation-message-holder {
+	position: fixed;
+	display: none;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.45);
+	z-index: 19;
+}
+
+#centered-holder {
+	position: absolute;
+	width:400px;
+	height: 200px;
+	background: white;
+	box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.8);
+	border-radius: 25px;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translateY(-50%) translateX(-50%);
+	transform: translateY(-50%) translateX(-50%);
+}
+
+#centered-holder > table {
+	position: absolute;
+	left: 50%;
+	top: calc(50% - 65px);
+	
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+#confirm-message-question {
+	font-weight: bold;
+	font-size: 20px;
+	letter-spacing: 1px;
+	height: 70px;
+	text-align:center;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -14,7 +14,7 @@ var vehicleReservationEndDate = null;
 
 
 function searchVehicles() {
-	console.log("submit");
+	showDataLoader();
 	var form = document.getElementById("vehicle-search-form");
 	var itemsHolder = document.getElementById("items-holder");
 	
@@ -52,6 +52,7 @@ function searchVehicles() {
 	}
 
 	if (is_error) {
+		hideDataLoader();
 		return;
 	}
 	
@@ -96,11 +97,13 @@ function searchVehicles() {
 				vehicleItemsRow.innerHTML = "<div class='no-items-found'>No vehicles found</div>";
 				
 			}
+			hideDataLoader();
+			document.body.style.overflowY = "hidden";
+			itemsHolder.style.left = "0px";
         }
     });
 	
-	document.body.style.overflowY = "hidden";
-	itemsHolder.style.left = "0px";
+	
 	
 }
 
@@ -109,6 +112,156 @@ function closeSearchVehicles() {
 	document.body.style.overflowY = "auto";
 	itemsHolder.style.left = "100%";
 }
+
+function loginUser() {
+	showDataLoader();
+	var loginForm = document.getElementById("single-form");
+	
+	var formData = new FormData(loginForm);
+	
+	
+	$.ajax({
+		type: "POST",
+		url: "loginUser",
+		data: {username: formData.get("username"),
+			  password: formData.get("password")},
+		success: function(response) {
+			console.log(response);
+			hideDataLoader();
+		}
+	})
+	
+}
+
+var isPageLoading = false;
+function loadPage(url) {
+	var animationDiv = document.getElementById("exiting-page-animation");
+	
+	if (animationDiv == null) {
+		window.location.href = url;
+		return;
+	}
+	
+	
+	animationDiv.style.width = "100%";
+	
+	if (!isPageLoading) {
+		isPageLoading = true;
+		setTimeout(function() {
+			window.location.href = url;
+		}, 700);
+	}
+	
+}
+
+
+function registerUser() {
+	showDataLoader();
+	var registerForm = document.getElementById("single-form");
+	var inputs = registerForm.getElementsByTagName("input");
+	
+	var emptyField = false;
+	
+	for (var i = 0; i < inputs.length; i++) {
+		if (inputs[i].type != "button") {
+			if (inputs[i].value == "") {
+				emptyField = true;
+				inputs[i].parentNode.classList.add("error");
+			}
+			else {
+				inputs[i].parentNode.classList.remove("error");
+			}
+		}
+	}
+	
+	if (emptyField) {
+		showFormMessage("Please fill the required fields and proceed.", 3000);
+		hideDataLoader();
+		return;
+	}
+	
+	var pass = document.getElementById("password");
+	var confPass = document.getElementById("confirm-password");
+	
+	if (pass.value != confPass.value) {
+		
+		pass.parentNode.classList.add("error");
+		confPass.parentNode.classList.add("error");
+		
+		showFormMessage("Passwords don't match.", 3000);
+		hideDataLoader();
+		return;
+	}
+	
+	
+	
+	var formData = new FormData(registerForm);
+	
+	$.ajax({
+		type: "POST",
+		url: "registerUser",
+		data: {username : formData.get("username")},
+		success: function(response) {
+			console.log(response);
+			showFormMessage("Confirmation message has been sent to your E-mail address.", 3000);
+			hideDataLoader();
+		}
+	});
+	
+	
+	
+}
+
+function showDataLoader() {
+	$("#data-loader").fadeIn(100);
+}
+
+function hideDataLoader() {
+	$("#data-loader").fadeOut(100);
+}
+
+var formMessageTimeout = null;
+function showFormMessage(message, length) {
+	var messageHolder = document.getElementById("form-message");
+	messageHolder.innerHTML = message;
+	
+		$(messageHolder).fadeIn(250);
+	
+	clearTimeout(formMessageTimeout);
+	formMessageTimeout = setTimeout(function() {
+		$(messageHolder).fadeOut(250);
+		formMessageTimeout = null;
+	}, length);
+	
+}
+
+var isConfirmationWindowActive = false;
+function toggleConfirmationMessageWindow() {
+	var confirmWindow = document.getElementById("confirmation-message-holder");
+	
+	if (!isConfirmationWindowActive) {
+		$(confirmWindow).fadeIn(500);
+		isConfirmationWindowActive = true;
+	}
+	
+	else {
+		$(confirmWindow).fadeOut(500);
+		isConfirmationWindowActive = false;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

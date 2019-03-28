@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +25,26 @@ public class WebApplicationController {
 	
 	
 	public List<Vehicle> vehicles = new ArrayList<Vehicle>();
+	
+	
+	
+	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
+	public String registerUser(@RequestParam("username") String username) {
+		
+		
+		
+		return username;
+	}
+	
+	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
+	public String loginUser(@RequestParam("username") String username,
+							@RequestParam("password") String password) {
+		
+		
+		
+		return username;
+	}
+	
 	
 	
 	@RequestMapping(value = "/searchVehicles", method = RequestMethod.POST)

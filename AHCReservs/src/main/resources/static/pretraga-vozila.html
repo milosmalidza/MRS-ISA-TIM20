@@ -14,8 +14,6 @@
 		
 		<link rel="stylesheet" href="bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
-		<!--<link rel="stylesheet" href="js-libs/dropdown.css" />
-		  <link rel="stylesheet" href="js-libs/input.css" />-->
 		<link rel="stylesheet" href="main-style.css" />
 		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
 		
@@ -28,14 +26,16 @@
 	<body style="overflow-y:auto;">
 			<div id="nav-bar">
 				<ul id="nav-bar-selection-1">
+					<li onclick="loadPage('index.html')">Home</li>
 					<li>Airline companies</li>
 					<li>Hotels</li>
 					<li>Rent-a-car services</li>
+					
 				</ul>
 				<ul id="nav-bar-selection-2">
 					<li>About</li>
-					<li>Register</li>
-					<li>Login</li>
+					<li onclick="loadPage('register-user.html')">Register</li>
+					<li onclick="loadPage('login.html')">Login</li>
 				</ul>
 			</div>
 		<div id="main-div">
@@ -53,7 +53,7 @@
 				<form id="vehicle-search-form">
 				<table style="margin-bottom:50px;">
 					<tr>
-						<td>Date range: </td>
+						<td style="width:45%">Date range: </td>
 						<td ><div id="dateinput" class="ui input"><input type="text" id="daterange" name="daterange"  /></div></td>
 					</tr>
 					
@@ -84,7 +84,7 @@
 					</tr>
 					
 					<tr>
-						<td></td>
+						<td><div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div></td>
 						<td><input style="width:150px;letter-spacing:1px;" class="ui button" type="button" onclick="searchVehicles()" value="Search" /></td>
 					</tr>
 				
@@ -120,6 +120,10 @@
 			
 			</div>
 		
+		
+		<div id="exiting-page-animation"></div> <!-- Sluzi za animaciju pri izlasku sa stranice, stavlja se na dno html-a -->
+		
+	
 		
 		
 		<script type="text/javascript">

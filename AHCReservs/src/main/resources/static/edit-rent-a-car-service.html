@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>Edit rent-a-car service</title>
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="main-script.js"></script>
+		
+		
+		<link rel="stylesheet" href="bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="main-style.css" />
+	
+	</head>
+
+	<body style="overflow-y:auto;">
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home</li>
+				<li>Airline companies</li>
+				<li>Hotels</li>
+				<li>Rent-a-car services</li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
+			<div id="main-content-holder">	<!-- Sluzi da spusti malo sadrzaj zbog navigacionog bara -->
+				<div class="center-content"> <!-- Centrira sav sadrzaj na sredinu -->
+					<h1 class="content-title">Edit rent-a-car service</h1>	<!-- Naslov sadrzaja -->
+					<p class="content-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					 nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident,
+					   sunt in culpa qui officia deserunt mollit anim id est laborum.</p><!-- Neki random tekst -->
+					   
+					 <form id="single-form">
+				<table style="margin-bottom:50px;">
+					<tr>
+						<td style="width:45%">Company name:  </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="company-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Company description: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="company-description" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Company address:  </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" name="company-address" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					
+					<tr>
+						<td>
+							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="changeCompanyInfo()" value="Change" /></td>
+					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td>Remove office branch: </td>
+						<td>
+							<select id="branch-offices" name="branch-offices" class="ui dropdown">
+							  <option value=""></option>
+							  <option value="Athens">Athens</option>
+							  <option value="Belgrade">Belgrade</option>
+							  <option value="London">London</option>
+							  <option value="New York">New York</option>
+							  <option value="Budapest">Budapest</option>
+							  <option value="Madrid">Madrid</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="Remove" /></td>
+					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
+					<tr>
+						<td>
+							Add vehicles
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="" value="Add vehicles" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>Remove vehicles: </td>
+						<td>
+							<select id="remove-vehicles-options" name="remove-vehicles-options" class="ui dropdown">
+							  <option value=""></option>
+							  <option value="Mazda32019">Mazda 3 2019</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="Remove" /></td>
+					</tr>
+					
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
+					
+					<tr>
+						<td>Edit vehicles: </td>
+						<td>
+							<select id="edit-vehicles-options" name="edit-vehicles-options" class="ui dropdown">
+							  <option value=""></option>
+							  <option value="Mazda32019">Mazda 3 2019</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="" value="Edit" /></td>
+					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
+				</table>
+				</form>
+					   
+				</div>
+			
+			</div>
+		</div>
+		
+		<div id="confirmation-message-holder">
+			<div id="centered-holder">
+				<table>
+					<tr>
+						<td id="confirm-message-question" colspan="2">Are you sure?</td>
+						
+					</tr>
+					<tr>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="Yes" />
+						</td>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="No" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="exiting-page-animation"></div>
+	
+	
+		<script type="text/javascript">
+		
+		$('#branch-offices')
+		  .dropdown();
+		
+		$('#remove-vehicles-options')
+		  .dropdown();
+		
+		$('#edit-vehicles-options')
+		  .dropdown();
+		
+		</script>
+	
+	
+	</body>
+
+</html>
+
+
+

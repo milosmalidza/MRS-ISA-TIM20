@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @MappedSuperclass
 public abstract class AppUser {
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected Long id;
