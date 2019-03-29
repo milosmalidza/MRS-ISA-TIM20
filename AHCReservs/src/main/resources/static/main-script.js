@@ -122,7 +122,7 @@ function loginUser() {
 	
 	$.ajax({
 		type: "POST",
-		url: "loginUser",
+		url: "user/loginUser",
 		data: {username: formData.get("username"),
 			  password: formData.get("password")},
 		success: function(response) {
@@ -196,14 +196,30 @@ function registerUser() {
 	
 	
 	var formData = new FormData(registerForm);
+	var jsonData = {
+		username : formData.get("username"),
+		password : formData.get("password"),
+		firstName : formData.get("first-name"),
+		lastName : formData.get("last-name"),
+		email : formData.get("email")
+	};
 	
 	$.ajax({
 		type: "POST",
-		url: "registerUser",
-		data: {username : formData.get("username")},
+		url: "user/registerUser",
+		data: {json : JSON.stringify(jsonData)},
 		success: function(response) {
+			
+			if (response == "success") {
+				showFormMessage("Confirmation message has been sent to your E-mail address.", 3000);
+			}
+			else if (response == "emailExists"){
+				showFormMessage("That E-mail address already exists.", 3000);
+			}
+			
+			
 			console.log(response);
-			showFormMessage("Confirmation message has been sent to your E-mail address.", 3000);
+			
 			hideDataLoader();
 		}
 	});

@@ -23,7 +23,7 @@ public class RegisteredUser extends AppUser{
 	
 	public RegisteredUser(AppUser user) {
 		
-		super(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmail());
+		super(user.getUsername(), user.getPassword(), user.getFirstName(), user.getLastName(), user.getEmailId());
 		//this.friendships = new ArrayList<Friendship>();
 	}
 	

@@ -28,25 +28,6 @@ public class WebApplicationController {
 	
 	
 	
-	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
-	public String registerUser(@RequestParam("username") String username) {
-		
-		
-		
-		return username;
-	}
-	
-	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
-	public String loginUser(@RequestParam("username") String username,
-							@RequestParam("password") String password) {
-		
-		
-		
-		return username;
-	}
-	
-	
-	
 	@RequestMapping(value = "/searchVehicles", method = RequestMethod.POST)
 	public String ajaxtest(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("doors") int doors,
 			@RequestParam("people") int people, @RequestParam("type") String type) throws JsonProcessingException {
