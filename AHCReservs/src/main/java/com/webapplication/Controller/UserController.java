@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.Model.ConfirmationToken;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Repository.ConfirmationTokenRepository;
@@ -44,6 +46,10 @@ public class UserController {
 		
 		JsonNode node = mapper.readTree(json);
 		RegisteredUser user = userRepository.findByEmailIdIgnoreCase(node.get("email").asText());
+		
+		if (userRepository.findByUsername(node.get("username").asText()) != null) {
+			return "usernameExists";
+		}
 		
 		
 		if (user != null) {
@@ -102,11 +108,45 @@ public class UserController {
 	
 	@RequestMapping(value = "/loginUser", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("username") String username,
-							@RequestParam("password") String password) {
+							@RequestParam("password") String password) throws IOException {
+		
+		RegisteredUser user = userRepository.findByUsername(username);
+		ObjectMapper mapper = new ObjectMapper();
+		
+		if (user != null) {
+			
+			if (password.equals(user.getPassword())) {
+				
+				
+				
+				String userJson = mapper.writeValueAsString(user);
+				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("status", "success");
+				System.out.println(mapper.writeValueAsString(jsonNode));
+				
+				
+				
+				return mapper.writeValueAsString(jsonNode);
+			}
+			else {
+				
+				JsonNode node = mapper.createObjectNode();
+				((ObjectNode) node).put("status", "invalidPassword");
+				
+				return mapper.writeValueAsString(node);
+			}
+			
+		}
+		
+		else {
+			
+			JsonNode node = mapper.createObjectNode();
+			((ObjectNode) node).put("status", "invalidUser");
+			
+			return mapper.writeValueAsString(node);
+		}
 		
 		
-		
-		return username;
 	}
 	
 }

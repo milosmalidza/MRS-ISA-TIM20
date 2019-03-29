@@ -126,6 +126,21 @@ function loginUser() {
 		data: {username: formData.get("username"),
 			  password: formData.get("password")},
 		success: function(response) {
+			
+			var data = JSON.parse(response);
+			
+			if (data.status == "success") {
+				showFormMessage("Success.", 3000);
+			}
+			
+			else if (data.status == "invalidUser") {
+				showFormMessage("No such username.", 3000);
+			}
+			
+			else if (data.status == "invalidPassword") {
+				showFormMessage("Invalid password.", 3000);
+			}
+			
 			console.log(response);
 			hideDataLoader();
 		}
@@ -183,6 +198,7 @@ function registerUser() {
 	var pass = document.getElementById("password");
 	var confPass = document.getElementById("confirm-password");
 	
+	
 	if (pass.value != confPass.value) {
 		
 		pass.parentNode.classList.add("error");
@@ -214,7 +230,12 @@ function registerUser() {
 				showFormMessage("Confirmation message has been sent to your E-mail address.", 3000);
 			}
 			else if (response == "emailExists"){
+				document.getElementById("email").parentNode.classList.add("error");
 				showFormMessage("That E-mail address already exists.", 3000);
+			}
+			else if (response == "usernameExists") {
+				document.getElementById("username").parentNode.classList.add("error");
+				showFormMessage("That Username address already exists.", 3000);
 			}
 			
 			
