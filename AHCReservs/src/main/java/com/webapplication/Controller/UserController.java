@@ -100,7 +100,7 @@ public class UserController {
 		}
 		
 		else {
-			return new ModelAndView("redirect:");
+			return new ModelAndView("redirect:/index.html");
 		}
 		
 	}
@@ -117,6 +117,13 @@ public class UserController {
 			
 			if (password.equals(user.getPassword())) {
 				
+				if (!user.isEnabled()) {
+					
+					JsonNode n = mapper.createObjectNode();
+					((ObjectNode) n).put("status", "notEnabled");
+					
+					return mapper.writeValueAsString(n);
+				}
 				
 				
 				String userJson = mapper.writeValueAsString(user);
