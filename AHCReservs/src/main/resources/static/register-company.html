@@ -1,0 +1,110 @@
+<html>
+	
+	<head>
+		
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/system-admin.js"></script>
+		
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		
+		<link rel="stylesheet" href="css/system-admin.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		
+	</head>
+	
+	<body style="overflow-y:auto;">
+		
+		<!-- System admin navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('register-company.html')"> Register company </li>
+				<li onclick="loadPage('register-admin.html')"> Admins </li>
+				<li> Discounts </li>
+			</ul>
+			
+			<ul id="nav-bar-selection-2">
+				<li> My profile </li>
+				<li> Logout </li>		
+			</ul>
+		</div>
+		
+		<br>
+		
+		<div id="main-div">
+			<div class="center-content">
+			
+				<!-- Register company form -->
+				<div id="register-div">
+					<table id="register-company-table" class="selection-component">
+					
+						<tr>
+							<td>
+								<h2> Company registration </h2>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Company type: </td>
+							<td>
+								<select id="company-type" class="ui dropdown">
+									<option value="">Select type</option>
+									<option value="airline"> Airline </option>
+									<option value="hotel"> Hotel </option>
+									<option value="rent-a-car"> Rent a car service </option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Company name: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="company-name"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Company admin: </td>
+							<td>
+								<select id="company-admin" class="ui input">
+									<option value="">Select admin</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> </td>
+							<td>
+								 <input class="ui button" type="button" onclick="registerCompany()" value="Register"/>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<!-- Decorating select tags  -->
+		<script type="text/javascript">
+		
+		$('#company-type')
+		  .dropdown();
+		
+		$('#company-admin')
+		  .dropdown();
+
+		</script>
+		
+	
+	</body>
+	
+</html>

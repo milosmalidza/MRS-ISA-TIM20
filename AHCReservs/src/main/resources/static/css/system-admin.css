@@ -1,100 +1,7 @@
-@font-face {
-	font-family: 'Montserrat';
-    src: url(../fonts/Montserrat-Regular.ttf) format("truetype");
-}
 
+/* Sub divs of the main div */
 
-body {
-	font-family: Montserrat;
-	background-color: #475d82;
-}
-
-
-/* Navigation bar */
-
-#nav-bar {
-	position: fixed;
-	z-index: 9;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 80px;
-	border-bottom: 2px solid black;
-	background: rgba(25,25,45,1.00);
-	box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.6);
-}
-
-#nav-bar-left-selection {
-	position: absolute;
-	left: 0px;
-	top: calc(50% - 30px);
-	list-style: none;
-	font-size: 15px;
-}
-
-#nav-bar-left-selection > li {
-	float: left;
-	margin: 10px;
-	padding: 9px;
-	font-weight: bold;
-	letter-spacing: 1px;
-	color: white;
-	border-bottom: 2px solid transparent;
-	cursor: pointer;
-	-webkit-transition: .5s;
-	transition: .5s;
-}
-
-
-#nav-bar-right-selection {
-	position: absolute;
-	right: 35px;
-	top: calc(50% - 30px);
-	list-style: none;
-	font-size: 15px;
-}
-
-#nav-bar-right-selection > li {
-	float: left;
-	margin: 10px;
-	padding: 9px;
-	font-weight: bold;
-	letter-spacing: 1px;
-	color: white;
-	border-bottom: 2px solid transparent;
-	cursor: pointer;
-	-webkit-transition: .5s;
-	transition: .5s;
-}
-
-#nav-bar-left-selection > li:hover {
-	border-bottom: 2px solid white;
-}
-
-#nav-bar-right-selection > li:hover {
-	border-bottom: 2px solid white;
-}
-
-
-/* Main div with all the content */
-div#main-div {
-	position:absolute;
-	width: 100%;
-	left: 0;
-	top: 0;
-	opacity: 0;
-	
-	-webkit-transform: scale(1.04);
-	transform: scale(1.04);
-	
-	-webkit-transition: .8s;
-	transition: .8s;
-}
-
-
-/* Sub divs */
-
-div#reg-company-div {
+div#register-div {
 	position: absolute;
 	width:100%;
 	height: calc(100% - 80px);
@@ -104,16 +11,10 @@ div#reg-company-div {
 }
 
 
-
-/* Input fields */
-input, textarea {
-	background-color: #A9B7C6;
-	height: 4ex;
-}
-
-select {
-	background-color: #A9B7C6;
-	height: 4ex;
+/* Decorating buttons */
+input[type="button"] {
+	width:150px;
+	letter-spacing:1px;	
 }
 
 

@@ -1,0 +1,142 @@
+<html>
+	
+	<head>
+		
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/system-admin.js"></script>
+		
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		
+		<link rel="stylesheet" href="css/system-admin.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		
+	</head>
+	
+	<body style="overflow-y:auto;">
+		
+		<!-- System admin navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('register-company.html')"> Register company </li>
+				<li onclick="loadPage('register-admin.html')"> Admins </li>
+				<li> Discounts </li>
+			</ul>
+			
+			<ul id="nav-bar-selection-2">
+				<li> My profile </li>
+				<li> Logout </li>		
+			</ul>
+		</div>
+		
+		<br>
+		
+		<div id="main-div">
+			<div class="center-content">
+				
+				<!-- Register admin form -->
+				<div id="register-div">
+					<table id="register-admin-table" class="selection-component">
+						
+						<tr>
+							<td>
+								<h2> Admin registration </h2>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width:45%"> Admin type: </td>
+							<td>
+								<select id="admin-type" class="ui dropdown">
+									<option value="">Select type</option>
+									<option value="airline"> Airline </option>
+									<option value="hotel"> Hotel </option>
+									<option value="rent-a-car"> Rent a car service </option>
+									<option value="system"> System </option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width:45%"> Username:  </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="admin-username" autocomplete="off"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Password:  </td>
+							<td>
+								<div class="ui input input-additional full-width-input">
+									<input id="admin-password" type="password" name="password"/>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td>Confirm password:  </td>
+							<td >
+								<div class="ui input input-additional full-width-input">
+									<input id="admin-confirm-password" type="password" name="confirm-password"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>First name: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="admin-first-name" autocomplete="off"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>Last name: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="admin-last-name" autocomplete="off"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td>Valid E-mail: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="admin-email" autocomplete="off"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							
+							<td> </td>
+							<td>
+								<input class="ui button" type="button" onclick="registerAdmin()" value="Register"/>
+							 </td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Decorating select tags  -->
+		<script type="text/javascript">
+		
+		$('#admin-type')
+		  .dropdown();
+
+		</script>
+	
+	</body>
+	
+</html>

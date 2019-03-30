@@ -37,8 +37,6 @@ public class UserController {
 	private EmailSenderService emailSenderService;
 	
 	
-	
-	
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
 	public String registerUser(@RequestParam("json") String json) throws IOException {
 		
@@ -79,8 +77,7 @@ public class UserController {
 			
 			emailSenderService.sendEmail(mail);
 			return "success";
-		}
-		
+		}	
 		
 	}
 	
