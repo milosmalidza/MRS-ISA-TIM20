@@ -27,8 +27,10 @@ public class AppUser {
 	@Column(name = "lastname", nullable = false)
 	protected String lastName;
 	
+	@Column(name = "emailId", nullable = false)
 	protected String emailId;
 	
+	@Column(name="isEnabled", nullable = false)
 	protected boolean isEnabled;
 	
 	public AppUser() {

@@ -20,28 +20,8 @@ window.onload = function() {
 			
 		}); */
 	
-	addNavBarListeners();
-	
 }
 
-
-function addNavBarListeners() {
-	
-	//navbar left selections listeners
-	$('li#register-company-selection').click(function() {
-		$(".selection-component").hide(); //hide all other components
-		$("#register-company-table").toggle(); //toggle the one's under the clicked selection
-	});
-	
-	$('li#admins-selection').click(function() {
-		$(".selection-component").hide();
-		$("#register-admin-table").toggle();
-	});
-	
-	//navbar right selections listeners
-	//TODO: implement
-	
-}
 
 function registerCompany() {
 	
@@ -96,8 +76,7 @@ function registerAdmin() {
 			
 			toast("Admin successfully registered");
 		}); 
-	
-	
+
 }
 
 
@@ -109,7 +88,7 @@ function getAdminJson() {
 		"firstName": $("#admin-first-name").val(),
 		"lastName": $("#admin-last-name").val(),
 		"email": $("#admin-email").val(),
-		"companyType": $("#admin-company").val()
+		"companyType": $("#admin-type").val()
 	};
 }
 

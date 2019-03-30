@@ -1,18 +1,23 @@
 package com.webapplication.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.Model.AppUser;
 import com.webapplication.Model.HotelAdmin;
+import com.webapplication.Model.SystemAdmin;
+import com.webapplication.Repository.SystemAdminRepository;
 
 @Service
 public class SystemAdminService {
 
 	@Autowired
+	SystemAdminRepository sysAdminRep;
+	
+	@Autowired
 	HotelAdminService hotelAdminSvc;
+	
 	
 	public AppUser registerAdmin(AdminToRegister admin) {
 		
@@ -20,6 +25,7 @@ public class SystemAdminService {
 			return null;
 		}
 		
+		//check which type of admin I'm registering
 		switch(admin.getCompanyType()) {
 		
 		case "hotel":
@@ -33,6 +39,10 @@ public class SystemAdminService {
 		case "rent-a-car":
 			//TODO: registrovati
 			break;
+			
+		case "system":
+			SystemAdmin sysAdmin = new SystemAdmin(admin);
+			return sysAdminRep.save(sysAdmin);
 			
 		default:
 			break;

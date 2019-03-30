@@ -2,6 +2,8 @@ package com.webapplication.Model;
 
 import javax.persistence.Entity;
 
+import com.webapplication.JSONBeans.AdminToRegister;
+
 @Entity
 public class SystemAdmin extends AppUser {
 
@@ -13,4 +15,12 @@ public class SystemAdmin extends AppUser {
 			String email) {
 		super(username, password, firstName, lastName, email);
 	}
+	
+	public SystemAdmin(AdminToRegister admin) {
+	
+		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
+				admin.getLastName(), admin.getEmail());
+		
+	}
+	
 }
