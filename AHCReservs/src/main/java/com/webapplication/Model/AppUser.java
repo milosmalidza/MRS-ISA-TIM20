@@ -11,11 +11,11 @@ import javax.persistence.Id;
 public class AppUser {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id", unique=true, nullable=false)
 	protected Long id;
 	
-	@Column(name = "username", unique = false, nullable = false)
+	@Column(name = "username", unique = true, nullable = false)
 	protected String username;
 	
 	@Column(name = "password", nullable = false)
@@ -27,20 +27,21 @@ public class AppUser {
 	@Column(name = "lastname", nullable = false)
 	protected String lastName;
 	
-	@Column(name = "email", nullable = false)
-	protected String email;
+	protected String emailId;
+	
+	protected boolean isEnabled;
 	
 	public AppUser() {
 		
 	}
 
-	public AppUser(String username, String password, String firstName, String lastName, String email) {
+	public AppUser(String username, String password, String firstName, String lastName, String emailId) {
 		
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
+		this.emailId = emailId;
 	}
 
 	public String getUsername() {
@@ -75,19 +76,35 @@ public class AppUser {
 		this.lastName = lastName;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getEmailId() {
+		return emailId;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
 	}
 	
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public boolean isEnabled() {
+		return isEnabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		this.isEnabled = isEnabled;
+	}
+
 	@Override
 	public String toString() {
 		return this.username + "; " + this.password + "; " + this.firstName + "; " + this.lastName
-				+  "; " + this.email;
+				+  "; " + this.emailId;
 	}
 	
 }

@@ -10,8 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.webapplication.Model.RegisteredUser;
 
 @Repository
-public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, Long>{
+public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, String>{
 	
 	public List<RegisteredUser> findAll();
+	
+	public RegisteredUser findByEmailIdIgnoreCase(String emailid);
+	
+	public RegisteredUser findByUsername(String username);
 	
 }

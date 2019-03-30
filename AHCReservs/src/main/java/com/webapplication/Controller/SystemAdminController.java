@@ -28,8 +28,6 @@ public class SystemAdminController {
 	@Autowired
 	HotelAdminService hotelAdminSvc;
 	
-	//@Autowired
-	//HotelAdminService 
 	
 	@RequestMapping(
 			value="/registerCompany",
