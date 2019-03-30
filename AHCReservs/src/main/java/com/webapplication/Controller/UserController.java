@@ -26,7 +26,6 @@ public class UserController {
 	 *  @param httpEntity - kako bi postman mogao da namapira json moram ostaviti ovaj oblik parametra
 	 *  @return json sa podacima o registrovanom korisniku
 	 *  */
-	
 	@RequestMapping(
 			value="/registerUser",
 			method=RequestMethod.POST,

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import com.webapplication.JSONBeans.AdminToRegister;
+
 @Entity
 public class HotelAdmin extends AppUser {
 
@@ -20,6 +22,15 @@ public class HotelAdmin extends AppUser {
 		
 		super(username, password, firstName, lastName, email);
 		this.hotel = hotel;
+		
+	}
+	
+	public HotelAdmin(AdminToRegister admin) {
+		
+		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
+				admin.getLastName(), admin.getEmail());
+		
+		this.hotel = null; //prilikom registracije admin je besposlen
 		
 	}
 
