@@ -133,6 +133,10 @@ function loginUser() {
 				showFormMessage("Success.", 3000);
 			}
 			
+			else if (data.status == "notEnabled") {
+				showFormMessage("Account not activated.", 3000);
+			}
+			
 			else if (data.status == "invalidUser") {
 				showFormMessage("No such username.", 3000);
 			}
