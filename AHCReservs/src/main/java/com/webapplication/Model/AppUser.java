@@ -15,7 +15,7 @@ public class AppUser {
 	@Column(name="id", unique=true, nullable=false)
 	protected Long id;
 	
-	@Column(name = "username", unique = true, nullable = false)
+	@Column(name = "username", unique = false, nullable = false)
 	protected String username;
 	
 	@Column(name = "password", nullable = false)

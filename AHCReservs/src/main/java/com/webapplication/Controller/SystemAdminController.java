@@ -1,5 +1,6 @@
 package com.webapplication.Controller;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AppUser;
+import com.webapplication.Model.Company;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Service.HotelAdminService;
 import com.webapplication.Service.SystemAdminService;
@@ -34,10 +38,11 @@ public class SystemAdminController {
 			method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> registerCompany(@RequestBody CompanyInfo companyInfo) {
+	public ResponseEntity<Company> registerCompany(@RequestBody CompanyInfo companyInfo) {
 		
-		//TODO: pozvati metodu iz servisa
-		return null;
+		System.out.println(companyInfo.toString());
+		return new ResponseEntity<>(sysAdminSvc.registerCompany(companyInfo), HttpStatus.CREATED);
+		//return null;
 	}
 	
 	@RequestMapping(
@@ -52,14 +57,33 @@ public class SystemAdminController {
 	}
 	
 	@RequestMapping(
-			value="/getHotelAdmins",
+			value="/getAvailableHotelAdmins",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public Collection<HotelAdmin> getHotelAdmins() {
 		
-		return hotelAdminSvc.findAll();
+		return hotelAdminSvc.getAvailableAdmins();
 		
 	}
+	
+	
+	@RequestMapping(
+			value="/getAdminByUsername",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public HotelAdmin getAdminByUsername(@RequestBody String username) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode node = mapper.readTree(username);
+		System.out.println(username);
+		return hotelAdminSvc.findByUsername(node.get("username").asText());
+		
+	}
+	//TODO: getAvailableAirlineAdmins
+	
+	
+	//TODO: getAvailableRentACarAdmins
 	
 	
 

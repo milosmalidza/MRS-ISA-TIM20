@@ -43,7 +43,7 @@ public class CompanyInfo {
 	
 	@Override
 	public String toString() {
-		return this.name + "; " + this.type + "; " + this.adminUsername;
+		return this.name + "; " + this.type + "; " + this.adminUsername + ";";
 	}
 
 }

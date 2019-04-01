@@ -52,7 +52,7 @@
 						<tr>
 							<td> Company type: </td>
 							<td>
-								<select id="company-type" class="ui dropdown">
+								<select id="company-type" class="ui dropdown" onchange="getAdmins()">
 									<option value="">Select type</option>
 									<option value="airline"> Airline </option>
 									<option value="hotel"> Hotel </option>
@@ -73,7 +73,7 @@
 						<tr>
 							<td> Company admin: </td>
 							<td>
-								<select id="company-admin" class="ui input">
+								<select id="company-admins" class="ui input">
 									<option value="">Select admin</option>
 								</select>
 							</td>
@@ -99,7 +99,7 @@
 		$('#company-type')
 		  .dropdown();
 		
-		$('#company-admin')
+		$('#company-admins')
 		  .dropdown();
 
 		</script>

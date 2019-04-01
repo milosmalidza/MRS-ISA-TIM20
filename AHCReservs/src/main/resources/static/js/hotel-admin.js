@@ -3,21 +3,8 @@ var controllerPath = "/hotelAdmin";
 window.onload = function() {
 	
 	//** DUMMY DATA **//
-	//get a hotel from company list
+	//get the hotel of the currently logged in admin
 	
-	axios.get(controllerPath + "/getCompany")
-	.then(response => {
-		
-		if(response != null && response != undefined) {
-			
-			$("#hotel-name").val(response.data.name);
-			
-		}
-		
-	});
-	
-	var fileName = location.href.split("/").slice(-1); 
-	console.log(fileName);
 }
 
 function saveChanges() {

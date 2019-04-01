@@ -17,13 +17,13 @@ public abstract class Company {
 	@Column(name="name", unique=false, nullable=false)
 	protected String name;
 	
-	@Column(name="description", nullable=false)
+	@Column(name="description", nullable=true)
 	protected String description;
 	
-	@Column(name="address", nullable=false)
+	@Column(name="address", nullable=true)
 	protected String address;
 	
-	@Column(name="rating", nullable=false)
+	@Column(name="rating", nullable=true)
 	protected double rating;
 	
 	public Company() {

@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import org.springframework.core.style.ToStringCreator;
+
 import com.webapplication.JSONBeans.AdminToRegister;
 
 @Entity
@@ -42,8 +44,10 @@ public class HotelAdmin extends AppUser {
 		this.hotel = hotel;
 	}
 	
-	
-	
+	@Override
+	public String toString() {
+		return super.toString();
+	}
 	
 	
 }

@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import com.webapplication.JSONBeans.CompanyInfo;
+
 @Entity
 public class Hotel extends Company {
 	
@@ -33,7 +35,11 @@ public class Hotel extends Company {
 		this.hotelAdmins = new HashSet<HotelAdmin>();
 	}
 	
-	
+	//used when registering a new company
+	public Hotel(CompanyInfo companyInfo, HotelAdmin hotelAdmin) {
+		this.name = companyInfo.getName();
+		//this.hotelAdmins.add(hotelAdmin);
+	}
 
 	public Set<HotelAdmin> getHotelAdmins() {
 		return hotelAdmins;
