@@ -1,11 +1,14 @@
 package com.webapplication.Model;
 
 import javax.persistence.Column;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.MappedSuperclass;
 
+
 import javax.persistence.Id;
+
 
 @MappedSuperclass
 public class AppUser {

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapplication.Model.RegisteredUser;
 
@@ -17,5 +18,8 @@ public interface RegisteredUserRepository extends JpaRepository<RegisteredUser, 
 	public RegisteredUser findByEmailIdIgnoreCase(String emailid);
 	
 	public RegisteredUser findByUsername(String username);
+	
+	@Transactional
+	public void deleteByUsername(String username);
 	
 }

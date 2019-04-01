@@ -242,6 +242,11 @@ function registerUser() {
 				showFormMessage("That Username address already exists.", 3000);
 			}
 			
+			else if (response == "emailError") {
+				document.getElementById("email").parentNode.classList.add("error");
+				showFormMessage("Invalid E-mail address.", 3000);
+			}
+			
 			
 			console.log(response);
 			

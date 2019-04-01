@@ -42,6 +42,7 @@ public class UserController {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
+		
 		JsonNode node = mapper.readTree(json);
 		RegisteredUser user = userRepository.findByEmailIdIgnoreCase(node.get("email").asText());
 		
@@ -74,8 +75,16 @@ public class UserController {
 			mail.setFrom("ahcreservation@gmail.com");
 			mail.setText("To confirm your account, please click the following link: "
 					+ " http://localhost:8080/user/confirmRegistration?token="+token.getConfirmationToken());
+			try{
+				emailSenderService.sendEmail(mail);
+			}
+			catch(Exception e) {
+				userRepository.deleteByUsername(username);
+				confirmationTokenRepository.deleteByConfirmationToken(token.getConfirmationToken());
+				
+				return "emailError";
+			}
 			
-			emailSenderService.sendEmail(mail);
 			return "success";
 		}	
 		
