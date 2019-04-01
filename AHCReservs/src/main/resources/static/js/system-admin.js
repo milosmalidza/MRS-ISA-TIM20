@@ -23,7 +23,7 @@ function registerCompany() {
 			toast("Company successfully registered");
 			
 			//the selected admin is no longer available
-			$('#company-admins option:selected').remove();
+			getAdmins();
 			
 		});
 	
@@ -34,6 +34,14 @@ function getAdmins() {
 	
 	//clear the select tag for admins
 	//$("#company-admins").val("");
+	
+	var n = document.getElementById("nesto");
+	var texts = n.getElementsByClassName("text");
+	
+	texts[0].classList.add("default");
+	texts[0].innerHTML = "Select admin";
+	
+	
 	$('#company-admins option:selected').remove();
 	$('#company-admins').empty().append('<option value="">Select admin</option>');
 	
