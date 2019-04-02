@@ -32,15 +32,12 @@ function registerCompany() {
  
 function getAdmins() {
 	
-	//clear the select tag for admins
-	//$("#company-admins").val("");
-	
-	var n = document.getElementById("nesto");
+	/* Clearing select tag for admins */
+	var n = document.getElementById("company-admins-holder");
 	var texts = n.getElementsByClassName("text");
 	
 	texts[0].classList.add("default");
 	texts[0].innerHTML = "Select admin";
-	
 	
 	$('#company-admins option:selected').remove();
 	$('#company-admins').empty().append('<option value="">Select admin</option>');
@@ -51,14 +48,14 @@ function getAdmins() {
 	switch(companyType) {
 		
 	case "airline":
-		//getAdminsFromServer("/getAvailableAirlineAdmins");
+		getAdminsFromServer("/getAvailableAirlineAdmins");
 		break;
 	case "hotel":
 		getAdminsFromServer("/getAvailableHotelAdmins");
 		break;
 		
 	case "rent-a-car":
-		//getAdminsFromServer("/getAvailableRentACarAdmins");
+		getAdminsFromServer("/getAvailableRentACarAdmins");
 		break;
 	}
 	

@@ -1,11 +1,10 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-
-import org.springframework.core.style.ToStringCreator;
 
 import com.webapplication.JSONBeans.AdminToRegister;
 

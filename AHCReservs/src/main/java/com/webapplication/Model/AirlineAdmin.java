@@ -1,7 +1,16 @@
 package com.webapplication.Model;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
+
+import com.webapplication.JSONBeans.AdminToRegister;
+
+@Entity
 public class AirlineAdmin extends AppUser {
 	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Airline airline;
 	
 	public AirlineAdmin() {
@@ -15,6 +24,16 @@ public class AirlineAdmin extends AppUser {
 		this.airline = airline;
 		
 	}
+	
+	//used when registering a new admin
+		public AirlineAdmin(AdminToRegister admin) {
+			
+			super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
+					admin.getLastName(), admin.getEmail());
+			
+			this.airline = null; //the admin is jobless when being registered
+			
+		}
 
 	public Airline getAirline() {
 		return airline;

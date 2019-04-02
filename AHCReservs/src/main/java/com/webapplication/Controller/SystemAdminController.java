@@ -16,10 +16,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
+import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Company;
 import com.webapplication.Model.HotelAdmin;
+import com.webapplication.Model.RentACarAdmin;
+import com.webapplication.Service.AirlineAdminService;
 import com.webapplication.Service.HotelAdminService;
+import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.SystemAdminService;
 
 @RestController
@@ -31,6 +35,12 @@ public class SystemAdminController {
 	
 	@Autowired
 	HotelAdminService hotelAdminSvc;
+	
+	@Autowired
+	AirlineAdminService airlineAdminSvc;
+	
+	@Autowired
+	RentACarAdminService rentACarAdminSvc;
 	
 	
 	@RequestMapping(
@@ -68,6 +78,28 @@ public class SystemAdminController {
 	
 	
 	@RequestMapping(
+			value="/getAvailableAirlineAdmins",
+			method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public Collection<AirlineAdmin> getAirlineAdmins() {
+		
+		return airlineAdminSvc.getAvailableAdmins();
+		
+	}
+	
+	@RequestMapping(
+			value="/getAvailableRentACarAdmins",
+			method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public Collection<RentACarAdmin> getRentACarAdmins() {
+		
+		return rentACarAdminSvc.getAvailableAdmins();
+		
+	}
+		
+	
+	/** POSTMAN TEST METHODS */
+	@RequestMapping(
 			value="/getAdminByUsername",
 			method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
@@ -80,11 +112,6 @@ public class SystemAdminController {
 		return hotelAdminSvc.findByUsername(node.get("username").asText());
 		
 	}
-	//TODO: getAvailableAirlineAdmins
-	
-	
-	//TODO: getAvailableRentACarAdmins
-	
 	
 
 }

@@ -2,6 +2,7 @@ package com.webapplication.Model;
 
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,38 +16,38 @@ import com.webapplication.JSONBeans.CompanyInfo;
 public class Hotel extends Company {
 	
 	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	private Set<HotelAdmin> hotelAdmins;
+	private Set<HotelAdmin> admins;
 	
 	public Hotel() {
 		
 		super();
-		this.hotelAdmins = new HashSet<HotelAdmin>();
+		this.admins = new HashSet<HotelAdmin>();
 		
 	}
 
 	public Hotel(String name) {
 		super(name);
-		this.hotelAdmins = new HashSet<HotelAdmin>();
+		this.admins = new HashSet<HotelAdmin>();
 	}
 	
 	public Hotel(Long id, String name, String description, String address, double rating) {
 		
 		super(id, name, description, address, rating);
-		this.hotelAdmins = new HashSet<HotelAdmin>();
+		this.admins = new HashSet<HotelAdmin>();
 	}
 	
 	//used when registering a new company
-	public Hotel(CompanyInfo companyInfo, HotelAdmin hotelAdmin) {
+	public Hotel(CompanyInfo companyInfo) {
 		this.name = companyInfo.getName();
-		//this.hotelAdmins.add(hotelAdmin);
+		this.admins = new HashSet<HotelAdmin>();
 	}
 
 	public Set<HotelAdmin> getHotelAdmins() {
-		return hotelAdmins;
+		return admins;
 	}
 
 	public void setHotelAdmins(Set<HotelAdmin> hotelAdmins) {
-		this.hotelAdmins = hotelAdmins;
+		this.admins = hotelAdmins;
 	}
 
 	
