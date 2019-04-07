@@ -26,14 +26,14 @@ public class AirlineAdmin extends AppUser {
 	}
 	
 	//used when registering a new admin
-		public AirlineAdmin(AdminToRegister admin) {
-			
-			super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
-					admin.getLastName(), admin.getEmail());
-			
-			this.airline = null; //the admin is jobless when being registered
-			
-		}
+	public AirlineAdmin(AdminToRegister admin) {
+		
+		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
+				admin.getLastName(), admin.getEmail());
+		
+		this.airline = null; //the admin is jobless when being registered
+		
+	}
 
 	public Airline getAirline() {
 		return airline;

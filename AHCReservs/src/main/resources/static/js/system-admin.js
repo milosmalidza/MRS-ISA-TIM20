@@ -117,17 +117,17 @@ function registerAdmin() {
 		return;
 	}
 	
+	//check whether email is valid
+	if(validateEmail($("#admin-email") === false)) {
+		toast("Invalid email");
+		return;
+	}
+	
+	//check whether email is valid
+	
 	//sending data to server
 	axios.post(controllerPath + "/registerAdmin", getAdminJson())
-		.then(response => {
-			
-			if(response.data === null || response.data === "") {
-				toast("Registration failed");
-				return;
-			}
-			
-			toast("Admin successfully registered");
-		}); 
+		.then(response => (toast(response.data))); 
 
 }
 
@@ -162,3 +162,8 @@ function validateInputFields(tableID) {
 	
 	return valid;
 }
+
+function validateEmail(elementValue){      
+	   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+	   return emailPattern.test(elementValue); 
+	 } 

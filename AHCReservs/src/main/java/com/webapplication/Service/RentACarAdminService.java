@@ -51,4 +51,10 @@ public class RentACarAdminService {
 		return availableAdmins;
 	}
 	
+	
+	public void deleteByUsername(String username) {
+		rentACarAdminRep.deleteByUsername(username);
+	}
+	
+	
 }

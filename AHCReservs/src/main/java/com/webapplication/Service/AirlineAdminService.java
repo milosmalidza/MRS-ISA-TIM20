@@ -50,4 +50,9 @@ public class AirlineAdminService {
 		return availableAdmins;
 	}
 	
+	
+	public void deleteByUsername(String username) {
+		airlineAdminRep.deleteByUsername(username);
+	}
+	
 }
