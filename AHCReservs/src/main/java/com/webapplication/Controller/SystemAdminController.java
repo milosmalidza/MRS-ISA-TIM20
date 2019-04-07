@@ -1,6 +1,7 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Company;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RentACarAdmin;
@@ -52,7 +52,7 @@ public class SystemAdminController {
 		
 		System.out.println(companyInfo.toString());
 		return new ResponseEntity<>(sysAdminSvc.registerCompany(companyInfo), HttpStatus.CREATED);
-		//return null;
+		
 	}
 	
 	@RequestMapping(
@@ -60,7 +60,7 @@ public class SystemAdminController {
 			method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AppUser> registerAdmin(@RequestBody AdminToRegister admin) {
+	public ResponseEntity<String> registerAdmin(@RequestBody AdminToRegister admin) {
 		
 		return new ResponseEntity<>(sysAdminSvc.registerAdmin(admin), HttpStatus.CREATED);
 

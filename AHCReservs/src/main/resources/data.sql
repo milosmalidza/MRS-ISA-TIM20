@@ -1,0 +1,1 @@
+insert into system_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(0, "bvlasonjic", "pezos", "bojan", "vlasonjic", "bojanvlasonjic@yahoo.com", 1);
