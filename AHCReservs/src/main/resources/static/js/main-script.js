@@ -1,10 +1,36 @@
+
+//Use this for session info
+var sessionUser = null;
+
 window.addEventListener("load", function() {
 	var mainDiv = document.getElementById("main-div");
-	if (mainDiv != "undefined") {
+	if (mainDiv != "undefined" && mainDiv != null) {
 		mainDiv.style.opacity = "1";
 		mainDiv.style.webkitTransform = "scale(1)";
 		mainDiv.style.transform = "scale(1)";
 	}
+	
+	try {
+		sessionUser = JSON.parse(window.localStorage.getItem("user"));
+	}
+	catch(err) {
+		sessionUser = null;
+	}
+	
+	if (sessionUser != null) {
+		var loginButton = document.getElementById("nav-bar-login-button");
+		loginButton.innerHTML = "Logout";
+		
+		var path = window.location.pathname;
+		var page = path.split("/").pop();
+		if (page == "login.html") {
+			window.location.href = "index.html";
+		}
+	}
+	
+	
+	console.log(sessionUser);
+	
 	
 }, false);
 
@@ -131,6 +157,8 @@ function loginUser() {
 			
 			if (data.status == "success") {
 				showFormMessage("Success.", 3000);
+				window.localStorage.setItem("user", response);
+				loadPage("index.html");
 			}
 			
 			else if (data.status == "notEnabled") {
@@ -154,9 +182,17 @@ function loginUser() {
 
 var isPageLoading = false;
 function loadPage(url) {
+	
+	
 	var animationDiv = document.getElementById("exiting-page-animation");
 	
+	
+	
 	if (animationDiv == null) {
+		if (url == "login.html" && sessionUser != null) {
+			logout(url);
+		}
+		
 		window.location.href = url;
 		return;
 	}
@@ -167,9 +203,29 @@ function loadPage(url) {
 	if (!isPageLoading) {
 		isPageLoading = true;
 		setTimeout(function() {
+			if (url == "login.html" && sessionUser != null) {
+				logout(url);
+				return;
+			}
 			window.location.href = url;
 		}, 700);
 	}
+	
+}
+
+function logout(url) {
+	window.localStorage.setItem("user", "");
+	sessionUser = null
+	
+	if (url != null) {
+		if (url == "login.html") {
+			window.location.href = "index.html";
+		}
+		else {
+			window.location.href = url;
+		}
+	}
+	
 	
 }
 

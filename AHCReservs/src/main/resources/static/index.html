@@ -2,9 +2,34 @@
 <html>
 	<head>
 		<title>AHCReservs</title>
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
 	</head>
 	<body>
-		<p>Home Page</p>
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home</li>
+				<li>Airline companies</li>
+				<li>Hotels</li>
+				<li>Rent-a-car services</li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		
+		<div id="exiting-page-animation"></div> <!-- Sluzi za animaciju pri izlasku sa stranice -->
 	
 	</body>
 </html>

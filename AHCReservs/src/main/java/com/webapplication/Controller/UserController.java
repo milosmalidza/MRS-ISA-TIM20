@@ -11,14 +11,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.ConfirmationToken;
+import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RegisteredUser;
+import com.webapplication.Model.RentACarAdmin;
+import com.webapplication.Model.SystemAdmin;
+import com.webapplication.Repository.AirlineAdminRepository;
 import com.webapplication.Repository.ConfirmationTokenRepository;
+import com.webapplication.Repository.HotelAdminRepository;
 import com.webapplication.Repository.RegisteredUserRepository;
+import com.webapplication.Repository.RentACarAdminRepository;
+import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Service.EmailSenderService;
 
 
@@ -26,6 +33,17 @@ import com.webapplication.Service.EmailSenderService;
 @RequestMapping("/user")
 public class UserController {
 	
+	@Autowired
+	private SystemAdminRepository systemAdminRepository;
+	
+	@Autowired
+	private RentACarAdminRepository rentacarAdminRepository;
+	
+	@Autowired
+	private HotelAdminRepository hotelAdminRepository;
+	
+	@Autowired
+	private AirlineAdminRepository airlineAdminRepository;
 	
 	@Autowired
 	private RegisteredUserRepository userRepository;
@@ -46,15 +64,23 @@ public class UserController {
 		JsonNode node = mapper.readTree(json);
 		RegisteredUser user = userRepository.findByEmailIdIgnoreCase(node.get("email").asText());
 		
-		if (userRepository.findByUsername(node.get("username").asText()) != null) {
+		if (userRepository.findByUsername(node.get("username").asText()) != null)
 			return "usernameExists";
-		}
+		else if (systemAdminRepository.findByUsername(node.get("username").asText()) != null)
+			return "usernameExists";
+		else if (rentacarAdminRepository.findByUsername(node.get("username").asText()) != null)
+			return "usernameExists";
+		else if (hotelAdminRepository.findByUsername(node.get("username").asText()) != null)
+			return "usernameExists";
+		else if (airlineAdminRepository.findByUsername(node.get("username").asText()) != null)
+			return "usernameExists";
+		
 		
 		
 		if (user != null) {
-			
 			return "emailExists";
 		}
+		
 		else {
 			String username = node.get("username").asText();
 			String password = node.get("password").asText();
@@ -90,6 +116,7 @@ public class UserController {
 		
 	}
 	
+	
 	@RequestMapping(value = "/confirmRegistration", method = RequestMethod.GET)
 	public ModelAndView confirmRegistration(@RequestParam("token") String token) {
 		
@@ -117,6 +144,11 @@ public class UserController {
 							@RequestParam("password") String password) throws IOException {
 		
 		RegisteredUser user = userRepository.findByUsername(username);
+		SystemAdmin sysUser = systemAdminRepository.findByUsername(username);
+		AirlineAdmin airAdmin = airlineAdminRepository.findByUsername(username);
+		HotelAdmin hotelAdmin = hotelAdminRepository.findByUsername(username);
+		RentACarAdmin carAdmin = rentacarAdminRepository.findByUsername(username);
+		
 		ObjectMapper mapper = new ObjectMapper();
 		
 		if (user != null) {
@@ -150,6 +182,131 @@ public class UserController {
 			}
 			
 		}
+		
+		else if (sysUser != null) {
+			
+			if (password.equals(sysUser.getPassword())) {
+				
+				if (!sysUser.isEnabled()) {
+					
+					JsonNode n = mapper.createObjectNode();
+					((ObjectNode) n).put("status", "notEnabled");
+					
+					return mapper.writeValueAsString(n);
+				}
+				
+				
+				String userJson = mapper.writeValueAsString(sysUser);
+				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("status", "success");
+				System.out.println(mapper.writeValueAsString(jsonNode));
+				
+				
+				
+				return mapper.writeValueAsString(jsonNode);
+			}
+			else {
+				
+				JsonNode node = mapper.createObjectNode();
+				((ObjectNode) node).put("status", "invalidPassword");
+				
+				return mapper.writeValueAsString(node);
+			}
+		}
+		
+		else if (airAdmin != null) {
+			
+			if (password.equals(airAdmin.getPassword())) {
+				
+				if (!airAdmin.isEnabled()) {
+					
+					JsonNode n = mapper.createObjectNode();
+					((ObjectNode) n).put("status", "notEnabled");
+					
+					return mapper.writeValueAsString(n);
+				}
+				
+				
+				String userJson = mapper.writeValueAsString(airAdmin);
+				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("status", "success");
+				System.out.println(mapper.writeValueAsString(jsonNode));
+				
+				
+				
+				return mapper.writeValueAsString(jsonNode);
+			}
+			else {
+				
+				JsonNode node = mapper.createObjectNode();
+				((ObjectNode) node).put("status", "invalidPassword");
+				
+				return mapper.writeValueAsString(node);
+			}
+		}
+		
+		else if (hotelAdmin != null) {
+			
+			if (password.equals(hotelAdmin.getPassword())) {
+				
+				if (!hotelAdmin.isEnabled()) {
+					
+					JsonNode n = mapper.createObjectNode();
+					((ObjectNode) n).put("status", "notEnabled");
+					
+					return mapper.writeValueAsString(n);
+				}
+				
+				
+				String userJson = mapper.writeValueAsString(hotelAdmin);
+				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("status", "success");
+				System.out.println(mapper.writeValueAsString(jsonNode));
+				
+				
+				
+				return mapper.writeValueAsString(jsonNode);
+			}
+			else {
+				
+				JsonNode node = mapper.createObjectNode();
+				((ObjectNode) node).put("status", "invalidPassword");
+				
+				return mapper.writeValueAsString(node);
+			}
+		}
+		
+		else if (carAdmin != null) {
+			
+			if (password.equals(carAdmin.getPassword())) {
+				
+				if (!carAdmin.isEnabled()) {
+					
+					JsonNode n = mapper.createObjectNode();
+					((ObjectNode) n).put("status", "notEnabled");
+					
+					return mapper.writeValueAsString(n);
+				}
+				
+				
+				String userJson = mapper.writeValueAsString(carAdmin);
+				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("status", "success");
+				System.out.println(mapper.writeValueAsString(jsonNode));
+				
+				
+				
+				return mapper.writeValueAsString(jsonNode);
+			}
+			else {
+				
+				JsonNode node = mapper.createObjectNode();
+				((ObjectNode) node).put("status", "invalidPassword");
+				
+				return mapper.writeValueAsString(node);
+			}
+		}
+		
 		
 		else {
 			
