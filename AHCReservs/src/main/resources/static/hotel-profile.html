@@ -1,0 +1,105 @@
+<html>
+	
+	<head>
+	
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/hotel-admin.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		
+		<link rel="stylesheet" href="js-libs/toast.css"/>
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/admin.css" />
+		
+	
+	</head>
+	
+	<body>
+	
+		<!-- Navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li> Hotel profile </li>
+				<li> Pricing </li>
+				<li> Reports </li>
+			</ul>
+			
+			<ul id="nav-bar-selection-2">
+				<li> My profile </li>
+				<li> Logout </li>		
+			</ul>
+		</div>
+		
+		<div id="main-div">
+			<div class="center-content">
+			
+				<!--  Hotel profile form -->
+				<div id="form-div">
+					<table id="hotel-profile-table">
+					
+						<tr>
+							<td>
+								<h2> Hotel profile </h2>
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td> Hotel name: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="hotel-name"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Description: </td>
+							<td>
+								<div class="ui form">
+  									<div class="field">
+  										<label> Description goes here: </label>
+										<textarea id="hotel-descr"> </textarea>
+									</div>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Address: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="hotel-address"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Room configuration: </td>
+							<td>
+								<input class="ui button" type="button" onclick="" value="Configure rooms"/>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> </td>
+							<td>
+								<input class="ui button" type="button" onclick="" value="Save changes"/>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	
+</html>

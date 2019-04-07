@@ -2,8 +2,7 @@ var controllerPath = "/hotelAdmin";
 
 window.onload = function() {
 	
-	//** DUMMY DATA **//
-	//get the hotel of the currently logged in admin
+	//TODO: get the hotel of the currently logged in admin
 	
 }
 
@@ -14,7 +13,7 @@ function saveChanges() {
 		return;
 	}
 	
-	toast("Changes saved");
+	toast("TODO: Implement");
 	
 }
 
