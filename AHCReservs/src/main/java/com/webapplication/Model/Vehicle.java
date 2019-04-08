@@ -1,15 +1,39 @@
 package com.webapplication.Model;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 public class Vehicle {
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id", unique=true, nullable=false)
 	private String id;
+	
+	@Column(name = "name", unique = false, nullable = false)
 	private String name;
+	
+	@Column(name = "description", unique = false, nullable = false)
 	private String description;
+	
+	@Column(name = "numberOfSeats", unique = false, nullable = false)
 	private int numOfSeats;
+	
+	@Column(name = "numOfDoors", unique = false, nullable = false)
 	private int numOfDoors;
+	
+	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
+	
+	@Column(name = "reserved", unique = false, nullable = false)
 	private boolean reserved;
+	
+	@Column(name = "pricePerDay", unique = false, nullable = false)
 	private int pricePerDay;
+	
+	@Column(name = "pricePerDay", unique = false, nullable = false)
 	private boolean archived;
 	
 	

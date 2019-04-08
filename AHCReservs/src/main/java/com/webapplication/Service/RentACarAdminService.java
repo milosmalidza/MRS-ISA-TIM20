@@ -1,11 +1,13 @@
 package com.webapplication.Service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Repository.RentACarAdminRepository;
 
@@ -55,6 +57,18 @@ public class RentACarAdminService {
 	public void deleteByUsername(String username) {
 		rentACarAdminRep.deleteByUsername(username);
 	}
+	
+	
+	public String AddCar(String requestJson) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		
+		
+		
+		return "test";
+	}
+	
 	
 	
 }
