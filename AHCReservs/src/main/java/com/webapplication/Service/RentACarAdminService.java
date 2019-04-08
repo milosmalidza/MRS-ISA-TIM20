@@ -47,7 +47,7 @@ public class RentACarAdminService {
 		List<RentACarAdmin> availableAdmins = new ArrayList<RentACarAdmin>();
 
 		for(RentACarAdmin rentACarAdmin: findAll()) {
-			if(rentACarAdmin.getRentACar() == null) {
+			if(rentACarAdmin.getRentACar() == null && rentACarAdmin.isEnabled()) {
 				availableAdmins.add(rentACarAdmin);
 			}
 		}

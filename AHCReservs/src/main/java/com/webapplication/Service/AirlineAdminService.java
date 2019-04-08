@@ -37,7 +37,7 @@ public class AirlineAdminService {
 		List<AirlineAdmin> availableAdmins = new ArrayList<AirlineAdmin>();
 		
 		for(AirlineAdmin airlineAdmin: findAll()) {
-			if(airlineAdmin.getAirline() == null) {
+			if(airlineAdmin.getAirline() == null && airlineAdmin.isEnabled()) {
 				availableAdmins.add(airlineAdmin);
 			}
 		}

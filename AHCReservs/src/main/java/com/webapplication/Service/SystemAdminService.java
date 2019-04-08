@@ -22,6 +22,9 @@ public class SystemAdminService {
 	@Autowired
 	SystemAdminRepository sysAdminRep;
 	
+	@Autowired
+	RegisteredUserService regUserSvc;
+	
 	/* Admin services */
 	@Autowired
 	HotelAdminService hotelAdminSvc;
@@ -50,10 +53,15 @@ public class SystemAdminService {
 	public String registerAdmin(AdminToRegister admin) {
 		
 		if(admin.getCompanyType() == null) {
-			return null;
+			return "Company type undefined";
 		}
 		
 		//TODO: Check whether email already exists
+		
+		
+		if(usernameExist(admin.getUsername())) {
+			return "Username already exists";
+		}
 		
 		String response; //message to be returned to the user
 		
@@ -62,15 +70,9 @@ public class SystemAdminService {
 		
 		case "hotel":
 			HotelAdmin hotelAdmin = new HotelAdmin(admin);
-			
-			if(hotelAdminSvc.findByUsername(hotelAdmin.getUsername()) != null) {
-				return "Username already exists";
-			}
-			
 			hotelAdminSvc.save(hotelAdmin);
 			
 			response = confirmService.sendConfirmationMail(hotelAdmin);
-			
 			if(response.contains("invalid")) {
 				hotelAdminSvc.deleteByUsername(hotelAdmin.getUsername());
 			}
@@ -79,14 +81,9 @@ public class SystemAdminService {
 			
 		case "airline":
 			AirlineAdmin airlineAdmin = new AirlineAdmin(admin);
-			
-			if(airlineAdminSvc.findByUsername(airlineAdmin.getUsername()) != null) {
-				return "Username already exists";
-			} 
-			
 			airlineAdminSvc.save(airlineAdmin);
-			response = confirmService.sendConfirmationMail(airlineAdmin);
 			
+			response = confirmService.sendConfirmationMail(airlineAdmin);
 			if(response.contains("invalid")) {
 				airlineAdminSvc.deleteByUsername(airlineAdmin.getUsername());
 			}
@@ -95,14 +92,9 @@ public class SystemAdminService {
 			
 		case "rent-a-car":
 			RentACarAdmin rent_a_car_admin = new RentACarAdmin(admin);
-			
-			if(rentACarAdminSvc.findByUsername(rent_a_car_admin.getUsername()) != null) {
-				return "Username already exists";
-			}
-			
 			rentACarAdminSvc.save(rent_a_car_admin);
-			response = confirmService.sendConfirmationMail(rent_a_car_admin);
 			
+			response = confirmService.sendConfirmationMail(rent_a_car_admin);
 			if(response.contains("invalid")) {
 				rentACarAdminSvc.deleteByUsername(rent_a_car_admin.getUsername());
 			}
@@ -111,14 +103,9 @@ public class SystemAdminService {
 			
 		case "system":
 			SystemAdmin sysAdmin = new SystemAdmin(admin);
-			
-			if(sysAdminRep.findByUsername(sysAdmin.getUsername()) != null) {
-				return "Username already exists";
-			}
-			
 			save(sysAdmin);
-			response = confirmService.sendConfirmationMail(sysAdmin);
 			
+			response = confirmService.sendConfirmationMail(sysAdmin);
 			if(response.contains("invalid")) {
 				deleteByUsername(sysAdmin.getUsername());
 			}
@@ -175,6 +162,21 @@ public class SystemAdminService {
 		}
 		
 		return null;
+	}
+	
+	
+	public boolean usernameExist(String username) {
+		
+		if(hotelAdminSvc.findByUsername(username) != null
+				|| airlineAdminSvc.findByUsername(username) != null 
+				|| rentACarAdminSvc.findByUsername(username) != null
+				|| regUserSvc.findByUsername(username) != null
+				|| findByUsername(username) != null ) { //searching through system admins
+			
+			return true;
+		}
+		
+		return false;
 	}
 
 
