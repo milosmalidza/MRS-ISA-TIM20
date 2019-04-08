@@ -2,22 +2,18 @@ package com.webapplication.Service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.Airline;
 import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Company;
-import com.webapplication.Model.ConfirmationToken;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.SystemAdmin;
-import com.webapplication.Repository.ConfirmationTokenRepository;
 import com.webapplication.Repository.SystemAdminRepository;
 
 @Service
@@ -46,12 +42,9 @@ public class SystemAdminService {
 	@Autowired
 	RentACarService rentACarSvc;
 	
-	/* Email notification services*/
+	/* Confirmation mail service */
 	@Autowired
-	private ConfirmationTokenRepository confirmationTokenRepository;
-	
-	@Autowired
-	private EmailSenderService emailSenderService;
+	ConfirmationTokenService confirmService;
 	
 	
 	public String registerAdmin(AdminToRegister admin) {
@@ -70,11 +63,13 @@ public class SystemAdminService {
 		case "hotel":
 			HotelAdmin hotelAdmin = new HotelAdmin(admin);
 			
-			if(hotelAdminSvc.save(hotelAdmin) == null) {
+			if(hotelAdminSvc.findByUsername(hotelAdmin.getUsername()) != null) {
 				return "Username already exists";
 			}
 			
-			response = sendConfirmationEmail(hotelAdmin);
+			hotelAdminSvc.save(hotelAdmin);
+			
+			response = confirmService.sendConfirmationMail(hotelAdmin);
 			
 			if(response.contains("invalid")) {
 				hotelAdminSvc.deleteByUsername(hotelAdmin.getUsername());
@@ -85,11 +80,12 @@ public class SystemAdminService {
 		case "airline":
 			AirlineAdmin airlineAdmin = new AirlineAdmin(admin);
 			
-			if(airlineAdminSvc.save(airlineAdmin) == null) {
+			if(airlineAdminSvc.findByUsername(airlineAdmin.getUsername()) != null) {
 				return "Username already exists";
 			} 
 			
-			response = sendConfirmationEmail(airlineAdmin);
+			airlineAdminSvc.save(airlineAdmin);
+			response = confirmService.sendConfirmationMail(airlineAdmin);
 			
 			if(response.contains("invalid")) {
 				airlineAdminSvc.deleteByUsername(airlineAdmin.getUsername());
@@ -100,11 +96,12 @@ public class SystemAdminService {
 		case "rent-a-car":
 			RentACarAdmin rent_a_car_admin = new RentACarAdmin(admin);
 			
-			if(rentACarAdminSvc.save(rent_a_car_admin) == null) {
+			if(rentACarAdminSvc.findByUsername(rent_a_car_admin.getUsername()) != null) {
 				return "Username already exists";
 			}
 			
-			response = sendConfirmationEmail(rent_a_car_admin);
+			rentACarAdminSvc.save(rent_a_car_admin);
+			response = confirmService.sendConfirmationMail(rent_a_car_admin);
 			
 			if(response.contains("invalid")) {
 				rentACarAdminSvc.deleteByUsername(rent_a_car_admin.getUsername());
@@ -115,11 +112,12 @@ public class SystemAdminService {
 		case "system":
 			SystemAdmin sysAdmin = new SystemAdmin(admin);
 			
-			if(save(sysAdmin) == null) {
+			if(sysAdminRep.findByUsername(sysAdmin.getUsername()) != null) {
 				return "Username already exists";
 			}
 			
-			response = sendConfirmationEmail(sysAdmin);
+			save(sysAdmin);
+			response = confirmService.sendConfirmationMail(sysAdmin);
 			
 			if(response.contains("invalid")) {
 				deleteByUsername(sysAdmin.getUsername());
@@ -134,32 +132,6 @@ public class SystemAdminService {
 		
 		return "Uknown company";
 	}
-	
-	public String sendConfirmationEmail(AppUser admin) {
-		
-		ConfirmationToken token = new ConfirmationToken(admin);
-		
-		confirmationTokenRepository.save(token);
-		
-		SimpleMailMessage mail = new SimpleMailMessage();
-		
-		mail.setTo(admin.getEmailId());
-		mail.setSubject("Complete AHC Registration");
-		mail.setFrom("ahcreservation@gmail.com");
-		mail.setText("To confirm your account, please click the following link: "
-				+ " http://localhost:8080/user/confirmRegistration?token="+token.getConfirmationToken());
-		try{
-			emailSenderService.sendEmail(mail);
-			return "A confirmation has been sent to your e-mail address";
-		}
-		catch(Exception e) {
-
-			return "E-mail address is invalid";
-		}
-		
-		
-	}
-	
 	
 	
 	public Company registerCompany(CompanyInfo companyInfo) {
@@ -208,10 +180,6 @@ public class SystemAdminService {
 
 	public SystemAdmin save(SystemAdmin admin) {
 		
-		if(findByUsername(admin.getUsername()) != null) {
-			return null;
-		}
-		
 		return sysAdminRep.save(admin);
 	}
 	
@@ -221,6 +189,11 @@ public class SystemAdminService {
 	
 	public void deleteByUsername(String username) {
 		sysAdminRep.deleteByUsername(username);
+	}
+	
+	
+	public SystemAdmin findByEmailIdIgnoreCase(String emailid) {
+		return sysAdminRep.findByEmailIdIgnoreCase(emailid);
 	}
 	
 }

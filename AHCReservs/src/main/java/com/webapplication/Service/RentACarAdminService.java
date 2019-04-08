@@ -1,6 +1,7 @@
 package com.webapplication.Service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,6 @@ public class RentACarAdminService {
 	
 
 	public RentACarAdmin save(RentACarAdmin admin) {
-		
-		//the username must be unique in the table
-		if(findByUsername(admin.getUsername()) != null) {
-			return null;
-		}
-		
 		return rentACarAdminRep.save(admin);
 	}
 	
@@ -54,6 +49,11 @@ public class RentACarAdminService {
 	
 	public void deleteByUsername(String username) {
 		rentACarAdminRep.deleteByUsername(username);
+	}
+	
+	
+	public RentACarAdmin findByEmailIdIgnoreCase(String emailid) {
+		return rentACarAdminRep.findByEmailIdIgnoreCase(emailid);
 	}
 	
 	

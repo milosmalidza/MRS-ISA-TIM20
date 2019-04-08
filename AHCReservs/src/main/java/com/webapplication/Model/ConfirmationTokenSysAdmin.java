@@ -15,7 +15,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-public class ConfirmationToken {
+public class ConfirmationTokenSysAdmin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,13 +28,13 @@ public class ConfirmationToken {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	
-	@OneToOne(targetEntity = RegisteredUser.class, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = SystemAdmin.class, fetch = FetchType.EAGER)
 	@JoinColumn(nullable = false, name = "user_id")
-	private RegisteredUser user;
+	private SystemAdmin user;
 	
-	public ConfirmationToken() {}
+	public ConfirmationTokenSysAdmin() {}
 	
-	public ConfirmationToken(RegisteredUser user) {
+	public ConfirmationTokenSysAdmin(SystemAdmin user) {
 		this.user = user;
 		this.createdDate = new Date();
 		this.confirmationToken = UUID.randomUUID().toString();
@@ -64,27 +64,13 @@ public class ConfirmationToken {
 		this.createdDate = createdDate;
 	}
 
-	public RegisteredUser getUser() {
+	public SystemAdmin getUser() {
 		return user;
 	}
 
-	public void setUser(RegisteredUser user) {
+	public void setUser(SystemAdmin user) {
 		this.user = user;
 	}
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 }

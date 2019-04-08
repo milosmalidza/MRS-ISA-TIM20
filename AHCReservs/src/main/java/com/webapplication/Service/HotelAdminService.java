@@ -18,12 +18,6 @@ public class HotelAdminService {
 	
 	
 	public HotelAdmin save(HotelAdmin admin) {
-		
-		//the username must be unique in the table
-		if(findByUsername(admin.getUsername()) != null) {
-			return null;
-		}
-		
 		return hotelAdminRep.save(admin);
 	}
 	
@@ -54,6 +48,11 @@ public class HotelAdminService {
 	
 	public void deleteByUsername(String username) {
 		hotelAdminRep.deleteByUsername(username);
+	}
+	
+	
+	public HotelAdmin findByEmailIdIgnoreCase(String emailid) {
+		return hotelAdminRep.findByEmailIdIgnoreCase(emailid);
 	}
 	
 }

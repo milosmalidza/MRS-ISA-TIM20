@@ -2,6 +2,7 @@ package com.webapplication.Controller;
 
 import java.io.IOException;
 
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,6 +25,7 @@ import com.webapplication.Model.Company;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
+import com.webapplication.Service.ConfirmationTokenService;
 import com.webapplication.Service.HotelAdminService;
 import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.SystemAdminService;
@@ -41,6 +45,9 @@ public class SystemAdminController {
 	
 	@Autowired
 	RentACarAdminService rentACarAdminSvc;
+	
+	@Autowired
+	ConfirmationTokenService confirmTokenSvc;
 	
 	
 	@RequestMapping(
@@ -94,6 +101,38 @@ public class SystemAdminController {
 	public Collection<RentACarAdmin> getRentACarAdmins() {
 		
 		return rentACarAdminSvc.getAvailableAdmins();
+		
+	}
+	
+	
+	/* Methods for admin registration confirmations */
+	
+	@RequestMapping(value = "/confirmHotelAdminRegistration", method = RequestMethod.GET)
+	public ModelAndView confirmHotelAdminRegistration(@RequestParam("token") String token) {
+		
+		return new ModelAndView(confirmTokenSvc.confirmHotelAdminRegistration(token));
+		
+	}
+	
+	@RequestMapping(value = "/confirmAirlineAdminRegistration", method = RequestMethod.GET)
+	public ModelAndView confirmHotelAirlineRegistration(@RequestParam("token") String token) {
+		
+		return new ModelAndView(confirmTokenSvc.confirmAirlineAdminRegistration(token));
+		
+	}
+	
+	@RequestMapping(value = "/confirmRentACarAdminRegistration", method = RequestMethod.GET)
+	public ModelAndView confirmRentACarAdminRegistration(@RequestParam("token") String token) {
+		
+		return new ModelAndView(confirmTokenSvc.confirmRentACarAdminRegistration(token));
+		
+	}
+	
+	
+	@RequestMapping(value = "/confirmSysAdminRegistration", method = RequestMethod.GET)
+	public ModelAndView confirmSysAdminRegistration(@RequestParam("token") String token) {
+		
+		return new ModelAndView(confirmTokenSvc.confirmSysAdminRegistration(token));
 		
 	}
 		
