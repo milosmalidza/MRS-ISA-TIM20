@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Model.VehicleType;
 import com.webapplication.Repository.RentACarAdminRepository;
+import com.webapplication.Repository.RentACarRepository;
 import com.webapplication.Repository.VehicleRepository;
 
 @Service
@@ -25,6 +27,9 @@ public class RentACarAdminService {
 	
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+	private RentACarRepository rentRepository;
 
 
 	public RentACarAdmin save(RentACarAdmin admin) {
@@ -82,9 +87,31 @@ public class RentACarAdminService {
 		return "success";
 	}
 
-	
-	public String ChangeCompanyInfo(String requestJson) {
+	//Change company info with new data
+	public String ChangeCompanyInfo(String requestJson) throws IOException {
 		
+		RentACar company = rentRepository.findOneByName("");
+		if (company == null) {
+			return "badRequest";
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode node = mapper.readTree(requestJson);
+		
+		
+		
+		String newName = node.get("newName").asText();
+		RentACar checkout = rentRepository.findOneByName(newName);
+		if (checkout != null) {
+			return "exists";
+		}
+		
+		company.setName(newName);
+		company.setDescription(node.get("newDescription").asText());
+		company.setAddress(node.get("newAddress").asText());
+		
+		rentRepository.save(company);
 		
 		return "success";
 	}

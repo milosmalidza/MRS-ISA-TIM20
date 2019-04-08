@@ -1,9 +1,53 @@
 
+var companyMessageTimeout = null;
+function showCompanyMessage(message, length) {
+	var messageHolder = document.getElementById("form-message-1");
+	messageHolder.innerHTML = message;
+	
+		$(messageHolder).fadeIn(250);
+	
+	clearTimeout(companyMessageTimeout);
+	companyMessageTimeout = setTimeout(function() {
+		$(messageHolder).fadeOut(250);
+		companyMessageTimeout = null;
+	}, length);
+	
+}
 
-function changeCompanyInfo() {
+
+function changeCompanyInfo () {
 	var companyName = document.getElementById("company-name");
 	var companyDescription = document.getElementById("company-description");
 	var companyAddress = document.getElementById("company-address");
+	
+	var json = {
+		newName : companyName.value,
+		nemDescription : companyDescription.value,
+		newAddress : companyAddress.value
+	};
+	
+	$.ajax({
+		type: "post",
+		url: "rentACarService/EditService",
+		data: {json : JSON.stringify(json)},
+		success: function (response) {
+			if (response == "success") {
+				showCompanyMessage("Successfully changed company information.", 3000);
+			}
+			else if (response == "badRequest") {
+				showCompanyMessage("Bad request, try reloading the page.", 3000);
+			}
+			
+			else if (response == "exists") {
+				showCompanyMessage("Company name already exists, please try another.", 3000);
+			}
+			
+			
+			
+		}
+	});
+	
+	
 }
 
 

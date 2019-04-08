@@ -7,6 +7,10 @@ html, body {
 	font-family: Montserrat;
 }
 
+.display-none {
+	display: none;
+}
+
 #main-div {
 	position:absolute;
 	width: 100%;

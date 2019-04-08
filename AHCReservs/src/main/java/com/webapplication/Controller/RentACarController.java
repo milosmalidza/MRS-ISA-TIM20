@@ -15,7 +15,6 @@ import com.webapplication.Service.RentACarAdminService;
 public class RentACarController {
 	
 	@Autowired
-	
 	private RentACarAdminService rentService;
 	
 	
@@ -31,6 +30,18 @@ public class RentACarController {
 		} catch (IOException e) {
 			return "badRequest";
 		}
+		
+	}
+	
+	@RequestMapping(value = "/EditService", method = RequestMethod.POST)
+	public String editInfo(@RequestParam("json") String json) {
+		
+		try {
+			return rentService.ChangeCompanyInfo(json);
+		} catch (IOException e) {
+			return "badRequest";
+		}
+		
 		
 	}
 	
