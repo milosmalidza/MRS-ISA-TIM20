@@ -1,6 +1,7 @@
 package com.webapplication.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,4 +16,6 @@ public interface HotelAdminRepository extends JpaRepository<HotelAdmin, Long> {
 	
 	@Transactional
 	public void deleteByUsername(String username);
+	
+	public HotelAdmin findByEmailIdIgnoreCase(String emailid);
 }
