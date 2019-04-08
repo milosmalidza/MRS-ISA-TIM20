@@ -1,16 +1,22 @@
 package com.webapplication.Model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name="vehicle")
 public class Vehicle {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id", unique=true, nullable=false)
-	private String id;
+	private Long id;
 	
 	@Column(name = "name", unique = false, nullable = false)
 	private String name;
@@ -24,6 +30,7 @@ public class Vehicle {
 	@Column(name = "numOfDoors", unique = false, nullable = false)
 	private int numOfDoors;
 	
+	@Enumerated
 	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
 	
@@ -33,13 +40,13 @@ public class Vehicle {
 	@Column(name = "pricePerDay", unique = false, nullable = false)
 	private int pricePerDay;
 	
-	@Column(name = "pricePerDay", unique = false, nullable = false)
+	@Column(name = "archived", nullable = false)
 	private boolean archived;
 	
 	
 	public Vehicle() {}
 	
-	public Vehicle(String id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
+	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
 			boolean reserved, int pricePerDay, boolean archived) {
 		super();
 		this.id = id;
@@ -87,11 +94,11 @@ public class Vehicle {
 		this.archived = archived;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

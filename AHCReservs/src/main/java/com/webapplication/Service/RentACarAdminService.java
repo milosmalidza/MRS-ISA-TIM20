@@ -8,16 +8,23 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.Model.RentACarAdmin;
+import com.webapplication.Model.Vehicle;
+import com.webapplication.Model.VehicleType;
 import com.webapplication.Repository.RentACarAdminRepository;
+import com.webapplication.Repository.VehicleRepository;
 
 @Service
 public class RentACarAdminService {
 
 
 	@Autowired
-	RentACarAdminRepository rentACarAdminRep;
+	private RentACarAdminRepository rentACarAdminRep;
+	
+	@Autowired
+	private VehicleRepository vehicleRepository;
 
 
 	public RentACarAdmin save(RentACarAdmin admin) {
@@ -54,16 +61,34 @@ public class RentACarAdminService {
 	}
 
 
-	public String AddCar(String requestJson) throws IOException {
+	public String AddCar(String requestJson) throws IOException, NumberFormatException, IllegalArgumentException  {
 
 		ObjectMapper mapper = new ObjectMapper();
-
-
-
-
-		return "test";
+		JsonNode node = mapper.readTree(requestJson);
+		
+		Vehicle vehicle = new Vehicle();
+		
+		vehicle.setArchived(false);
+		vehicle.setDescription(node.get("description").asText());
+		vehicle.setName(node.get("name").asText());
+		
+		vehicle.setNumOfDoors(Integer.parseInt(node.get("numberOfDoors").asText()));
+		vehicle.setNumOfSeats(Integer.parseInt(node.get("numberOfSeats").asText()));
+		vehicle.setVehicleType(VehicleType.valueOf(node.get("typeOfVehicle").asText()));
+		vehicle.setPricePerDay(Integer.parseInt(node.get("pricePerDay").asText()));
+		
+		vehicleRepository.save(vehicle);
+		
+		return "success";
 	}
 
+	
+	public String ChangeCompanyInfo(String requestJson) {
+		
+		
+		return "success";
+	}
+	
 
 	public RentACarAdmin findByEmailIdIgnoreCase(String emailid) {
 		return rentACarAdminRep.findByEmailIdIgnoreCase(emailid);

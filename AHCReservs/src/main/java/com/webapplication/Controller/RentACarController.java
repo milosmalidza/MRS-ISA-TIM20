@@ -23,12 +23,15 @@ public class RentACarController {
 	public String addCar(@RequestParam("json") String json) {
 		
 		try {
-			rentService.AddCar(json);
+			return rentService.AddCar(json);
+		} catch (NumberFormatException e) {
+			return "badNumber";
+		} catch (IllegalArgumentException e) {
+			return "badType";
 		} catch (IOException e) {
-
-			return "error parsing data";
+			return "badRequest";
 		}
-		return json;
+		
 	}
 	
 	

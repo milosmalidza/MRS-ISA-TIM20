@@ -1,4 +1,17 @@
 
+
+function changeCompanyInfo() {
+	var companyName = document.getElementById("company-name");
+	var companyDescription = document.getElementById("company-description");
+	var companyAddress = document.getElementById("company-address");
+}
+
+
+
+
+
+
+
 function addRentACarServiceCar() {
 	showDataLoader();
 	var form = document.getElementById("single-form");
@@ -54,7 +67,6 @@ function addRentACarServiceCar() {
 		numberOfDoors : data.get("number-of-doors"),
 		typeOfVehicle : data.get("type-of-vehicle"),
 		pricePerDay : data.get("price-per-day")
-		
 	};
 	
 	$.ajax({
@@ -62,9 +74,24 @@ function addRentACarServiceCar() {
 		url: "rentACarService/AddCar",
 		data: {json : JSON.stringify(json)},
 		success: function(response) {
+			
+			if (response == "success") {
+				showFormMessage("Car has been successfully added.", 3000);
+			}
+			else if (response == "badNumber") {
+				showFormMessage("Make sure that you have entered whole number.", 3000);
+			}
+			else if (response == "badType") {
+				showFormMessage("Bad vehicle type.", 3000);
+			}
+			else if (response == "badRequest") {
+			 	showFormMessage("Bad request.", 3000);
+		 	}
+			
+			
 			console.log(response);
 			
-			showFormMessage("Car has been successfully added.", 3000);
+			//showFormMessage("Car has been successfully added.", 3000);
 			hideDataLoader();
 		}
 	});
