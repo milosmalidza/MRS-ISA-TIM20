@@ -23,4 +23,8 @@ public class RegisteredUserService {
 		return registeredUserRep.save(user);
 	}
 	
+	public RegisteredUser findByUsername(String username) {
+		return registeredUserRep.findByUsername(username);
+	}
+	
 }

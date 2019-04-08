@@ -37,7 +37,7 @@ public class HotelAdminService {
 		List<HotelAdmin> availableAdmins = new ArrayList<HotelAdmin>();
 		
 		for(HotelAdmin hotelAdmin: findAll()) {
-			if(hotelAdmin.getHotel() == null) {
+			if(hotelAdmin.getHotel() == null && hotelAdmin.isEnabled()) {
 				availableAdmins.add(hotelAdmin);
 			}
 		}

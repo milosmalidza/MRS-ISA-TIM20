@@ -164,7 +164,8 @@ public class ConfirmationTokenService {
 		
 		if (confirmationToken != null) {
 			
-			HotelAdmin hotelAdmin = hotelAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId());
+			//HotelAdmin hotelAdmin = hotelAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId()); - TODO: REAL
+			HotelAdmin hotelAdmin = hotelAdminSvc.findByUsername(confirmationToken.getUser().getUsername()); //Temporary
 			hotelAdmin.setEnabled(true);
 			hotelAdminSvc.save(hotelAdmin);
 			
@@ -185,7 +186,9 @@ public class ConfirmationTokenService {
 		
 		if (confirmationToken != null) {
 			
-			AirlineAdmin airAdmin = airlineAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId());
+			//AirlineAdmin airAdmin = airlineAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId()); TODO: REAL
+			AirlineAdmin airAdmin = airlineAdminSvc.findByUsername(confirmationToken.getUser().getUsername()); //Temporary
+			
 			airAdmin.setEnabled(true);
 			airlineAdminSvc.save(airAdmin);
 			
@@ -205,7 +208,8 @@ public class ConfirmationTokenService {
 		
 		if (confirmationToken != null) {
 			
-			RentACarAdmin racAdmin = racAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId());
+			//RentACarAdmin racAdmin = racAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId()); TODO: real
+			RentACarAdmin racAdmin = racAdminSvc.findByUsername(confirmationToken.getUser().getUsername()); // TEMPORARY
 			racAdmin.setEnabled(true);
 			racAdminSvc.save(racAdmin);
 			
@@ -223,8 +227,9 @@ public class ConfirmationTokenService {
 		ConfirmationTokenSysAdmin confirmationToken = confirmationTokenSysAdminRepository.findByConfirmationToken(token);
 		
 		if (confirmationToken != null) {
-			
-			SystemAdmin sysAdmin = sysAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId());
+			 
+			//SystemAdmin sysAdmin = sysAdminSvc.findByEmailIdIgnoreCase(confirmationToken.getUser().getEmailId()); TODO: REAL
+			SystemAdmin sysAdmin = sysAdminSvc.findByUsername(confirmationToken.getUser().getUsername()); //Temporary
 			sysAdmin.setEnabled(true);
 			sysAdminSvc.save(sysAdmin);
 			
