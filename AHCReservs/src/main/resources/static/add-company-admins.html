@@ -9,13 +9,14 @@
 		
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js/system-admin.js"></script>
+		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="js-libs/toast.css" />
 		
 		<link rel="stylesheet" href="css/admin.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
-		
+					
 	</head>
 	
 	<body style="overflow-y:auto;">
@@ -35,25 +36,24 @@
 			</ul>
 		</div>
 		
-		<br>
 		
 		<div id="main-div">
 			<div class="center-content">
 			
-				<!-- Register company form -->
+				<!-- Add admins to existing company form -->
 				<div class="form-div">
-					<table id="register-company-table" class="selection-component">
+					<table id="company-admins-table">
 					
 						<tr>
 							<td>
-								<h2> Company registration </h2>
+								<h2> Company administrators </h2>
 							</td>
 						</tr>
 						
 						<tr>
 							<td> Company type: </td>
 							<td>
-								<select id="company-type-form1" class="ui dropdown" onchange="getAdmins()">
+								<select id="company-type-form2" class="ui dropdown" onchange="viewAdmins()">
 									<option value="">Select type</option>
 									<option value="airline"> Airline </option>
 									<option value="hotel"> Hotel </option>
@@ -63,33 +63,36 @@
 						</tr>
 						
 						<tr>
-							<td> Company name: </td>
-							<td>
-								<div class="input-additional full-width-input ui input ">
-									<input type="text" id="company-name"/>
-								</div>
-							</td>
-						</tr>
 						
-						<tr>
-							<td> Initial admin: </td>
-							<td id="company-admins-holder">
-								<select id="company-admins" class="ui input">
-									<option value="">Select admin</option>
+							<td> Available admins: </td>
+							
+							<td id="available-admins-holder">
+								<select id="available-admins" multiple="" class="ui selection dropdown">
 								</select>
 							</td>
 						</tr>
 						
 						<tr>
+							<td> Company name: </td>
+							<td>
+								<div class="input-additional full-width-input ui input ">
+									<input type="text" id="admins-company-name"/>
+								</div>
+							</td>
+							
+						</tr>
+						
+						<tr>
 							<td> </td>
 							<td>
-								 <input class="ui button" type="button" onclick="registerCompany()" value="Register"/>
+								<input class="ui button" type="button" onclick="addAdmins()" value="Add admins"/>
 							</td>
 						</tr>
 						
 					</table>
+					
 				</div>
-				
+			
 			</div>
 		</div>
 		
@@ -97,15 +100,15 @@
 		<!-- Decorating select tags  -->
 		<script type="text/javascript">
 		
-		$('#company-type-form1')
+		$('#company-type-form2')
 		  .dropdown();
 		
-		$('#company-admins')
+		$("#available-admins")
 		  .dropdown();
 
 		</script>
-		
-	
+
 	</body>
 	
 </html>
+	

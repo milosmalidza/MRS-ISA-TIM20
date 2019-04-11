@@ -55,9 +55,8 @@ public class SystemAdminController {
 			method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Company> registerCompany(@RequestBody CompanyInfo companyInfo) {
+	public ResponseEntity<String> registerCompany(@RequestBody CompanyInfo companyInfo) {
 		
-		System.out.println(companyInfo.toString());
 		return new ResponseEntity<>(sysAdminSvc.registerCompany(companyInfo), HttpStatus.CREATED);
 		
 	}
@@ -72,6 +71,10 @@ public class SystemAdminController {
 		return new ResponseEntity<>(sysAdminSvc.registerAdmin(admin), HttpStatus.CREATED);
 
 	}
+	
+	
+	/* GET methods for getting available admins */
+	
 	
 	@RequestMapping(
 			value="/getAvailableHotelAdmins",
@@ -134,6 +137,17 @@ public class SystemAdminController {
 		
 		return new ModelAndView(confirmTokenSvc.confirmSysAdminRegistration(token));
 		
+	}
+	
+	
+	@RequestMapping(
+			value="/companyExists",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public boolean companyExists(@RequestBody String companyName) throws IOException {
+		
+		return sysAdminSvc.companyExists(companyName, true);
 	}
 		
 	

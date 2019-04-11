@@ -15,12 +15,6 @@ public class AirlineService {
 	AirlineRepository airlineRep;
 	
 	public Airline save(Airline airline) {
-		
-		//the airline name must be unique in the table
-		if(findByName(airline.getName()) != null) {
-			return null;
-		}
-		
 		return airlineRep.save(airline);
 	}
 	

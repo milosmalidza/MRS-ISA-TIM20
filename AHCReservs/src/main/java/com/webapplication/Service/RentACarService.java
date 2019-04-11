@@ -20,12 +20,6 @@ public class RentACarService {
 	
 	
 	public RentACar save(RentACar rentACar) {
-		
-		//the rent a car name must be unique in the table
-		if(findByName(rentACar.getName()) != null) {
-			return null;
-		}
-		
 		return rentACarRep.save(rentACar);
 	}
 	

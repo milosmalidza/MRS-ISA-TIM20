@@ -15,77 +15,140 @@ function registerCompany() {
 	axios.post(controllerPath + "/registerCompany", getCompanyJson())
 		.then(response => {
 			
-			if(response.data === null || response.data === "") {
-				toast("Registration failed");
-				return;
-			}
-			
-			toast("Company successfully registered");
-			
-			//the selected admin is no longer available
-			getAdmins();
+			toast(response.data); //print out the response to the user
+			getAdmins(); //the selected admin is no longer available
 			
 		});
 	
 }
 
  
-function getAdmins() {
+async function getAdmins() {
+
+	
+	clearDisplayedAdmins("company-admins-holder", "company-admins");
+	
+	/* Get admins */
+	let companyType = $("#company-type-form1").val();
+	let admins = await getCompanyAdmins(companyType);
+	
+	
+	//if there aren't any available admins we can't register a company
+	if(admins === null || admins.length === 0) {
+		toast("No admins available for the selected company");
+		return;
+	}
+	
+	let select = document.getElementById("company-admins");
+	insertAdminsToSelectTag(select, admins);
+	
+	
+}
+
+function clearDisplayedAdmins(tdHolder, adminsSelect) {
 	
 	/* Clearing select tag for admins */
-	var n = document.getElementById("company-admins-holder");
+	var n = document.getElementById(tdHolder);
 	var texts = n.getElementsByClassName("text");
 	
 	texts[0].classList.add("default");
 	texts[0].innerHTML = "Select admin";
 	
-	$('#company-admins option:selected').remove();
-	$('#company-admins').empty().append('<option value="">Select admin</option>');
+	$('#' + adminsSelect + 'option:selected').remove();
+	$('#' + adminsSelect).empty().append('<option value="">Select admin</option>');
 	
+}
+
+function insertAdminsToSelectTag(select, admins) {
 	
-	let companyType = $("#company-type").val();
+	//insert admins as options in the select tag
+	for(let i = 0; i < admins.length; i++) {
+		let option = document.createElement("option");
+		option.text = admins[i].username + " " + admins[i].firstName + " " + admins[i].lastName;
+		option.value = admins[i].username;
+		select.add(option);
+	}
+	
+}
+
+async function getCompanyAdmins(companyType) {
 	
 	switch(companyType) {
-		
+	
 	case "airline":
-		getAdminsFromServer("/getAvailableAirlineAdmins");
-		break;
+		return await getAdminsFromServer("/getAvailableAirlineAdmins");
+		
 	case "hotel":
-		getAdminsFromServer("/getAvailableHotelAdmins");
-		break;
+		return await  getAdminsFromServer("/getAvailableHotelAdmins");
 		
 	case "rent-a-car":
-		getAdminsFromServer("/getAvailableRentACarAdmins");
-		break;
+		return await  getAdminsFromServer("/getAvailableRentACarAdmins");
 	}
 	
 }
 
 
-function getAdminsFromServer(serverMethodPath) {
+async function getAdminsFromServer(serverMethodPath) {
 	
-	//get the admins for the selected company from the server
-	axios.get(controllerPath + serverMethodPath)
-		.then(response => {
-			
-			let admins = response.data;
-			let select = document.getElementById("company-admins");
-			
-			//if there aren't any available admins we can't register a company
-			if(admins.length === 0) {
-				toast("No admins available for the selected company");
-				return;
-			}
-			
-			//insert admins as options in the select tag
-			for(let i = 0; i < admins.length; i++) {
-				let option = document.createElement("option");
-				option.text = admins[i].username + " " + admins[i].firstName + " " + admins[i].lastName;
-				option.value = admins[i].username;
-				select.add(option);
-			}
-			
-		});
+	var response = await this.axiosAdmins(serverMethodPath);
+	console.log(response.data);
+	return response.data;
+}
+
+async function axiosAdmins(serverMethodPath) {
+	return await axios.get(controllerPath + serverMethodPath);
+}
+
+
+async function viewAdmins() {
+	
+	//clearDisplayedAdmins
+	$('#available-admins option:selected').remove();
+	$('#available-admins').empty().append('<option value="">Select admin</option>');
+	
+	/* Get admins */
+	let companyType = $("#company-type-form2").val();
+	let admins = await getCompanyAdmins(companyType);
+	
+	
+	//if there aren't any available admins we can't register a company
+	if(admins === null || admins.length === 0) {
+		toast("No admins available for the selected company");
+		return;
+	}
+	
+	let select = document.getElementById("available-admins");
+	insertAdminsToSelectTag(select, admins);
+	
+	
+}
+
+async function addAdmins() {
+	
+	let companyName = $("#admins-company-name").val();
+	
+	//check if the company exists
+	let exists = await this.companyExists(companyName);
+	if(exists === false) {
+		toast("Company does not exist");
+		return;
+	} 
+	
+}
+		
+
+async function companyExists(companyName) {
+	
+	var response = await this.axiosCompanyExists(companyName);
+	return response.data;
+		
+}
+
+async function axiosCompanyExists(companyName) {
+	
+	let companyNameJson = {"companyName": companyName };
+	return axios.post(controllerPath + "/companyExists", companyNameJson)
+
 }
 
 
@@ -95,7 +158,7 @@ function getCompanyJson() {
 	
 	return {
 		"name": $("#company-name").val(),
-		"type":  $("#company-type :selected").val(),
+		"type":  $("#company-type-form1 :selected").val(),
 		"adminUsername": tokens[0]
 	}; 
 }

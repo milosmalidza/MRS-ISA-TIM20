@@ -16,13 +16,7 @@ public class HotelService {
 	HotelRepository hotelRep;
 	
 	
-	public Hotel save(Hotel hotel) {
-		
-		//the hotel name must be unique in the table
-		if(findByName(hotel.getName()) != null) {
-			return null;
-		}
-		
+	public Hotel save(Hotel hotel) {	
 		return hotelRep.save(hotel);
 	}
 	
