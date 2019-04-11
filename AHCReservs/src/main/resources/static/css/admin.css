@@ -1,7 +1,7 @@
 
 /* Sub divs of the main div */
 
-div#form-div {
+div.form-div {
 	position: absolute;
 	width:100%;
 	height: calc(100% - 80px);

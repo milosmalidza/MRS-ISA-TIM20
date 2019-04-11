@@ -169,7 +169,6 @@ public class ConfirmationTokenService {
 			hotelAdmin.setEnabled(true);
 			hotelAdminSvc.save(hotelAdmin);
 			
-			
 			return "redirect:/login.html";
 		}
 		
