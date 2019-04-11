@@ -1,12 +1,16 @@
 package com.webapplication.Model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,8 +38,8 @@ public class Vehicle {
 	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
 	
-	@Column(name = "reserved", unique = false, nullable = false)
-	private boolean reserved;
+	@OneToOne
+	private Reservation reservation;
 	
 	@Column(name = "pricePerDay", unique = false, nullable = false)
 	private int pricePerDay;
@@ -43,11 +47,14 @@ public class Vehicle {
 	@Column(name = "archived", nullable = false)
 	private boolean archived;
 	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private RentACar rentACar;
+	
 	
 	public Vehicle() {}
 	
 	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
-			boolean reserved, int pricePerDay, boolean archived) {
+			Reservation reservation, int pricePerDay, boolean archived) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -55,12 +62,27 @@ public class Vehicle {
 		this.numOfSeats = numOfSeats;
 		this.numOfDoors = numOfDoors;
 		this.vehicleType = vehicleType;
-		this.reserved = reserved;
+		this.reservation = reservation;
 		this.pricePerDay = pricePerDay;
 		this.archived = archived;
 	}
 
+	
 
+	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
+			Reservation reservation, int pricePerDay, boolean archived, RentACar rentACar) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.description = description;
+		this.numOfSeats = numOfSeats;
+		this.numOfDoors = numOfDoors;
+		this.vehicleType = vehicleType;
+		this.reservation = reservation;
+		this.pricePerDay = pricePerDay;
+		this.archived = archived;
+		this.rentACar = rentACar;
+	}
 
 	public String getDescription() {
 		return description;
@@ -70,12 +92,12 @@ public class Vehicle {
 		this.description = description;
 	}
 
-	public boolean isReserved() {
-		return reserved;
+	public Reservation isReserved() {
+		return reservation;
 	}
 
-	public void setReserved(boolean reserved) {
-		this.reserved = reserved;
+	public void setReserved(Reservation reserved) {
+		this.reservation = reserved;
 	}
 
 	public int getPricePerDay() {
@@ -132,6 +154,14 @@ public class Vehicle {
 
 	public void setVehicleType(VehicleType vehicleType) {
 		this.vehicleType = vehicleType;
+	}
+
+	public RentACar getRentACar() {
+		return rentACar;
+	}
+
+	public void setRentACar(RentACar rentACar) {
+		this.rentACar = rentACar;
 	}
 	
 	

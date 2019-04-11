@@ -82,6 +82,8 @@ public class RentACarAdminService {
 		vehicle.setVehicleType(VehicleType.valueOf(node.get("typeOfVehicle").asText()));
 		vehicle.setPricePerDay(Integer.parseInt(node.get("pricePerDay").asText()));
 		
+		
+		
 		vehicleRepository.save(vehicle);
 		
 		return "success";
@@ -92,7 +94,7 @@ public class RentACarAdminService {
 		
 		RentACar company = rentRepository.findOneByName("");
 		if (company == null) {
-			return "badRequest";
+			return "notLoggedIn";
 		}
 		
 		ObjectMapper mapper = new ObjectMapper();

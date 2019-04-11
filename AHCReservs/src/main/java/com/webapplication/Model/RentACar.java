@@ -1,49 +1,41 @@
 package com.webapplication.Model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.webapplication.JSONBeans.CompanyInfo;
 
 @Entity
 public class RentACar extends Company {
 	
-	//private List<String> branchOffice;
-	
-	//@OneToMany(mappedBy = "rentacar", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	//private Set<Vehicle> vehicles;
 	
 	@OneToMany(mappedBy = "rent_a_car", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<RentACarAdmin> admins;
 	
-
-	public RentACar() {
-		super();
-		//this.vehicles = new HashSet<Vehicle>();
-		this.admins = new HashSet<RentACarAdmin>();
-		
-	}
+	@OneToMany(mappedBy = "rentACar", targetEntity = Vehicle.class , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Vehicle> vehicles;
 	
-	public RentACar(String name) {
-		super(name);
-		//this.vehicles = new HashSet<Vehicle>();
-		this.admins = new HashSet<RentACarAdmin>();
-		
-	}
+	@OneToMany(mappedBy = "rentACar", targetEntity =  RentACarBranchOffice.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<RentACarBranchOffice> branchOffices;
+	
 
-	public RentACar(Set<Vehicle> vehicles, Set<RentACarAdmin> admins) {
+	public RentACar() {}
+	
+	public RentACar(Set<RentACarAdmin> admins, List<Vehicle> vehicles, List<RentACarBranchOffice> branchOffices) {
 		super();
-		//this.branchOffice = branchOffice;
-		//this.vehicles = vehicles;
 		this.admins = admins;
-		
+		this.vehicles = vehicles;
+		this.branchOffices = branchOffices;
 	}
-	
+
+
 	//used when registering a new company
 	public RentACar(CompanyInfo companyInfo) {
 		this.name = companyInfo.getName();
@@ -52,22 +44,21 @@ public class RentACar extends Company {
 	}
 	
 
-	/*
-	public List<String> getBranchOffice() {
-		return branchOffice;
+	public List<RentACarBranchOffice> getBranchOffice() {
+		return branchOffices;
 	}
 
-	public void setBranchOffice(List<String> branchOffice) {
-		this.branchOffice = branchOffice;
+	public void setBranchOffice(List<RentACarBranchOffice> branchOffices) {
+		this.branchOffices = branchOffices;
 	}
 
-	public Set<Vehicle> getVehicles() {
+	public List<Vehicle> getVehicles() {
 		return vehicles;
 	}
 
-	public void setVehicles(Set<Vehicle> vehicles) {
+	public void setVehicles(List<Vehicle> vehicles) {
 		this.vehicles = vehicles;
-	} */
+	} 
 	
 	public Set<RentACarAdmin> getAdmins() {
 		return admins;
