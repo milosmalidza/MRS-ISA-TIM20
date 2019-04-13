@@ -1,12 +1,19 @@
 package com.webapplication.Model;
 
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 @Entity
 public class RegisteredUser extends AppUser{
 
 	//@OneToMany(mappedBy="registereduser", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	//private List<Friendship> friendships;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Reservation> reservations;
+	
 	
 	
 	public RegisteredUser() {
