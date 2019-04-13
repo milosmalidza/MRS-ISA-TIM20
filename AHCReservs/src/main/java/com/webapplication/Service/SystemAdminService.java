@@ -2,7 +2,7 @@ package com.webapplication.Service;
 
 
 import java.io.IOException;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +13,6 @@ import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.Airline;
 import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.AppUser;
-import com.webapplication.Model.Company;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RentACar;
@@ -137,7 +135,7 @@ public class SystemAdminService {
 			return "Company with the entered name already exists";
 		}
 		
-		switch(companyInfo.getType()) {
+		switch(companyInfo.getType().toLowerCase()) {
 		
 		case "hotel":
 			
@@ -219,6 +217,74 @@ public class SystemAdminService {
 		
 		return false;
 
+	}
+	
+	
+	public String addAdminsToCompany(CompanyInfo companyInfo) {
+		
+		//determine company type
+		switch(companyInfo.getType().toLowerCase()) {
+		
+		case "hotel":
+			
+			Hotel hotel = hotelSvc.findByName(companyInfo.getName()); //get hotel
+			
+			//iterate through admins and set their hotels
+			for(String username: companyInfo.getUsernames()) {
+				
+				HotelAdmin hotelAdmin = hotelAdminSvc.findByUsername(username);
+				
+				//if the admin doesn't already have a hotel assigned, assign the hotel
+				if(hotelAdmin.getHotel() == null) {
+					hotelAdmin.setHotel(hotel);
+					hotelAdminSvc.save(hotelAdmin);
+				}
+				
+			}
+			
+			return "Admins and their companies successfully saved";
+			
+		case "airline":
+			
+			Airline airline = airlineSvc.findByName(companyInfo.getName()); //get airline
+			
+			//iterate through admins and set their airline
+			for(String username: companyInfo.getUsernames()) {
+				
+				AirlineAdmin airlineAdmin = airlineAdminSvc.findByUsername(username);
+				
+				if(airlineAdmin.getAirline() == null) {
+					System.out.println("Nema");
+					airlineAdmin.setAirline(airline);
+					airlineAdminSvc.save(airlineAdmin);
+				}
+				
+			}
+			
+			return "Admins and their companies successfully saved";
+			
+		case "rent-a-car":
+			
+			RentACar rentACar = rentACarSvc.findByName(companyInfo.getName()); //get airline
+			
+			//iterate through admins and set their airline
+			for(String username: companyInfo.getUsernames()) {
+				
+				RentACarAdmin rentACarAdmin = rentACarAdminSvc.findByUsername(username);
+				
+				if(rentACarAdmin.getRentACar() == null) {
+					rentACarAdmin.setRentACar(rentACar);
+					rentACarAdminSvc.save(rentACarAdmin);
+				}
+				
+			}
+			
+			return "Admins and their companies successfully saved";
+			
+		}
+		
+		
+		return "Admins not saved. Something wen't wrong.";
 	}
 	
 	

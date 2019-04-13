@@ -3,6 +3,7 @@ package com.webapplication.Controller;
 import java.io.IOException;
 
 
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.Company;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
@@ -148,6 +148,18 @@ public class SystemAdminController {
 	public boolean companyExists(@RequestBody String companyName) throws IOException {
 		
 		return sysAdminSvc.companyExists(companyName, true);
+	}
+	
+	
+	@RequestMapping(
+			value="/addAdminsToCompany",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> addAdminsToCompany(@RequestBody CompanyInfo companyInfo) {
+		
+		return new ResponseEntity<>(sysAdminSvc.addAdminsToCompany(companyInfo), HttpStatus.ACCEPTED);
+		
 	}
 		
 	

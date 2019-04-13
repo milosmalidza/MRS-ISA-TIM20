@@ -103,6 +103,8 @@ async function axiosAdmins(serverMethodPath) {
 async function viewAdmins() {
 	
 	//clearDisplayedAdmins
+	var multiSelect = document.getElementById("available-admins");
+	multiSelect.selectedIndex = -1;
 	$('#available-admins option:selected').remove();
 	$('#available-admins').empty().append('<option value="">Select admin</option>');
 	
@@ -133,6 +135,32 @@ async function addAdmins() {
 		toast("Company does not exist");
 		return;
 	} 
+	
+	
+	//alert(JSON.stringify(getCompanyAdminsJson()));
+	
+	//sending data to server
+	
+	axios.post(controllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
+		.then(response => {
+			
+			toast(response.data); //print out the response to the user
+			viewAdmins();
+			
+		}); 
+	
+}
+
+
+function getCompanyAdminsJson() {
+	
+	var admins = $("#available-admins").val();
+	
+	return {
+		"name": $("#admins-company-name").val(),
+		"type":  $("#company-type-form2 :selected").val(),
+		"usernames": admins
+	}; 
 	
 }
 		
