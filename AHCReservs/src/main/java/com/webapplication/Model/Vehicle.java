@@ -28,7 +28,7 @@ public class Vehicle {
 	@Column(name = "description", unique = false, nullable = false)
 	private String description;
 	
-	@Column(name = "numberOfSeats", unique = false, nullable = false)
+	@Column(name = "numbOfSeats", unique = false, nullable = false)
 	private int numOfSeats;
 	
 	@Column(name = "numOfDoors", unique = false, nullable = false)

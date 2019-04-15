@@ -1,5 +1,7 @@
 package com.webapplication.Repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,6 +11,7 @@ import com.webapplication.Model.Vehicle;
 public interface VehicleRepository extends JpaRepository<Vehicle, String> {
 	
 	public Vehicle findAllByName(String name);
+	
 	
 	
 }
