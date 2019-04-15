@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.webapplication.JSONBeans.RoomData;
 
 @Entity
 public class Room {
@@ -55,6 +56,17 @@ public class Room {
 		this.reserved = reserved;
 		this.discount = discount;
 		this.hotel = hotel;
+	}
+	
+	
+	public Room(RoomData roomData) {
+		
+		this.number = roomData.getNumber();
+		this.floor = roomData.getFloor();
+		this.numOfBeds = roomData.getNumOfBeds();
+		this.roomType = roomData.getRoomType();
+		this.reserved = false;
+		this.discount = false;
 	}
 
 	public Long getId() {

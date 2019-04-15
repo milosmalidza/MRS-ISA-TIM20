@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webapplication.JSONBeans.HotelData;
+import com.webapplication.JSONBeans.RoomData;
 import com.webapplication.Model.Hotel;
+import com.webapplication.Model.Room;
+import com.webapplication.Model.RoomType;
 import com.webapplication.Repository.HotelRepository;
 
 
@@ -19,6 +22,9 @@ public class HotelService {
 	
 	@Autowired
 	MultipleService mulSvc;
+	
+	@Autowired
+	RoomService roomSvc;
 	
 	
 	public Hotel updateProfile(HotelData hotelData) {
@@ -55,6 +61,42 @@ public class HotelService {
 		save(hotel);
 		
 		return hotel;
+	}
+	
+	
+	public Room addRoom(RoomData roomData) {
+		
+		Hotel hotel = findOne(roomData.getHotelID()).get();
+		
+		if(hotel == null) {
+			return null;
+		}
+		
+		//check if the room number already exists in the hotel
+		for (Room room : hotel.getRooms()) {
+			
+			if(room.getNumber() == roomData.getNumber()) {
+				return null;
+			}
+			
+		}
+		
+		//convert string to enum
+		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
+		if(type == null) {
+			return null;
+		}
+		
+		roomData.setRoomType(type);
+		
+		//create new room
+		Room room = new Room(roomData);
+		room.setHotel(hotel);
+		
+		//save changes
+		roomSvc.save(room);
+		return room;
+		
 	}
 	
 	public Optional<Hotel> findOne(Long id) {

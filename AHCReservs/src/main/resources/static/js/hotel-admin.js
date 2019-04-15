@@ -20,6 +20,12 @@ window.onload = function() {
 			if(response.data != "" && response.data != null) {
 				adminHotel = response.data;
 				fillHotelProfileInputs(response.data); //fill the profile data
+				
+				for(let i = 0; i < adminHotel.rooms.length; i++) {
+					addRoomToTable(adminHotel.rooms[i]);
+				}
+				
+				
 			} else {
 				alert("You haven't been assigned a hotel yet");
 				
@@ -66,6 +72,7 @@ function updateProfile() {
 				return;
 			}
 			
+			adminHotel = response.data; //update the global hotel variable
 			fillHotelProfileInputs(response.data);
 		});
 	
@@ -90,7 +97,66 @@ function addRoom() {
 		return;
 	}
 	
-	alert("adding room");
+	//TODO: calculate number of beds, compare them to the room type selected
+	
+	axios.post(controllerPath + "/addRoom", getRoomJson())
+		.then(response => {
+			
+			if(response.data === null || response.data === "") {
+				toast("Room with the room number already exists");
+				return;
+			}
+			
+			// append a row to the all rooms table
+			addRoomToTable(response.data);
+			
+		}); 
+	
+	
+}
+
+
+function getRoomJson() {
+	
+	return {
+		"hotelID": adminHotel.id,
+		"number": $("#room-number").val(),
+		"floor": $("#room-floor").val(),
+		"numOfBeds": $("#room-beds").val(),
+		"roomTypeString": $("#room-type").val()
+	};
+	
+}
+
+
+function addRoomToTable(room) {
+	
+	var tableRef = $("#rooms-table-body")[0];
+	
+	// Insert a row in the table at the last row
+	var newRow   = tableRef.insertRow(tableRef.rows.length);
+	
+	//iterate through room properties
+	let index = 0;
+	for (var property in room) {
+	    if (room.hasOwnProperty(property)) {
+	        
+	    	//skip the room id when displaying it
+	    	if(property === 'id') {
+	    		continue;
+	    	}
+	    	
+	    	// Insert a cell in the row at index 0
+	    	var newCell  = newRow.insertCell(index);
+
+	    	// Append a text node to the cell
+	    	var newText  = document.createTextNode(room[property]);
+	    	newCell.appendChild(newText);
+	    	
+	    	index = index + 1;
+	    }
+	}
+	
 }
 
 //display tables containing room configuration forms
