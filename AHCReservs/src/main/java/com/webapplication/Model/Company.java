@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
@@ -17,7 +18,8 @@ public abstract class Company {
 	@Column(name="name", unique=false, nullable=false)
 	protected String name;
 	
-	@Column(name="description", nullable=true)
+	@Lob
+	@Column(name="description", length=900, nullable=true)
 	protected String description;
 	
 	@Column(name="address", nullable=true)

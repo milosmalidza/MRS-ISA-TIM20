@@ -1,9 +1,6 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
-
-
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,7 @@ import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
 import com.webapplication.Service.ConfirmationTokenService;
 import com.webapplication.Service.HotelAdminService;
+import com.webapplication.Service.MultipleService;
 import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.SystemAdminService;
 
@@ -48,6 +46,9 @@ public class SystemAdminController {
 	
 	@Autowired
 	ConfirmationTokenService confirmTokenSvc;
+	
+	@Autowired
+	MultipleService mulSvc;
 	
 	
 	@RequestMapping(
@@ -147,7 +148,7 @@ public class SystemAdminController {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public boolean companyExists(@RequestBody String companyName) throws IOException {
 		
-		return sysAdminSvc.companyExists(companyName, true);
+		return mulSvc.companyExists(companyName, true);
 	}
 	
 	
