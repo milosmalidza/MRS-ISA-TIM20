@@ -3,12 +3,7 @@
 var sessionUser = null;
 
 window.addEventListener("load", function() {
-	var mainDiv = document.getElementById("main-div");
-	if (mainDiv != "undefined" && mainDiv != null) {
-		mainDiv.style.opacity = "1";
-		mainDiv.style.webkitTransform = "scale(1)";
-		mainDiv.style.transform = "scale(1)";
-	}
+	
 	
 	try {
 		sessionUser = JSON.parse(window.localStorage.getItem("user"));
@@ -29,7 +24,34 @@ window.addEventListener("load", function() {
 	}
 	
 	
+	
+	
 	console.log(sessionUser);
+	
+	var loadingScreen = document.getElementById("loading-division");
+	var leaf = document.getElementById("leaf-animation");
+	
+	$("body").removeClass("preload");
+	
+	leaf.style.animationName = "leafStrokeFinish";
+	leaf.style.animationDuration = "1.2s";
+	leaf.style.animationIterationCount = "1";
+	setTimeout(function() {
+		leaf.style.transition = "fill .5s";
+		leaf.style.webkitTransition = "fill .5s";
+		leaf.style.fill = "rgba(38,102,71,1.00)";
+		setTimeout(function() {
+			$(loadingScreen).fadeOut(400);
+			var mainDiv = document.getElementById("main-div");
+			if (mainDiv != "undefined" && mainDiv != null) {
+				mainDiv.style.opacity = "1";
+				mainDiv.style.webkitTransform = "scale(1)";
+				mainDiv.style.transform = "scale(1)";
+			}
+		}, 850);
+	}, 1000);
+	
+	
 	
 	
 }, false);
