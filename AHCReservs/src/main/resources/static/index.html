@@ -14,7 +14,7 @@
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/home-style.css" />
 	</head>
-	<body class="preload" onload="animateDivs()">
+	<body class="preload" onload="initHomePage()">
 		
 		<div id="loading-division">
 			
@@ -57,18 +57,11 @@
 			
 		</div>
 		
-		<div id="nav-bar">
 		
-			<ul id="nav-bar-selection-2">
-				<li>About</li>
-				<li onclick="loadPage('register-user.html')">Register</li>
-				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
-			</ul>
-		</div>
 		
-		<div id="home-background">
-			<div id="home-background-image"></div>
-			<div id="home-background-teaser"></div>
+		<div class="home-background">
+			<div class="home-background-image"></div>
+			<div class="home-background-teaser"></div>
 		</div>
 		
 		
@@ -76,16 +69,34 @@
 		
 		
 		<div id="main-div">
-			<div id="absolute-div-1"></div>
 			
-			<div id="splash-text">Airplane <br> Hotel <br> Car</div>
-			
-			<div id="scroll-indicator-holder">
-				<div id="scroll-line"></div>
-				<img src="css/images/mouseIcon.png" id="scroll-icon"/>
+			<div id="nav-bar">
+				<ul id="nav-bar-selection-2">
+					<li>About</li>
+					<li onclick="loadPage('register-user.html')">Register</li>
+					<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+				</ul>
+			</div>
+			<div id="third-div">
+				<div id="absolute-div-1"></div>
+				<div id="splash-text">Airplane <br> Hotel <br> Car</div>
+
+				<div id="scroll-indicator-holder">
+					<div id="scroll-line"></div>
+					<img src="css/images/mouseIcon.png" id="scroll-icon"/>
+				</div>
 			</div>
 			
+			<div id="secondary-div">
+				
+				<div id="white-teaser"></div>
+			
+			</div>
 		</div>
+		
+		
+		
+		
 		
 		
 		
