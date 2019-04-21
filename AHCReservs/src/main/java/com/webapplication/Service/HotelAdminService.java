@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Repository.HotelAdminRepository;
 
@@ -15,6 +16,18 @@ public class HotelAdminService {
 
 	@Autowired
 	HotelAdminRepository hotelAdminRep;
+	
+	
+	public Hotel getHotel(String username) {
+		
+		HotelAdmin admin = hotelAdminRep.findByUsername(username);
+		
+		if(admin != null) {
+			return admin.getHotel();
+		}
+		
+		return null;
+	}
 	
 	
 	public HotelAdmin save(HotelAdmin admin) {

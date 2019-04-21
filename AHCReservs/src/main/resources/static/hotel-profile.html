@@ -75,7 +75,7 @@
 			
 			<ul id="nav-bar-selection-2">
 				<li> My profile </li>
-				<li> Logout </li>		
+				<li id="nav-bar-logout" onclick="logout()"> Logout </li>		
 			</ul>
 		</div>
 		
@@ -83,10 +83,11 @@
 			<div class="center-content">
 			
 				<!--  Hotel profile form -->
-				<div id="form-div">
+				<div class="profile-div">
 					<table id="hotel-profile-table">
 					
 						<tr>
+							<td> </td>
 							<td>
 								<h2> Hotel profile </h2>
 							</td>
@@ -108,7 +109,7 @@
 								<div class="ui form">
   									<div class="field">
   										<label> Description goes here: </label>
-										<textarea id="hotel-descr"> </textarea>
+										<textarea id="hotel-description"> </textarea>
 									</div>
 								</div>
 							</td>
@@ -126,7 +127,7 @@
 						<tr>
 							<td> Room configuration: </td>
 							<td>
-								<input class="ui button" type="button" onclick="" value="Configure rooms"/>
+								<input class="ui button" type="button" onclick="showForm()" value="Configure rooms"/>
 							</td>
 						</tr>
 						
@@ -140,14 +141,107 @@
 						<tr>
 							<td> </td>
 							<td>
-								<input class="ui button" type="button" onclick="" value="Save changes"/>
+								<input class="ui button" type="button" onclick="updateProfile()" value="Update profile"/>
 							</td>
 						</tr>
 						
 					</table>
 				</div>
+				
+				
+				<!-- Room configuration/ -->
+				<div id="rooms-config-div" class="profile-div">
+					<table id="add-room-table">
+						
+						<tr>
+							<th> </th>
+							<th>
+								<h2> Room configuration </h2>
+							</th>
+						</tr>
+						
+						<tr>
+							<td> Room floor: </td>
+							<td> 
+								<div class="ui input">
+									<input type="number" id="room-floor"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Room number: </td>
+							<td> 
+								<div class="ui input">
+									<input type="number" id="room-number"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Room type: </td>
+							<td>
+								<select id="room-type" class="ui dropdown">
+									<option value="">Select type</option>
+									<option value="single"> Single </option>
+									<option value="double"> Double </option>
+									<option value="triple"> Triple </option>
+									<option value="quad"> Quad </option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Number of beds: </td>
+							<td> 
+								<div class="ui input">
+									<input type="number" id="room-beds"/>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							
+							<td> </td>
+							<td>
+								<input class="ui button" type="button" onclick="addRoom()" value="Add room"/>
+							 </td>
+						</tr>
+					
+					</table>
+					
+					<br/>
+					
+					<table id="rooms-table" class="ui celled table">
+						
+						<thead>
+							<tr>
+								<th> Room number </th>
+								<th> Floor number  </th>
+								<th> Num of beds </th>
+								<th> Room type </th>
+								<th> Is reserved </th>
+								<th> Is on discount </th>
+							</tr>
+						</thead>
+						
+						<tbody id="rooms-table-body">
+						
+						</tbody>
+					</table>
+					
+				</div>
+				
 			</div>
 		</div>
+		
+		
+		<!-- Decorating select tags  -->
+		<script>
+			$("#room-type")
+			  .dropdown();
+			
+		</script>
 	
 	</body>
 	

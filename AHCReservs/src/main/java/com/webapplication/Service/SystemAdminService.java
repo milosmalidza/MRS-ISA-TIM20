@@ -1,14 +1,9 @@
 package com.webapplication.Service;
 
 
-import java.io.IOException;
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.Airline;
@@ -28,6 +23,9 @@ public class SystemAdminService {
 	
 	@Autowired
 	RegisteredUserService regUserSvc;
+	
+	@Autowired
+	MultipleService mulSvc;
 	
 	/* Admin services */
 	@Autowired
@@ -63,7 +61,7 @@ public class SystemAdminService {
 		//TODO: Check whether email already exists
 		
 		
-		if(usernameExist(admin.getUsername())) {
+		if(mulSvc.usernameExist(admin.getUsername())) {
 			return "Username already exists";
 		}
 		
@@ -131,7 +129,7 @@ public class SystemAdminService {
 			return "Unknown company type";
 		}
 		
-		if(companyExists(companyInfo.getName(), false)) {
+		if(mulSvc.companyExists(companyInfo.getName(), false)) {
 			return "Company with the entered name already exists";
 		}
 		
@@ -179,45 +177,7 @@ public class SystemAdminService {
 	}
 	
 	
-	public boolean usernameExist(String username) {
-		
-		if(hotelAdminSvc.findByUsername(username) != null
-				|| airlineAdminSvc.findByUsername(username) != null 
-				|| rentACarAdminSvc.findByUsername(username) != null
-				|| regUserSvc.findByUsername(username) != null
-				|| findByUsername(username) != null ) { //searching through system admins
-			
-			return true;
-		}
-		
-		return false;
-	}
 	
-	
-	public boolean companyExists(String companyName, boolean isJson) {
-		
-		//parse json if neccessairy
-		if(isJson) {
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode node = null;
-			try {
-				node = mapper.readTree(companyName);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			companyName = node.get("companyName").asText();
-		}
-		
-		if(airlineSvc.findByName(companyName) != null 
-		     || hotelSvc.findByName(companyName) != null
-		     || rentACarSvc.findByName(companyName) != null) {
-			
-			return true;
-		} 
-		
-		return false;
-
-	}
 	
 	
 	public String addAdminsToCompany(CompanyInfo companyInfo) {
