@@ -86,7 +86,6 @@ public class HotelService {
 		if(type == null) {
 			return null;
 		}
-		
 		roomData.setRoomType(type);
 		
 		//create new room
@@ -96,6 +95,26 @@ public class HotelService {
 		//save changes
 		roomSvc.save(room);
 		return room;
+		
+	}
+	
+	
+	public String removeRoom(Long roomID) {
+		
+		//TODO: proveri da li je soba rezervisana
+		Room room = roomSvc.findById(roomID).get();
+		
+		if(room == null) {
+			return "Room does not exist";
+		}
+		
+		if(room.isReserved()) {
+			return "You can't remove a room which is reserved";
+		}
+		
+		roomSvc.removeById(roomID);
+		
+		return "Success";
 		
 	}
 	

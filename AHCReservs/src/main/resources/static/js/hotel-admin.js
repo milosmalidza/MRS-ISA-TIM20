@@ -10,10 +10,17 @@ window.onload = function() {
 		window.location.href = "index.html";
 	}
 	
-	let loggedUser = JSON.parse(user);
+	getAdminHotel(user);
+	
+}
+
+
+function getAdminHotel(userJSON) {
+	
+	let loggedUser = JSON.parse(userJSON);
 	let usernameJson = { "username": loggedUser.username }; //json used for posting a request
 	
-	//get the hotel of the current user
+	//get the hotel of the logged in admin
 	axios.post(controllerPath + "/getHotel", usernameJson)
 		.then(response => {
 			
@@ -21,9 +28,7 @@ window.onload = function() {
 				adminHotel = response.data;
 				fillHotelProfileInputs(response.data); //fill the profile data
 				
-				for(let i = 0; i < adminHotel.rooms.length; i++) {
-					addRoomToTable(adminHotel.rooms[i]);
-				}
+				addAllRoomsToTable();
 				
 				
 			} else {
@@ -35,6 +40,7 @@ window.onload = function() {
 				
 			}
 		});
+	
 }
 
 
@@ -50,7 +56,6 @@ function fillHotelProfileInputs(hotel) {
 		$("#hotel-address").val(hotel.address);
 	}
 	
-	//TODO: room configuration
 	
 	//TODO: pricing
 	
@@ -129,27 +134,35 @@ function getRoomJson() {
 }
 
 
+function addAllRoomsToTable() {
+	
+	for(let i = 0; i < adminHotel.rooms.length; i++) {
+		addRoomToTable(adminHotel.rooms[i]);
+	}
+}
+
 function addRoomToTable(room) {
 	
 	var tableRef = $("#rooms-table-body")[0];
 	
 	// Insert a row in the table at the last row
-	var newRow   = tableRef.insertRow(tableRef.rows.length);
+	var newRow = tableRef.insertRow(tableRef.rows.length);
+	
+	let index = 0; //table column index
 	
 	//iterate through room properties
-	let index = 0;
 	for (var property in room) {
 	    if (room.hasOwnProperty(property)) {
-	        
-	    	//skip the room id when displaying it
+	    	
+	    	//id won't be displayed
 	    	if(property === 'id') {
 	    		continue;
 	    	}
-	    	
-	    	// Insert a cell in the row at index 0
+	        
+	    	// Insert a cell in the row at index
 	    	var newCell  = newRow.insertCell(index);
-
-	    	// Append a text node to the cell
+	    		
+    		// Append a text node to the cell
 	    	var newText  = document.createTextNode(room[property]);
 	    	newCell.appendChild(newText);
 	    	
@@ -157,13 +170,70 @@ function addRoomToTable(room) {
 	    }
 	}
 	
+	
+	//add the remove button to the table
+	var removeBtnCell  = newRow.insertCell(index);
+	var btnRemove = document.createElement("INPUT");
+	
+    btnRemove.type = "button";
+    btnRemove.value = "Remove";
+    
+    btnRemove.setAttribute("onclick", "removeRoom(this);");
+    btnRemove.setAttribute("data-room-id", room.id); //bind room id to the button
+    
+    removeBtnCell.appendChild(btnRemove);
+    
+    //add the edit button to the table
+    //TODO:
+	
+}
+
+
+function removeRoom(removeBtn) {
+	
+	let roomID = removeBtn.getAttribute("data-room-id");
+	
+	roomKeyJSON = {"key": roomID};
+	
+	axios.post(controllerPath + "/removeRoom", roomKeyJSON)
+	.then(response => {
+		
+		if(response.data.toLowerCase() != "success") {
+			toast(response.data);
+			return;
+		}
+		
+		
+		$("#rooms-table-body").empty(); //remove all items from the table
+		
+		let user = window.localStorage.getItem("user");
+		getAdminHotel(user); //re-get the hotel and redraw the rooms in table
+		
+	});
+	
 }
 
 //display tables containing room configuration forms
 function showForm() {
 	
-	$("#add-room-table").toggle();
-	$("#rooms-table").toggle();
+	//show content
+	$("#add-room-table").show();
+	$("#rooms-table").show();
+	
+	//add the animation
+	document.getElementById("animation-div").style.width = "100%";
+}
+
+
+function goBack() {
+	
+	//adding the animation
+	document.getElementById("animation-div").style.width = "0%";
+	
+	//hide content
+	$("#add-room-table").hide();
+	$("#rooms-table").hide();
+	
 }
 
 

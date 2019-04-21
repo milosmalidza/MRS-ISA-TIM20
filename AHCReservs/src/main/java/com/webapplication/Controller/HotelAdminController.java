@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webapplication.JSONBeans.HotelData;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.JSONBeans.RoomData;
 import com.webapplication.JSONBeans.Username;
 import com.webapplication.Model.Hotel;
@@ -58,6 +59,17 @@ public class HotelAdminController {
 	public ResponseEntity<Room> addRoom(@RequestBody RoomData roomData) {
 		
 		return new ResponseEntity<>(hotelSvc.addRoom(roomData), HttpStatus.CREATED);
+	}
+	
+	
+	@RequestMapping(
+			value="/removeRoom",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> removeRoom(@RequestBody KeyBean keyBean) {
+		
+		return new ResponseEntity<>(hotelSvc.removeRoom(keyBean.getKey()), HttpStatus.ACCEPTED);
 	}
 	
 }

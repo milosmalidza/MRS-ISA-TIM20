@@ -19,6 +19,31 @@ div.profile-div {
 }
 
 
+div#animation-div {
+	
+	position: fixed;
+	width: 0%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	background-color: white;
+	z-index: 5;
+	overflow-y: scroll;
+	
+	-webkit-transition: .7s;
+	transition: .7s;
+}
+
+div#back-div {
+	
+	position: absolute;
+	right: 2em;
+	top: 6em;
+	background: white;
+	
+}
+
+
 /* Decorating buttons */
 input[type="button"] {
 	width:150px;
