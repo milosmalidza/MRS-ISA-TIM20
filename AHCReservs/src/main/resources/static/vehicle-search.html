@@ -72,7 +72,7 @@
 					<li onclick="loadPage('index.html')">Home</li>
 					<li>Airline companies</li>
 					<li>Hotels</li>
-					<li>Rent-a-car services</li>
+					<li onclick="loadPage('cars.html')">Rent-a-car services</li>
 					
 				</ul>
 				<ul id="nav-bar-selection-2">
@@ -81,13 +81,13 @@
 					<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
 				</ul>
 			</div>
-		<div id="main-div">
+		<div id="main-div" th:attr="data-id=${service.id}">
 			
 			<div id="main-content-holder">
 			<div class="center-content">
 				<div style="margin-bottom: 55px;">
-					<h1 class="vehicle-search-title">Name of rent-a-car service</h1>
-					<p class="vehicle-search-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+					<h1 class="vehicle-search-title" th:text="${service.name}">Name of rent-a-car service</h1>
+					<p class="vehicle-search-text" th:text="${service.description}">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
 					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
 					 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
 					  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,

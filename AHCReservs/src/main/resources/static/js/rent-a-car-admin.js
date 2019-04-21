@@ -274,21 +274,11 @@ function performReservation(element) {
 
 
 
-
-
-
-
-
-
-
-
-
 function closeSearchVehicles() {
 	var itemsHolder = document.getElementById("items-holder");
 	document.body.style.overflowY = "auto";
 	itemsHolder.style.left = "100%";
 }
-
 
 
 

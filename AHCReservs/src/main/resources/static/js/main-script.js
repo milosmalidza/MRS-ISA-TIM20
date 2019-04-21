@@ -272,9 +272,25 @@ function toggleConfirmationMessageWindow() {
 }
 
 
+function mouseEnterCompanyItem(element) {
+	element.style.color = "white";
+	element.style.borderTopColor = "rgba(38,102,71,1.00)";
+	var animationDiv = element.getElementsByClassName("company-item-animation-layer")[0];
+	animationDiv.style.background = "rgba(38,102,71,1.00)";
+	
+}
 
+function mouseLeaveCompanyItem(element) {
+	element.style.color = "black";
+	element.style.borderTopColor = "black";
+	var animationDiv = element.getElementsByClassName("company-item-animation-layer")[0];
+	animationDiv.style.background = "transparent";
+}
 
-
+function companyClicked(element) {
+	var elementId = element.getAttribute("data-id");
+	loadPage("vehicle-search.html?id=" + elementId);
+}
 
 
 

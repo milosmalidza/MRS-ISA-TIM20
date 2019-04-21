@@ -8,6 +8,8 @@ import com.webapplication.Model.RentACar;
 @Repository
 public interface RentACarRepository extends JpaRepository<RentACar, Long> {
 
-	RentACar findOneByName(String name);
+	public RentACar findOneByName(String name);
+	
+	public RentACar findOneById(Long id);
 	
 }

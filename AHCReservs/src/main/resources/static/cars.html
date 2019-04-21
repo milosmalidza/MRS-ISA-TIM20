@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 	<head>
 		<title>AHC | Cars</title>
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
@@ -66,7 +66,7 @@
 				<li onclick="loadPage('index.html')">Home</li>
 				<li>Airline companies</li>
 				<li>Hotels</li>
-				<li>Rent-a-car services</li>
+				<li onclick="loadPage('cars.html')">Rent-a-car services</li>
 				
 			</ul>
 			<ul id="nav-bar-selection-2">
@@ -80,8 +80,21 @@
 			<div id="main-content-holder">	<!-- Sluzi da spusti malo sadrzaj zbog navigacionog bara -->
 				<div class="center-content"> <!-- Centrira sav sadrzaj na sredinu -->
 					
-					   <div class="company-holder" th:each="service : ${services}">
-					   		<div th:text="${service.name}"></div>
+					   <div class="company-holder" th:each="service : ${services}" th:attr="data-id=${service.id}" onmouseenter="mouseEnterCompanyItem(this)" onmouseleave="mouseLeaveCompanyItem(this)" onClick="companyClicked(this)">
+				   			<div class="company-item-animation-layer"></div>
+					   		<div class="company-name">
+					   			<div th:text="${service.name}"></div>
+					   		</div>
+					   		<div class="company-description">
+					   			<div th:text="${service.description}"></div>
+					   		</div>
+					   		<div class="company-address">
+					   			<div th:text="${service.address}"></div>
+					   		</div>
+					   		<div class="company-rating">
+					   			<div class="company-rating-image"></div>
+					   			<div class="company-rating-text" th:inline="text">[[${service.rating}]] / 5.0</div>
+					   		</div>
 					   	
 					   </div>
 					   
