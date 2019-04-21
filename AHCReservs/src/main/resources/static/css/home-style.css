@@ -129,10 +129,11 @@ div#nav-bar {
 
 #secondary-div {
 	position: absolute;
+	display: none;
 	width: 100%;
 	height: 100%;
 	
-	top: 100%;
+	top: 0%;
 	
 	-webkit-transition: 1s;
 	transition: 1s;
@@ -149,19 +150,138 @@ div#nav-bar {
 
 #white-teaser {
 	position: absolute;
-	left: 50%;
-	top: 50%;
+	left: 0%;
+	top: 100%;
 	width: 100%;
 	height: 100%;
 	background: white;
 	
-	-webkit-transform: translateX(-50%) translateY(-50%);
-	transform: translateX(-50%) translateY(-50%);
-	
-	-webkit-transition: width .8s, height .8s;
-	transition:  width .8s, height .8s;
+	-webkit-transition: .8s;
+	transition: .8s;
 	
 }
+
+
+
+#secondary-full-holder {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+}
+
+
+.secondary-item {
+	position: absolute;
+	width: 33.333%;
+	height: 100%;
+	cursor: pointer;
+	mix-blend-mode: difference;
+	
+}
+
+.center-secondary-item {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	height: auto;
+	width: 80%;
+	color: white;
+	font-size: 14px;
+	mix-blend-mode: difference;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.hash-number {
+	font-weight: bold;
+	font-size: 4em;
+	height: 1em;
+	margin-bottom: 30px;
+	mix-blend-mode: difference;
+	
+}
+
+.secondary-item-title {
+	margin: 0;
+	font-size: 5.5em;
+	height: 1em;
+	font-weight: bold;
+	text-align: center;
+}
+
+.secondary-item-description {
+	margin: 0;
+	text-align: justify;
+	font-size: .9em;
+	margin-top: 30px;
+	line-height: 2em;
+	letter-spacing: 1px;
+}
+
+.item-animation-div {
+	position: absolute;
+	left: 0;
+	background: white;
+	width: 100%;
+	bottom: 0;
+	height: 0%;
+	
+	-webkit-transition: .65s;
+	transition: .65s;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media only screen and (max-width: 1500px) {
+	.center-secondary-item {
+		font-size: 11px;
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.center-secondary-item {
+		font-size: 9px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

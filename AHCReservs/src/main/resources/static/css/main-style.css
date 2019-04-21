@@ -1,6 +1,6 @@
 @font-face {
 	font-family: 'Montserrat';
-    src: url(../fonts/FiraSans-Light.ttf) format("truetype");
+    src: url(../fonts/Montserrat-Regular.ttf) format("truetype");
 }
 
 html, body {
@@ -115,12 +115,15 @@ scrollbar {
 .input-additional {
 	font-size: 14px;
 	font-weight: bold;
+	border-radius: 25px;
 	border: 1px solid transparent !important;
 }
 
 .full-width-input {
 	width: 100%;
 }
+
+
 
 .no-items-found {
 	position: absolute;
@@ -138,13 +141,21 @@ scrollbar {
 .center-content {
 	position: absolute;
 	top:10%;
-	left: 25%;
-	right: 25%;
+	left: 50%;
+	width: 50%;
+	min-width: 900px;
+	
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
 }
 
 .vehicle-item {
 	height: 400px;
 }
+h1 {
+	font-family: Montserrat;
+}
+
 
 .reserve-vehicle-button {
 	position: absolute;
@@ -242,6 +253,10 @@ scrollbar {
 	font-size: 14px;
 	font-weight: bold;
 	border: 1px solid transparent;
+}
+
+input {
+	font-family: Montserrat;
 }
 
 #dateinput.ui.input {

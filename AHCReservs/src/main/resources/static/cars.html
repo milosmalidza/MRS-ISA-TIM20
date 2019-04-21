@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html>
+
+<html xmlns:th="http://www.thymeleaf.org">
 	<head>
-		<title>AHC | Home</title>
+		<title>AHC | Cars</title>
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
-		<script type="text/javascript" src="js/home.js"></script>
+		<script type="text/javascript" src="js/rent-a-car-admin.js"></script>
 		
 		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
-		<link rel="stylesheet" href="css/home-style.css" />
+		<link rel="stylesheet" href="css/company-search.css" />
+	
 	</head>
-	<body class="preload" onload="initHomePage()">
+
+	<body style="overflow-y:auto;" class="preload">
 		
 		<div id="loading-division">
 			
 			<svg version="1.1" id="logo-svg-animation" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 				 width="1111px" height="1111px" viewBox="0 0 1111 1111" enable-background="new 0 0 1111 1111" xml:space="preserve">
 			<g>
-				<path id="leaf-animation" d="M562.625,182.601c31.863,76.664,91.608,133.098,142.482,195.919
+				<path id="leaf-animation" class="preload" d="M562.625,182.601c31.863,76.664,91.608,133.098,142.482,195.919
 					c79.859,98.613,111.626,211.723,102.477,337.132c-3.706,50.746-32.086,88.695-72.052,115.655
 					c-40.502,27.319-84.14,50.388-127.912,72.303c-28.192,14.113-44.171,31.59-38.834,64.498c1.339,8.234,0.583,17.28-1.461,25.379
 					c-0.966,3.838-7.246,8.752-11.122,8.752c-3.875,0-9.253-4.788-11.219-8.82c-2.167-4.446-2.449-10.674-1.421-15.69
@@ -57,80 +60,39 @@
 			
 		</div>
 		
-		
-		
-		<div class="home-background">
-			<div class="home-background-image"></div>
-			<div class="home-background-teaser"></div>
-		</div>
-		
-		
-		
-		
-		
-		<div id="main-div">
-			
-			<div id="nav-bar">
-				<ul id="nav-bar-selection-2">
-					<li>About</li>
-					<li onclick="loadPage('register-user.html')">Register</li>
-					<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
-				</ul>
-			</div>
-			<div id="third-div">
-				<div id="absolute-div-1"></div>
-				<div id="splash-text">Airplane <br> Hotel <br> Car</div>
-
-				<div id="scroll-indicator-holder">
-					<div id="scroll-line"></div>
-					<img src="css/images/mouseIcon.png" id="scroll-icon"/>
-				</div>
-			</div>
-			<div id="secondary-div">
+	
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home</li>
+				<li>Airline companies</li>
+				<li>Hotels</li>
+				<li>Rent-a-car services</li>
 				
-				<div id="secondary-full-holder">
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
+			<div id="main-content-holder">	<!-- Sluzi da spusti malo sadrzaj zbog navigacionog bara -->
+				<div class="center-content"> <!-- Centrira sav sadrzaj na sredinu -->
 					
-					<div class="secondary-item" onmouseenter="mouseEnterItem(this)" onmouseleave="mouseLeaveItem(this)">
-						<div class="item-animation-div"></div>
-						<div class="center-secondary-item">
-							<div class="hash-number">1#</div>
-							<div class="secondary-item-title">Airplanes</div>
-							<div class="secondary-item-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
-						</div>
-						
-					</div>
-					
-					<div class="secondary-item" style="left:33.333%;" onmouseenter="mouseEnterItem(this)" onmouseleave="mouseLeaveItem(this)">
-						<div class="item-animation-div"></div>
-						<div class="center-secondary-item">
-							<div class="hash-number">2#</div>
-							<div class="secondary-item-title">Hotels</div>
-							<div class="secondary-item-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
-						</div>
-						
-					</div>
-					
-					<div class="secondary-item" style="left:66.666%;" onmouseenter="mouseEnterItem(this)" onmouseleave="mouseLeaveItem(this)" onclick="loadPage('cars.html')">
-						<div class="item-animation-div"></div>
-						<div class="center-secondary-item">
-							<div class="hash-number">3#</div>
-							<div class="secondary-item-title">Cars</div>
-							<div class="secondary-item-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </div>
-						</div>
-						
-					</div>
-					
+					   <div class="company-holder" th:each="service : ${services}">
+					   		<div th:text="${service.name}"></div>
+					   	
+					   </div>
+					   
 				</div>
 			
 			</div>
-			<div id="white-teaser"></div>
-			
 		</div>
 		
-		
-		
-		
-		<div id="exiting-page-animation"></div> <!-- Sluzi za animaciju pri izlasku sa stranice -->
+		<div id="exiting-page-animation"></div>
+	
 	
 	</body>
+
 </html>
