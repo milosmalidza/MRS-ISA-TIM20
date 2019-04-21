@@ -10,11 +10,29 @@ div.form-div {
 	
 }
 
+div.profile-div {
+	position: relative;
+	width:100%;
+	height: calc(100% - 100px);
+	top: 140px;
+	left: 0;
+}
+
 
 /* Decorating buttons */
 input[type="button"] {
 	width:150px;
 	letter-spacing:1px;	
+}
+
+
+/* Hotel profile decorators */
+table#add-room-table {
+	display: none;
+}
+
+table#rooms-table {
+	display: none;
 }
 
 

@@ -1,7 +1,6 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
-
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -11,7 +10,8 @@ import com.webapplication.JSONBeans.AdminToRegister;
 @Entity
 public class HotelAdmin extends AppUser {
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY) 
 	private Hotel hotel;
 	
 	public HotelAdmin() {
