@@ -102,11 +102,13 @@ async function axiosAdmins(serverMethodPath) {
 
 async function viewAdmins() {
 	
+	//TODO: izbori se sa ovim
 	//clearDisplayedAdmins
-	var multiSelect = document.getElementById("available-admins");
-	multiSelect.selectedIndex = -1;
-	$('#available-admins option:selected').remove();
-	$('#available-admins').empty().append('<option value="">Select admin</option>');
+	//var multiSelect = document.getElementById("available-admins");
+	//multiSelect.selectedIndex = -1;
+	//$('#available-admins option:selected').remove();
+	//$('#available-admins').empty().append('<option value="">Select admin</option>');
+	$("#available-admins").dropdown('restore defaults');
 	
 	/* Get admins */
 	let companyType = $("#company-type-form2").val();

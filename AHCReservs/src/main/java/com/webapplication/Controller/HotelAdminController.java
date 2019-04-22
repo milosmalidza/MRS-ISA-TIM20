@@ -72,4 +72,15 @@ public class HotelAdminController {
 		return new ResponseEntity<>(hotelSvc.removeRoom(keyBean.getKey()), HttpStatus.ACCEPTED);
 	}
 	
+	
+	@RequestMapping(
+			value="/editRoom",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> editRoom(@RequestBody RoomData roomData) {
+		
+		return new ResponseEntity<>(hotelSvc.editRoom(roomData), HttpStatus.ACCEPTED);
+	}
+	
 }

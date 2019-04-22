@@ -79,6 +79,7 @@ function updateProfile() {
 			
 			adminHotel = response.data; //update the global hotel variable
 			fillHotelProfileInputs(response.data);
+			toast("Updated");
 		});
 	
 		
@@ -95,6 +96,43 @@ function getHotelJson() {
 }
 
 
+function roomTypeBedNumValidation(roomType, numOfBeds) {
+	
+	switch(roomType.toLowerCase()) {
+	
+	case "single":
+		
+		if(numOfBeds != 1) {
+			return "Single room can contain only one bed";
+		}
+		break;
+		
+	case "double":
+		
+		if(numOfBeds < 1 || numOfBeds > 2) {
+			return "Double room can contain 1 or 2 beds";
+		}
+		break;
+		
+	case "triple":
+		
+		if(numOfBeds < 2 || numOfBeds > 3) {
+			return "Triple room can contain 2 or 3 beds";
+		}
+		break;
+		
+	case "quad":
+		
+		if(numOfBeds < 2 || numOfBeds > 4) {
+			return "Quad room can contain 2,3 or 4 beds";
+		}
+		break;
+	} 
+	
+	return "ok";
+	
+}
+
 function addRoom() {
 	
 	if(validateInputFields("#add-room-table") === false) {
@@ -102,7 +140,19 @@ function addRoom() {
 		return;
 	}
 	
-	//TODO: calculate number of beds, compare them to the room type selected
+	//room floor and number must be > 1
+	if($("#room-floor").val() < 1 || $("#room-number").val() < 1) {
+		toast("Entered numbers must be positive");
+		return;
+	}
+	
+	//Comparing room type to number of beds
+	let message = roomTypeBedNumValidation($("#room-type").val(), $("#room-beds").val());
+	
+	if(message != "ok") {
+		toast(message);
+		return;
+	}
 	
 	axios.post(controllerPath + "/addRoom", getRoomJson())
 		.then(response => {
@@ -113,6 +163,7 @@ function addRoom() {
 			}
 			
 			// append a row to the all rooms table
+			adminHotel.rooms.push(response.data);
 			addRoomToTable(response.data);
 			
 		}); 
@@ -169,22 +220,91 @@ function addRoomToTable(room) {
 	    	index = index + 1;
 	    }
 	}
+    
+    //add the edit button to the table
+    var editBtnCell  = newRow.insertCell(index);
+	var editBtn = document.createElement("INPUT");
 	
-	
-	//add the remove button to the table
-	var removeBtnCell  = newRow.insertCell(index);
+	editBtn.type = "button";
+	editBtn.value = "Edit";
+	editBtn.className = "ui primary basic button";
+    
+	editBtn.setAttribute("onclick", "displayEditModal(this);");
+	editBtn.setAttribute("data-room-id", room.id); //bind room id to the button
+    
+    editBtnCell.appendChild(editBtn);
+    
+    
+    //add the remove button to the table
+	var removeBtnCell  = newRow.insertCell(index + 1);
 	var btnRemove = document.createElement("INPUT");
 	
     btnRemove.type = "button";
     btnRemove.value = "Remove";
+    btnRemove.className = "ui negative basic button";
     
     btnRemove.setAttribute("onclick", "removeRoom(this);");
     btnRemove.setAttribute("data-room-id", room.id); //bind room id to the button
     
     removeBtnCell.appendChild(btnRemove);
-    
-    //add the edit button to the table
-    //TODO:
+	
+}
+
+
+function getRoom(roomID) {
+	
+	let roomToReturn = null;
+	//find the room which is being edited
+	for (let i = 0; i < adminHotel.rooms.length; i++) {
+		if(adminHotel.rooms[i].id == roomID) {
+			roomToReturn = adminHotel.rooms[i];
+			break;
+		}
+	}
+	
+	return roomToReturn;
+}
+
+
+function displayEditModal(editBtn) {
+	
+	//Add the room id to the hidden input field
+	let roomID = editBtn.getAttribute("data-room-id");
+	$("#edit-room-id").val(roomID);
+	
+	
+	let roomToDisplay = getRoom(roomID);
+	
+	if(roomToDisplay.reserved === true) {
+		toast("Can't edit a reserved room");
+		return;
+	}
+	
+	//display modal
+	var modal = document.getElementById('edit-modal');
+	modal.style.display = "block";
+	
+	
+	//display the rooms data
+	$("#room-floor-edit").val(roomToDisplay.floor);
+	$("#room-number-edit").val(roomToDisplay.number);
+	// TODO: postavi tekucu vrednost $('#room-type-edit').dropdown('set selected', roomToDisplay.roomType);
+	$("#room-beds-edit").val(roomToDisplay.numOfBeds);
+	
+	//When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	  }
+	}
+
+}
+
+
+function closeEditModal() {
+	
+	var modal = document.getElementById('edit-modal');
+	modal.style.display = "none";
 	
 }
 
@@ -193,23 +313,96 @@ function removeRoom(removeBtn) {
 	
 	let roomID = removeBtn.getAttribute("data-room-id");
 	
+	let roomToRemove = getRoom(roomID);
+	
+	if(roomToRemove.reserved === true) {
+		toast("Can't remove a reserved room");
+		return;
+	}
+	
+	if(confirm("Are you sure you wan't to delete the room?") === false) {
+		return;
+	}
+	
 	roomKeyJSON = {"key": roomID};
 	
+	//sending request to server
 	axios.post(controllerPath + "/removeRoom", roomKeyJSON)
-	.then(response => {
+		.then(response => {
 		
-		if(response.data.toLowerCase() != "success") {
-			toast(response.data);
-			return;
-		}
-		
-		
-		$("#rooms-table-body").empty(); //remove all items from the table
-		
-		let user = window.localStorage.getItem("user");
-		getAdminHotel(user); //re-get the hotel and redraw the rooms in table
+			if(response.data.toLowerCase() != "success") {
+				toast(response.data);
+				return;
+			}
+			
+			
+			$("#rooms-table-body").empty(); //remove all items from the table
+			
+			let user = window.localStorage.getItem("user");
+			getAdminHotel(user); //re-get the hotel and redraw the rooms in table
 		
 	});
+	
+}
+
+
+function editRoom() {
+
+	
+	if(validateInputFields("#edit-room-table") === false) {
+		toast("Empty fields detected");
+		return;
+	}
+	
+	//room floor and number must be > 1
+	if($("#room-floor-edit").val() < 1 || $("#room-number-edit").val() < 1) {
+		toast("Entered numbers must be positive");
+		return;
+	}
+	
+	//Comparing room type to number of beds
+	let message = roomTypeBedNumValidation($("#room-type-edit").val(), $("#room-beds-edit").val());
+	
+	if(message != "ok") {
+		toast(message);
+		return;
+	}
+	
+	
+	let roomID = $("#edit-room-id").val();
+
+	//sending request to server
+	axios.post(controllerPath + "/editRoom", getEditRoomJson(roomID))
+		.then(response => {
+		
+			if(response.data.toLowerCase() != "success") {
+				toast(response.data);
+				return;
+			}
+			
+			
+			$("#rooms-table-body").empty(); //remove all items from the table
+			
+			let user = window.localStorage.getItem("user");
+			getAdminHotel(user); //re-get the hotel and redraw the rooms in table
+			
+			closeEditModal(); //close the pop-up window for editing
+		
+		});
+	
+}
+
+
+function getEditRoomJson(roomID) {
+	
+	return {
+		"hotelID": adminHotel.id,
+		"roomID": roomID,
+		"number": $("#room-number-edit").val(),
+		"floor": $("#room-floor-edit").val(),
+		"numOfBeds": $("#room-beds-edit").val(),
+		"roomTypeString": $("#room-type-edit").val()
+	};
 	
 }
 

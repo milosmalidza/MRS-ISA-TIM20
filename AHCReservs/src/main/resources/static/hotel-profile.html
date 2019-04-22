@@ -112,7 +112,7 @@
 		<div id="animation-div">
 		
 			<!-- Back button -->
-			<div id="back-div" onclick="goBack()">BACK</div>
+			<button id="back-button" class="ui black basic button" onclick="goBack()"> BACK </button>
 				
 			<div class="center-content">
 			
@@ -187,6 +187,8 @@
 							<th> Room type </th>
 							<th> Is reserved </th>
 							<th> Is on discount </th>
+							<th> * </th>
+							<th> - </th>		
 						</tr>
 					</thead>
 					
@@ -198,9 +200,86 @@
 		</div>
 		
 		
+		<!-- Modal div used when editing a room -->
+		<!-- The Modal -->
+		<div id="edit-modal" class="modal">
+		
+		  <!-- Modal content -->
+		  <div class="modal-content">
+		    <span class="close" onclick="closeEditModal()">&times;</span>
+		    
+		    <input type="hidden" id="edit-room-id"/>
+		    
+		    <table id="edit-room-table">
+					
+					<tr>
+						<th> </th>
+						<th>
+							<h2> Edit room </h2>
+						</th>
+					</tr>
+					
+					<tr>
+						<td> Room floor: </td>
+						<td> 
+							<div class="ui input">
+								<input type="number" id="room-floor-edit"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Room number: </td>
+						<td> 
+							<div class="ui input">
+								<input type="number" id="room-number-edit"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Room type: </td>
+						<td>
+							<select id="room-type-edit" class="ui dropdown">
+								<option value="">Select type</option>
+								<option value="single"> Single </option>
+								<option value="double"> Double </option>
+								<option value="triple"> Triple </option>
+								<option value="quad"> Quad </option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Number of beds: </td>
+						<td> 
+							<div class="ui input">
+								<input type="number" id="room-beds-edit"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						
+						<td> </td>
+						<td>
+							<input class="ui button" type="button" onclick="editRoom()" value="Edit room"/>
+						 </td>
+					</tr>
+				
+				</table>
+		    
+		  </div>
+		
+		</div>
+		
+		
 		<!-- Decorating select tags  -->
 		<script>
 			$("#room-type")
+			  .dropdown();
+			  
+			  $("#room-type-edit")
 			  .dropdown();
 			
 		</script>
