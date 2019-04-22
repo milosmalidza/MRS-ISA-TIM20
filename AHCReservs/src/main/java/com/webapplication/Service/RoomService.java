@@ -1,5 +1,7 @@
 package com.webapplication.Service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,15 @@ public class RoomService {
 		return roomRep.save(room);
 	}
 	
+	public void removeById(Long id) {
+		roomRep.deleteById(id);
+	}
 	
-	//conver string to room type
+	public Optional<Room> findById(Long id) {
+		return roomRep.findById(id);
+	}
+	
+	//convert string to room type
 	public RoomType getRoomType(String roomTypeString) {
 		
 		switch(roomTypeString.toLowerCase()) {

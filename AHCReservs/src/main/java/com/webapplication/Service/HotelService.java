@@ -73,12 +73,8 @@ public class HotelService {
 		}
 		
 		//check if the room number already exists in the hotel
-		for (Room room : hotel.getRooms()) {
-			
-			if(room.getNumber() == roomData.getNumber()) {
-				return null;
-			}
-			
+		if(mulSvc.roomExistsInHotel(hotel, roomData, false)) {
+			return null;
 		}
 		
 		//convert string to enum
@@ -86,7 +82,6 @@ public class HotelService {
 		if(type == null) {
 			return null;
 		}
-		
 		roomData.setRoomType(type);
 		
 		//create new room
@@ -98,6 +93,68 @@ public class HotelService {
 		return room;
 		
 	}
+	
+	
+	public String removeRoom(Long roomID) {
+		
+		Room room = roomSvc.findById(roomID).get();
+		
+		if(room == null) {
+			return "Room does not exist";
+		}
+		
+		if(room.isReserved()) {
+			return "You can't remove a room which is reserved";
+		}
+		
+		roomSvc.removeById(roomID);
+		
+		return "Success";
+		
+	}
+	
+	public String editRoom(RoomData roomData) {
+		
+		//get the hotel of the room
+		Hotel hotel = findOne(roomData.getHotelID()).get();
+		
+		if(hotel == null) {
+			return "Hotel does not exists";
+		}
+		
+		//check if the room number already exists in the hotel
+		if(mulSvc.roomExistsInHotel(hotel, roomData, true)) {
+			return "Room number already exists in the hotel";
+		}
+		
+		Room room = roomSvc.findById(roomData.getRoomID()).get();
+		
+		if(room == null) {
+			return "Room does not exist";
+		}
+		
+		if(room.isReserved()) {
+			return "You can't edit a room which is reserved";
+		}
+		
+		//change the data of the room
+		room.setNumber(roomData.getNumber());
+		room.setFloor(roomData.getFloor());
+		room.setNumOfBeds(roomData.getNumOfBeds());
+	
+		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
+		
+		if(type == null) {
+			return ("Unknown room type");
+		}
+		
+		room.setRoomType(type);
+		
+		roomSvc.save(room);
+		
+		return "Success";
+	}
+	
 	
 	public Optional<Hotel> findOne(Long id) {
 		return hotelRep.findById(id);

@@ -6,6 +6,7 @@ import com.webapplication.Model.RoomType;
 public class RoomData {
 	
 	private Long hotelID;
+	private Long roomID;
 	private int number;
 	private int floor;
 	private int numOfBeds;
@@ -17,10 +18,12 @@ public class RoomData {
 		
 	}
 	
-	
-	public RoomData(Long hotelID, int number, int floor, int numOfBeds, RoomType roomType, String roomTypeString) {
+
+	public RoomData(Long hotelID, Long roomID, int number, int floor, int numOfBeds, RoomType roomType,
+			String roomTypeString) {
 		
 		this.hotelID = hotelID;
+		this.roomID = roomID;
 		this.number = number;
 		this.floor = floor;
 		this.numOfBeds = numOfBeds;
@@ -86,6 +89,16 @@ public class RoomData {
 
 	public void setRoomTypeString(String roomTypeString) {
 		this.roomTypeString = roomTypeString;
+	}
+
+
+	public Long getRoomID() {
+		return roomID;
+	}
+
+
+	public void setRoomID(Long roomID) {
+		this.roomID = roomID;
 	}
 	
 	
