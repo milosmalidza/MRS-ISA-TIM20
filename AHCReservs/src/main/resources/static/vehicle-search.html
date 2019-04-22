@@ -130,6 +130,13 @@
 						<td><div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div></td>
 						<td><input style="width:150px;letter-spacing:1px;" class="ui button" type="button" onclick="searchVehicles()" value="Search" /></td>
 					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td></td>
+						<td>		
+							<p id="form-message">Message</p>
+						</td>
+						
+					</tr>
 				
 				</table>
 				</form>
@@ -144,6 +151,7 @@
 		<div id="items-holder">
 				<div id="items-holder-utility">
 					<div id="go-back-items-holder" onclick="closeSearchVehicles()">BACK</div>
+					<div id="message-items-holder"></div>
 				</div>
 				<div id="vehicle-items-row">
 					<div class="row">

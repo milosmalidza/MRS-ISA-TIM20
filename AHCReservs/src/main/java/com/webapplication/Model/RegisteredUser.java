@@ -12,7 +12,7 @@ public class RegisteredUser extends AppUser{
 	//private List<Friendship> friendships;
 	
 	@OneToMany(mappedBy = "user")
-	private List<Reservation> reservations;
+	private List<VehicleReservation> reservations;
 	
 	
 	

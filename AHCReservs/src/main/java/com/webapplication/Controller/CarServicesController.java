@@ -27,9 +27,7 @@ public class CarServicesController {
 	
 	@GetMapping("/vehicle-search.html")
 	public String vehicleSearch(@RequestParam("id") String id, Model model) {
-		System.out.println(id);
 		RentACar service = rentService.rentACarRep.findOneById(Long.parseLong(id));
-		System.out.println(service.getDescription());
 		
 		
 		model.addAttribute("service", service);

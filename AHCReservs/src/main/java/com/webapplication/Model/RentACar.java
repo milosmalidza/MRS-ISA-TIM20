@@ -18,7 +18,7 @@ public class RentACar extends Company {
 	@OneToMany(mappedBy = "rent_a_car", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<RentACarAdmin> admins;
 	
-	@OneToMany(mappedBy = "rentACar", targetEntity = Vehicle.class , fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "rentACar", targetEntity = Vehicle.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private List<Vehicle> vehicles;
 	
 	@OneToMany(mappedBy = "rentACar", targetEntity =  RentACarBranchOffice.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)

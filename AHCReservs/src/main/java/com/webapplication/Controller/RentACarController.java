@@ -1,6 +1,7 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class RentACarController {
 		
 		try {
 			return rentService.returnSearchResults(json);
-		} catch (IOException e) {
+		} catch (IOException | ParseException e) {
 			return "badRequest";
 		}
 		
@@ -72,7 +73,13 @@ public class RentACarController {
 	@RequestMapping(value = "/reserveVehicle", method = RequestMethod.POST)
 	public String reserveVehicle(@RequestParam("json") String json, @RequestParam("user") String user) {
 		
-		return rentService.returnReservationResults(json, user);
+		try {
+			return rentService.returnReservationResults(json, user);
+		} catch (IOException | ParseException e) {
+			
+			e.printStackTrace();
+			return "badRequest";
+		}
 		
 		
 	}

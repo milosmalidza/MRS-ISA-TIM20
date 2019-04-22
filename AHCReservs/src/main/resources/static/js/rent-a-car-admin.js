@@ -153,6 +153,8 @@ function searchVehicles() {
 	showDataLoader();
 	var form = document.getElementById("vehicle-search-form");
 	var itemsHolder = document.getElementById("items-holder");
+	var mainDiv = document.getElementById("main-div");
+	
 	
 	
 	var dateElement = document.getElementById("daterange");
@@ -167,9 +169,17 @@ function searchVehicles() {
 	peopleElement.parentNode.classList.remove("error");
 	typeElement.classList.remove("error");
 	
+	if (vehicleReservationStartDate == null || vehicleReservationEndDate == null) {
+		dateElement.classList.add("error");
+		showFormMessage("Please select reservation date.", 3000);
+		hideDataLoader();
+		return;
+	}
+	
 	if (dateElement.value == "") {
 		dateElement.classList.add("error");
-		is_error = true;
+		showFormMessage("Please select reservation date.", 3000);
+		hideDataLoader();
 	}
 	
 	if (doorsElement.value == "" || isNaN(doorsElement.value)) {
@@ -198,6 +208,7 @@ function searchVehicles() {
         url: "rentACarService/searchVehicles",
         data:{json : JSON.stringify(
 			{
+				companyid : mainDiv.getAttribute("data-id"),
 				startDate:  vehicleReservationStartDate,
 			 	endDate : vehicleReservationEndDate,
 			 	doors : parseInt(doorsElement.value),
@@ -250,7 +261,9 @@ function performReservation(element) {
 	var parentNode = element.parentNode;
 	
 	var id = {
-		id : parentNode.dataset.id
+		id : parentNode.dataset.id,
+		startDate:  vehicleReservationStartDate,
+		endDate : vehicleReservationEndDate
 	};
 	
 	console.log(id);
@@ -262,7 +275,13 @@ function performReservation(element) {
 		success : function(response) {
 			
 			if (response == "success") {
-				
+				closeSearchVehicles();
+			}
+			else if (response == "notLoggedIn") {
+				showReservationMessage("You are not logged in.", 3000);
+			}
+			else if (response == "badRequest") {
+				showReservationMessage("Bad request.", 3000);
 			}
 			
 			
@@ -279,6 +298,56 @@ function closeSearchVehicles() {
 	document.body.style.overflowY = "auto";
 	itemsHolder.style.left = "100%";
 }
+
+
+function showReservationMessage(message, length) {
+	var messageHolder = document.getElementById("message-items-holder");
+	messageHolder.innerHTML = message;
+	
+		$(messageHolder).fadeIn(250);
+	
+	clearTimeout(formMessageTimeout);
+	formMessageTimeout = setTimeout(function() {
+		$(messageHolder).fadeOut(250);
+		formMessageTimeout = null;
+	}, length);
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

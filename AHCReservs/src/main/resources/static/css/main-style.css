@@ -427,7 +427,17 @@ div#nav-bar {
 	text-align:center;
 }
 
-
+#message-items-holder {
+	position: absolute;
+	font-weight: bold;
+	letter-spacing: 1px;
+	display: none;
+	top: 50%;
+	left: 200px;
+	
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
 
 
 

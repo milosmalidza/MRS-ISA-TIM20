@@ -1,5 +1,7 @@
 package com.webapplication.Model;
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
@@ -10,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -38,8 +41,8 @@ public class Vehicle {
 	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
 	
-	@OneToOne
-	private Reservation reservation;
+	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	private List<VehicleReservation> reservations;
 	
 	@Column(name = "pricePerDay", unique = false, nullable = false)
 	private int pricePerDay;
@@ -47,14 +50,14 @@ public class Vehicle {
 	@Column(name = "archived", nullable = false)
 	private boolean archived;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private RentACar rentACar;
 	
 	
 	public Vehicle() {}
 	
 	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
-			Reservation reservation, int pricePerDay, boolean archived) {
+			List<VehicleReservation> reservations, int pricePerDay, boolean archived) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -62,7 +65,7 @@ public class Vehicle {
 		this.numOfSeats = numOfSeats;
 		this.numOfDoors = numOfDoors;
 		this.vehicleType = vehicleType;
-		this.reservation = reservation;
+		this.reservations = reservations;
 		this.pricePerDay = pricePerDay;
 		this.archived = archived;
 	}
@@ -70,7 +73,7 @@ public class Vehicle {
 	
 
 	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,
-			Reservation reservation, int pricePerDay, boolean archived, RentACar rentACar) {
+			List<VehicleReservation> reservations, int pricePerDay, boolean archived, RentACar rentACar) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -78,10 +81,21 @@ public class Vehicle {
 		this.numOfSeats = numOfSeats;
 		this.numOfDoors = numOfDoors;
 		this.vehicleType = vehicleType;
-		this.reservation = reservation;
+		this.reservations = reservations;
 		this.pricePerDay = pricePerDay;
 		this.archived = archived;
 		this.rentACar = rentACar;
+	}
+
+	
+	
+	
+	public List<VehicleReservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<VehicleReservation> reservations) {
+		this.reservations = reservations;
 	}
 
 	public String getDescription() {
@@ -90,14 +104,6 @@ public class Vehicle {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Reservation isReserved() {
-		return reservation;
-	}
-
-	public void setReserved(Reservation reserved) {
-		this.reservation = reserved;
 	}
 
 	public int getPricePerDay() {
