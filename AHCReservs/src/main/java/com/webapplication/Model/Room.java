@@ -38,7 +38,7 @@ public class Room {
 	@Column(name="discount", unique=false, nullable=false)
 	private boolean discount;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Hotel hotel;
 	
 	public Room() {

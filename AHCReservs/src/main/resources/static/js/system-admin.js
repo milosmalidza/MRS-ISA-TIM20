@@ -101,14 +101,14 @@ async function axiosAdmins(serverMethodPath) {
 
 
 async function viewAdmins() {
-	
-	
+
 	// clear displayed admins
 	$("#available-admins").dropdown('clear');
 	var multiSelect = document.getElementById("available-admins");
 	multiSelect.selectedIndex = -1;
 	$('#available-admins option:selected').remove();
 	$('#available-admins').empty().append('<option value="">Select admin</option>');
+
 	
 	
 	/* Get admins */

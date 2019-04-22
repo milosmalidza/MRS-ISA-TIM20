@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webapplication.JSONBeans.RoomData;
+import com.webapplication.Model.Hotel;
+import com.webapplication.Model.Room;
 
 @Service
 public class MultipleService {
@@ -87,6 +90,36 @@ public class MultipleService {
 		if(airlineSvc.findByName(hotelName) != null || rentACarSvc.findByName(hotelName) != null) {
 				
 			return true;
+		}
+		
+		return false;
+		
+	}
+	
+	
+	public boolean roomExistsInHotel(Hotel hotel, RoomData roomData, boolean editing) {
+		
+		//check if the room number already exists in the hotel
+		for (Room room : hotel.getRooms()) {
+			
+			if(room.getNumber() == roomData.getNumber()) {
+				
+				//if the room is being edited
+				if(editing) {
+					
+					//if the user left the same room number when he was editing
+					if(room.getId() == roomData.getRoomID()) {
+						continue;
+					}
+						
+					return true;
+					
+				} else {
+					return true;
+				}
+				
+			}
+			
 		}
 		
 		return false;
