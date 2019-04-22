@@ -5,10 +5,71 @@
 
 html, body {
 	font-family: Montserrat;
+	scrollbar-width: none;
 }
 
 .display-none {
 	display: none;
+}
+
+::-webkit-scrollbar { 
+    display: none; 
+}
+scrollbar { 
+    display: none; 
+}
+
+#loading-division {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: white;
+	
+	z-index:9999;
+}
+
+#logo-svg-animation {
+	position: absolute;
+	width: 210px;
+	height: 210px;
+	left: 50%;
+	top: 48%;
+	
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.preload *{
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
+
+#leaf-animation {
+	fill: transparent;
+    stroke: rgba(38,102,71,1.00);
+    stroke-width: 10px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-dasharray: 2100;
+    stroke-dashoffset: 2100;
+	animation-name: leafStroke;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    
+}
+
+@keyframes leafStroke {
+    0%   { stroke-dashoffset: 2100; }
+    50%   { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 2100; }
+}
+
+@keyframes leafStrokeFinish {
+    0%   { stroke-dashoffset: 2100; }
+    100%   { stroke-dashoffset: 0; }
 }
 
 #main-div {
@@ -33,7 +94,7 @@ html, body {
 	position: fixed;
 	width: 0%;
 	height: 100%;
-	background: rgba(38,102,71,1.00);
+	background: white;
 	left: 0;
 	top: 0;
 	z-index: 999;
@@ -54,12 +115,15 @@ html, body {
 .input-additional {
 	font-size: 14px;
 	font-weight: bold;
+	border-radius: 25px;
 	border: 1px solid transparent !important;
 }
 
 .full-width-input {
 	width: 100%;
 }
+
+
 
 .no-items-found {
 	position: absolute;
@@ -77,13 +141,21 @@ html, body {
 .center-content {
 	position: absolute;
 	top:10%;
-	left: 25%;
-	right: 25%;
+	left: 50%;
+	width: 50%;
+	min-width: 900px;
+	
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
 }
 
 .vehicle-item {
 	height: 400px;
 }
+h1 {
+	font-family: Montserrat;
+}
+
 
 .reserve-vehicle-button {
 	position: absolute;
@@ -183,6 +255,10 @@ html, body {
 	border: 1px solid transparent;
 }
 
+input {
+	font-family: Montserrat;
+}
+
 #dateinput.ui.input {
 	width: 100%;
 }
@@ -242,7 +318,7 @@ html, body {
 #main-content-holder {
 	position: absolute;
 	width:100%;
-	height: calc(100% - 80px);
+	height: calc(100% - 70px);
 	top: 140px;
 	left: 0;
 }

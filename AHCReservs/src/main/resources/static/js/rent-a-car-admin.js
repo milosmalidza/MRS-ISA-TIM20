@@ -56,10 +56,6 @@ function changeCompanyInfo () {
 
 
 
-
-
-
-
 function addRentACarServiceCar() {
 	showDataLoader();
 	var form = document.getElementById("single-form");
@@ -200,11 +196,14 @@ function searchVehicles() {
 	$.ajax({
         type:"POST",
         url: "rentACarService/searchVehicles",
-        data:{startDate:  vehicleReservationStartDate,
-			  endDate : vehicleReservationEndDate,
-			 doors : parseInt(doorsElement.value),
-			 people : parseInt(peopleElement.value),
-			 type : typeElement.value},
+        data:{json : JSON.stringify(
+			{
+				startDate:  vehicleReservationStartDate,
+			 	endDate : vehicleReservationEndDate,
+			 	doors : parseInt(doorsElement.value),
+			 	people : parseInt(peopleElement.value),
+			 	type : typeElement.value
+			})},
         success:function(response){
         	console.log(response);
             var cars = JSON.parse(response);
@@ -218,14 +217,14 @@ function searchVehicles() {
 				for (var i = 0; i < cars.length; i++) {
 					var itemHolder = document.createElement("div");
 					itemHolder.setAttribute("class", "col-lg-3  col-sm-4 col-xs-6 vehicle-item");
-					itemHolder.innerHTML =  '<div class="vehicle-item-holder">' +
+					itemHolder.innerHTML =  '<div class="vehicle-item-holder" data-id="'+ cars[i].id +'" >' +
 												'<div class="vehicle-item-name">' + cars[i].name + '</div>' +
 												'<div class="vehicle-item-description">' + cars[i].description + '</div>' +
 												'<div class="vehicle-item-number-of-people bold-font">Number of people: ' + cars[i].numOfSeats + '</div>' +
 												'<div class="vehicle-item-number-of-doors bold-font">Number of doors: ' + cars[i].numOfDoors + '</div>' +
 												'<div class="vehicle-item-vehicle-type bold-font">Type: ' + cars[i].vehicleType + '</div>' +
 												'<div class="vehicle-item-price-per-day bold-font">Price per day: ' + cars[i].pricePerDay + '</div>' +
-												'<input class="ui button reserve-vehicle-button" type="button" value="Reserve" />' + 
+												'<input class="ui button reserve-vehicle-button" type="button" value="Reserve" onclick="performReservation(this)"/>' + 
 											'</div>';
 					row.appendChild(itemHolder);
 				}
@@ -243,17 +242,43 @@ function searchVehicles() {
 			itemsHolder.style.left = "0px";
         }
     });
+}
+
+
+function performReservation(element) {
 	
+	var parentNode = element.parentNode;
 	
+	var id = {
+		id : parentNode.dataset.id
+	};
+	
+	console.log(id);
+	
+	$.ajax({
+		type : "POST",
+		url : "rentACarService/reserveVehicle",
+		data : {json : JSON.stringify(id), user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			
+			if (response == "success") {
+				
+			}
+			
+			
+			console.log(response);
+		}
+	})
 	
 }
+
+
 
 function closeSearchVehicles() {
 	var itemsHolder = document.getElementById("items-holder");
 	document.body.style.overflowY = "auto";
 	itemsHolder.style.left = "100%";
 }
-
 
 
 

@@ -101,14 +101,15 @@ async function axiosAdmins(serverMethodPath) {
 
 
 async function viewAdmins() {
+
+	// clear displayed admins
+	$("#available-admins").dropdown('clear');
+	var multiSelect = document.getElementById("available-admins");
+	multiSelect.selectedIndex = -1;
+	$('#available-admins option:selected').remove();
+	$('#available-admins').empty().append('<option value="">Select admin</option>');
+
 	
-	//TODO: izbori se sa ovim
-	//clearDisplayedAdmins
-	//var multiSelect = document.getElementById("available-admins");
-	//multiSelect.selectedIndex = -1;
-	//$('#available-admins option:selected').remove();
-	//$('#available-admins').empty().append('<option value="">Select admin</option>');
-	$("#available-admins").dropdown('restore defaults');
 	
 	/* Get admins */
 	let companyType = $("#company-type-form2").val();
@@ -128,6 +129,12 @@ async function viewAdmins() {
 }
 
 async function addAdmins() {
+	
+	
+	if(validateInputFields("#company-admins-table") === false) {
+		toast("Empty field detected");
+		return;
+	}
 	
 	let companyName = $("#admins-company-name").val();
 	

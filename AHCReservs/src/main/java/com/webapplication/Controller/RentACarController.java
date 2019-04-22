@@ -16,20 +16,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Service.RentACarAdminService;
+import com.webapplication.Service.RentACarService;
 
 @RestController
 @RequestMapping("/rentACarService")
 public class RentACarController {
 	
 	@Autowired
-	private RentACarAdminService rentService;
+	private RentACarAdminService rentAdminService;
+	
+	@Autowired
+	private RentACarService rentService;
 	
 	
 	@RequestMapping(value = "/AddCar", method = RequestMethod.POST)
 	public String addCar(@RequestParam("json") String json) {
 		
 		try {
-			return rentService.AddCar(json);
+			return rentAdminService.AddCar(json);
 		} catch (NumberFormatException e) {
 			return "badNumber";
 		} catch (IllegalArgumentException e) {
@@ -44,7 +48,7 @@ public class RentACarController {
 	public String editInfo(@RequestParam("json") String json) {
 		
 		try {
-			return rentService.ChangeCompanyInfo(json);
+			return rentAdminService.ChangeCompanyInfo(json);
 		} catch (IOException e) {
 			return "badRequest";
 		}
@@ -54,16 +58,41 @@ public class RentACarController {
 	
 	
 	@RequestMapping(value = "/searchVehicles", method = RequestMethod.POST)
-	public String ajaxtest(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate, @RequestParam("doors") int doors,
-			@RequestParam("people") int people, @RequestParam("type") String type) throws JsonProcessingException {
+	public String searchVehicles(@RequestParam("json") String json) throws JsonProcessingException {
+		
+		try {
+			return rentService.returnSearchResults(json);
+		} catch (IOException e) {
+			return "badRequest";
+		}
 		
 		
-		
-		
-		
-		return "success";
 	}
 	
-	
+	@RequestMapping(value = "/reserveVehicle", method = RequestMethod.POST)
+	public String reserveVehicle(@RequestParam("json") String json, @RequestParam("user") String user) {
+		
+		return rentService.returnReservationResults(json, user);
+		
+		
+	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
