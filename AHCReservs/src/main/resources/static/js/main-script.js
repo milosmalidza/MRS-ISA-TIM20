@@ -23,35 +23,14 @@ window.addEventListener("load", function() {
 		}
 	}
 	
-	
-	
-	
 	console.log(sessionUser);
 	
-	var loadingScreen = document.getElementById("loading-division");
-	var leaf = document.getElementById("leaf-animation");
-	
-	$("body").removeClass("preload");
-	
-	leaf.style.animationName = "leafStrokeFinish";
-	leaf.style.animationDuration = "1.2s";
-	leaf.style.animationIterationCount = "1";
-	setTimeout(function() {
-		leaf.style.transition = "fill .5s";
-		leaf.style.webkitTransition = "fill .5s";
-		leaf.style.fill = "rgba(38,102,71,1.00)";
-		setTimeout(function() {
-			$(loadingScreen).fadeOut(400);
-			var mainDiv = document.getElementById("main-div");
-			if (mainDiv != "undefined" && mainDiv != null) {
-				mainDiv.style.opacity = "1";
-				mainDiv.style.webkitTransform = "scale(1)";
-				mainDiv.style.transform = "scale(1)";
-			}
-		}, 850);
-	}, 1000);
-	
-	
+	var mainDiv = document.getElementById("main-div");
+	if (mainDiv != "undefined" && mainDiv != null) {
+		mainDiv.style.opacity = "1";
+		mainDiv.style.webkitTransform = "scale(1)";
+		mainDiv.style.transform = "scale(1)";
+	}
 	
 	
 }, false);
@@ -78,7 +57,28 @@ function loginUser() {
 			if (data.status == "success") {
 				showFormMessage("Success.", 3000);
 				window.localStorage.setItem("user", response);
-				loadPage("index.html");
+				
+				if (data.user == "sysAdmin") {
+					loadPage("register-company.html");
+				}
+				
+				else if (data.user == "airAdmin") {
+					loadPage("/");
+				}
+				
+				else if (data.user == "hotelAdmin") {
+					loadPage("hotel-profile.html");
+				}
+				
+				else if (data.user == "carAdmin") {
+					loadPage("edit-rent-a-car-service.html");
+				}
+				
+				else {
+					loadPage("/");
+				}
+				
+				
 			}
 			
 			else if (data.status == "notEnabled") {

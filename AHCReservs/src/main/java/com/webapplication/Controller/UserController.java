@@ -167,6 +167,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(user);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
+				((ObjectNode) jsonNode).put("user", "registeredUser");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
@@ -199,6 +200,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(sysUser);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
+				((ObjectNode) jsonNode).put("user", "systemUser");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
@@ -230,6 +232,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(airAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
+				((ObjectNode) jsonNode).put("user", "airAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
@@ -261,6 +264,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(hotelAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
+				((ObjectNode) jsonNode).put("user", "hotelAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
@@ -292,6 +296,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(carAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
+				((ObjectNode) jsonNode).put("user", "carAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				

@@ -73,7 +73,7 @@ public class RentACarService {
 			
 			if (type.equals(vehicle.getVehicleType().toString()) &&
 					doors == vehicle.getNumOfDoors() &&
-					people == vehicle.getNumOfSeats() &&
+					people <= vehicle.getNumOfSeats() &&
 					id == vehicle.getRentACar().getId()) {
 				
 				boolean isReserved = false;

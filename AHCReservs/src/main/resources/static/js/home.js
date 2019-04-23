@@ -3,6 +3,24 @@
 function initHomePage() {
 	var rotatedEl = document.getElementById("absolute-div-1");
 	
+	var loadingScreen = document.getElementById("loading-division");
+	var leaf = document.getElementById("leaf-animation");
+	
+	$("body").removeClass("preload");
+	
+	leaf.style.animationName = "leafStrokeFinish";
+	leaf.style.animationDuration = "1.2s";
+	leaf.style.animationIterationCount = "1";
+	setTimeout(function() {
+		leaf.style.transition = "fill .5s";
+		leaf.style.webkitTransition = "fill .5s";
+		leaf.style.fill = "rgba(38,102,71,1.00)";
+		setTimeout(function() {
+			$(loadingScreen).fadeOut(400);
+			
+		}, 850);
+	}, 1000);
+	
 	setTimeout(function() {
 		rotatedEl.style.width = "45%";
 		

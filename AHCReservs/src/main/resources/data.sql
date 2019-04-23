@@ -37,3 +37,41 @@ insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats
 						et dolore magna aliqua.", "Maruti Suzuki Ciaz", 5, 5, 17, 1, 0);
 insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-2, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Datsun GO+", 5, 5, 12, 2, 0);
+                        
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-3, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Mazda 3 2019", 3, 5, 15, 0, 0);
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-4, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Maruti Suzuki Ciaz", 3, 5, 17, 1, 0);
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-5, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Datsun GO+", 3, 5, 12, 2, 0);
+                        
+					
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-6, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Golf 5", 5, 5, 15, 0, -1);
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-7, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Tesla Model S", 5, 5, 17, 1, -1);
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-8, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Suzuki Vitara", 5, 5, 12, 2, -1);
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        

@@ -276,6 +276,7 @@ function performReservation(element) {
 			
 			if (response == "success") {
 				closeSearchVehicles();
+				showFormMessage("Vehicle has been successfully reserved.", 3000);
 			}
 			else if (response == "notLoggedIn") {
 				showReservationMessage("You are not logged in.", 3000);
