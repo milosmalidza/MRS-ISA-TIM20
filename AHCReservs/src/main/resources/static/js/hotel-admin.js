@@ -10,6 +10,8 @@ window.onload = function() {
 		window.location.href = "index.html";
 	}
 	
+	//TODO: check the type of the user
+	
 	getAdminHotel(user);
 	
 }
@@ -165,6 +167,8 @@ function addRoom() {
 			// append a row to the all rooms table
 			adminHotel.rooms.push(response.data);
 			addRoomToTable(response.data);
+			
+			clearInputFields("#add-room-table");
 			
 		}); 
 	
@@ -427,21 +431,4 @@ function goBack() {
 	$("#add-room-table").hide();
 	$("#rooms-table").hide();
 	
-}
-
-
-function validateInputFields(tableID) {
-	
-	var valid = true;
-	$(tableID + " :input").not(":button").each(function() {
-		
-		var input = $(this).val();
-		
-		if(input === "" || input === null) {
-			valid = false;
-		}
-		
-	});
-	
-	return valid;
 }

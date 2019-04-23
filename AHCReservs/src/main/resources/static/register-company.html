@@ -7,8 +7,10 @@
 		<script type="text/javascript" src="js-libs/toast.js"></script>
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		
+		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js/system-admin.js"></script>
+		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="js-libs/toast.css" />
@@ -74,7 +76,7 @@
 			
 			<ul id="nav-bar-selection-2">
 				<li> My profile </li>
-				<li> Logout </li>		
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')"> Logout </li>		
 			</ul>
 		</div>
 		
@@ -95,7 +97,7 @@
 						
 						<tr>
 							<td> Company type: </td>
-							<td>
+							<td id="company-type-holder">
 								<select id="company-type-form1" class="ui dropdown" onchange="getAdmins()">
 									<option value="">Select type</option>
 									<option value="airline"> Airline </option>
