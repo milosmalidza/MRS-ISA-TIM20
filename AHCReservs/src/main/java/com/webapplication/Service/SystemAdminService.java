@@ -214,7 +214,6 @@ public class SystemAdminService {
 				AirlineAdmin airlineAdmin = airlineAdminSvc.findByUsername(username);
 				
 				if(airlineAdmin.getAirline() == null) {
-					System.out.println("Nema");
 					airlineAdmin.setAirline(airline);
 					airlineAdminSvc.save(airlineAdmin);
 				}

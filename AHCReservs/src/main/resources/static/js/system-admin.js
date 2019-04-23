@@ -1,6 +1,19 @@
 var controllerPath = "/sysadmin";
 
 
+window.onload = function() {
+	
+	//get the currently logged in user
+	let user = window.localStorage.getItem("user");
+	
+	//TODO: check the type of the user
+	
+	if(user === null || user === undefined || user === "") {
+		window.location.href = "index.html";
+	}
+	
+}
+
 /* Company registration functions */
 
 function registerCompany() {
@@ -16,8 +29,13 @@ function registerCompany() {
 		.then(response => {
 			
 			toast(response.data); //print out the response to the user
-			getAdmins(); //the selected admin is no longer available
 			
+			//if the registration was successful clear the input fields
+			if(response.data.toLowerCase().includes("success")) {
+				clearInputFields("#register-company-table");
+				getAdmins(); //the selected admin is no longer available so I need to re-get the admins
+			}
+				
 		});
 	
 }
@@ -26,7 +44,7 @@ function registerCompany() {
 async function getAdmins() {
 
 	
-	clearDisplayedAdmins("company-admins-holder", "company-admins");
+	clearSemanticSelect("company-admins-holder", "company-admins", "Select admin");
 	
 	/* Get admins */
 	let companyType = $("#company-type-form1").val();
@@ -42,20 +60,6 @@ async function getAdmins() {
 	let select = document.getElementById("company-admins");
 	insertAdminsToSelectTag(select, admins);
 	
-	
-}
-
-function clearDisplayedAdmins(tdHolder, adminsSelect) {
-	
-	/* Clearing select tag for admins */
-	var n = document.getElementById(tdHolder);
-	var texts = n.getElementsByClassName("text");
-	
-	texts[0].classList.add("default");
-	texts[0].innerHTML = "Select admin";
-	
-	$('#' + adminsSelect + 'option:selected').remove();
-	$('#' + adminsSelect).empty().append('<option value="">Select admin</option>');
 	
 }
 
@@ -103,12 +107,15 @@ async function axiosAdmins(serverMethodPath) {
 async function viewAdmins() {
 
 	// clear displayed admins
+	clearSemanticMultiSelect("#available-admins", "Select admin");
+	
+	/*
 	$("#available-admins").dropdown('clear');
 	var multiSelect = document.getElementById("available-admins");
 	multiSelect.selectedIndex = -1;
 	$('#available-admins option:selected').remove();
 	$('#available-admins').empty().append('<option value="">Select admin</option>');
-
+	*/
 	
 	
 	/* Get admins */
@@ -145,16 +152,14 @@ async function addAdmins() {
 		return;
 	} 
 	
-	
-	//alert(JSON.stringify(getCompanyAdminsJson()));
-	
 	//sending data to server
-	
 	axios.post(controllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
 		.then(response => {
 			
 			toast(response.data); //print out the response to the user
 			viewAdmins();
+			
+			clearInputFields("#company-admins-table");
 			
 		}); 
 	
@@ -223,11 +228,22 @@ function registerAdmin() {
 		return;
 	}
 	
-	//check whether email is valid
+	//TODO: initialize loader
 	
 	//sending data to server
 	axios.post(controllerPath + "/registerAdmin", getAdminJson())
-		.then(response => (toast(response.data))); 
+		.then(response => {
+			
+			toast(response.data);
+			
+			//clear the input fields if the registration was successful
+			if(response.data.toLowerCase().includes("confirmation")) {
+				clearInputFields("#register-admin-table");
+			}
+			
+			 
+			//TODO: hide loader
+		});
 
 }
 
@@ -243,27 +259,3 @@ function getAdminJson() {
 		"companyType": $("#admin-type").val()
 	};
 }
-
-
-/* Function for validating input fields by checking whether they're empty */
-
-function validateInputFields(tableID) {
-	
-	var valid = true;
-	$(tableID + " :input").not(":button").each(function() {
-		
-		var input = $(this).val();
-		
-		if(input === "" || input === null) {
-			valid = false;
-		}
-		
-	});
-	
-	return valid;
-}
-
-function validateEmail(elementValue){      
-	   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-	   return emailPattern.test(elementValue); 
-	 } 
