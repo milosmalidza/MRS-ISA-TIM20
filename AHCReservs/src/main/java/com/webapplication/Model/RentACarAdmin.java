@@ -5,11 +5,13 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webapplication.JSONBeans.AdminToRegister;
 
 @Entity
 public class RentACarAdmin extends AppUser {
 
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private RentACar rent_a_car;
 	
@@ -34,11 +36,11 @@ public class RentACarAdmin extends AppUser {
 		this.rent_a_car = null; //the admin is jobless when being registered
 		
 	}
-
+	@JsonIgnore
 	public RentACar getRentACar() {
 		return rent_a_car;
 	}
-
+	@JsonIgnore
 	public void setRentACar(RentACar rentACar) {
 		this.rent_a_car = rentACar;
 	}

@@ -315,7 +315,9 @@ function showReservationMessage(message, length) {
 	
 }
 
-
+function viewVehicles() {
+	loadPage("view-vehicles.html?username=" + sessionUser.username + "&password=" + sessionUser.password);
+}
 
 
 

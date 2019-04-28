@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Edit rent-a-car service</title>
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/rent-a-car-admin.js"></script>
+		
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/admin-vehicle.css" />
+	
+	</head>
+
+	<body style="overflow-y:auto;">
+	
+	
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home</li>
+				<li>Airline companies</li>
+				<li>Hotels</li>
+				<li onclick="loadPage('cars.html')">Rent-a-car services</li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
+			<div id="main-content-holder">	<!-- Sluzi da spusti malo sadrzaj zbog navigacionog bara -->
+				<div class="row">
+					<div class="col-lg-6 col-sm-12 view-vehicle-item" th:each="vehicle : ${vehicles}" th:attr="data-vehicle=${vehicle.id}">
+						<div class="view-vehicle-content">
+							<div class="view-vehicle-content-holder">
+								<div class="view-vehicle-name" th:text="${vehicle.name}">Lorem ipsum</div>
+								<div class="view-vehicle-description" th:text="${vehicle.description}">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+						 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+						  velit esse cillum dolore eu fugiat nulla pariatur.</div>
+								<div class="view-vehicle-type" th:inline="text">Vehicle type: <span style="font-weight: bold;">[[${vehicle.vehicleType}]]</span></div>
+								<div class="view-vehicle-doors" th:inline="text">Vehicle doors: <span style="font-weight: bold;">[[${vehicle.numOfDoors}]]</span></div>
+								<div class="view-vehicle-people" th:inline="text">Vehicle seats: <span style="font-weight: bold;">[[${vehicle.numOfSeats}]]</span></div>
+								<div class="view-vehicle-branch">Vehicle branch: Lorem ipsum</div>
+							</div>
+							
+							
+						</div>
+						<div class="view-vehicle-operations">
+							
+							<div class="view-vehicle-operations-holder">
+								<input style="width:70%;letter-spacing:1px;" id="" class="ui button align-vehicle-view-button" type="button" onclick="" value="Edit" />
+								<input data-type="vehicle" style="width:70%;letter-spacing:1px;" id="" class="ui button align-vehicle-view-button" type="button" onclick="toggleConfirmationMessageWindow(this)" value="Remove" />
+							</div>
+							
+						</div>
+					</div>
+					
+				</div>
+			
+			</div>
+		</div>
+		
+		<div id="confirmation-message-holder">
+			<div id="centered-holder">
+				<table>
+					<tr>
+						<td id="confirm-message-question" colspan="2">Are you sure?</td>
+						
+					</tr>
+					<tr>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="toggle-yes" class="ui button" type="button" onclick="toggleConfirmationMessageWindow(this)" value="Yes" />
+						</td>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="toggle-no" class="ui button" type="button" onclick="toggleConfirmationMessageWindow(this)" value="No" />
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div id="exiting-page-animation"></div>
+		
+		<script> </script>
+	
+	</body>
+
+</html>

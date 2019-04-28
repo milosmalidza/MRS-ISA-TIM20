@@ -51,7 +51,7 @@ function loginUser() {
 		data: {username: formData.get("username"),
 			  password: formData.get("password")},
 		success: function(response) {
-			
+			console.log(response);
 			var data = JSON.parse(response);
 			
 			if (data.status == "success") {
@@ -71,7 +71,7 @@ function loginUser() {
 				}
 				
 				else if (data.user == "carAdmin") {
-					loadPage("edit-rent-a-car-service.html");
+					loadPage("edit-rent-a-car-service.html?username=" + data.username + "&password=" + data.password);
 				}
 				
 				else {
@@ -93,7 +93,7 @@ function loginUser() {
 				showFormMessage("Invalid password.", 3000);
 			}
 			
-			console.log(response);
+			
 			hideDataLoader();
 		}
 	})
@@ -255,9 +255,17 @@ function showFormMessage(message, length) {
 	
 }
 
+var confirmationSelectedElement = null
 var isConfirmationWindowActive = false;
-function toggleConfirmationMessageWindow() {
+function toggleConfirmationMessageWindow(element) {
+	
+	if (element.id == "toggle-yes") {
+		removeDataElement(confirmationSelectedElement);
+	}
+	
+	
 	var confirmWindow = document.getElementById("confirmation-message-holder");
+	confirmationSelectedElement = element;
 	
 	if (!isConfirmationWindowActive) {
 		$(confirmWindow).fadeIn(500);
@@ -270,6 +278,40 @@ function toggleConfirmationMessageWindow() {
 	}
 	
 }
+
+function removeDataElement(element) {
+	
+	var dataType = element.getAttribute("data-type");
+	
+	if (dataType == "vehicle") {
+		var closest = element.closest(".view-vehicle-item");
+		
+		var data = {
+			vehicle : closest.getAttribute("data-vehicle")
+		};
+		
+		$.ajax({
+			type: "post",
+			url: "rentACarService/RemoveCar",
+			data: {json : JSON.stringify(data),
+					user : JSON.stringify(sessionUser)
+				
+				},
+			success: function(response) {
+				console.log(response);
+				if (response == "success") {
+					$(closest).css("display", "none");
+				}
+				
+			}
+		})
+	}
+	
+	
+}
+
+
+
 
 
 function mouseEnterCompanyItem(element) {

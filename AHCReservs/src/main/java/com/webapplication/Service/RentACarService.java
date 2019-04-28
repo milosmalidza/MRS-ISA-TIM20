@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
+import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Repository.RegisteredUserRepository;
@@ -27,6 +28,9 @@ public class RentACarService {
 
 	@Autowired
 	public RegisteredUserRepository userRepository;
+	
+	@Autowired
+	private RentACarAdminService rentAdminService;
 	
 	@Autowired
 	public RentACarRepository rentACarRep;
@@ -51,6 +55,23 @@ public class RentACarService {
 		return rentACarRep.findAll();
 	}
 	
+	public String removeVehicle(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode dataNode = mapper.readTree(json);
+		JsonNode userNode = mapper.readTree(user);
+		
+		RentACarAdmin admin = rentAdminService.findByUsername(userNode.get("username").asText());
+		
+		if (admin == null || !admin.getPassword().equals(userNode.get("password").asText())) {
+			return "badRequest";
+		}
+		
+		vehicleRep.deleteById(Long.parseLong(dataNode.get("vehicle").asText()));
+		
+		
+		return "success";
+	}
 	
 	
 	public String returnSearchResults(String json) throws IOException, ParseException {
