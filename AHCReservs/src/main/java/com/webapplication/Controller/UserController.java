@@ -200,7 +200,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(sysUser);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
-				((ObjectNode) jsonNode).put("user", "systemUser");
+				((ObjectNode) jsonNode).put("user", "sysAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
