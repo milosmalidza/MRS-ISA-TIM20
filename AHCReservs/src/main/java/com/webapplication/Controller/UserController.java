@@ -304,11 +304,10 @@ public class UserController {
 				
 				String userJson = mapper.writeValueAsString(carAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
+				((ObjectNode) jsonNode).put("serviceId", carAdmin.getRentACar().getId());
 				((ObjectNode) jsonNode).put("status", "success");
 				((ObjectNode) jsonNode).put("user", "carAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
-				
-				
 				
 				return mapper.writeValueAsString(jsonNode);
 			}

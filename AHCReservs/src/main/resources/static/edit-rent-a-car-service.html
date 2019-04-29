@@ -49,7 +49,7 @@
 						<td style="width:45%">Company name:  </td>
 						<td>
 							<div class="input-additional full-width-input ui input ">
-								<input type="text" id="company-name" name="company-name" autocomplete="off"/>
+								<input th:attr="value=${service.name}" type="text" id="company-name" name="company-name" autocomplete="off"/>
 							</div>
 						</td>
 					</tr>
@@ -58,7 +58,7 @@
 						<td>Company description: </td>
 						<td>
 							<div class="input-additional full-width-input ui input ">
-								<input type="text" id="company-description" name="company-description" autocomplete="off"/>
+								<input th:attr="value=${service.description}" type="text" id="company-description" name="company-description" autocomplete="off"/>
 							</div>
 						</td>
 					</tr>
@@ -67,7 +67,7 @@
 						<td>Company address:  </td>
 						<td>
 							<div class="input-additional full-width-input ui input ">
-								<input type="text" id="company-address" name="company-address" autocomplete="off"/>
+								<input th:attr="value=${service.address}" type="text" id="company-address" name="company-address" autocomplete="off"/>
 							</div>
 						</td>
 					</tr>
@@ -88,88 +88,47 @@
 					</tr>
 					
 					<tr>
-						<td>Remove office branch: </td>
-						<td>
-							<select id="branch-offices" name="branch-offices" class="ui dropdown">
-							  <option value=""></option>
-							  <option value="Athens">Athens</option>
-							  <option value="Belgrade">Belgrade</option>
-							  <option value="London">London</option>
-							  <option value="New York">New York</option>
-							  <option value="Budapest">Budapest</option>
-							  <option value="Madrid">Madrid</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
-						</td>
-						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="Remove" /></td>
-					</tr>
-					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td style="font-size: 24px; font-weight: bold;">Office branches</td>
 						<td></td>
-						<td>		
-							<p id="form-message">Message</p>
-						</td>
-						
-					</tr>
-					<tr>
-						<td>
-							Add vehicles
-						</td>
-						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="loadPage('add-rent-a-car-vehicle.html')" value="Add vehicles" /></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Remove vehicles: </td>
-						<td>
-							<select id="remove-vehicles-options" name="remove-vehicles-options" class="ui dropdown">
-							  <option value=""></option>
-							  <option value="Mazda32019">Mazda 3 2019</option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
-						</td>
-						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="toggleConfirmationMessageWindow()" value="Remove" /></td>
-					</tr>
-					
-					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
-						<td></td>
-						<td>		
-							<p id="form-message">Message</p>
-						</td>
-						
 					</tr>
 					
 					<tr>
-						<td>Edit vehicles: </td>
+						<td>Add office branch: </td>
 						<td>
-							<select id="edit-vehicles-options" name="edit-vehicles-options" class="ui dropdown">
-							  <option value=""></option>
-							  <option value="Mazda32019">Mazda 3 2019</option>
-							</select>
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="addRentOfficeBranches()" value="Add" />
+						</td>
+					</tr>
+					
+					<tr>
+						<td>View office branches: </td>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="viewRentOfficeBranches()" value="View" />
 						</td>
 					</tr>
 					<tr>
-						<td>
-							<div id="data-loader" style="float:right;margin-right:50px;" class="ui active inline loader"></div>
-						</td>
-						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="" value="Edit" /></td>
-					</tr>
-					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
 						<td></td>
-						<td>		
-							<p id="form-message">Message</p>
-						</td>
-						
+						<td></td>
 					</tr>
+					<tr>
+						<td style="font-size: 24px; font-weight: bold;">Company vehicles</td>
+						<td></td>
+					</tr>
+					
+					<tr>
+						<td>
+							Add vehicles: 
+						</td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="loadPage('add-rent-a-car-vehicle.html')" value="Add" /></td>
+					</tr>
+					
+					<tr>
+						<td>View vehicles: </td>
+						<td>
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="viewVehicles()" value="View" />
+						</td>
+					</tr>
+					
+					
 				</table>
 				</form>
 					   

@@ -90,24 +90,29 @@ public class RentACarAdminService {
 	}
 
 	//Change company info with new data
-	public String ChangeCompanyInfo(String requestJson) throws IOException {
+	public String ChangeCompanyInfo(String requestJson, String user) throws IOException {
 		
-		RentACar company = rentRepository.findOneByName("");
-		if (company == null) {
-			return "notLoggedIn";
-		}
+		
 		
 		ObjectMapper mapper = new ObjectMapper();
 		
 		JsonNode node = mapper.readTree(requestJson);
+		JsonNode userNode = mapper.readTree(user);
 		
+		RentACar company = rentRepository.findById(userNode.get("serviceId").asLong()).get();
+		if (company == null) {
+			return "notLoggedIn";
+		}
 		
 		
 		String newName = node.get("newName").asText();
-		RentACar checkout = rentRepository.findOneByName(newName);
-		if (checkout != null) {
-			return "exists";
+		if (!company.getName().equals(newName)) {
+			RentACar checkout = rentRepository.findOneByName(newName);
+			if (checkout != null) {
+				return "exists";
+			}
 		}
+		
 		
 		company.setName(newName);
 		company.setDescription(node.get("newDescription").asText());

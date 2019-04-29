@@ -12,4 +12,5 @@ public interface RentACarRepository extends JpaRepository<RentACar, Long> {
 	
 	public RentACar findOneById(Long id);
 	
+	
 }
