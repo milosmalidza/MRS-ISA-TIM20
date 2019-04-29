@@ -19,7 +19,7 @@ div.profile-div {
 }
 
 
-div#animation-div {
+div.left-animation-div {
 	
 	position: fixed;
 	width: 0%;
@@ -32,6 +32,22 @@ div#animation-div {
 	
 	-webkit-transition: .7s;
 	transition: .7s;
+}
+
+div.right-animation-div {
+	
+	position: fixed;
+	width: 0%;
+	height: 100%;
+	top: 0;
+	right: 0;
+	background-color: white;
+	z-index: 5;
+	overflow-y: scroll;
+	
+	-webkit-transition: .7s;
+	transition: .7s;
+	
 }
 
 button#back-button {

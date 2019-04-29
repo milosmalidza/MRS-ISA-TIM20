@@ -24,11 +24,15 @@ public class Hotel extends Company {
 	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<Room> rooms;
 	
+	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<HAdditionalService> pricelist;
+	
 	public Hotel() {
 		
 		super();
 		this.admins = new HashSet<HotelAdmin>();
 		this.rooms = new HashSet<Room>();
+		this.pricelist = new HashSet<HAdditionalService>();
 		
 	}
 
@@ -36,6 +40,7 @@ public class Hotel extends Company {
 		super(name);
 		this.admins = new HashSet<HotelAdmin>();
 		this.rooms = new HashSet<Room>();
+		this.pricelist = new HashSet<HAdditionalService>();
 	}
 	
 	public Hotel(Long id, String name, String description, String address, double rating) {
@@ -43,6 +48,7 @@ public class Hotel extends Company {
 		super(id, name, description, address, rating);
 		this.admins = new HashSet<HotelAdmin>();
 		this.rooms = new HashSet<Room>();
+		this.pricelist = new HashSet<HAdditionalService>();
 	}
 	
 	//used when registering a new company
@@ -50,14 +56,15 @@ public class Hotel extends Company {
 		this.name = companyInfo.getName();
 		this.admins = new HashSet<HotelAdmin>();
 		this.rooms = new HashSet<Room>();
+		this.pricelist = new HashSet<HAdditionalService>();
 	}
 	
 	@JsonIgnore //ignoring to avoid infinite recursion when returning json
-	public Set<HotelAdmin> getHotelAdmins() {
+	public Set<HotelAdmin> getAdmins() {
 		return admins;
 	}
 
-	public void setHotelAdmins(Set<HotelAdmin> hotelAdmins) {
+	public void setAdmins(Set<HotelAdmin> hotelAdmins) {
 		this.admins = hotelAdmins;
 	}
 
@@ -68,6 +75,15 @@ public class Hotel extends Company {
 	public void setRooms(Set<Room> rooms) {
 		this.rooms = rooms;
 	}
+
+	
+	public Set<HAdditionalService> getPricelist() {
+		return pricelist;
+	}
+
+	public void setPricelist(Set<HAdditionalService> pricelist) {
+		this.pricelist = pricelist;
+	} 
 
 	
 	

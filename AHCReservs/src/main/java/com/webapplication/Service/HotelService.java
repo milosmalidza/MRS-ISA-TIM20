@@ -1,5 +1,7 @@
 package com.webapplication.Service;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.webapplication.JSONBeans.HotelData;
+import com.webapplication.JSONBeans.HotelServiceData;
 import com.webapplication.JSONBeans.RoomData;
+import com.webapplication.Model.Currency;
+import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.Hotel;
+import com.webapplication.Model.HotelServiceType;
 import com.webapplication.Model.Room;
 import com.webapplication.Model.RoomType;
 import com.webapplication.Repository.HotelRepository;
@@ -25,6 +31,9 @@ public class HotelService {
 	
 	@Autowired
 	RoomService roomSvc;
+	
+	@Autowired
+	HAdditionalServiceSvc hAdditionalSvc;
 	
 	
 	public Hotel updateProfile(HotelData hotelData) {
@@ -77,12 +86,16 @@ public class HotelService {
 			return null;
 		}
 		
-		//convert string to enum
+		//convert strings to enums
 		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
-		if(type == null) {
+		Currency currency = mulSvc.convertStringToCurrency(roomData.getCurrencyString());
+		
+		if(type == null || currency == null) {
 			return null;
 		}
+		
 		roomData.setRoomType(type);
+		roomData.setCurrency(currency);
 		
 		//create new room
 		Room room = new Room(roomData);
@@ -143,18 +156,62 @@ public class HotelService {
 		room.setNumOfBeds(roomData.getNumOfBeds());
 	
 		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
+		Currency currency = mulSvc.convertStringToCurrency(roomData.getCurrencyString());
 		
-		if(type == null) {
-			return ("Unknown room type");
+		if(type == null || currency == null) {
+			return "Unknown currency or room type";
 		}
 		
 		room.setRoomType(type);
+		room.getRoomPrice().setCurrency(currency);
+		room.getRoomPrice().setPrice(roomData.getPrice());
 		
 		roomSvc.save(room);
 		
 		return "Success";
 	}
 	
+	
+	public HAdditionalService addService(HotelServiceData serviceData) {
+		
+		
+		//convert strings to enums
+		Currency currency = mulSvc.convertStringToCurrency(serviceData.getCurrencyString());
+		HotelServiceType svcType = hAdditionalSvc.convertStringToService(serviceData.getServiceTypeString());
+		
+		if(currency == null || svcType == null) {
+			return null;
+		}
+		
+		serviceData.setCurrency(currency);
+		serviceData.setServiceType(svcType);
+		
+		Hotel hotel = findOne(serviceData.getHotelID()).get();
+		
+		if(hotel == null) {
+			System.out.println("Can't find hotel");
+			return null;
+		}
+		
+		//check if service already exists in the hotel
+		if(hAdditionalSvc.serviceExistsInHotel(serviceData.getServiceType(), hotel.getId())) {
+			return null;
+		}
+		
+		//create object and save data
+		HAdditionalService service = new HAdditionalService(serviceData, hotel);
+		
+		return hAdditionalSvc.save(service);
+		
+		
+	}
+	
+	
+	public Collection<HotelServiceType> getServiceTypes() {
+		
+		return Arrays.asList(HotelServiceType.values());
+		
+	}
 	
 	public Optional<Hotel> findOne(Long id) {
 		return hotelRep.findById(id);

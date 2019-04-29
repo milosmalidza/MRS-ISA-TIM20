@@ -1,5 +1,8 @@
 package com.webapplication.Service;
 
+import java.util.Arrays;
+
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +33,20 @@ public class RoomService {
 	//convert string to room type
 	public RoomType getRoomType(String roomTypeString) {
 		
-		switch(roomTypeString.toLowerCase()) {
-		
-		case "single":
-			return RoomType.SINGLE;
+		try {
 			
-		case "double":
-			return RoomType.DOUBLE;
+			return RoomType.valueOf(roomTypeString.toUpperCase());
 			
-		case "triple":
-			return RoomType.TRIPLE;
-			
-		case "quad":
-			return RoomType.QUAD;
-		
-		default:
+		} catch(Exception e) {
+			e.printStackTrace();
 			return null;
-		
 		}
+	}
+	
+	public Collection<RoomType> getRoomTypes() {
+		
+		return Arrays.asList(RoomType.values());
+		
 	}
 	
 	

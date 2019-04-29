@@ -86,14 +86,14 @@
 						<tr>
 							<td> Room configuration: </td>
 							<td>
-								<input class="ui button" type="button" onclick="showForm()" value="Configure rooms"/>
+								<input class="ui button" type="button" onclick="displayRoomConfig()" value="Configure rooms"/>
 							</td>
 						</tr>
 						
 						<tr>
 							<td> Pricing configuration: </td>
 							<td>
-								<input class="ui button" type="button" onclick="" value="Configure prices"/>
+								<input class="ui button" type="button" onclick="displayPriceConfig()" value="Configure prices"/>
 							</td>
 						</tr>
 						
@@ -111,10 +111,10 @@
 		
 		
 		<!-- Room configuration/ -->
-		<div id="animation-div">
+		<div class="left-animation-div" id="room-configuration-div">
 		
 			<!-- Back button -->
-			<button id="back-button" class="ui black basic button" onclick="goBack()"> BACK </button>
+			<button id="back-button" class="ui black basic button" onclick="hideRoomConfig()"> BACK </button>
 				
 			<div class="center-content">
 			
@@ -131,7 +131,7 @@
 						<td> Room floor: </td>
 						<td> 
 							<div class="ui input">
-								<input type="number" id="room-floor"/>
+								<input type="number" id="room-floor" min="1"/>
 							</div>
 						</td>
 					</tr>
@@ -140,7 +140,7 @@
 						<td> Room number: </td>
 						<td> 
 							<div class="ui input">
-								<input type="number" id="room-number"/>
+								<input type="number" id="room-number" min="1"/>
 							</div>
 						</td>
 					</tr>
@@ -150,12 +150,9 @@
 						<td>
 							<select id="room-type" class="ui dropdown">
 								<option value="">Select type</option>
-								<option value="single"> Single </option>
-								<option value="double"> Double </option>
-								<option value="triple"> Triple </option>
-								<option value="quad"> Quad </option>
 							</select>
 						</td>
+						
 					</tr>
 					
 					<tr>
@@ -165,6 +162,27 @@
 								<input type="number" id="room-beds"/>
 							</div>
 						</td>
+					</tr>
+					
+					<tr>
+						<td> Price per night: </td>
+						<td> 
+							<div class="ui input">
+								<input type="number" id="room-price" min="1"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Currency: </td>
+						
+						<td>
+							<select id="price-currency" class="ui dropdown">
+								<option value="">Select currency</option>
+							</select>
+						</td>
+						
+						<td> </td>
 					</tr>
 					
 					<tr>
@@ -183,12 +201,19 @@
 					
 					<thead>
 						<tr>
+							<th>
+								<h2> Hotel rooms </h2>	
+							</th>
+						</tr>
+						
+						<tr>
 							<th> Room number </th>
 							<th> Floor number  </th>
 							<th> Num of beds </th>
 							<th> Room type </th>
 							<th> Is reserved </th>
 							<th> Is on discount </th>
+							<th> Room price </th>
 							<th> * </th>
 							<th> - </th>		
 						</tr>
@@ -244,10 +269,6 @@
 						<td>
 							<select id="room-type-edit" class="ui dropdown">
 								<option value="">Select type</option>
-								<option value="single"> Single </option>
-								<option value="double"> Double </option>
-								<option value="triple"> Triple </option>
-								<option value="quad"> Quad </option>
 							</select>
 						</td>
 					</tr>
@@ -259,6 +280,27 @@
 								<input type="number" id="room-beds-edit"/>
 							</div>
 						</td>
+					</tr>
+					
+					<tr>
+						<td> Price per night: </td>
+						<td> 
+							<div class="ui input">
+								<input type="number" id="room-price-edit"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Currency: </td>
+						
+						<td>
+							<select id="price-currency-edit" class="ui dropdown">
+								<option value="">Select currency</option>
+							</select>
+						</td>
+						
+						<td> </td>
 					</tr>
 					
 					<tr>
@@ -276,12 +318,106 @@
 		</div>
 		
 		
+		
+		<!-- Pricing configuration/ -->
+		<div id="price-configuration-div" class="right-animation-div">
+		
+			<!-- Back button -->
+			<button id="back-button" class="ui black basic button" onclick="hidePriceConfig()"> BACK </button>
+				
+			<div class="center-content">
+			
+			<table id="add-service-table">
+			
+			<tr>
+				<th> </th>
+				<th>
+					<h2> Configure prices </h2>
+				</th>
+			</tr>
+			
+			<tr>
+				<td> Service type: </td>
+				<td>
+					<select id="service-type" class="ui dropdown">
+						<option value=""> Select service </option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td> Service price: </td>
+				<td>
+					<div class="ui input">
+						<input type="number" id="service-price" min="1"/>
+					</div>
+				</td>
+			</tr>	
+			
+			<tr>
+				<td> Currency: </td>
+				
+				<td>
+					<select id="service-currency" class="ui dropdown">
+						<option value="">Select currency</option>
+					</select>
+				</td>
+			</tr>
+			
+			<tr>
+				<td> </td>
+				<td>
+					<input class="ui button" type="button" onclick="addService()" value="Add service"/>
+				</td>
+			</tr>
+			
+			</table>
+			
+			
+			<table id="all-services-table" class="ui single line table">
+				
+				<thead>
+					<tr>
+						<td> </td>
+						<td>
+							<h2> Hotel services  </h2>
+						<td>
+					</tr>
+					
+					<tr>
+						<th> Service type </th>
+						<th> Service price </th>
+						<th> * </th>
+					</tr>
+				</thead>
+				
+				<tbody id="all-services-body">
+				
+				</tbody>
+				
+			</table>
+			
+			</div>
+			
+		</div>
+		
+		
 		<!-- Decorating select tags  -->
 		<script>
+		
 			$("#room-type")
 			  .dropdown();
 			  
-			  $("#room-type-edit")
+			$("#room-type-edit")
+			  .dropdown();
+			
+			$("#price-currency")
+			  .dropdown();
+			
+			$("#price-currency-edit")
+			  .dropdown();
+			
+			$("#service-type")
 			  .dropdown();
 			
 		</script>

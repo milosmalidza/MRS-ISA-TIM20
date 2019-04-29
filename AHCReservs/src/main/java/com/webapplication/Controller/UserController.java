@@ -2,8 +2,12 @@ package com.webapplication.Controller;
 
 
 import java.io.IOException;
+import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.ConfirmationToken;
+import com.webapplication.Model.Currency;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACarAdmin;
@@ -27,6 +32,7 @@ import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Service.EmailSenderService;
+import com.webapplication.Service.MultipleService;
 
 
 @RestController
@@ -53,6 +59,9 @@ public class UserController {
 	
 	@Autowired
 	private EmailSenderService emailSenderService;
+	
+	@Autowired
+	private MultipleService mulSvc;
 	
 	
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
@@ -200,7 +209,7 @@ public class UserController {
 				String userJson = mapper.writeValueAsString(sysUser);
 				JsonNode jsonNode = mapper.readTree(userJson);
 				((ObjectNode) jsonNode).put("status", "success");
-				((ObjectNode) jsonNode).put("user", "systemUser");
+				((ObjectNode) jsonNode).put("user", "sysAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
 				
@@ -321,6 +330,16 @@ public class UserController {
 			return mapper.writeValueAsString(node);
 		}
 		
+	}
+	
+	
+	@RequestMapping(
+			value="/getCurrencies",
+			method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<Currency>> getRoomTypes() {
+		
+		return new ResponseEntity<>(mulSvc.getCurrencies(), HttpStatus.OK);
 		
 	}
 	
