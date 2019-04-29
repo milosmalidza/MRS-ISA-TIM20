@@ -302,6 +302,9 @@ function removeDataElement(element) {
 				if (response == "success") {
 					$(closest).css("display", "none");
 				}
+				else if (response == "reserved") {
+					alert("Vehicle is already reserved and cannot be removed!");
+				}
 				
 			}
 		})

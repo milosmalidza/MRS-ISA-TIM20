@@ -67,9 +67,27 @@ public class RentACarService {
 			return "badRequest";
 		}
 		
-		vehicleRep.deleteById(Long.parseLong(dataNode.get("vehicle").asText()));
 		
+		Long vehicleId = Long.parseLong(dataNode.get("vehicle").asText());
+		Long serviceId = Long.parseLong(userNode.get("serviceId").asText());
 		
+		Vehicle vehicle = vehicleRep.findById(vehicleId).get();
+		RentACar service = rentACarRep.findById(serviceId).get();
+		
+		System.out.println(service.getVehicles().size());
+		service.getVehicles().remove(vehicle);
+		System.out.println(service.getVehicles().size());
+		//rentACarRep.save(service);
+		
+		Date currentDate = new Date();
+		
+		for (VehicleReservation res : vehicle.getReservations()) {
+			if (currentDate.before(res.getDueDate())) {
+				return "reserved";
+			}
+		}
+		
+		vehicleRep.delete(vehicle);
 		return "success";
 	}
 	
