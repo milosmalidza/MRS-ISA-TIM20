@@ -57,10 +57,11 @@ public class RentACarController {
 	}
 	
 	@RequestMapping(value = "/EditService", method = RequestMethod.POST)
-	public String editInfo(@RequestParam("json") String json) {
+	public String editInfo(@RequestParam("json") String json,
+			@RequestParam("user") String user) {
 		
 		try {
-			return rentAdminService.ChangeCompanyInfo(json);
+			return rentAdminService.ChangeCompanyInfo(json, user);
 		} catch (IOException e) {
 			return "badRequest";
 		}
