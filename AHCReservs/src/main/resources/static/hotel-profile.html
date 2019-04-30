@@ -13,6 +13,7 @@
 		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		
+		<link rel="stylesheet" href="js-libs/icon.css" />
 		<link rel="stylesheet" href="js-libs/toast.css"/>
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		
@@ -86,21 +87,32 @@
 						<tr>
 							<td> Room configuration: </td>
 							<td>
-								<input class="ui button" type="button" onclick="displayRoomConfig()" value="Configure rooms"/>
+								<button class="ui right labeled icon button" onclick="displayRoomConfig()">
+									<i class="bed icon"></i>
+									Configure rooms
+								</button>
+								<!-- <input class="ui button" type="button" onclick="displayRoomConfig()" value="Configure rooms"/>  -->
 							</td>
 						</tr>
 						
 						<tr>
 							<td> Pricing configuration: </td>
 							<td>
-								<input class="ui button" type="button" onclick="displayPriceConfig()" value="Configure prices"/>
+								<button class="ui right labeled icon button" onclick="displayPriceConfig()">
+									<i class="euro bill icon"></i>
+									Configure prices
+								</button>
+								<!--<input class="ui button" type="button" onclick="displayPriceConfig()" value="Configure prices"/> -->
 							</td>
 						</tr>
 						
 						<tr>
 							<td> </td>
 							<td>
-								<input class="ui button" type="button" onclick="updateProfile()" value="Update profile"/>
+								<button class="ui right labeled icon button" onclick="updateProfile()">
+									<i class="user icon"></i>
+									Update profile 
+								</button>
 							</td>
 						</tr>
 						

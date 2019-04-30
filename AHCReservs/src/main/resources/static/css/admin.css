@@ -124,3 +124,7 @@ table#edit-room-table {
 	margin: 0 auto;
 }
 
+textarea#hotel-description {
+	font-family: Montserrat;
+}
+
