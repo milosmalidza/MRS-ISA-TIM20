@@ -1,6 +1,7 @@
 package com.webapplication.JSONBeans;
 
 
+import com.webapplication.Model.Currency;
 import com.webapplication.Model.RoomType;
 
 public class RoomData {
@@ -12,16 +13,19 @@ public class RoomData {
 	private int numOfBeds;
 	private RoomType roomType;
 	private String roomTypeString;
+	private double price;
+	private String currencyString;
+	private Currency currency;
 	
 	
 	public RoomData() {
 		
 	}
-	
+
 
 	public RoomData(Long hotelID, Long roomID, int number, int floor, int numOfBeds, RoomType roomType,
-			String roomTypeString) {
-		
+			String roomTypeString, double price, String currencyString, Currency currency) {
+		super();
 		this.hotelID = hotelID;
 		this.roomID = roomID;
 		this.number = number;
@@ -29,6 +33,9 @@ public class RoomData {
 		this.numOfBeds = numOfBeds;
 		this.roomType = roomType;
 		this.roomTypeString = roomTypeString;
+		this.price = price;
+		this.currencyString = currencyString;
+		this.currency = currency;
 	}
 
 
@@ -39,6 +46,16 @@ public class RoomData {
 
 	public void setHotelID(Long hotelID) {
 		this.hotelID = hotelID;
+	}
+
+
+	public Long getRoomID() {
+		return roomID;
+	}
+
+
+	public void setRoomID(Long roomID) {
+		this.roomID = roomID;
 	}
 
 
@@ -92,15 +109,36 @@ public class RoomData {
 	}
 
 
-	public Long getRoomID() {
-		return roomID;
+	public double getPrice() {
+		return price;
 	}
 
 
-	public void setRoomID(Long roomID) {
-		this.roomID = roomID;
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public String getCurrencyString() {
+		return currencyString;
+	}
+
+
+	public void setCurrencyString(String currencyString) {
+		this.currencyString = currencyString;
+	}
+
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 	
+
 	
 	
 

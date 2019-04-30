@@ -10,16 +10,22 @@ window.onload = function() {
 		window.location.href = "index.html";
 	}
 	
-	//TODO: check the type of the user
 	
-	getAdminHotel(user);
+	let loggedUser = JSON.parse(user);
+	
+	//check the type of the user
+	if(loggedUser.user != "hotelAdmin") {
+		history.back(); //redirect the user to the previous page
+	}
+	
+	getAdminHotel(loggedUser);
 	
 }
 
 
-function getAdminHotel(userJSON) {
+function getAdminHotel(loggedUser) {
 	
-	let loggedUser = JSON.parse(userJSON);
+	
 	let usernameJson = { "username": loggedUser.username }; //json used for posting a request
 	
 	//get the hotel of the logged in admin
@@ -30,8 +36,11 @@ function getAdminHotel(userJSON) {
 				adminHotel = response.data;
 				fillHotelProfileInputs(response.data); //fill the profile data
 				
-				addAllRoomsToTable();
+				//display rooms and prices
+				addAllRoomsToTable(); 
+				addAllServicesToTable();
 				
+				fillSelectInputs();
 				
 			} else {
 				alert("You haven't been assigned a hotel yet");
@@ -41,6 +50,16 @@ function getAdminHotel(userJSON) {
 				window.location.href = "index.html";
 				
 			}
+		});
+	
+}
+
+function getRoomTypes(selectID) {
+	
+	axios.get(controllerPath + "/getRoomTypes")
+		.then(response => {
+			addValuesToSelect("#room-type", response.data, "Select type");
+			addValuesToSelect("#room-type-edit", response.data, "Select type");
 		});
 	
 }
@@ -58,8 +77,22 @@ function fillHotelProfileInputs(hotel) {
 		$("#hotel-address").val(hotel.address);
 	}
 	
+}
+
+function fillSelectInputs() {
 	
-	//TODO: pricing
+	//room configuration selects
+	getRoomTypes(); //fill the values in the select that contains room types
+	addCurrenciesToSelect("#price-currency"); //fill the currency select with its values
+	addCurrenciesToSelect("#price-currency-edit"); //fill the currency select with its values
+	
+	//pricing configuration selects
+	addCurrenciesToSelect("#service-currency");
+	
+	axios.get(controllerPath + "/getServiceTypes")
+		.then(response => {
+			addValuesToSelect("#service-type", response.data, 'Select service');
+		});
 	
 }
 
@@ -142,11 +175,12 @@ function addRoom() {
 		return;
 	}
 	
-	//room floor and number must be > 1
-	if($("#room-floor").val() < 1 || $("#room-number").val() < 1) {
+	
+	//room floor,number and price must be > 1
+	if($("#room-floor").val() < 1 || $("#room-number").val() < 1 || $("#room-price").val() < 1) {
 		toast("Entered numbers must be positive");
 		return;
-	}
+	} 
 	
 	//Comparing room type to number of beds
 	let message = roomTypeBedNumValidation($("#room-type").val(), $("#room-beds").val());
@@ -183,7 +217,9 @@ function getRoomJson() {
 		"number": $("#room-number").val(),
 		"floor": $("#room-floor").val(),
 		"numOfBeds": $("#room-beds").val(),
-		"roomTypeString": $("#room-type").val()
+		"roomTypeString": $("#room-type").val(),
+		"price": $("#room-price").val(),
+		"currencyString": $("#price-currency").val()
 	};
 	
 }
@@ -213,14 +249,20 @@ function addRoomToTable(room) {
 	    	if(property === 'id') {
 	    		continue;
 	    	}
-	        
+	    	
 	    	// Insert a cell in the row at index
 	    	var newCell  = newRow.insertCell(index);
-	    		
-    		// Append a text node to the cell
-	    	var newText  = document.createTextNode(room[property]);
-	    	newCell.appendChild(newText);
 	    	
+	    	//room price is an object containing the price and currency
+	    	if(property === 'roomPrice') {
+	    		var newText = document.createTextNode(room[property].price + ' ' + room[property].currency);
+	    		newCell.appendChild(newText);
+	    	} else {
+	    		// Append a text node to the cell
+		    	var newText  = document.createTextNode(room[property]);
+		    	newCell.appendChild(newText);
+	    	}
+	        	
 	    	index = index + 1;
 	    }
 	}
@@ -405,30 +447,130 @@ function getEditRoomJson(roomID) {
 		"number": $("#room-number-edit").val(),
 		"floor": $("#room-floor-edit").val(),
 		"numOfBeds": $("#room-beds-edit").val(),
-		"roomTypeString": $("#room-type-edit").val()
+		"roomTypeString": $("#room-type-edit").val(),
+		"price": $("#room-price-edit").val(),
+		"currencyString": $("#price-currency-edit").val()
 	};
 	
 }
 
 //display tables containing room configuration forms
-function showForm() {
+function displayRoomConfig() {
 	
 	//show content
 	$("#add-room-table").show();
 	$("#rooms-table").show();
 	
 	//add the animation
-	document.getElementById("animation-div").style.width = "100%";
+	document.getElementById("room-configuration-div").style.width = "100%";
+}
+
+function displayPriceConfig() {
+	
+	$("#add-service-table").show();
+	
+	//add the animation
+	document.getElementById("price-configuration-div").style.width = "100%";
 }
 
 
-function goBack() {
+function hideRoomConfig() {
 	
 	//adding the animation
-	document.getElementById("animation-div").style.width = "0%";
+	document.getElementById("room-configuration-div").style.width = "0%";
 	
 	//hide content
 	$("#add-room-table").hide();
 	$("#rooms-table").hide();
 	
+}
+
+function hidePriceConfig() {
+	
+	$("#add-service-table").hide();
+	
+	//add the animation
+	document.getElementById("price-configuration-div").style.width = "0%";
+}
+
+
+function addService() {
+	
+	if(validateInputFields("#add-service-table") === false) {
+		toast("Empty field detected");
+		return;
+	}
+	
+	if($("#service-price").val() < 1) {
+		toast("Service price must be > 0");
+		return;
+	}
+	
+	
+	axios.post(controllerPath + "/addService", getServiceJson())
+		.then(response => {
+			
+			if(response.data === "" || response.data === null) {
+				toast("Service already added");
+				return;
+			}
+			
+			addRowToServicesTable(response.data);
+			
+			
+		});
+	
+}
+
+function addRowToServicesTable(serviceObject) {
+	
+	
+	let tableRef = $("#all-services-body")[0];
+	
+	// Insert a row in the table at the last row
+	let newRow = tableRef.insertRow(tableRef.rows.length);
+	
+	//add a cell for service type
+	let newCell  = newRow.insertCell(0);
+	let newText  = document.createTextNode(serviceObject.service);
+	newCell.appendChild(newText);
+	
+	//add a cell for service price
+	newCell = newRow.insertCell(1);
+	newText = document.createTextNode(serviceObject.servicePrice.price + ' ' + serviceObject.servicePrice.currency);
+	newCell.appendChild(newText);
+	
+	
+    //add the edit button to the table
+    var editBtnCell  = newRow.insertCell(2);
+	var editBtn = document.createElement("INPUT");
+	
+	editBtn.type = "button";
+	editBtn.value = "Edit";
+	editBtn.className = "ui primary basic button";
+    
+	//editBtn.setAttribute("onclick", "displayEditModal(this);");
+	//editBtn.setAttribute("data-room-id", room.id); //bind room id to the button
+    
+    editBtnCell.appendChild(editBtn);
+   
+}
+
+function addAllServicesToTable() {
+	
+	for(let i = 0; i < adminHotel.pricelist.length; i++) {
+		addRowToServicesTable( adminHotel.pricelist[i]);
+	}
+	
+}
+
+
+function getServiceJson() {
+	
+	return {
+		"hotelID": adminHotel.id,
+		"serviceTypeString": $("#service-type").val(),
+		"price": $("#service-price").val(),
+		"currencyString": $("#service-currency").val()
+	};
 }

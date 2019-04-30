@@ -2,12 +2,16 @@ package com.webapplication.Service;
 
 import java.io.IOException;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.RoomData;
+import com.webapplication.Model.Currency;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.Room;
 
@@ -123,6 +127,28 @@ public class MultipleService {
 		}
 		
 		return false;
+		
+	}
+	
+	
+	public Collection<Currency> getCurrencies() {
+		
+		return Arrays.asList(Currency.values());
+		
+	}
+	
+	
+	public Currency convertStringToCurrency(String currencyString) {
+		
+		try {
+			
+			return Currency.valueOf(currencyString.toUpperCase());
+			
+		} catch(Exception e) {
+			
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 

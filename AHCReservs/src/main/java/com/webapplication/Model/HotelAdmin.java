@@ -1,10 +1,12 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.webapplication.JSONBeans.AdminToRegister;
 
 @Entity
@@ -35,6 +37,7 @@ public class HotelAdmin extends AppUser {
 		
 	}
 
+	
 	public Hotel getHotel() {
 		return hotel;
 	}

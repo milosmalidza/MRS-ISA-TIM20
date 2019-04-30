@@ -8,11 +8,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.webapplication.JSONBeans.RoomData;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Room {
 
 	@Id
@@ -41,8 +44,12 @@ public class Room {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Hotel hotel;
 	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Price roomPrice;
+	
 	public Room() {
 	
+		roomPrice = new Price();
 	}
 
 	public Room(Long id, int number, int floor, int numOfBeds, RoomType roomType, boolean reserved,
@@ -56,6 +63,8 @@ public class Room {
 		this.reserved = reserved;
 		this.discount = discount;
 		this.hotel = hotel;
+		
+		roomPrice = new Price();
 	}
 	
 	
@@ -67,6 +76,10 @@ public class Room {
 		this.roomType = roomData.getRoomType();
 		this.reserved = false;
 		this.discount = false;
+		
+		roomPrice = new Price();
+		roomPrice.setPrice(roomData.getPrice());
+		roomPrice.setCurrency(roomData.getCurrency());
 	}
 
 	public Long getId() {
@@ -133,6 +146,14 @@ public class Room {
 
 	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
+	}
+
+	public Price getRoomPrice() {
+		return roomPrice;
+	}
+
+	public void setRoomPrice(Price roomPrice) {
+		this.roomPrice = roomPrice;
 	}
 	
 }

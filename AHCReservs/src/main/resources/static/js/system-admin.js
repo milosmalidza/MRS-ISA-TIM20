@@ -6,10 +6,15 @@ window.onload = function() {
 	//get the currently logged in user
 	let user = window.localStorage.getItem("user");
 	
-	//TODO: check the type of the user
-	
 	if(user === null || user === undefined || user === "") {
 		window.location.href = "index.html";
+	}
+	
+	
+	let loggedUser = JSON.parse(user);
+	//check the type of the user
+	if(loggedUser.user != "sysAdmin") {
+		history.back(); //redirect the user to the previous page
 	}
 	
 }
