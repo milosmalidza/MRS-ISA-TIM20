@@ -22,14 +22,15 @@ function changeCompanyInfo () {
 	
 	var json = {
 		newName : companyName.value,
-		nemDescription : companyDescription.value,
+		newDescription : companyDescription.value,
 		newAddress : companyAddress.value
 	};
 	
 	$.ajax({
 		type: "post",
 		url: "rentACarService/EditService",
-		data: {json : JSON.stringify(json)},
+		data: {json : JSON.stringify(json),
+			  user : JSON.stringify(sessionUser)},
 		success: function (response) {
 			if (response == "success") {
 				showCompanyMessage("Successfully changed company information.", 3000);
@@ -315,7 +316,9 @@ function showReservationMessage(message, length) {
 	
 }
 
-
+function viewVehicles() {
+	loadPage("view-vehicles.html?username=" + sessionUser.username + "&password=" + sessionUser.password);
+}
 
 
 

@@ -46,7 +46,7 @@ function clearSemanticSelect(tdHolder, selectID, defaultText) {
 	texts[0].innerHTML = defaultText;
 	
 	$('#' + selectID + 'option:selected').remove();
-	$('#' + selectID).empty().append('<option value="">Select admin</option>');
+	$('#' + selectID).empty().append('<option value="">' + defaultText + '</option>');
 	
 }
 
