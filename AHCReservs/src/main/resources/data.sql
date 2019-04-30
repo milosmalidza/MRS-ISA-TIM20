@@ -27,7 +27,6 @@ insert into rentacar_admin(id, username, password, firstName, lastName, email_id
 insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "ra5un", "ra5pw", "ra5fn", "ra5ln", "ra5@gmail.com", 1);
 
 
-insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidza@gmail.com", 1);
 insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidzaa@gmail.com", 1);
 
 
