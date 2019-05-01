@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<title>AHC | Cars</title>
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/company-search.js"></script>
+		
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/company-search.css" />
+		<script th:inline="javascript">
+			/*<![CDATA[*/
+			
+			var services = [];
+			/*[# th:each="service : ${services}"]*/
+				
+				services.push({
+					name : /*[[${service.name}]]*/'',
+					description : /*[[${service.description}]]*/'',
+					address : /*[[${service.address}]]*/'',
+					rating : /*[[${service.rating}]]*/'',
+					id : /*[[${service.id}]]*/''
+				});
+				
+			/*[/]*/
+
+			/*]]>*/
+		</script>
+	</head>
+
+	<body style="overflow: hidden;background:rgba(12,47,33,1.00);" onLoad="browseCompaniesLoaded()">
+		
+	
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
+				<li>Airline companies | <span><i class="plane icon"></i></span></li>
+				<li>Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('cars.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+				<li id="search-button">Search <span><i class="search icon"></i></span></li>
+			</ul>
+		</div>
+		
+		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
+			
+			<div class="car-services-background-holder">
+				<div class="background-teaser"></div>
+			</div>
+			
+			
+			<div id="main-company-content-holder">
+				<div class="comapny-content">
+					<div class="company-number">
+						<div class="company-number-holder">
+							<div>1#</div>
+							<div>2#</div>
+							<div>3#</div>
+							<div>4#</div>
+						</div>
+					</div>
+				</div>
+				<div class="comapny-content">
+					
+					<div class="main-company-info">
+						<div class="main-company-name">Lorem Ipsum</div>
+						<div class="main-company-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore 
+					et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
+					 nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+					  velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+					   sunt in culpa qui officia deserunt mollit anim id est laborum.</div>
+						<div class="main-company-address">Lorem ipsum dolor sit amet</div>
+					</div>
+					
+				</div>
+				<div class="comapny-content">
+					
+					<div id="company-explore" onmouseenter="exploreEnter()" onmouseleave="exploreLeave()" onClick="companyClicked()">
+						<div id="company-explore-mouse-enter"></div>
+					
+						<div id="company-explore-text">Explore
+						<br>
+						<br>
+						<img src="css/images/star_icon.png" id="star-rating-image" />
+						<br>
+						<br>
+						<span class="main-company-rating">4.7 / 5.0</span>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="exiting-page-animation"></div>
+	
+	
+	</body>
+	<script> </script>
+</html>
+
+
+
+
+
+
+
+

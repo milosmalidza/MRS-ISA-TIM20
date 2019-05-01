@@ -332,10 +332,6 @@ function mouseLeaveCompanyItem(element) {
 	animationDiv.style.background = "transparent";
 }
 
-function companyClicked(element) {
-	var elementId = element.getAttribute("data-id");
-	loadPage("vehicle-search.html?id=" + elementId);
-}
 
 
 

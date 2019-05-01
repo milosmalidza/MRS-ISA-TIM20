@@ -6,6 +6,7 @@
 html, body {
 	font-family: Montserrat;
 	scrollbar-width: none;
+	
 }
 
 .display-none {
@@ -344,16 +345,19 @@ div#nav-bar {
 
 #nav-bar-selection-1 > li {
 	float: left;
-	margin: 10px;
-	padding: 9px;
+	margin: 10px 3px;
+	padding: 9px 18px;
 	font-weight: bold;
 	letter-spacing: 1px;
+	border-radius: 20px;
 	color: white;
 	border-bottom: 2px solid transparent;
 	cursor: pointer;
-	-webkit-transition: border .5s;
-	transition: border .5s;
+	-webkit-transition: .5s;
+	transition: .5s;
 }
+
+
 
 
 #nav-bar-selection-2 {
@@ -366,23 +370,26 @@ div#nav-bar {
 
 #nav-bar-selection-2 > li {
 	float: left;
-	margin: 10px;
-	padding: 9px;
+	margin: 10px 3px;
+	padding: 9px 18px;
 	font-weight: bold;
+	border-radius: 20px;
 	letter-spacing: 1px;
 	color: white;
 	border-bottom: 2px solid transparent;
 	cursor: pointer;
-	-webkit-transition: border .5s;
-	transition: border .5s;
+	-webkit-transition: .5s;
+	transition: .5s;
 }
 
 #nav-bar-selection-1 > li:hover {
-	border-bottom: 2px solid white;
+	background: white;
+	color: black;
 }
 
 #nav-bar-selection-2 > li:hover {
-	border-bottom: 2px solid white;
+	background: white;
+	color: black;
 }
 
 

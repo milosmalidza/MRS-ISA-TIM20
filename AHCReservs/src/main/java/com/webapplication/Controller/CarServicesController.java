@@ -1,5 +1,6 @@
 package com.webapplication.Controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,17 @@ public class CarServicesController {
 		
 		return "view-vehicles.html";
 	}
+	
+	@GetMapping("/car-services.html")
+	public String returnCarServices(Model model) {
+		
+		
+		List<RentACar> services = rentService.findAll();
+		model.addAttribute("services", services);
+		
+		return "car-services.html";
+	}
+	
 	
 	@GetMapping("/edit-rent-a-car-service.html")
 	public String returnRentService(Model model,
