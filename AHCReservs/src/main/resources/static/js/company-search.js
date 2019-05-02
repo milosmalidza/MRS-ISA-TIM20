@@ -7,29 +7,37 @@ var switching = false;
 
 function switchService(e) {
 	
+	var filename= location.pathname.split('/').pop(); //get the html file name which called the function
+	var param = ""; // the parameter that indicates a hotel or rent a car service
+	
+	if(filename.includes("car")) {
+		param = "car";
+	} else {
+		param = "hotel";
+	}
 	
 	console.log(e.deltaY);
 	if (e.deltaY > 0) {
-		scrollDownDetected();
+		scrollDownDetected(param);
 	}
 	else {
-		scrollUpDetected();
+		scrollUpDetected(param);
 	}
 	
 }
 
-function scrollDownDetected() {
+function scrollDownDetected(companyTypePrefix) {
 	if (serviceIndex < services.length - 1 && !switching) {
 		switching = true;
 		serviceIndex++;
-		switchServiceInfo();
+		switchServiceInfo(companyTypePrefix);
 		
 	}
 }
 
-function switchServiceInfo() {
+function switchServiceInfo(companyTypePrefix) {
 	$(".company-number-holder").animate({top : (- serviceIndex * 100) + "%"}, 300);
-		$(".car-services-background-holder").fadeOut(300);
+		$("." + companyTypePrefix + "-services-background-holder").fadeOut(300);
 		$(".main-company-name").animate({opacity : 0}, 300);
 		setTimeout(function() {
 			
@@ -39,7 +47,7 @@ function switchServiceInfo() {
 			
 			$(".main-company-name").html(services[serviceIndex].name);
 			$(".main-company-name").animate({opacity : 1}, 300);
-			$(".car-services-background-holder").fadeIn(300);
+			$("." + companyTypePrefix + "-services-background-holder").fadeIn(300);
 		}, 300);
 		
 		$(".main-company-rating").animate({opacity : 0}, 300);
@@ -67,11 +75,11 @@ function switchServiceInfo() {
 }
 
 
-function scrollUpDetected() {
+function scrollUpDetected(companyTypePrefix) {
 	if (serviceIndex > 0 && !switching) {
 		switching = true;
 		serviceIndex--;
-		switchServiceInfo();
+		switchServiceInfo(companyTypePrefix);
 		
 	}
 }

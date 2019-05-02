@@ -3,15 +3,23 @@ insert into system_admin(id, username, password, firstName, lastName, email_id, 
 
 --dummy podaci za hotel admin-a
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 0);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, -1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1, -2);
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-4, "ha4un", "ha4pw", "ha4fn", "ha4ln", "ha4@gmail.com", 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "ha5un", "ha5pw", "ha5fn", "ha5ln", "ha1@gmail.com", 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "ha5un", "ha5pw", "ha5fn", "ha5ln", "ha5@gmail.com", 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-6, "ha6un", "ha6pw", "ha6fn", "ha6ln", "ha6@gmail.com", 1);
 
---dummy podaci za hotel
-insert into hotel(id, address, description, name, rating) values (0, "Bulevar oslobodjenja 1", "Lorem ipsum...", "Royal Palace", 0);
+--dummy podaci za hotele
+insert into hotel(id, address, description, name, rating) values (0, "Bulevar oslobodjenja 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit aliquam eleifend. In consectetur sed velit nec dapibus. Mauris nec mauris id diam hendrerit ultrices. Ut nec arcu et arcu porttitor fermentum. Nunc varius, arcu in vestibulum luctus, nunc lorem aliquet neque, at feugiat sem neque nec leo. Etiam bibendum erat quis tortor eleifend, sed bibendum libero feugiat. Nam feugiat ac diam ac tincidunt. Phasellus justo ex, ultrices vel volutpat quis, consectetur id quam. Quisque at ullamcorper augue, ut pretium odio.", "Royal Palace", 0);
 insert into room(id, discount, floor, num_of_beds, number, reserved, room_type, hotel_id, room_price_id) values (-1, 0, 1, 2, 101, 0, 1, 0, -1);
 insert into price(id, currency, price) values (-1, 0, 25);
+
+insert into hotel(id, address, description, name, rating) values (-1, "Vladimira Popovica 10", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim augue eleifend ante sagittis, quis dapibus ex molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc tempus commodo nibh, vel pharetra metus laoreet ut. Nulla et ante vel diam auctor mollis. Vivamus vulputate mattis lacus, ut tempor neque posuere at. Donec a tortor suscipit velit venenatis iaculis. Aliquam et ex rutrum, pellentesque ipsum at, dictum nibh. Integer arcu mi, pellentesque et urna in, vestibulum interdum mauris. Integer ut velit gravida, ullamcorper mauris vitae, imperdiet leo. Nam consequat, leo et porta ultricies, tortor velit rutrum tortor, venenatis commodo ipsum sapien sed nisi. Integer ut congue dolor. Nulla lacinia molestie purus. In at dui nec sem faucibus vestibulum. Curabitur et libero auctor, sodales leo non, auctor ex. Maecenas egestas odio orci, nec feugiat lorem posuere eget. Suspendisse rhoncus ligula in rhoncus pretium.", "Crowne Plaza Belgrade", 0);
+
+insert into hotel(id, address, description, name, rating) values (-2, "Haile Selassie Ave", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nunc tortor, tincidunt et blandit a, porttitor sed lorem. Nam accumsan vehicula lectus ac imperdiet. Sed enim tellus, mattis eget tempor at, aliquam id massa. Fusce quis tortor libero. Donec vel tincidunt dui, ut rutrum massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras sodales eget libero gravida egestas.", "InterContinental Lusaka", 0);
+
+
+
 --dummy podaci za airline admin-a
 insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "aa1un", "aa1pw", "aa1fn", "aa1ln", "aa1@gmail.com", 1);
 insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "aa2un", "aa2pw", "aa2fn", "aa2ln", "aa2@gmail.com", 1);

@@ -19,7 +19,7 @@ public abstract class Company {
 	protected String name;
 	
 	@Lob
-	@Column(name="description", length=900, nullable=true)
+	@Column(name="description", length=1000, nullable=true)
 	protected String description;
 	
 	@Column(name="address", nullable=true)
