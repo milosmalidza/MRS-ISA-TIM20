@@ -13,7 +13,7 @@ function initHomePage() {
 	setTimeout(function() {
 		leaf.style.transition = "fill 1s";
 		leaf.style.webkitTransition = "fill .5s";
-		leaf.style.fill = "rgba(118,200,94,1.00)";
+		leaf.style.fill = "rgba(232,204,81,1.00)";
 	}, 1900);
 	
 	setTimeout(function() {

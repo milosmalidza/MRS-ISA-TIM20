@@ -31,8 +31,8 @@ scrollbar {
 
 #logo-svg-animation {
 	position: absolute;
-	width: 9vw;
-	height: 9vw;
+	width: 8vw;
+	height: 8vw;
 	left: 50%;
 	top: 10%;
 	
@@ -50,7 +50,7 @@ scrollbar {
 #leaf-animation {
 	fill: transparent;
 	color: ;
-    stroke: rgba(118,200,94,1.00);
+    stroke: rgba(232,204,81,1.00);
     stroke-width: 10px;
     stroke-linejoin: round;
     stroke-linecap: round;
