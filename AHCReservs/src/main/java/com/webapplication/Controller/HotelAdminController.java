@@ -125,5 +125,16 @@ public class HotelAdminController {
 		
 	}
 	
+	@RequestMapping(
+			value="/editService",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HAdditionalService> editService(@RequestBody HotelServiceData serviceData) {
+		
+		return new ResponseEntity<>(hotelSvc.editService(serviceData), HttpStatus.ACCEPTED);
+		
+	}
+	
 	
 }

@@ -6,6 +6,7 @@ import com.webapplication.Model.HotelServiceType;
 public class HotelServiceData {
 	
 	private Long hotelID;
+	private Long serviceID;
 	private String serviceTypeString;
 	private HotelServiceType serviceType;
 	private double price;
@@ -77,5 +78,14 @@ public class HotelServiceData {
 		this.hotelID = hotelID;
 	}
 	
-	
+	public Long getServiceID() {
+		return serviceID;
+	}
+
+
+	public void setServiceID(Long serviceID) {
+		this.serviceID = serviceID;
+	}
+
+
 }

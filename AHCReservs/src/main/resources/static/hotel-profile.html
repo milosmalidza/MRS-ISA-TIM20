@@ -247,8 +247,7 @@
 		  <div class="modal-content">
 		    <span class="close" onclick="closeEditModal()">&times;</span>
 		    
-		    <input type="hidden" id="edit-room-id"/>
-		    
+		    <!-- Edit room form -->
 		    <table id="edit-room-table">
 					
 					<tr>
@@ -256,6 +255,13 @@
 						<th>
 							<h2> Edit room </h2>
 						</th>
+					</tr>
+					
+					<tr>
+						<td> </td>
+						<td>
+							<input type="hidden" id="edit-room-id"/>
+						</td>
 					</tr>
 					
 					<tr>
@@ -324,6 +330,59 @@
 					</tr>
 				
 				</table>
+				
+				<!-- Edit service form -->
+				<table id="edit-service-table">
+				
+					<tr>
+						<th> </th>
+						<th>
+							<h2> Edit service </h2>
+						</th>
+					</tr>
+					
+					<tr>
+						<td> </td>
+						<td>
+							<input type="hidden" id="edit-service-id">
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Service type: </td>
+						<td>
+							<div class="ui input">
+								<input type="text" id="edit-service-type" disabled/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Service price: </td>
+						<td>
+							<div class="ui input">
+								<input type="number" id="edit-service-price" min="1"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Currency: </td>
+						<td>
+							<select id="edit-service-currency" class="ui dropdown">
+								<option value="">Select currency</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> </td>
+						<td>
+							<input class="ui button" type="button" onclick="editService()" value="Edit service"/>
+						 </td>
+					</tr>
+				
+				</table>
 		    
 		  </div>
 		
@@ -386,7 +445,7 @@
 			</table>
 			
 			
-			<table id="all-services-table" class="ui single line table">
+			<table id="all-services-table" class="ui celled table">
 				
 				<thead>
 					<tr>
@@ -430,6 +489,12 @@
 			  .dropdown();
 			
 			$("#service-type")
+			  .dropdown();
+			
+			$("#service-currency")
+			  .dropdown();
+			
+			$("#edit-service-currency")
 			  .dropdown();
 			
 		</script>
