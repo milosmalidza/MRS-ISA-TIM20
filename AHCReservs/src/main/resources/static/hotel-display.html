@@ -14,6 +14,8 @@
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/company-search.css" />
+		
+		
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			
@@ -31,7 +33,8 @@
 			/*[/]*/
 
 			/*]]>*/
-		</script>
+		</script> 
+		
 	</head>
 
 	<body style="overflow: hidden;background:rgba(12,47,33,1.00);" onLoad="browseCompaniesLoaded()">
@@ -41,7 +44,7 @@
 			<ul id="nav-bar-selection-1">
 				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
 				<li>Airline companies | <span><i class="plane icon"></i></span></li>
-				<li onclick="loadPage('hotel-display.html')"> Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('hotel-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
 				<li onclick="loadPage('cars.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
 				
 			</ul>
@@ -55,7 +58,7 @@
 		
 		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
 			
-			<div class="car-services-background-holder">
+			<div class="hotel-services-background-holder">
 				<div class="background-teaser"></div>
 			</div>
 			
@@ -86,7 +89,7 @@
 				</div>
 				<div class="comapny-content">
 					
-					<div id="company-explore" onmouseenter="exploreEnter()" onmouseleave="exploreLeave()" onClick="companyClicked()">
+					<div id="company-explore" onmouseenter="exploreEnter()" onmouseleave="exploreLeave()" onClick="">
 						<div id="company-explore-mouse-enter"></div>
 					
 						<div id="company-explore-text">Explore

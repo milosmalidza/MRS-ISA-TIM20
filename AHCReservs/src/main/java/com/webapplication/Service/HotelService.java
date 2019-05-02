@@ -203,6 +203,27 @@ public class HotelService {
 		
 		return hAdditionalSvc.save(service);
 		
+	}
+	
+	public HAdditionalService editService(HotelServiceData serviceData) {
+		
+		HAdditionalService additionalSvc = hAdditionalSvc.findOne(serviceData.getServiceID()).get();
+		
+		if(additionalSvc == null) {
+			return null;
+		}
+		
+		//convert string to enum
+		Currency currency = mulSvc.convertStringToCurrency(serviceData.getCurrencyString());
+		
+		if(currency == null) {
+			return null;
+		}
+		
+		additionalSvc.getServicePrice().setPrice(serviceData.getPrice());
+		additionalSvc.getServicePrice().setCurrency(currency);
+		
+		return hAdditionalSvc.save(additionalSvc);
 		
 	}
 	

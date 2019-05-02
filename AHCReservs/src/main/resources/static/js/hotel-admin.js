@@ -18,14 +18,14 @@ window.onload = function() {
 		history.back(); //redirect the user to the previous page
 	}
 	
-	getAdminHotel(loggedUser);
+	getAdminHotel(user);
 	
 }
 
 
-function getAdminHotel(loggedUser) {
+function getAdminHotel(user) {
 	
-	
+	let loggedUser = JSON.parse(user);
 	let usernameJson = { "username": loggedUser.username }; //json used for posting a request
 	
 	//get the hotel of the logged in admin
@@ -88,6 +88,7 @@ function fillSelectInputs() {
 	
 	//pricing configuration selects
 	addCurrenciesToSelect("#service-currency");
+	addCurrenciesToSelect("#edit-service-currency");
 	
 	axios.get(controllerPath + "/getServiceTypes")
 		.then(response => {
@@ -227,6 +228,8 @@ function getRoomJson() {
 
 function addAllRoomsToTable() {
 	
+	$("#rooms-table-body").empty();
+	
 	for(let i = 0; i < adminHotel.rooms.length; i++) {
 		addRoomToTable(adminHotel.rooms[i]);
 	}
@@ -275,7 +278,7 @@ function addRoomToTable(room) {
 	editBtn.value = "Edit";
 	editBtn.className = "ui primary basic button";
     
-	editBtn.setAttribute("onclick", "displayEditModal(this);");
+	editBtn.setAttribute("onclick", "displayEditRoomModal(this);");
 	editBtn.setAttribute("data-room-id", room.id); //bind room id to the button
     
     editBtnCell.appendChild(editBtn);
@@ -312,7 +315,11 @@ function getRoom(roomID) {
 }
 
 
-function displayEditModal(editBtn) {
+function displayEditRoomModal(editBtn) {
+	
+	
+	$("#edit-service-table").hide(); //hide the form for editing a service
+	$("#edit-room-table").show();
 	
 	//Add the room id to the hidden input field
 	let roomID = editBtn.getAttribute("data-room-id");
@@ -334,8 +341,19 @@ function displayEditModal(editBtn) {
 	//display the rooms data
 	$("#room-floor-edit").val(roomToDisplay.floor);
 	$("#room-number-edit").val(roomToDisplay.number);
+	
 	// TODO: postavi tekucu vrednost $('#room-type-edit').dropdown('set selected', roomToDisplay.roomType);
+	
 	$("#room-beds-edit").val(roomToDisplay.numOfBeds);
+	$("#room-price-edit").val(roomToDisplay.roomPrice.price);
+	
+	//TODO: postavi valutu $("#price-currency-edit :selected").val(roomToDisplay.roomPrice.currency);
+	
+	addListenerToEditModal(modal);
+
+}
+
+function addListenerToEditModal(modal) {
 	
 	//When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
@@ -343,7 +361,7 @@ function displayEditModal(editBtn) {
 	    modal.style.display = "none";
 	  }
 	}
-
+	
 }
 
 
@@ -425,14 +443,8 @@ function editRoom() {
 				toast(response.data);
 				return;
 			}
-			
-			
-			$("#rooms-table-body").empty(); //remove all items from the table
-			
-			let user = window.localStorage.getItem("user");
-			getAdminHotel(user); //re-get the hotel and redraw the rooms in table
-			
-			closeEditModal(); //close the pop-up window for editing
+				
+			emptyAndRedrawTable("#rooms-table-body");
 		
 		});
 	
@@ -516,7 +528,7 @@ function addService() {
 			}
 			
 			addRowToServicesTable(response.data);
-			
+			adminHotel.pricelist.push(response.data);
 			
 		});
 	
@@ -549,21 +561,104 @@ function addRowToServicesTable(serviceObject) {
 	editBtn.value = "Edit";
 	editBtn.className = "ui primary basic button";
     
-	//editBtn.setAttribute("onclick", "displayEditModal(this);");
-	//editBtn.setAttribute("data-room-id", room.id); //bind room id to the button
+	editBtn.setAttribute("onclick", "displayEditServiceModal(this);");
+	editBtn.setAttribute("data-service-id", serviceObject.id); //bind service id to the button
     
     editBtnCell.appendChild(editBtn);
    
 }
 
-function addAllServicesToTable() {
+
+function displayEditServiceModal(editBtn) {
+	
+	
+	$("#edit-room-table").hide(); //hide the form for editing a room
+	$("#edit-service-table").show(); //show the form for editing a service
+	
+	//Add the service id to the hidden input field
+	let serviceID = editBtn.getAttribute("data-service-id");
+	$("#edit-service-id").val(serviceID);
+	
+	
+	let serviceToEdit = getService(serviceID);
+	
+	//display modal
+	var modal = document.getElementById('edit-modal');
+	modal.style.display = "block";
+	
+	
+	//display the service data
+	$("#edit-service-type").val(serviceToEdit.service);
+	$("#edit-service-price").val(serviceToEdit.servicePrice.price);
+	
+	addListenerToEditModal(modal);
+
+}
+
+
+function getService(serviceID) {
 	
 	for(let i = 0; i < adminHotel.pricelist.length; i++) {
-		addRowToServicesTable( adminHotel.pricelist[i]);
+		
+		if(adminHotel.pricelist[i].id == serviceID) {
+			return adminHotel.pricelist[i];
+		}
+		
 	}
 	
 }
 
+function addAllServicesToTable() {
+	
+	$("#all-services-body").empty();
+	
+	for(let i = 0; i < adminHotel.pricelist.length; i++) {
+		addRowToServicesTable(adminHotel.pricelist[i]);
+	}
+	
+}
+
+function editService() {
+	
+	
+	if(validateInputFields("#edit-service-table") === false) {
+		toast("Empty field detected");
+		return;
+	}
+	
+	
+	axios.post(controllerPath + "/editService", getEditServiceJson())
+		.then(response => {
+			
+			emptyAndRedrawTable("#all-services-body");
+			
+		});
+	
+}
+
+/** Empties the table, re-gets the hotel of the logged in user in order to redraw the table after editing */
+function emptyAndRedrawTable(tableID) {
+	
+	$(tableID).empty(); //remove all items from the table
+	
+	let user = window.localStorage.getItem("user");
+	getAdminHotel(user); //re-get the hotel and redraw the services in table
+	
+	closeEditModal(); //close the pop-up window for editing
+	
+}
+
+
+function getEditServiceJson() {
+	
+	return {
+		"serviceID": $("#edit-service-id").val(),
+		"serviceTypeString": $("#edit-service-type").val(),
+		"price": $("#edit-service-price").val(),
+		"currencyString": $("#edit-service-currency").val()
+	}
+	
+}
 
 function getServiceJson() {
 	
