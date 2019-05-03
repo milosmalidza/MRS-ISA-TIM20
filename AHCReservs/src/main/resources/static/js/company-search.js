@@ -17,6 +17,8 @@ function switchService(e) {
 	}
 	
 	console.log(e.deltaY);
+	if (searchEnabled) return;
+	
 	if (e.deltaY > 0) {
 		scrollDownDetected(param);
 	}
@@ -142,6 +144,121 @@ function browseCompaniesLoaded() {
 function companyClicked() {
 	loadPage("vehicle-search.html?id=" + services[serviceIndex].id);
 }
+
+
+
+var searchEnabled = false;
+
+function initializeSearch() {
+	$("#search-background-dimmer").fadeIn(500);
+	$("#search-form").animate({width : 600}, 400);
+	$(".search-option").fadeIn(400);
+	searchEnabled = true;
+}
+
+
+function closeSearch() {
+	$("#search-background-dimmer").fadeOut(500);
+	$("#search-form").animate({width : 0}, 400);
+	$(".search-option").fadeOut(100);
+	closeSearchResults();
+	searchEnabled = false;
+}
+
+
+function closeSearchResults() {
+	document.getElementById("search-results-holder").style.height = "0";
+}
+
+function openSearchResults() {
+	document.getElementById("search-results-holder").style.height = "calc(100% - 100px)";
+}
+
+
+function searchCompanies() {
+	var input = document.getElementById("first-input");
+	
+	if (input.value == "") {
+		closeSearchResults();
+	}
+	else {
+		openSearchResults();
+		if (companyType == "car") {
+			searchVehicles();
+		}
+		
+	}
+}
+
+function searchVehicles() {
+	
+	var firstInput = document.getElementById("first-input");
+	var inputType = document.getElementById("search-type");
+	var displayData = document.getElementById("display-results");
+	
+	displayData.innerHTML = ""; //remove everything
+	
+	var row = document.createElement("tr");
+	row.innerHTML = "<td> Name </td>" +
+					"<td> Location </td>" +
+					"<td> Rating </td>";
+	row.setAttribute("class", "bold-font");
+	displayData.appendChild(row);
+	
+	if (inputType.value == "name") {
+		
+		for (var i = 0; i < services.length; i++) {
+			
+			if (services[i].name.toLowerCase().includes(firstInput.value.toLowerCase())) {
+				var row = document.createElement("tr");
+				row.innerHTML = "<td>" + services[i].name + "</td>" +
+								"<td>" + services[i].address + "</td>" +
+								"<td>" + services[i].rating.toFixed(1) + " / 5.0</td>";
+				
+				row.setAttribute("onclick", "companySelected(" + i + ")");
+				displayData.appendChild(row);
+			}
+		}
+	}
+	
+	else {
+		for (var i = 0; i < services.length; i++) {
+			
+			if (services[i].address.toLowerCase().includes(firstInput.value.toLowerCase())) {
+				var row = document.createElement("tr");
+				row.innerHTML = "<td>" + services[i].name + "</td>" +
+								"<td>" + services[i].address + "</td>" +
+								"<td>" + services[i].rating.toFixed(1) + " / 5.0</td>";
+				
+				row.setAttribute("onclick", "companySelected(" + i + ")");
+				displayData.appendChild(row);
+			}
+		}
+	}
+	
+}
+
+
+function companySelected(index) {
+	if (!switching) {
+		switching = true;
+		serviceIndex = index;
+		switchServiceInfo(companyType);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
