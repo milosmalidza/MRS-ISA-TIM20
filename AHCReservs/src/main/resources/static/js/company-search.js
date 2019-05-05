@@ -7,23 +7,14 @@ var switching = false;
 
 function switchService(e) {
 	
-	var filename= location.pathname.split('/').pop(); //get the html file name which called the function
-	var param = ""; // the parameter that indicates a hotel or rent a car service
-	
-	if(filename.includes("car")) {
-		param = "car";
-	} else {
-		param = "hotel";
-	}
-	
 	console.log(e.deltaY);
 	if (searchEnabled) return;
 	
 	if (e.deltaY > 0) {
-		scrollDownDetected(param);
+		scrollDownDetected(companyType);
 	}
 	else {
-		scrollUpDetected(param);
+		scrollUpDetected(companyType);
 	}
 	
 }
@@ -183,14 +174,13 @@ function searchCompanies() {
 	}
 	else {
 		openSearchResults();
-		if (companyType == "car") {
-			searchVehicles();
-		}
+		
+		findCompanies();
 		
 	}
 }
 
-function searchVehicles() {
+function findCompanies() {
 	
 	var firstInput = document.getElementById("first-input");
 	var inputType = document.getElementById("search-type");

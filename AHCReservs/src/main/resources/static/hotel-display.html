@@ -7,13 +7,16 @@
 		
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
 		<script type="text/javascript" src="js/company-search.js"></script>
+		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
 		
 		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/company-search.css" />
+		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
 		
 		
 		<script th:inline="javascript">
@@ -33,6 +36,9 @@
 			/*[/]*/
 
 			/*]]>*/
+			
+			var companyType = "hotel";
+			
 		</script> 
 		
 	</head>
@@ -52,8 +58,32 @@
 				<li>About</li>
 				<li onclick="loadPage('register-user.html')">Register</li>
 				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
-				<li id="search-button">Search <span><i class="search icon"></i></span></li>
+				<li onClick="initializeSearch()" id="search-button">Search <span><i class="search icon"></i></span></li>
 			</ul>
+			
+			<div id="search-form">
+				<div class="ui input search-option">
+					<input oninput="searchCompanies()" id="first-input" type="text" class="search-input" placeholder="Search..."/>
+				
+				</div>
+				<select class="ui dropdown search-option" id="search-type">
+				  <option value="name">Search by name</option>
+				  <option value="location">Search by location</option>
+				</select>
+				<script>
+					$('#search-type').dropdown();
+				</script>
+					
+				<div id="dateinput" class="ui input search-option">
+					<input type="text" id="daterange" name="daterange" class="search-input" />
+				</div>
+				<script>
+					$(".search-option").fadeOut(0);
+				</script>
+				
+
+			</div>
+			
 		</div>
 		
 		<div id="main-div">				<!-- Sluzi da se pri ulazu na stranicu odradi animacija (ne zaboraviti da se ubaci main-scirpt.js, jer ono pokrece animaciju) -->
@@ -107,8 +137,28 @@
 			
 		</div>
 		
+		<div id="search-background-dimmer" onClick="closeSearch()"></div>
+		<div id="search-results-holder">
+			<table id="display-results">
+				
+			</table>
+		</div>
+		
 		<div id="exiting-page-animation"></div>
-	
+		
+		<script type="text/javascript">
+			$(function() {
+			  $('input[name="daterange"]').daterangepicker({
+				  timePicker: true,
+				opens: 'left'
+			  }, function(start, end, label) {
+				console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+				  //vehicleReservationStartDate = start.format('YYYY-MM-DD HH-mm');
+				  //vehicleReservationEndDate = end.format('YYYY-MM-DD HH-mm');
+			  });
+			});
+		</script>
+		
 	
 	</body>
 	<script> </script>
