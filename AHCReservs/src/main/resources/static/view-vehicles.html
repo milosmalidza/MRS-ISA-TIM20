@@ -47,6 +47,7 @@
 								<div class="view-vehicle-type" th:inline="text">Vehicle type: <span style="font-weight: bold;">[[${vehicle.vehicleType}]]</span></div>
 								<div class="view-vehicle-doors" th:inline="text">Vehicle doors: <span style="font-weight: bold;">[[${vehicle.numOfDoors}]]</span></div>
 								<div class="view-vehicle-people" th:inline="text">Vehicle seats: <span style="font-weight: bold;">[[${vehicle.numOfSeats}]]</span></div>
+								<div class="view-vehicle-price" th:inline="text">Price per day: <span style="font-weight: bold;">[[${vehicle.pricePerDay}]]</span></div>
 								<div class="view-vehicle-branch">Vehicle branch: Lorem ipsum</div>
 							</div>
 							
@@ -55,7 +56,7 @@
 						<div class="view-vehicle-operations">
 							
 							<div class="view-vehicle-operations-holder">
-								<input style="width:70%;letter-spacing:1px;" id="" class="ui button align-vehicle-view-button" type="button" onclick="" value="Edit" />
+								<input style="width:70%;letter-spacing:1px;" th:attr="data-vehicle-id=${vehicle.id}" class="ui button align-vehicle-view-button" type="button" onclick="editVehicle(this)" value="Edit" />
 								<input data-type="vehicle" style="width:70%;letter-spacing:1px;" id="" class="ui button align-vehicle-view-button" type="button" onclick="toggleConfirmationMessageWindow(this)" value="Remove" />
 							</div>
 							
@@ -86,7 +87,91 @@
 			</div>
 		</div>
 		
+		<div id="edit-vehicle-holder">
+		
+			<div id="edit-vehicle-form">
+				
+				<table>
+					<tr>
+						<td>Vehicle name:</td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input class="vehicle-edit-field" type="text" id="edit-vehicle-name" name="vehicle-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Vehicle description:</td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input class="vehicle-edit-field" type="text" id="edit-vehicle-description" name="vehicle-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Vehicle doors:</td>
+						<td>
+							<select class="ui dropdown" id="edit-vehicle-doors">
+								<option value="3">3</option>
+								<option value="5">5</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Type of vehicle: </td>
+						<td><select name="type-of-vehicle" class="ui dropdown" id="edit-type-of-vehicle">
+							  <option value="Hatchback">Hatchback</option>
+							  <option value="Sedan">Sedan</option>
+							  <option value="MPV">MPV</option>
+							  <option value="SUV">SUV</option>
+							  <option value="Crossover">Crossover</option>
+							  <option value="Coupe">Coupe</option>
+							</select>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Vehicle capacity (people):</td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input class="vehicle-edit-field" type="number" min="1" id="edit-vehicle-capacity" name="vehicle-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Price per day:</td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input class="vehicle-edit-field" type="number" min="1" id="edit-vehicle-price" name="vehicle-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="center" style="padding-top: 50px !important;">
+							<input style="width:150px;letter-spacing:1px;" class="ui button" type="button" onclick="saveEdit()" value="Save" />
+						</td>
+						<td align="center" style="padding-top: 50px !important;">
+							<input style="width:150px;letter-spacing:1px;" class="ui button" type="button" onclick="closeEdit()" value="Cancel" />
+						</td>
+					</tr>
+					
+					
+				</table>
+				
+			</div>
+			
+		</div>
+		
 		<div id="exiting-page-animation"></div>
+		<script type="text/javascript">
+			$('#edit-vehicle-doors').dropdown();
+			$('#edit-type-of-vehicle').dropdown();
+		</script>
 		
 		<script> </script>
 	

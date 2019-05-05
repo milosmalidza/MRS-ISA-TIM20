@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Service.RentACarAdminService;
@@ -28,6 +29,48 @@ public class RentACarController {
 	
 	@Autowired
 	private RentACarService rentService;
+	
+	@RequestMapping(value = "/saveEditedVehicle", method = RequestMethod.POST)
+	public String saveEditedVehicle(@RequestParam("json") String json,
+									@RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.saveEditedVehicle(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/GetVehicleInfo", method = RequestMethod.POST)
+	public String getVehicleInfo(@RequestParam("json") String json) {
+		
+		try {
+			return rentService.getVehicleInfo(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/CheckVehicle", method = RequestMethod.POST)
+	public String checkVehicle (@RequestParam("json") String json) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			JsonNode status = mapper.readTree(json);
+			return rentService.checkVehicle(status.get("id").asText());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
 	
 	@RequestMapping(value = "/RemoveCar", method = RequestMethod.POST)
 	public String removeCar(@RequestParam("json") String json, @RequestParam("user") String user) {

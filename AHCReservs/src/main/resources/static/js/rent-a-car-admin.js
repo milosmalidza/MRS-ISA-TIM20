@@ -320,11 +320,140 @@ function viewVehicles() {
 	loadPage("view-vehicles.html?username=" + sessionUser.username + "&password=" + sessionUser.password);
 }
 
+function saveEdit() {
+	
+	
+	var json = {
+		id : vehicleEditId,
+		name : $("#edit-vehicle-name").val(),
+		description : $("#edit-vehicle-description").val(),
+		type : $('#edit-type-of-vehicle').val(),
+		doors : $('#edit-vehicle-doors').val(),
+		people : $("#edit-vehicle-capacity").val(),
+		price : $("#edit-vehicle-price").val()
+	};
+	
+	var user = sessionUser;
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/saveEditedVehicle",
+		data : {json : JSON.stringify(json),
+			   user : JSON.stringify(user)},
+		success : function(response) {
+			console.log(response);
+			if (response == "success") {
+				
+				selectedEditVehicle.getElementsByClassName("view-vehicle-name")[0].innerHTML = json.name;
+				selectedEditVehicle.getElementsByClassName("view-vehicle-description")[0].innerHTML = json.description;
+				selectedEditVehicle.getElementsByClassName("view-vehicle-type")[0].innerHTML = 'Vehicle type: <span style="font-weight: bold;">' + json.type + '</span>';
+				selectedEditVehicle.getElementsByClassName("view-vehicle-doors")[0].innerHTML = 'Vehicle doors: <span style="font-weight: bold;">' +json.doors+ '</span>';
+				selectedEditVehicle.getElementsByClassName("view-vehicle-people")[0].innerHTML = 'Vehicle seats: <span style="font-weight: bold;">' + json.people + '</span>';
+				selectedEditVehicle.getElementsByClassName("view-vehicle-price")[0].innerHTML = 'Price per day: <span style="font-weight: bold;">' + json.price + '</span>';
+				
+				
+				closeEdit();
+			}
+			
+		}
+	});
+	
+	
+}
+
+
+function showForm(response) {
+	
+	console.log(response);
+	
+	var data = JSON.parse(response);
+	
+	if (data.status != "ok") {
+		alert("Bad request");
+		return;
+	}
+	
+	$("#edit-vehicle-name").val(data.name);
+	$("#edit-vehicle-description").val(data.description);
+	$('#edit-type-of-vehicle').dropdown('set selected', data.type);
+	$('#edit-vehicle-doors').dropdown('set selected', data.doors);
+	$("#edit-vehicle-capacity").val(data.people);
+	$("#edit-vehicle-price").val(data.price);
+	
+	
+	openEdit();
+	
+}
+
+var vehicleEditId = null;
+var selectedEditVehicle = null;
+function displayEditWindow(response) {
+	
+	if (response == "reserved") {
+		alert("Vehicle is already reserved.");
+		return;
+	}
+	if (response == "badRequest") {
+		alert("Bad request.");
+		return
+	}
+	
+	var json = {
+		id : vehicleEditId
+	};
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/GetVehicleInfo",
+		data : {json : JSON.stringify(json)},
+		success : showForm
+		
+	});
+	
+	
+	
+									  
+}
+
+
+function closeEdit() {
+	$("#edit-vehicle-holder").fadeOut(500);
+}
+
+function openEdit() {
+	$("#edit-vehicle-holder").fadeIn(500);
+}
 
 
 
 
+function editVehicle(element) {
+	var vehicleId = parseInt(element.getAttribute("data-vehicle-id"));
+	vehicleEditId = vehicleId;
+	selectedEditVehicle = element.closest(".view-vehicle-item");
+	console.log(selectedEditVehicle);
+	checkVehicle(vehicleId, displayEditWindow);
+	
+	
+}
 
+function checkVehicle(id, callback) {
+	
+	var json = {
+		id : id
+	};
+	
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/CheckVehicle",
+		data : {json : JSON.stringify(json)},
+		success : callback
+	});
+	
+	
+	
+}
 
 
 

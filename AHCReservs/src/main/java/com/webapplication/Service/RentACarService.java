@@ -55,6 +55,50 @@ public class RentACarService {
 		return rentACarRep.findAll();
 	}
 	
+	public String getVehicleInfo(String json) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode node = mapper.readTree(json);
+		Long id = Long.parseLong(node.get("id").asText());
+		
+		Vehicle vehicle = vehicleRep.findById(id).get();
+		
+		JsonNode vehicleNode = mapper.createObjectNode();
+		
+		((ObjectNode)vehicleNode).put("name", vehicle.getName());
+		((ObjectNode)vehicleNode).put("description", vehicle.getDescription());
+		((ObjectNode)vehicleNode).put("type", vehicle.getVehicleType().toString());
+		((ObjectNode)vehicleNode).put("doors", vehicle.getNumOfDoors());
+		((ObjectNode)vehicleNode).put("people", vehicle.getNumOfSeats());
+		((ObjectNode)vehicleNode).put("price", vehicle.getPricePerDay());
+		((ObjectNode)vehicleNode).put("status", "ok");
+		
+		String vehicleJson = mapper.writeValueAsString(vehicleNode);
+		
+		
+		return vehicleJson;
+	}
+	
+	public String checkVehicle(String id) {
+		
+		Long vid = Long.parseLong(id);
+		
+		Vehicle vehicle = vehicleRep.findById(vid).get();
+		
+		if (vehicle == null) return "badRequest";
+		
+		Date currentDate = new Date();
+		List<VehicleReservation> reses = vehicle.getReservations();
+		for (VehicleReservation res : reses) {
+			if (currentDate.before(res.getDueDate())) {
+				return "reserved";
+			}
+		}
+		
+		return "ok";
+	}
+	
 	public String removeVehicle(String json, String user) throws IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();

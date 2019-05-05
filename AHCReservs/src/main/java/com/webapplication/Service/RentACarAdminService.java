@@ -65,7 +65,49 @@ public class RentACarAdminService {
 		rentACarAdminRep.deleteByUsername(username);
 	}
 
-
+	
+	public String saveEditedVehicle(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode jsonData = mapper.readTree(json);
+		JsonNode jsonUser = mapper.readTree(user);
+		
+		
+		RentACarAdmin admin = rentACarAdminRep.findByUsername(jsonUser.get("username").asText());
+		
+		if (admin == null) {
+			return "badRequest";
+		}
+		
+		if (!admin.getPassword().equals(jsonUser.get("password").asText())) return "badRequest";
+		
+		Long id = jsonData.get("id").asLong();
+		String name = jsonData.get("name").asText();
+		String description = jsonData.get("description").asText();
+		VehicleType type = VehicleType.valueOf(jsonData.get("type").asText());
+		int doors = jsonData.get("doors").asInt();
+		int people = jsonData.get("people").asInt();
+		int price = jsonData.get("price").asInt();
+		
+		Vehicle vehicle = vehicleRepository.findById(id).get();
+		
+		vehicle.setName(name);
+		vehicle.setDescription(description);
+		vehicle.setNumOfDoors(doors);
+		vehicle.setNumOfSeats(people);
+		vehicle.setVehicleType(type);
+		vehicle.setPricePerDay(price);
+		
+		vehicleRepository.save(vehicle);
+		
+		
+		
+		
+		
+		return "success";
+	}
+	
 	public String AddCar(String requestJson) throws IOException, NumberFormatException, IllegalArgumentException  {
 
 		ObjectMapper mapper = new ObjectMapper();
@@ -127,6 +169,8 @@ public class RentACarAdminService {
 	public RentACarAdmin findByEmailIdIgnoreCase(String emailid) {
 		return rentACarAdminRep.findByEmailIdIgnoreCase(emailid);
 	}
+
+	
 
 	
 }
