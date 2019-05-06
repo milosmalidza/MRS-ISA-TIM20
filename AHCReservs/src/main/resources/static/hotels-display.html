@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js/hotel-home.js"></script>
 		<script type="text/javascript" src="js/company-search.js"></script>
 		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
 		
@@ -50,7 +51,7 @@
 			<ul id="nav-bar-selection-1">
 				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
 				<li>Airline companies | <span><i class="plane icon"></i></span></li>
-				<li onclick="loadPage('hotel-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('hotels-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
 				<li onclick="loadPage('car-services.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
 				
 			</ul>
@@ -119,7 +120,7 @@
 				</div>
 				<div class="comapny-content">
 					
-					<div id="company-explore" onmouseenter="exploreEnter()" onmouseleave="exploreLeave()" onClick="">
+					<div id="company-explore" onmouseenter="exploreEnter()" onmouseleave="exploreLeave()" onClick="hotelClicked()">
 						<div id="company-explore-mouse-enter"></div>
 					
 						<div id="company-explore-text">Explore

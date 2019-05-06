@@ -11,8 +11,12 @@ insert into hotel_admin(id, username, password, firstName, lastName, email_id, i
 
 --dummy podaci za hotele
 insert into hotel(id, address, description, name, rating) values (0, "Bulevar oslobodjenja 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit aliquam eleifend. In consectetur sed velit nec dapibus. Mauris nec mauris id diam hendrerit ultrices. Ut nec arcu et arcu porttitor fermentum. Nunc varius, arcu in vestibulum luctus, nunc lorem aliquet neque, at feugiat sem neque nec leo. Etiam bibendum erat quis tortor eleifend, sed bibendum libero feugiat. Nam feugiat ac diam ac tincidunt. Phasellus justo ex, ultrices vel volutpat quis, consectetur id quam. Quisque at ullamcorper augue, ut pretium odio.", "Royal Palace", 0);
-insert into room(id, discount, floor, num_of_beds, number, reserved, room_type, hotel_id, room_price_id) values (-1, 0, 1, 2, 101, 0, 1, 0, -1);
-insert into price(id, currency, price) values (-1, 0, 25);
+insert into room(id, discount, floor, num_of_beds, number, reserved, room_type, hotel_id, room_price_id) values (-1, 0, 1, 1, 101, 0, 0, 0, -1);
+insert into room(id, discount, floor, num_of_beds, number, reserved, room_type, hotel_id, room_price_id) values (-2, 0, 1, 2, 102, 0, 1, 0, -2);
+insert into room(id, discount, floor, num_of_beds, number, reserved, room_type, hotel_id, room_price_id) values (-3, 0, 1, 2, 103, 0, 1, 0, -2);
+
+insert into price(id, currency, price) values (-1, 0, 15);
+insert into price(id, currency, price) values (-2, 0, 25);
 
 insert into hotel(id, address, description, name, rating) values (-1, "Vladimira Popovica 10", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim augue eleifend ante sagittis, quis dapibus ex molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc tempus commodo nibh, vel pharetra metus laoreet ut. Nulla et ante vel diam auctor mollis. Vivamus vulputate mattis lacus, ut tempor neque posuere at. Donec a tortor suscipit velit venenatis iaculis. Aliquam et ex rutrum, pellentesque ipsum at, dictum nibh. Integer arcu mi, pellentesque et urna in, vestibulum interdum mauris. Integer ut velit gravida, ullamcorper mauris vitae, imperdiet leo. Nam consequat, leo et porta ultricies, tortor velit rutrum tortor, venenatis commodo ipsum sapien sed nisi. Integer ut congue dolor. Nulla lacinia molestie purus. In at dui nec sem faucibus vestibulum. Curabitur et libero auctor, sodales leo non, auctor ex. Maecenas egestas odio orci, nec feugiat lorem posuere eget. Suspendisse rhoncus ligula in rhoncus pretium.", "Crowne Plaza Belgrade", 0);
 

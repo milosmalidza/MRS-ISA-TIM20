@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Hotel home</title>
+		
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js/hotel-home.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		<link rel="stylesheet" href="css/hotel.css" />
+	
+	</head>
+
+	<body>
+		
+		<!-- Navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
+				<li>Airline companies | <span><i class="plane icon"></i></span></li>
+				<li onclick="loadPage('hotels-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('car-services.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
+				
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		
+		<!-- Hotel data -->
+		
+		<div id="main-content-holder" th:attr="data-hotel-id=${service.id}">
+			<div class="center-content">
+				
+				<h1 id="hotel-name" class="content-title" th:text="${service.name}"> Title </h1>
+				
+				<br/>
+				
+				<p id="hotel-description" th:text="${service.description}"> Description </p>
+				
+				<br/>
+				
+				<p id="hotel-address" th:text="${service.address}"> Address </p>
+				
+				<br/>
+				
+				<div class="ui labeled button" tabindex="0">
+					<div class="ui green button" onclick="makeReservation()">
+				    	<i class="handshake outline icon"></i> Make reservation
+				    </div>
+				  	<a class="ui basic green left pointing label" onclick="makeReservation()" th:inline="text">
+				  		Available rooms: [[*{availableRooms}]]
+				  	</a>
+			    </div>
+				
+			</div>
+		</div>
+		
+		<div id="reservation-div" class="down-animation-div">
+			
+			<div class="center-content">
+				
+				<table id="available-rooms-table" class="ui celled striped table">
+					
+					<thead>
+						<tr>
+							<th>
+								<h2> Check the rooms to reserve </h2>
+							</th>
+						</tr>
+						
+						<tr>
+							<th> Room number </th>
+							<th> Room floor </th>
+							<th> Number of beds </th>
+							<th> Room type </th>
+							<th> Price per night </th>
+							<th> Select </th>
+						</tr>
+						
+					</thead>
+					
+					<tbody>
+						
+						<!-- thymeleaf foreach iteration through rooms -->
+						<th:block th:each="room : ${service.rooms}">
+							
+							<tr>
+								<td th:text="${room.number}"> Number </td>
+								<td th:text="${room.floor}"> Floor </td>
+								<td th:text="${room.numOfBeds}"> Beds </td>
+								<td th:text="${room.roomType}"> Type </td>
+								<td th:text="|${room.roomPrice.price} ${room.roomPrice.currency}|"> Price </td>
+								<td>
+									<input type="checkbox" th:value="${room.id}" />
+								</td>
+							</tr>
+							
+						</th:block>
+						
+					</tbody>
+					
+				</table>
+				
+				<button class="ui positive button"> Add rooms to reservation </button>
+				
+			</div>
+			
+		</div>
+		
+		<script>
+		
+		</script>
+		
+	</body>
+	
+</html>
