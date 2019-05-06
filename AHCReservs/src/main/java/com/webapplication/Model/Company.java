@@ -1,11 +1,17 @@
 package com.webapplication.Model;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
 
 @MappedSuperclass
 public abstract class Company {
@@ -27,6 +33,9 @@ public abstract class Company {
 	
 	@Column(name="rating", nullable=true)
 	protected double rating;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Rating> ratings;
 	
 	public Company() {
 		
@@ -84,8 +93,24 @@ public abstract class Company {
 	public void setRating(double rating) {
 		this.rating = rating;
 	}
+
+	public List<Rating> getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(List<Rating> ratings) {
+		this.ratings = ratings;
+	}
 	
-	
+	public void updateRating() {
+		double sum = 0;
+		for (Rating r : ratings) {
+			sum += r.getRating();
+		}
+		
+		this.rating = Math.round((sum / ratings.size()) * 10) / 10;
+		
+	}
 	
 	
 	

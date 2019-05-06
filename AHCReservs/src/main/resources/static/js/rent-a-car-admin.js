@@ -456,7 +456,57 @@ function checkVehicle(id, callback) {
 }
 
 
-
+var r_error = false;
+function rateService(value) {
+	
+	if (r_error) {
+		r_error = false;
+		return;
+	}
+	
+	var json = {
+		id : document.getElementById("main-div").getAttribute("data-id"),
+		rating : value
+	};
+	
+	var user = sessionUser;
+	if (user == null) {
+		r_error = true;
+		alert("Not logged in.");
+		$("#service-rating").rating('clear rating');
+		return;
+	}
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/rateService",
+		data : {json : JSON.stringify(json),
+			   user : JSON.stringify(user)},
+		success : function (response) {
+			console.log(response);
+			if (response == "noReservation") {
+				r_error = true;
+				alert("You are not allowed to rate us yet.");
+				$("#service-rating").rating('clear rating');
+				
+			}
+			else if (response == "notLoggedIn") {
+				r_error = true;
+				alert("You are not logged in.");
+				$("#service-rating").rating('clear rating');
+			}
+			
+			else if (response == "success") {
+				
+			}
+			
+			
+			
+		}
+	});
+	
+	
+}
 
 
 

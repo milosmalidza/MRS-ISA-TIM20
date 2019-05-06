@@ -133,7 +133,10 @@ function browseCompaniesLoaded() {
 
 
 function companyClicked() {
-	loadPage("vehicle-search.html?id=" + services[serviceIndex].id);
+	
+	var username = sessionUser == null ? null : sessionUser.username;
+	
+	loadPage("vehicle-search.html?id=" + services[serviceIndex].id + "&u=" + username);
 }
 
 

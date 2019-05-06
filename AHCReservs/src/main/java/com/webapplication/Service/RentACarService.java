@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.webapplication.Model.Rating;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
@@ -54,6 +55,83 @@ public class RentACarService {
 	public List<RentACar> findAll() {
 		return rentACarRep.findAll();
 	}
+	
+	public String rateRentACar(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(json);
+		JsonNode jsonUser = mapper.readTree(user);
+		
+		RegisteredUser ruser = userRepository.findByUsername(jsonUser.get("username").asText());
+		
+		if (ruser == null || !ruser.getPassword().equals(jsonUser.get("password").asText())) {
+			return "notLoggedIn";
+		}
+		
+		RentACar service = rentACarRep.findById(jsonNode.get("id").asLong()).get();
+		
+		VehicleReservation reservation = null;
+		Date currentDate = new Date();
+		
+		for (Vehicle v : service.getVehicles()) {
+			for (VehicleReservation r : v.getReservations()) {
+				if (r.getUser().getId() == ruser.getId() && currentDate.after(r.getDueDate())) {
+					
+					reservation = r;
+					break;
+				}
+			}
+			
+			if (reservation != null) break;
+			
+		}
+		
+		if (reservation == null) return "noReservation";
+		
+		
+		
+		Rating rating = null;
+		
+		for (Rating r : service.getRatings()) {
+			if (r.getUserId() == ruser.getId()) {
+				rating = r;
+				break;
+			}
+		}
+		
+		if (rating == null) {
+			rating = new Rating();
+			rating.setUserId(ruser.getId());
+			rating.setRating(jsonNode.get("rating").asDouble());
+			service.getRatings().add(rating);
+		}
+		else {
+			rating.setUserId(ruser.getId());
+			rating.setRating(jsonNode.get("rating").asDouble());
+		}
+		
+		
+		service.updateRating();
+		
+		rentACarRep.save(service);
+		
+		return "success";
+	}
+	
+	public double getUserRating(RentACar service, RegisteredUser user) {
+		
+		if (user == null) return 0.0;
+		
+		for (Rating r : service.getRatings()) {
+			if (r.getUserId() == user.getId()) {
+				return r.getRating();
+			}
+		}
+		
+		return 0.0;
+	}
+	
+	
 	
 	public String getVehicleInfo(String json) throws IOException {
 		

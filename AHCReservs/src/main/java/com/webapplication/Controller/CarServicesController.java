@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Repository.RentACarAdminRepository;
@@ -85,11 +86,17 @@ public class CarServicesController {
 	
 	
 	@GetMapping("/vehicle-search.html")
-	public String vehicleSearch(@RequestParam("id") String id, Model model) {
+	public String vehicleSearch(@RequestParam("id") String id,
+								@RequestParam("u") String username,
+								Model model) {
 		RentACar service = rentService.rentACarRep.findOneById(Long.parseLong(id));
+		RegisteredUser user = rentService.userRepository.findByUsername(username);
+		
+		double rating = rentService.getUserRating(service, user);
 		
 		
 		model.addAttribute("service", service);
+		model.addAttribute("rating", rating);
 		return "vehicle-search.html";
 	}
 	

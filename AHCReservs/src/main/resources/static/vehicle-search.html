@@ -97,6 +97,14 @@
 						</td>
 						
 					</tr>
+					<tr>	<!-- Koristiti ovo ako zelimo da prikazemo poruku korisniku -->
+						<td align="right">Rate us: </td>
+						<td>		
+							
+							<div id="service-rating" style="margin-left: 15px;" class="ui rating" th:attr="data-rating=${rating}" data-max-rating="5"></div>
+						</td>
+						
+					</tr>
 				
 				</table>
 				</form>
@@ -154,6 +162,12 @@
 		$('#type-of-vehicle')
 		  .dropdown();
 		
+			$('.ui.rating').rating({
+				onRate: function(value) {
+					rateService(value);
+				}
+			});
+			
 		</script>
 		
 	</body>
