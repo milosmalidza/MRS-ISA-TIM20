@@ -169,7 +169,7 @@ public class RentACarService {
 		Date currentDate = new Date();
 		List<VehicleReservation> reses = vehicle.getReservations();
 		for (VehicleReservation res : reses) {
-			if (currentDate.before(res.getDueDate())) {
+			if (currentDate.before(res.getDueDate()) || currentDate.before(res.getReservationDate())) {
 				return "reserved";
 			}
 		}

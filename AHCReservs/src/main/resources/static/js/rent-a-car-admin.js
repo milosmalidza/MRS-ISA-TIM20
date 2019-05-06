@@ -389,6 +389,8 @@ var vehicleEditId = null;
 var selectedEditVehicle = null;
 function displayEditWindow(response) {
 	
+	console.log(response);
+	
 	if (response == "reserved") {
 		alert("Vehicle is already reserved.");
 		return;
