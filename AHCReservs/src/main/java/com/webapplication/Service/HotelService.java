@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.webapplication.JSONBeans.HotelData;
 import com.webapplication.JSONBeans.HotelServiceData;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.JSONBeans.RoomData;
 import com.webapplication.Model.Currency;
 import com.webapplication.Model.HAdditionalService;
@@ -224,6 +225,29 @@ public class HotelService {
 		additionalSvc.getServicePrice().setCurrency(currency);
 		
 		return hAdditionalSvc.save(additionalSvc);
+		
+	}
+	
+	
+	public int getNumOfAvaiableRooms(Long hotelID) {
+		
+		Hotel hotel = findOne(hotelID).get();
+		
+		if(hotel == null) {
+			return -1;
+		}
+		
+		int availableRooms = 0;
+		
+		for(Room room: hotel.getRooms()) {
+			
+			if(!room.isReserved()) {
+				availableRooms++;
+			}
+			
+		}
+		
+		return availableRooms;
 		
 	}
 	

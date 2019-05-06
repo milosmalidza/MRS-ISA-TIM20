@@ -136,6 +136,12 @@ function companyClicked() {
 	loadPage("vehicle-search.html?id=" + services[serviceIndex].id);
 }
 
+function hotelClicked() {
+	
+	loadPage("hotel-home.html?id=" + services[serviceIndex].id);
+	
+}
+
 
 
 var searchEnabled = false;

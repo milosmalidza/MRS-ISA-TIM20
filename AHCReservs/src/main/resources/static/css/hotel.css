@@ -34,6 +34,21 @@ div.left-animation-div {
 	transition: .7s;
 }
 
+div.down-animation-div {
+	
+	position: fixed;
+	width: 100%;
+	height: 0%;
+	bottom: 0;
+	left: 0;
+	background-color: white;
+	z-index: 5;
+	overflow-y: scroll;
+	
+	-webkit-transition: .7s;
+	transition: .7s;
+}
+
 div.right-animation-div {
 	
 	position: fixed;
@@ -73,6 +88,10 @@ table#add-room-table {
 }
 
 table#rooms-table {
+	display: none;
+}
+
+table#available-rooms-table {
 	display: none;
 }
 
