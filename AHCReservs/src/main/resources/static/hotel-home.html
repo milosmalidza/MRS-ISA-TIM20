@@ -4,9 +4,13 @@
 		<title>Hotel home</title>
 		
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
-		
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
 		<script type="text/javascript" src="js-libs/toast.js"></script>
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
+		
+		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/hotel-home.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
 		
@@ -15,6 +19,7 @@
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="js-libs/toast.css" />
 		<link rel="stylesheet" href="css/hotel.css" />
+		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
 	
 	</head>
 
@@ -66,16 +71,50 @@
 			</div>
 		</div>
 		
+		
+		<!-- Pop-up div for reservation -->
+		
 		<div id="reservation-div" class="down-animation-div">
 			
+			<!-- Back button -->
+			<button id="back-button" class="ui green basic button" onclick="hideReservationDiv()"> BACK </button>
+			
 			<div class="center-content">
+			
+				<!-- Date picker for room reservation -->
+				<table id="reservation-date-table">
+				
+					<tr>
+						<td> Select check in and check out date: </td>			
+				
+						<td>
+							<div id="reservation-date" class="ui input">
+								<input type="text" id="daterange" name="daterange"  />
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Enter number of guests </td>
+						
+						<td>
+							<div class="ui input">
+ 								<input type="number" id="guests-num" placeholder="Number of guests...">
+							</div>
+						</td>
+					</tr>
+					
+				</table>
+				
+				
+				<!-- Available rooms -->
 				
 				<table id="available-rooms-table" class="ui celled striped table">
 					
 					<thead>
 						<tr>
-							<th>
-								<h2> Check the rooms to reserve </h2>
+							<th colspan="100%">
+								<h2> Check the rooms you want to reserve </h2>
 							</th>
 						</tr>
 						
@@ -84,15 +123,16 @@
 							<th> Room floor </th>
 							<th> Number of beds </th>
 							<th> Room type </th>
+							<th> On discount </th>
 							<th> Price per night </th>
-							<th> Select </th>
+							<th> Check </th>
 						</tr>
 						
 					</thead>
 					
-					<tbody>
+					<tbody id="available-rooms-body">
 						
-						<!-- thymeleaf foreach iteration through rooms -->
+						<!-- thymeleaf foreach iteration through rooms
 						<th:block th:each="room : ${service.rooms}">
 							
 							<tr>
@@ -101,24 +141,74 @@
 								<td th:text="${room.numOfBeds}"> Beds </td>
 								<td th:text="${room.roomType}"> Type </td>
 								<td th:text="|${room.roomPrice.price} ${room.roomPrice.currency}|"> Price </td>
+								
 								<td>
-									<input type="checkbox" th:value="${room.id}" />
+									<div class="ui checkbox">
+											<input type="checkbox" th:value="${room.id}">
+	 										<label></label>
+									</div>
 								</td>
+								
 							</tr>
 							
-						</th:block>
+						</th:block> -->
 						
 					</tbody>
 					
 				</table>
 				
-				<button class="ui positive button"> Add rooms to reservation </button>
+				<!-- Additional services -->
+				<table id="additional-services-table">
+					
+					<tr>
+						<td> Select the additional services you would like to include: </td>
+						
+					</tr>
+					
+					<tr>
+						<td>
+							
+							<select id="additional-services-select" class="ui fluid search dropdown" multiple="">
+								<option value=""> Additional service...</option>
+							</select>
+							
+						</td>
+					</tr>
+					
+					<tr>
+						<td>
+							<button class="ui positive button" onclick="reserveRooms()"> Make reservation </button>
+						</td>
+					</tr>
+					
+				</table>
 				
 			</div>
 			
 		</div>
 		
 		<script>
+		
+			//Initialize datepicker
+			$(function() {
+				$('input[name="daterange"]').daterangepicker({
+					timePicker: true,
+			    	opens: 'left'
+			  	}, function(start, end, label) {
+			           console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+				       roomCheckInDate = start.format('DD.MM.YYYY.');
+				       roomCheckOutDate = end.format('DD.MM.YYYY.');
+				       
+				       getAvailableRooms();
+				       displayAdditionalServices();
+			    });
+			});
+			
+		
+			$(".ui.checkbox").checkbox();
+			
+			$("#additional-services-select")
+			  .dropdown();
 		
 		</script>
 		

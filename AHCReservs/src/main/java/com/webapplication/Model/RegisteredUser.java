@@ -2,8 +2,11 @@ package com.webapplication.Model;
 
 
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 @Entity
 public class RegisteredUser extends AppUser{
@@ -13,6 +16,9 @@ public class RegisteredUser extends AppUser{
 	
 	@OneToMany(mappedBy = "user")
 	private List<VehicleReservation> reservations;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<RoomReservation> hotelReservations;
 	
 	
 	
@@ -48,6 +54,14 @@ public class RegisteredUser extends AppUser{
 	@Override
 	public String toString() {
 		return super.toString();
+	}
+
+	public Set<RoomReservation> getHotelReservations() {
+		return hotelReservations;
+	}
+
+	public void setHotelReservations(Set<RoomReservation> hotelReservations) {
+		this.hotelReservations = hotelReservations;
 	}
 	
 }

@@ -82,7 +82,7 @@ input[type="button"] {
 }
 
 
-/* Hotel profile decorators */
+/* Hiding certain tables */
 table#add-room-table {
 	display: none;
 }
@@ -92,6 +92,10 @@ table#rooms-table {
 }
 
 table#available-rooms-table {
+	display: none;
+}
+
+table#additional-services-table {
 	display: none;
 }
 

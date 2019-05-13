@@ -47,6 +47,9 @@ public class Room {
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Price roomPrice;
 	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private RoomReservation reservation;
+	
 	public Room() {
 	
 		roomPrice = new Price();
@@ -155,5 +158,15 @@ public class Room {
 	public void setRoomPrice(Price roomPrice) {
 		this.roomPrice = roomPrice;
 	}
+
+	@JsonIgnore
+	public RoomReservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(RoomReservation reservation) {
+		this.reservation = reservation;
+	}
+
 	
 }
