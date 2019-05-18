@@ -34,7 +34,7 @@ public class RoomReservationService {
 	@Autowired
 	RoomService roomSvc;
 	
-	public String reserveRooms(RoomReservationBean reservationData) {
+	/*public String reserveRooms(RoomReservationBean reservationData) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
 		Date checkInDate = null;
@@ -95,7 +95,7 @@ public class RoomReservationService {
 		}
 		
 		return "Reservation successful";
-	}
+	}*/
 	
 	
 	public Set<HAdditionalService> convertStringToAdditionalService(List<String> stringServices, Long hotelID) {

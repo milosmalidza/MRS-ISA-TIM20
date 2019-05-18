@@ -31,6 +31,12 @@ public class RentACarController {
 	private RentACarService rentService;
 	
 	
+	@RequestMapping(value = "/addOfficeBranch", method = RequestMethod.POST)
+	public String addOfficeBranch(@RequestParam("json") String json, @RequestParam("user") String user) {
+		
+		return "sdsad";
+	}
+	
 	@RequestMapping(value = "/rateService", method = RequestMethod.POST)
 	public String rateService(@RequestParam("json") String json, @RequestParam("user") String user) {
 		

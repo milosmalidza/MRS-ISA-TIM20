@@ -511,12 +511,61 @@ function rateService(value) {
 }
 
 
+function openAddOfficeBranch() {
+	var el = document.getElementById("add-office-branch-holder");
+	
+	$("#office-branch-name").val("");
+	$("#office-branch-location").val("");
+	$(el).fadeIn(500);
+}
+
+function closeAddOfficeBranch() {
+	var el = document.getElementById("add-office-branch-holder");
+	var nameIn = document.getElementById("office-branch-name");
+	var locationIn = document.getElementById("office-branch-location");
+	nameIn.parentNode.classList.remove("error");
+	locationIn.parentNode.classList.remove("error");
+	
+	$(el).fadeOut(500);
+}
 
 
-
-
-
-
+function addOfficeBranch() {
+	
+	var nameIn = document.getElementById("office-branch-name");
+	var locationIn = document.getElementById("office-branch-location");
+	
+	var name = nameIn.value;
+	var location = locationIn.value;
+	
+	var flag = false;
+	nameIn.parentNode.classList.remove("error");
+	locationIn.parentNode.classList.remove("error");
+	
+	if (name == "") {
+		nameIn.parentNode.classList.add("error");
+		flag = true;
+	}
+	
+	if (location == "") {
+		locationIn.parentNode.classList.add("error");
+		flag = true;
+	}
+	
+	if (flag) return;
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/addOfficeBranch",
+		data : {json : JSON.stringify({name : name, location : location}),
+			   user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			console.log(response);
+		}
+	})
+	
+	
+}
 
 
 
