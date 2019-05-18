@@ -1,6 +1,7 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,12 +44,11 @@ public class Room {
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Hotel hotel;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Price roomPrice;
+	@Column(name="roomPrice", unique=false, nullable=false)
+	private double roomPrice;
 	
 	public Room() {
 	
-		roomPrice = new Price();
 	}
 
 	public Room(Long id, int number, int floor, int numOfBeds, RoomType roomType, boolean reserved,
@@ -64,7 +63,6 @@ public class Room {
 		this.discount = discount;
 		this.hotel = hotel;
 		
-		roomPrice = new Price();
 	}
 	
 	
@@ -76,10 +74,8 @@ public class Room {
 		this.roomType = roomData.getRoomType();
 		this.reserved = false;
 		this.discount = false;
+		this.roomPrice = roomData.getPrice();
 		
-		roomPrice = new Price();
-		roomPrice.setPrice(roomData.getPrice());
-		roomPrice.setCurrency(roomData.getCurrency());
 	}
 
 	public Long getId() {
@@ -148,11 +144,11 @@ public class Room {
 		this.hotel = hotel;
 	}
 
-	public Price getRoomPrice() {
+	public double getRoomPrice() {
 		return roomPrice;
 	}
 
-	public void setRoomPrice(Price roomPrice) {
+	public void setRoomPrice(double roomPrice) {
 		this.roomPrice = roomPrice;
 	}
 	

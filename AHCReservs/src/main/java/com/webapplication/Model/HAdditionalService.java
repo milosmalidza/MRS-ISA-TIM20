@@ -1,6 +1,7 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -26,8 +26,8 @@ public class HAdditionalService {
 	@Column(name="service", unique=false, nullable=false)
 	private HotelServiceType service;
 	
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Price servicePrice;
+	@Column(name="servicePrice", unique=false, nullable=false)
+	private double servicePrice;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Hotel hotel;
@@ -36,7 +36,7 @@ public class HAdditionalService {
 		
 	}
 
-	public HAdditionalService(Long id, HotelServiceType service, Price price) {
+	public HAdditionalService(Long id, HotelServiceType service, double price) {
 		
 		this.id = id;
 		this.service = service;
@@ -46,11 +46,7 @@ public class HAdditionalService {
 	public HAdditionalService(HotelServiceData data, Hotel hotel) {
 		
 		this.service = data.getServiceType();
-		
-		this.servicePrice = new Price();
-		this.servicePrice.setCurrency(data.getCurrency());
-		this.servicePrice.setPrice(data.getPrice());
-		
+		this.servicePrice = data.getPrice();
 		this.setHotel(hotel);
 		
 	}
@@ -71,11 +67,11 @@ public class HAdditionalService {
 		this.service = service;
 	}
 
-	public Price getServicePrice() {
+	public double getServicePrice() {
 		return servicePrice;
 	}
 
-	public void setServicePrice(Price price) {
+	public void setServicePrice(double price) {
 		this.servicePrice = price;
 	}
 

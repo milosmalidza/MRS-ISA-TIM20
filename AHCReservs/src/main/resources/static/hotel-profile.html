@@ -109,7 +109,7 @@
 							<td> </td>
 							<td>
 								<button class="ui right labeled icon button" onclick="updateProfile()">
-									<i class="user icon"></i>
+									<i class="building icon"></i>
 									Update profile 
 								</button>
 							</td>
@@ -182,18 +182,6 @@
 								<input type="number" id="room-price" min="1"/>
 							</div>
 						</td>
-					</tr>
-					
-					<tr>
-						<td> Currency: </td>
-						
-						<td>
-							<select id="price-currency" class="ui dropdown">
-								<option value="">Select currency</option>
-							</select>
-						</td>
-						
-						<td> </td>
 					</tr>
 					
 					<tr>
@@ -309,18 +297,6 @@
 					</tr>
 					
 					<tr>
-						<td> Currency: </td>
-						
-						<td>
-							<select id="price-currency-edit" class="ui dropdown">
-								<option value="">Select currency</option>
-							</select>
-						</td>
-						
-						<td> </td>
-					</tr>
-					
-					<tr>
 						
 						<td> </td>
 						<td>
@@ -362,15 +338,6 @@
 							<div class="ui input">
 								<input type="number" id="edit-service-price" min="1"/>
 							</div>
-						</td>
-					</tr>
-					
-					<tr>
-						<td> Currency: </td>
-						<td>
-							<select id="edit-service-currency" class="ui dropdown">
-								<option value="">Select currency</option>
-							</select>
 						</td>
 					</tr>
 					
@@ -425,16 +392,6 @@
 			</tr>	
 			
 			<tr>
-				<td> Currency: </td>
-				
-				<td>
-					<select id="service-currency" class="ui dropdown">
-						<option value="">Select currency</option>
-					</select>
-				</td>
-			</tr>
-			
-			<tr>
 				<td> </td>
 				<td>
 					<input class="ui button" type="button" onclick="addService()" value="Add service"/>
@@ -481,19 +438,7 @@
 			$("#room-type-edit")
 			  .dropdown();
 			
-			$("#price-currency")
-			  .dropdown();
-			
-			$("#price-currency-edit")
-			  .dropdown();
-			
 			$("#service-type")
-			  .dropdown();
-			
-			$("#service-currency")
-			  .dropdown();
-			
-			$("#edit-service-currency")
 			  .dropdown();
 			
 		</script>
