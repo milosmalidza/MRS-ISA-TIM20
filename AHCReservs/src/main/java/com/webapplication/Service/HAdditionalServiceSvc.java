@@ -85,4 +85,20 @@ public class HAdditionalServiceSvc {
 	}
 	
 	
+	public HAdditionalService findOneForHotel(Long hotelID, HotelServiceType serviceType) {
+		
+		
+		for(HAdditionalService additionalSvc: findAllForHotel(hotelID)) {
+			
+			if(additionalSvc.getService() == serviceType) {
+				return additionalSvc;
+			}
+			
+		}
+		
+		return null;
+		
+	}
+	
+	
 }

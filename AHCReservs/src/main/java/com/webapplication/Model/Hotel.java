@@ -27,6 +27,9 @@ public class Hotel extends Company {
 	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<HAdditionalService> pricelist;
 	
+	@OneToMany(mappedBy = "hotel", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private Set<RoomReservation> reservations;
+	
 	public Hotel() {
 		
 		super();
@@ -83,6 +86,15 @@ public class Hotel extends Company {
 
 	public void setPricelist(Set<HAdditionalService> pricelist) {
 		this.pricelist = pricelist;
+	}
+
+	@JsonIgnore 
+	public Set<RoomReservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(Set<RoomReservation> reservations) {
+		this.reservations = reservations;
 	} 
 
 	

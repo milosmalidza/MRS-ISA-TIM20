@@ -47,6 +47,9 @@ public class Room {
 	@Column(name="roomPrice", unique=false, nullable=false)
 	private double roomPrice;
 	
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private RoomReservation reservation;
+	
 	public Room() {
 	
 	}
@@ -151,5 +154,15 @@ public class Room {
 	public void setRoomPrice(double roomPrice) {
 		this.roomPrice = roomPrice;
 	}
+
+	@JsonIgnore
+	public RoomReservation getReservation() {
+		return reservation;
+	}
+
+	public void setReservation(RoomReservation reservation) {
+		this.reservation = reservation;
+	}
+
 	
 }

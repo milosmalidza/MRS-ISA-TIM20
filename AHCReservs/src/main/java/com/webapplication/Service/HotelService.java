@@ -1,5 +1,8 @@
 package com.webapplication.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.Collection;
@@ -9,6 +12,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.HotelData;
 import com.webapplication.JSONBeans.HotelServiceData;
 import com.webapplication.JSONBeans.RoomData;
@@ -34,6 +38,9 @@ public class HotelService {
 	
 	@Autowired
 	HAdditionalServiceSvc hAdditionalSvc;
+	
+	@Autowired
+	RoomReservationService roomReservSvc;
 	
 	
 	public Hotel updateProfile(HotelData hotelData) {
@@ -229,6 +236,53 @@ public class HotelService {
 			if(!room.isReserved()) {
 				availableRooms++;
 			}
+			
+		}
+		
+		return availableRooms;
+		
+	}
+	
+	public Collection<Room> getAvailableRooms(DateBean dateBean) {
+		
+		Hotel hotel = findOne(dateBean.getCompanyID()).get();
+		
+		if(hotel == null) {
+			return null;
+		}
+		
+		ArrayList<Room> availableRooms = new ArrayList<Room>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		
+		//convert strings to date
+		try {
+			dateBean.setStartDate(sdf.parse(dateBean.getStrStartDate()));
+			dateBean.setEndDate(sdf.parse(dateBean.getStrEndDate()));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
+		//iterate through hotel rooms and find the available ones
+		for(Room room: hotel.getRooms()) {
+			
+			//room is available if there is no reservation at all
+			if(room.getReservation() == null) {
+				System.out.println("No reservation at all");
+				availableRooms.add(room);
+				continue;
+				
+			} else {
+				
+				//check whether the room is reserved
+				if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
+					System.out.println("Room available");
+					availableRooms.add(room);
+				}
+				
+			}
+			
+			System.out.println("Room reserved");
 			
 		}
 		
