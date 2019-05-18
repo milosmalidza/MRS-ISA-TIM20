@@ -32,7 +32,8 @@ public class HotelDisplayController {
 	public String vehicleSearch(@RequestParam("id") String id, Model model) {
 		
 		Hotel service = hotelSvc.findOne(Long.parseLong(id)).get();
-		int availableRooms = hotelSvc.getNumOfAvaiableRooms(Long.parseLong(id));
+		int availableRooms = service.getRooms().size();
+				
 		
 		model.addAttribute("service", service);
 		model.addAttribute("availableRooms", availableRooms);

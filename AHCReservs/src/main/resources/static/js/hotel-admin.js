@@ -231,42 +231,10 @@ function addAllRoomsToTable() {
 
 function addRoomToTable(room) {
 	
-	var tableRef = $("#rooms-table-body")[0];
-	
-	// Insert a row in the table at the last row
-	var newRow = tableRef.insertRow(tableRef.rows.length);
-	
-	let index = 0; //table column index
-	
-	//iterate through room properties
-	for (var property in room) {
-	    if (room.hasOwnProperty(property)) {
-	    	
-	    	//id won't be displayed
-	    	if(property === 'id') {
-	    		continue;
-	    	}
-	    	
-	    	// Insert a cell in the row at index
-	    	var newCell  = newRow.insertCell(index);
-	    	
-    		var newText;
-    		
-    		if(property === 'roomPrice') {
-    			newText = document.createTextNode(room[property] + ' \u20AC'); //append the currency to the price
-    		} else {
-    			newText = document.createTextNode(room[property]);
-    		}
-    		
-    		newCell.appendChild(newText);
-	    	
-	        	
-	    	index = index + 1;
-	    }
-	}
+	let jsonData = insertAttrToRoomTable(room,"#rooms-table-body");
     
     //add the edit button to the table
-    var editBtnCell  = newRow.insertCell(index);
+    var editBtnCell  = jsonData.newRow.insertCell(jsonData.index);
 	var editBtn = document.createElement("INPUT");
 	
 	editBtn.type = "button";
@@ -280,7 +248,7 @@ function addRoomToTable(room) {
     
     
     //add the remove button to the table
-	var removeBtnCell  = newRow.insertCell(index + 1);
+	var removeBtnCell  = jsonData.newRow.insertCell(jsonData.index + 1);
 	var btnRemove = document.createElement("INPUT");
 	
     btnRemove.type = "button";

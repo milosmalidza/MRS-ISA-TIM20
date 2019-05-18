@@ -81,6 +81,50 @@ function addValuesToSelect(selectID, listOfValues, defaultText) {
 	
 }
 
+/** Inserts the room data in the table with tableID 
+ * @param room - room to be inserted
+ * @param tableID - '#' + id of the table body (<tbody>) that will contain the room
+ * @return - row in table containing the room data + index of the next column to be inserted */
+function insertAttrToRoomTable(room, tableID) {
+	
+	var tableRef = $(tableID)[0];
+	
+	// Insert a row in the table at the last row
+	var newRow = tableRef.insertRow(tableRef.rows.length);
+	
+	let index = 0; //table column index
+	
+	//iterate through room properties
+	for (var property in room) {
+	    if (room.hasOwnProperty(property)) {
+	    	
+	    	//id won't be displayed, reservation details also won't be displayed
+	    	if(property === 'id' || property === 'reservation') {
+	    		continue;
+	    	}
+	    	
+	    	// Insert a cell in the row at index
+	    	var newCell  = newRow.insertCell(index);
+	    	var newText;
+	    	
+	    	//room price is an object containing the price and currency
+	    	if(property === 'roomPrice') {
+	    		newText = document.createTextNode(room[property] + '  \u20AC'); //append currency to price
+	    	} else {
+		    	newText  = document.createTextNode(room[property]);
+	    	}
+	    	
+	    	newCell.appendChild(newText);
+	        	
+	    	index = index + 1;
+	    }
+	}
+	
+	
+	return { "index" : index, "newRow": newRow };
+	
+	
+}
 
 function validateEmail(elementValue){      
 	   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;

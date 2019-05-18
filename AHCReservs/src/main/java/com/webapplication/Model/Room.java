@@ -1,7 +1,6 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -35,9 +35,6 @@ public class Room {
 	@Column(name="roomType", unique=false, nullable=false)
 	private RoomType roomType;
 	
-	@Column(name="reserved", unique=false, nullable=false)
-	private boolean reserved;
-	
 	@Column(name="discount", unique=false, nullable=false)
 	private boolean discount;
 	
@@ -54,7 +51,7 @@ public class Room {
 	
 	}
 
-	public Room(Long id, int number, int floor, int numOfBeds, RoomType roomType, boolean reserved,
+	public Room(Long id, int number, int floor, int numOfBeds, RoomType roomType,
 			boolean discount, Hotel hotel) {
 		
 		this.id = id;
@@ -62,7 +59,6 @@ public class Room {
 		this.floor = floor;
 		this.numOfBeds = numOfBeds;
 		this.roomType = roomType;
-		this.reserved = reserved;
 		this.discount = discount;
 		this.hotel = hotel;
 		
@@ -75,7 +71,6 @@ public class Room {
 		this.floor = roomData.getFloor();
 		this.numOfBeds = roomData.getNumOfBeds();
 		this.roomType = roomData.getRoomType();
-		this.reserved = false;
 		this.discount = false;
 		this.roomPrice = roomData.getPrice();
 		
@@ -122,14 +117,7 @@ public class Room {
 		this.roomType = roomType;
 	}
 
-	public boolean isReserved() {
-		return reserved;
-	}
-
-	public void setReserved(boolean reserved) {
-		this.reserved = reserved;
-	}
-
+	
 	public boolean isDiscount() {
 		return discount;
 	}

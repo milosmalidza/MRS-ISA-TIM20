@@ -63,42 +63,11 @@ function addAllRoomsToTable(rooms) {
 
 function addRoomToTable(room) {
 		
-	var tableRef = $("#available-rooms-body")[0];
 	
-	// Insert a row in the table at the last row
-	var newRow = tableRef.insertRow(tableRef.rows.length);
-	
-	let index = 0; //table column index
-	
-	//iterate through room properties
-	for (var property in room) {
-	    if (room.hasOwnProperty(property)) {
-	    	
-	    	//id won't be displayed, reservation details also won't be displayed
-	    	if(property === 'id' || property === 'reserved' || property === 'reservation') {
-	    		continue;
-	    	}
-	    	
-	    	// Insert a cell in the row at index
-	    	var newCell  = newRow.insertCell(index);
-	    	
-	    	//room price is an object containing the price and currency
-	    	if(property === 'roomPrice') {
-	    		var newText = document.createTextNode(room[property].price + ' ' + room[property].currency);
-	    		newCell.appendChild(newText);
-	    	} else {
-	    		// Append a text node to the cell
-		    	var newText  = document.createTextNode(room[property]);
-		    	newCell.appendChild(newText);
-	    	}
-	        	
-	    	index = index + 1;
-	    }
-	}
-	
+	let jsonData = insertAttrToRoomTable(room, "#available-rooms-body"); 
 	
 	//create  checkbox
-	var checkBoxCell  = newRow.insertCell(index);
+	var checkBoxCell  = jsonData.newRow.insertCell(jsonData.index);
 	
 	var checkbox = document.createElement('input');
 	checkbox.type = "checkbox";
@@ -134,8 +103,7 @@ function displayAdditionalServices() {
 				for(let i = 0; i < response.data.length; i++) {
 					
 					//store the service type and price as a string to array
-					serviceTypesAndPrices.push(response.data[i].service + ':   ' +
-							response.data[i].servicePrice.price + ' ' + response.data[i].servicePrice.currency); 
+					serviceTypesAndPrices.push(response.data[i].service + ':   ' + response.data[i].servicePrice + ' \u20AC'); 
 					
 				}
 				

@@ -121,7 +121,7 @@ public class HotelService {
 			return "Room does not exist";
 		}
 		
-		if(room.isReserved()) {
+		if(!roomReservSvc.reservationsPassed(roomID)) {
 			return "You can't remove a room which is reserved";
 		}
 		
@@ -151,7 +151,7 @@ public class HotelService {
 			return "Room does not exist";
 		}
 		
-		if(room.isReserved()) {
+		if(!roomReservSvc.reservationsPassed(room.getId())) {
 			return "You can't edit a room which is reserved";
 		}
 		
@@ -220,28 +220,6 @@ public class HotelService {
 		
 	}
 	
-	
-	public int getNumOfAvaiableRooms(Long hotelID) {
-		
-		Hotel hotel = findOne(hotelID).get();
-		
-		if(hotel == null) {
-			return -1;
-		}
-		
-		int availableRooms = 0;
-		
-		for(Room room: hotel.getRooms()) {
-			
-			if(!room.isReserved()) {
-				availableRooms++;
-			}
-			
-		}
-		
-		return availableRooms;
-		
-	}
 	
 	public Collection<Room> getAvailableRooms(DateBean dateBean) {
 		

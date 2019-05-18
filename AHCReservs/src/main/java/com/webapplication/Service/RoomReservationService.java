@@ -79,7 +79,7 @@ public class RoomReservationService {
 			}
 			
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
-					room.getRoomPrice().getPrice(), room.getHotel(), user, room, additionalServices);
+					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
 			
 			
 			//if the room hasn't been reserved in the mean time the reservation is successful
@@ -159,6 +159,30 @@ public class RoomReservationService {
 		
 		return false;
 		
+	}
+	
+	/** Method determines whether the admin get edit or delete the room by checking whether
+	 * the reservations have expired
+	 * @param room_id - id of the room to be checked
+	 * @return boolean indicating whether there are any reservations in the future */
+	public boolean reservationsPassed(Long room_id) {
+	
+		Date today = new Date();
+		
+		//iterate through all reservations containing the room passed as parameter
+		for(RoomReservation reservation: findAll()) {
+					
+			if(reservation.getRoom().getId() == room_id) {
+				
+				//compare dates
+				if(today.before(reservation.getCheckIn()) || today.before(reservation.getCheckOut())) {
+					return false;
+				}
+			}
+			
+		}
+		
+		return true;
 	}
 	
 	
