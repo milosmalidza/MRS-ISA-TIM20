@@ -83,12 +83,7 @@ function fillSelectInputs() {
 	
 	//room configuration selects
 	getRoomTypes(); //fill the values in the select that contains room types
-	addCurrenciesToSelect("#price-currency"); //fill the currency select with its values
-	addCurrenciesToSelect("#price-currency-edit"); //fill the currency select with its values
-	
-	//pricing configuration selects
-	addCurrenciesToSelect("#service-currency");
-	addCurrenciesToSelect("#edit-service-currency");
+
 	
 	axios.get(controllerPath + "/getServiceTypes")
 		.then(response => {
@@ -219,8 +214,7 @@ function getRoomJson() {
 		"floor": $("#room-floor").val(),
 		"numOfBeds": $("#room-beds").val(),
 		"roomTypeString": $("#room-type").val(),
-		"price": $("#room-price").val(),
-		"currencyString": $("#price-currency").val()
+		"price": $("#room-price").val()
 	};
 	
 }
@@ -256,15 +250,16 @@ function addRoomToTable(room) {
 	    	// Insert a cell in the row at index
 	    	var newCell  = newRow.insertCell(index);
 	    	
-	    	//room price is an object containing the price and currency
-	    	if(property === 'roomPrice') {
-	    		var newText = document.createTextNode(room[property].price + ' ' + room[property].currency);
-	    		newCell.appendChild(newText);
-	    	} else {
-	    		// Append a text node to the cell
-		    	var newText  = document.createTextNode(room[property]);
-		    	newCell.appendChild(newText);
-	    	}
+    		var newText;
+    		
+    		if(property === 'roomPrice') {
+    			newText = document.createTextNode(room[property] + ' \u20AC'); //append the currency to the price
+    		} else {
+    			newText = document.createTextNode(room[property]);
+    		}
+    		
+    		newCell.appendChild(newText);
+	    	
 	        	
 	    	index = index + 1;
 	    }
@@ -345,9 +340,7 @@ function displayEditRoomModal(editBtn) {
 	// TODO: postavi tekucu vrednost $('#room-type-edit').dropdown('set selected', roomToDisplay.roomType);
 	
 	$("#room-beds-edit").val(roomToDisplay.numOfBeds);
-	$("#room-price-edit").val(roomToDisplay.roomPrice.price);
-	
-	//TODO: postavi valutu $("#price-currency-edit :selected").val(roomToDisplay.roomPrice.currency);
+	$("#room-price-edit").val(roomToDisplay.roomPrice);
 	
 	addListenerToEditModal(modal);
 
@@ -357,8 +350,8 @@ function addListenerToEditModal(modal) {
 	
 	//When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
-	  if (event.target == modal) {
-	    modal.style.display = "none";
+	  if(event.target == modal) {
+		  modal.style.display = "none";
 	  }
 	}
 	
@@ -378,6 +371,8 @@ function removeRoom(removeBtn) {
 	let roomID = removeBtn.getAttribute("data-room-id");
 	
 	let roomToRemove = getRoom(roomID);
+	
+	//TODO: proveri na serveru da li je soba rezervisana
 	
 	if(roomToRemove.reserved === true) {
 		toast("Can't remove a reserved room");
@@ -460,8 +455,7 @@ function getEditRoomJson(roomID) {
 		"floor": $("#room-floor-edit").val(),
 		"numOfBeds": $("#room-beds-edit").val(),
 		"roomTypeString": $("#room-type-edit").val(),
-		"price": $("#room-price-edit").val(),
-		"currencyString": $("#price-currency-edit").val()
+		"price": $("#room-price-edit").val()
 	};
 	
 }
@@ -549,7 +543,7 @@ function addRowToServicesTable(serviceObject) {
 	
 	//add a cell for service price
 	newCell = newRow.insertCell(1);
-	newText = document.createTextNode(serviceObject.servicePrice.price + ' ' + serviceObject.servicePrice.currency);
+	newText = document.createTextNode(serviceObject.servicePrice + ' \u20AC');
 	newCell.appendChild(newText);
 	
 	
@@ -589,7 +583,7 @@ function displayEditServiceModal(editBtn) {
 	
 	//display the service data
 	$("#edit-service-type").val(serviceToEdit.service);
-	$("#edit-service-price").val(serviceToEdit.servicePrice.price);
+	$("#edit-service-price").val(serviceToEdit.servicePrice);
 	
 	addListenerToEditModal(modal);
 
@@ -654,8 +648,7 @@ function getEditServiceJson() {
 	return {
 		"serviceID": $("#edit-service-id").val(),
 		"serviceTypeString": $("#edit-service-type").val(),
-		"price": $("#edit-service-price").val(),
-		"currencyString": $("#edit-service-currency").val()
+		"price": $("#edit-service-price").val()
 	}
 	
 }
@@ -665,7 +658,6 @@ function getServiceJson() {
 	return {
 		"hotelID": adminHotel.id,
 		"serviceTypeString": $("#service-type").val(),
-		"price": $("#service-price").val(),
-		"currencyString": $("#service-currency").val()
+		"price": $("#service-price").val()
 	};
 }

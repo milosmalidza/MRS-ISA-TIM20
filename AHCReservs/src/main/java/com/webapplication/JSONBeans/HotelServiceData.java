@@ -1,6 +1,5 @@
 package com.webapplication.JSONBeans;
 
-import com.webapplication.Model.Currency;
 import com.webapplication.Model.HotelServiceType;
 
 public class HotelServiceData {
@@ -10,23 +9,19 @@ public class HotelServiceData {
 	private String serviceTypeString;
 	private HotelServiceType serviceType;
 	private double price;
-	private String currencyString;
-	private Currency currency;
 	
 	public HotelServiceData() {
 		
 	}
 
 	
-	public HotelServiceData(Long hotelID, String serviceTypeString, HotelServiceType serviceType, double price,
-			String currencyString, Currency currency) {
+	public HotelServiceData(Long hotelID, String serviceTypeString, HotelServiceType serviceType, double price) {
 		super();
 		this.hotelID = hotelID;
 		this.serviceTypeString = serviceTypeString;
 		this.serviceType = serviceType;
 		this.price = price;
-		this.currencyString = currencyString;
-		this.currency = currency;
+		
 	}
 
 
@@ -52,22 +47,6 @@ public class HotelServiceData {
 
 	public void setPrice(double price) {
 		this.price = price;
-	}
-
-	public String getCurrencyString() {
-		return currencyString;
-	}
-
-	public void setCurrencyString(String currencyString) {
-		this.currencyString = currencyString;
-	}
-
-	public Currency getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
 	}
 
 	public Long getHotelID() {

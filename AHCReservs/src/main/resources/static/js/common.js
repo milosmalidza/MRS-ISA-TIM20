@@ -82,18 +82,6 @@ function addValuesToSelect(selectID, listOfValues, defaultText) {
 }
 
 
-/** Get a list of currencies from the server, and add them to the select tag
- *  @selectID: select tag id(id with '#') to be filled with currencies*/
-function addCurrenciesToSelect(selectID) {
-	
-	axios.get(userControllerPath + "/getCurrencies")
-		.then(response => {
-			addValuesToSelect(selectID, response.data, "Select currency");
-		});
-	
-}
-
-
 function validateEmail(elementValue){      
 	   var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 	   return emailPattern.test(elementValue); 

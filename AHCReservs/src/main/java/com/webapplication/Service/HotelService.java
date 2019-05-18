@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,6 @@ import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.HotelData;
 import com.webapplication.JSONBeans.HotelServiceData;
 import com.webapplication.JSONBeans.RoomData;
-import com.webapplication.Model.Currency;
 import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelServiceType;
@@ -95,14 +95,12 @@ public class HotelService {
 		
 		//convert strings to enums
 		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
-		Currency currency = mulSvc.convertStringToCurrency(roomData.getCurrencyString());
 		
-		if(type == null || currency == null) {
+		if(type == null) {
 			return null;
 		}
 		
 		roomData.setRoomType(type);
-		roomData.setCurrency(currency);
 		
 		//create new room
 		Room room = new Room(roomData);
@@ -163,15 +161,13 @@ public class HotelService {
 		room.setNumOfBeds(roomData.getNumOfBeds());
 	
 		RoomType type = roomSvc.getRoomType(roomData.getRoomTypeString());
-		Currency currency = mulSvc.convertStringToCurrency(roomData.getCurrencyString());
 		
-		if(type == null || currency == null) {
+		if(type == null) {
 			return "Unknown currency or room type";
 		}
 		
 		room.setRoomType(type);
-		room.getRoomPrice().setCurrency(currency);
-		room.getRoomPrice().setPrice(roomData.getPrice());
+		room.setRoomPrice(roomData.getPrice());
 		
 		roomSvc.save(room);
 		
@@ -183,14 +179,12 @@ public class HotelService {
 		
 		
 		//convert strings to enums
-		Currency currency = mulSvc.convertStringToCurrency(serviceData.getCurrencyString());
 		HotelServiceType svcType = hAdditionalSvc.convertStringToService(serviceData.getServiceTypeString());
 		
-		if(currency == null || svcType == null) {
+		if(svcType == null) {
 			return null;
 		}
 		
-		serviceData.setCurrency(currency);
 		serviceData.setServiceType(svcType);
 		
 		Hotel hotel = findOne(serviceData.getHotelID()).get();
@@ -220,15 +214,7 @@ public class HotelService {
 			return null;
 		}
 		
-		//convert string to enum
-		Currency currency = mulSvc.convertStringToCurrency(serviceData.getCurrencyString());
-		
-		if(currency == null) {
-			return null;
-		}
-		
-		additionalSvc.getServicePrice().setPrice(serviceData.getPrice());
-		additionalSvc.getServicePrice().setCurrency(currency);
+		additionalSvc.setServicePrice(serviceData.getPrice());
 		
 		return hAdditionalSvc.save(additionalSvc);
 		
