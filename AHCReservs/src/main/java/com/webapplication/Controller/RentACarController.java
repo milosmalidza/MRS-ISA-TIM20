@@ -31,10 +31,29 @@ public class RentACarController {
 	private RentACarService rentService;
 	
 	
+	@RequestMapping(value = "/getBranchOffices", method = RequestMethod.POST)
+	public String getBranchOffices(@RequestParam("json") String json) {
+		
+		try {
+			return rentService.getBranchOffices(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
 	@RequestMapping(value = "/addOfficeBranch", method = RequestMethod.POST)
 	public String addOfficeBranch(@RequestParam("json") String json, @RequestParam("user") String user) {
 		
-		return "sdsad";
+		try {
+			return rentAdminService.addOfficeBranch(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
 	}
 	
 	@RequestMapping(value = "/rateService", method = RequestMethod.POST)

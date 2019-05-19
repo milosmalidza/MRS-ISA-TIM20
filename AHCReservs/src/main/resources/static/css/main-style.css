@@ -447,13 +447,46 @@ div#nav-bar {
 }
 
 
+#notification-window {
+	position: fixed;
+	width: 350px;
+	height: 160px;
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+	
+	background: white;
+	
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
+	right: -400px;
+	top: 100px;
+	z-index: 10;
+	
+	-webkit-transition: .5s;
+	transition: .5s;
+}
 
+#notification-window > div {
+	position: absolute;
+	width: 90%;
+	
+	top: 50%;
+	left: 50%;
+	
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
 
+#notification-title {
+	letter-spacing: 2px;
+	font-weight: bold;
+	font-size: 18px;
+	margin-bottom: 20px;
+}
 
-
-
-
-
+#notification-content {
+	letter-spacing: 1px;
+	font-size: 12px;
+}
 
 
 

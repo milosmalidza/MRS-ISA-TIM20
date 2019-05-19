@@ -17,9 +17,11 @@ import com.webapplication.Model.Rating;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
+import com.webapplication.Model.RentACarBranchOffice;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Repository.RegisteredUserRepository;
+import com.webapplication.Repository.RentACarBranchOfficeRepository;
 import com.webapplication.Repository.RentACarRepository;
 import com.webapplication.Repository.VehicleRepository;
 import com.webapplication.Repository.VehicleReservationRepository;
@@ -42,6 +44,9 @@ public class RentACarService {
 	@Autowired
 	public VehicleReservationRepository reservationRep;
 	
+	@Autowired
+	public RentACarBranchOfficeRepository branchRep;
+	
 	
 	public RentACar save(RentACar rentACar) {
 		return rentACarRep.save(rentACar);
@@ -54,6 +59,40 @@ public class RentACarService {
 	
 	public List<RentACar> findAll() {
 		return rentACarRep.findAll();
+	}
+	
+	public List<RentACarBranchOffice> findAllRentACarBranchOffices(RentACar rentACar) {
+		
+		return branchRep.findAllByRentACar(rentACar);
+	}
+	
+	public String getBranchOffices(String json) throws IOException {
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode dataNode = mapper.readTree(json);
+		
+		
+		RentACar rentACar = rentACarRep.findById(dataNode.get("serviceId").asLong()).get();
+		
+		List<RentACarBranchOffice> offices = findAllRentACarBranchOffices(rentACar);
+		
+		List<JsonNode> dataOutput = new ArrayList<JsonNode>();
+		
+		for (RentACarBranchOffice o : offices) {
+			System.out.println(o.getName());
+			
+			JsonNode n = mapper.createObjectNode();
+			
+			((ObjectNode)n).put("id", o.getId());
+			((ObjectNode)n).put("name", o.getName());
+			((ObjectNode)n).put("address", o.getAddress());
+			
+			dataOutput.add(n);
+		}
+		
+		return mapper.writeValueAsString(dataOutput);
 	}
 	
 	public String rateRentACar(String json, String user) throws IOException {
