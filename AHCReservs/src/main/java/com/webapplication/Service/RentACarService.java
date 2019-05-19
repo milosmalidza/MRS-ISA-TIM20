@@ -66,6 +66,8 @@ public class RentACarService {
 		return branchRep.findAllByRentACar(rentACar);
 	}
 	
+	
+	
 	public String getBranchOffices(String json) throws IOException {
 		
 		
@@ -81,7 +83,6 @@ public class RentACarService {
 		List<JsonNode> dataOutput = new ArrayList<JsonNode>();
 		
 		for (RentACarBranchOffice o : offices) {
-			System.out.println(o.getName());
 			
 			JsonNode n = mapper.createObjectNode();
 			

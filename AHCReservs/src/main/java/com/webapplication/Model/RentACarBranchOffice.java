@@ -31,7 +31,7 @@ public class RentACarBranchOffice {
 	@Column(name = "address", unique = false, nullable = false)
 	private String address;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private RentACar rentACar;
 	
 	
