@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -54,6 +55,7 @@ public class Vehicle {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private RentACar rentACar;
+	
 	
 	
 	public Vehicle() {}
@@ -171,8 +173,6 @@ public class Vehicle {
 	public void setRentACar(RentACar rentACar) {
 		this.rentACar = rentACar;
 	}
-	
-	
 	
 	
 }

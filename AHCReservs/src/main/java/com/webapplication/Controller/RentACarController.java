@@ -31,6 +31,55 @@ public class RentACarController {
 	private RentACarService rentService;
 	
 	
+	@RequestMapping(value = "/removeBranchOffice", method = RequestMethod.POST)
+	public String removeBranchOffice(@RequestParam("json") String json, @RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.removeBranchOffice(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/updateBranchOffice", method = RequestMethod.POST)
+	public String updateBranchOffice(@RequestParam("json") String json, @RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.updateBranchOffice(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/getBranchOffices", method = RequestMethod.POST)
+	public String getBranchOffices(@RequestParam("json") String json) {
+		
+		try {
+			return rentService.getBranchOffices(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/addOfficeBranch", method = RequestMethod.POST)
+	public String addOfficeBranch(@RequestParam("json") String json, @RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.addOfficeBranch(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
 	@RequestMapping(value = "/rateService", method = RequestMethod.POST)
 	public String rateService(@RequestParam("json") String json, @RequestParam("user") String user) {
 		
