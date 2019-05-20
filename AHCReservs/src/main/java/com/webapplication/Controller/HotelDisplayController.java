@@ -19,7 +19,7 @@ public class HotelDisplayController {
 	
 	
 	@GetMapping("/hotels-display.html")
-	public String returnCarServices(Model model) {
+	public String returnHotelServices(Model model) {
 		
 		
 		List<Hotel> hotels = hotelSvc.findAll();
@@ -29,7 +29,7 @@ public class HotelDisplayController {
 	} 
 	
 	@GetMapping("/hotel-home.html")
-	public String vehicleSearch(@RequestParam("id") String id, Model model) {
+	public String hotelSearch(@RequestParam("id") String id, Model model) {
 		
 		Hotel service = hotelSvc.findOne(Long.parseLong(id)).get();
 		int availableRooms = service.getRooms().size();

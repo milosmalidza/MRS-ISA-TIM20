@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+	
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/quick-reservation.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		<link rel="stylesheet" href="css/hotel.css" />
+	
+	
+	</head>
+	
+	<body>
+	
+		<!-- Navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
+				<li>Airline companies | <span><i class="plane icon"></i></span></li>
+				<li onclick="loadPage('hotels-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('car-services.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
+				<li onclick="loadPage('quick-reservations-display.html')">
+					Quick reservations | <span> <i class="handshake icon"> </i></span>
+				</li>
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li>About</li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
+		
+		<div class="main-div">
+			<div class="center-content">
+				<table>
+				
+					<tr>
+						<th>
+							<h2> View quick reservations </h2>
+						</th>
+					</tr>
+					
+					<tr>
+						<td> Company type: </td>
+						<td id="company-type-holder">
+							<select id="company-type" class="ui dropdown" onchange="changeDisplay()">
+								<option value="">Select type</option>
+								<option value="airline"> Airline </option>
+								<option value="hotel"> Hotel </option>
+								<option value="rent-a-car"> Rent a car service </option>
+							</select>
+						</td>
+					</tr>
+					
+				</table>
+				
+				
+				<table id="room-reservations-table" class="ui celled striped table displayed-element">
+					
+					<thead>
+						<tr>
+							<th colspan="100%">
+								<h2> Room reservations </h2>
+							</th>
+						</tr>
+						
+						<tr>
+							<th> Check in </th>
+							<th> Check out </th>
+							<th> Number of guests </th>
+							<th> Reservation price </th>
+							<th> Hotel name </th>
+							<th> Room number </th>
+				
+							<th> Number of beds </th>
+							<th> Room type </th>
+							<th> Additional services </th>
+							
+							
+						</tr>
+					</thead>
+					
+					<tbody>
+					
+						<th:block th:each="roomReservation : ${roomReservations}">
+							
+							<tr>
+								<td th:text="${#dates.format(roomReservation.checkIn, 'dd.MMM.yyyy')}"> Check in </td> 
+								<td th:text="${#dates.format(roomReservation.checkOut, 'dd.MMM.yyyy')}"> Check in </td> 
+								<td th:text="${roomReservation.numOfGuests}"> Num of guests </td>
+								<td th:text="|${roomReservation.reservedPrice} &euro;|"> Price </td>
+								<td th:text="${roomReservation.hotel.name}"> Hotel name </td>
+								<td th:text="${roomReservation.room.number}"> Room number </td>
+								<td th:text="${roomReservation.room.numOfBeds}"> Number of beds </td>
+								<td th:text="${roomReservation.room.roomType}"> Room type </td>
+								
+								<td th:if="${roomReservation.additionalServices.empty}"> None </td>
+								
+								<td th:unless="${roomReservation.additionalServices.empty}" >
+									<button class="ui basic green button" th:attr="onclick=|reserveRoom('${roomReservation.id}')|" >
+										View
+									</button>
+								</td>
+								
+								<td>
+									<button class="ui positive button" th:attr="onclick=|reserveRoom('${roomReservation.id}')|" >
+										Reserve
+									</button>
+								</td>
+							</tr>
+							
+						</th:block>
+					
+					</tbody>
+				
+				</table>
+				
+			</div>
+		</div>
+		
+		
+		<!--  Additional services pop up div -->
+		<div id="additional-services-div" class="bottom-pop-up">
+			<table id="additional-services-table">
+				
+				<thead>
+					<tr>
+						<td> </td>
+						<td>
+							<h2> Additional services  </h2>
+						<td>
+					</tr>
+					
+					<tr>
+						<th> Service type </th>
+						<th> Service price </th>
+					</tr>
+					
+				</thead>
+				
+				<tbody id="additional-services-body">
+				
+				</tbody>
+			
+			</table>
+		</div>
+	</body>
+	
+	<script>
+		$(".ui.dropdown")
+		  .dropdown();
+	
+	</script>
+	
+</html>

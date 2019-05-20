@@ -65,6 +65,22 @@ div.right-animation-div {
 	
 }
 
+div.bottom-pop-up {
+	
+	position: fixed;
+	width: 50%;
+	height: 0%;
+	bottom: 0;
+	right: 50%;	
+	background-color: white;
+	z-index: 5;
+	overflow-y: scroll;
+	
+	-webkit-transition: .7s;
+	transition: .7s;
+	
+}
+
 button#back-button {
 	
 	position: absolute;
@@ -96,6 +112,14 @@ table#available-rooms-table {
 }
 
 table#additional-services-table {
+	display: none;
+}
+
+table#room-reservations-table {
+	display: none;
+}
+
+tr.initially-hidden-element {
 	display: none;
 }
 

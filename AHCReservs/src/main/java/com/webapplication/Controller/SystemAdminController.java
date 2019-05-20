@@ -14,18 +14,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
+import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
+import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
 import com.webapplication.Service.ConfirmationTokenService;
 import com.webapplication.Service.HotelAdminService;
+import com.webapplication.Service.HotelService;
 import com.webapplication.Service.MultipleService;
 import com.webapplication.Service.RentACarAdminService;
+import com.webapplication.Service.RentACarService;
 import com.webapplication.Service.SystemAdminService;
 
 @RestController
@@ -49,6 +51,12 @@ public class SystemAdminController {
 	
 	@Autowired
 	MultipleService mulSvc;
+	
+	@Autowired
+	HotelService hotelSvc;
+	
+	@Autowired
+	RentACarService racSvc;
 	
 	
 	@RequestMapping(
@@ -164,20 +172,27 @@ public class SystemAdminController {
 	}
 		
 	
-	/** POSTMAN TEST METHODS */
 	@RequestMapping(
-			value="/getAdminByUsername",
-			method=RequestMethod.POST,
-			consumes=MediaType.APPLICATION_JSON_VALUE,
+			value="/getHotels",
+			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public HotelAdmin getAdminByUsername(@RequestBody String username) throws IOException {
+	public ResponseEntity<Collection<Hotel>> getHotels() {
 		
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode node = mapper.readTree(username);
-		System.out.println(username);
-		return hotelAdminSvc.findByUsername(node.get("username").asText());
+		return new ResponseEntity<>(hotelSvc.findAll(), HttpStatus.OK);
 		
 	}
+	
+	@RequestMapping(
+			value="/getRentACarServices",
+			method=RequestMethod.GET,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Collection<RentACar>> getRentACarServices() {
+		
+		return new ResponseEntity<>(racSvc.findAll(), HttpStatus.OK);
+		
+	}
+	
+	
 	
 
 }
