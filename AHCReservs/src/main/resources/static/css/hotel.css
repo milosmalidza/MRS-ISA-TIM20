@@ -68,10 +68,11 @@ div.right-animation-div {
 div.bottom-pop-up {
 	
 	position: fixed;
+	left: 50%;	
+	margin-left: -400px;
 	width: 50%;
 	height: 0%;
 	bottom: 0;
-	right: 50%;	
 	background-color: white;
 	z-index: 5;
 	overflow-y: scroll;
