@@ -511,18 +511,233 @@ function rateService(value) {
 }
 
 
+function openAddOfficeBranch() {
+	var el = document.getElementById("add-office-branch-holder");
+	
+	$("#office-branch-name").val("");
+	$("#office-branch-location").val("");
+	$(el).fadeIn(500);
+}
+
+function closeAddOfficeBranch() {
+	var el = document.getElementById("add-office-branch-holder");
+	var nameIn = document.getElementById("office-branch-name");
+	var locationIn = document.getElementById("office-branch-location");
+	nameIn.parentNode.classList.remove("error");
+	locationIn.parentNode.classList.remove("error");
+	
+	$(el).fadeOut(500);
+}
 
 
+function addOfficeBranch() {
+	
+	var nameIn = document.getElementById("office-branch-name");
+	var locationIn = document.getElementById("office-branch-location");
+	
+	var name = nameIn.value;
+	var location = locationIn.value;
+	
+	var flag = false;
+	nameIn.parentNode.classList.remove("error");
+	locationIn.parentNode.classList.remove("error");
+	
+	if (name == "") {
+		nameIn.parentNode.classList.add("error");
+		flag = true;
+	}
+	
+	if (location == "") {
+		locationIn.parentNode.classList.add("error");
+		flag = true;
+	}
+	
+	if (flag) return;
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/addOfficeBranch",
+		data : {json : JSON.stringify({name : name, location : location}),
+			   user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			if (response == "success") {
+				notify("Success", "You have successfully added new office branch");
+				$("#office-branch-name").val("");
+				$("#office-branch-location").val("");
+			}
+			else if (response == "exists") {
+				notify("Exists", "Office branch with that name and location already exists");
+				
+			}
+			
+			else {
+				notify("Bad request", "Something went wrong, please login again");
+			}
+			console.log(response);
+		}
+	})
+	
+	
+}
+
+function closeViewBranches() {
+	var el = document.getElementById("view-office-branch-holder");
+	
+	$(el).fadeOut(500);
+}
 
 
+function openViewBranches() {
+	
+	var json = {
+		serviceId : sessionUser.serviceId
+	};
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getBranchOffices",
+		data : {json : JSON.stringify(json)},
+		success : function(response) {
+			
+			var data = JSON.parse(response);
+			var browseBranches = document.getElementsByClassName("browse-branches")[0];
+			browseBranches.innerHTML = "";
+			
+			for (var i = 0; i < data.length; i++) {
+				
+				var branchItem = document.createElement("div");
+				branchItem.setAttribute("class", "branch-item");
+				branchItem.setAttribute("data-id", data[i].id);
+				branchItem.setAttribute("data-status", "0");
+				branchItem.setAttribute("data-name", data[i].name);
+				branchItem.setAttribute("data-address", data[i].address);
+				
+				branchItem.innerHTML = '<div class="branch-column">' + 
+							'<div class="branch-item-name branch-margin">' + data[i].name + '</div>' + 
+							'<div class="branch-item-location branch-margin">' + data[i].address + '</div>' + 
+						'</div>' + 
+						'<div class="branch-column">' + 
+							'<div class="branch-actions">' + 
+								'<input style="width:180px;letter-spacing:1px;margin-bottom: 20px;" id="" onClick="editBranchOffice(this)" class="ui button" type="button" value="Edit branch" /><br>' +
+								'<input style="width:180px;letter-spacing:1px;" id="" onClick="removeBranchOffice(this)" class="ui button" type="button" value="Remove branch" />' +
+							'</div>' +
+						'</div>';
+				
+				
+				browseBranches.appendChild(branchItem);
+			}
+			
+			var el = document.getElementById("view-office-branch-holder");
+	
+			$(el).fadeIn(500);
+			
+			console.log(response);
+		}
+	})
+	
+	
+	
+	
+}
 
 
+function editBranchOffice(element) {
+	var item = element.closest(".branch-item");
+	var nameElement = item.getElementsByClassName("branch-item-name")[0];
+	var addressElement = item.getElementsByClassName("branch-item-location")[0];
+	
+	var status = item.getAttribute("data-status");
+	
+	if (status == "0") {
+		item.setAttribute("data-status", "1");
+		var name = nameElement.textContent;
+		var address = addressElement.textContent;
+		
+		
+
+		nameElement.innerHTML = '<input style="letter-spacing:2px;" spellcheck="false" class="item-name-input" type="text" value="' + name + '" />';
+		addressElement.innerHTML = '<input spellcheck="false" class="item-name-input" type="text" value="' + address + '" />';
+		element.value = "Save";
+	}
+	
+	else {
+		var name = item.getElementsByClassName("item-name-input")[0].value;
+		var address = item.getElementsByClassName("item-name-input")[1].value;
+		
+		if (name == item.getAttribute("data-name") && address == item.getAttribute("data-address")) {
+			nameElement.innerHTML = name;
+			addressElement.innerHTML = address;
+			item.setAttribute("data-status", "0");
+			element.value = "Edit branch";
+			return;
+		}
+		
+		var json = {
+			id : item.getAttribute("data-id"),
+			name : name,
+			address : address
+		};
+		
+		$.ajax({
+			type : "post",
+			url : "rentACarService/updateBranchOffice",
+			data : {json : JSON.stringify(json), user : JSON.stringify(sessionUser)},
+			success : function(response) {
+				if (response == "success") {
+					notify("Success", "Successfully updated office branch");
+					nameElement.innerHTML = name;
+					addressElement.innerHTML = address;
+					
+					item.setAttribute("data-name", name);
+					item.setAttribute("data-address", address);
+					item.setAttribute("data-status", "0");
+					element.value = "Edit branch";
+					
+				}
+				
+				else if (response == "exists") {
+					notify("Exists", "That office branch already exists");
+				}
+				else {
+					notify("Bad request", "Please try logging in again");
+				}
+				
+				
+			}
+		})
+		
+	}
+	
+}
 
 
-
-
-
-
+function removeBranchOffice(element) {
+	var item = element.closest(".branch-item");
+	
+	var json = {
+		id : item.getAttribute("data-id")
+	};
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/removeBranchOffice",
+		data : {json : JSON.stringify(json), user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			
+			if (response == "success") {
+				var browseBranches = document.getElementsByClassName("browse-branches")[0];
+				browseBranches.removeChild(item);
+				notify("Removed", "You have successfully removed office branch");
+			}
+			
+			else {
+				notify("Bad request", "Please try logging in again");
+			}
+			
+		}
+	})
+	
+}
 
 
 

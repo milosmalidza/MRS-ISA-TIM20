@@ -333,6 +333,48 @@ function mouseLeaveCompanyItem(element) {
 }
 
 
+var notificationTimeout = null;
+function notify(title, content) {
+	
+	var notificationWindow = document.getElementById("notification-window");
+	var notificationTitle = document.getElementById("notification-title");
+	var notificationContent = document.getElementById("notification-content");
+	
+	notificationTitle.innerHTML = title;
+	notificationContent.innerHTML = content;
+	
+	notificationWindow.style.right = "0px";
+	clearTimeout(notificationTimeout);
+	
+	notificationTimeout = setTimeout(function(){
+		notificationWindow.style.right = "-400px";
+	}, 4000);
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

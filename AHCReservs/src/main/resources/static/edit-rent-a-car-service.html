@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/rent-a-car-admin.css" />
 	
 	</head>
 
@@ -95,14 +96,14 @@
 					<tr>
 						<td>Add office branch: </td>
 						<td>
-							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="addRentOfficeBranches()" value="Add" />
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="openAddOfficeBranch()" value="Add" />
 						</td>
 					</tr>
 					
 					<tr>
 						<td>View office branches: </td>
 						<td>
-							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="viewRentOfficeBranches()" value="View" />
+							<input style="width:150px;letter-spacing:1px;" id="" class="ui button" type="button" onclick="openViewBranches()" value="View" />
 						</td>
 					</tr>
 					<tr>
@@ -137,6 +138,68 @@
 			</div>
 		</div>
 		
+		<div id="view-office-branch-holder">
+			
+			<div id="view-center-branch-content">
+				<div class="branch-nav-bar">
+					<input style="width:150px;letter-spacing:1px;margin-bottom: 20px;" id="branch-close-button" onClick="closeViewBranches()" class="ui button" type="button" value="Close" />
+				</div>
+				<div class="browse-branches">
+					<div class="branch-item">
+						<div class="branch-column">
+							<div class="branch-item-name branch-margin">Name</div>
+							<div class="branch-item-location branch-margin">Location</div>
+						</div>
+						<div class="branch-column">
+							<div class="branch-actions">
+								<input style="width:180px;letter-spacing:1px;margin-bottom: 20px;" id="" onClick="" class="ui button" type="button" value="Edit branch" /><br>
+								<input style="width:180px;letter-spacing:1px;" id="" onClick="" class="ui button" type="button" value="Remove branch" />
+							</div>
+						</div>
+
+
+					</div>
+					
+				
+				</div>
+			</div>
+			
+		</div>
+		
+		<div id="add-office-branch-holder">
+			
+			<div id="center-branch-content">
+				
+				<table>
+					<tr>
+						<td>Office branch name:</td>
+						<td>
+							<div style="width: 300px;" class="ui input input-additional">
+								<input id="office-branch-name" type="text" name="number-of-seats"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Office branch location</td>
+						<td>
+							<div style="width: 300px;" class="ui input input-additional">
+								<input id="office-branch-location" type="text" name="number-of-seats"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td align="right"><input style="width:150px;letter-spacing:1px;" id="" onClick="addOfficeBranch()" class="ui button" type="button" value="Add branch" /></td>
+						<td><input style="width:150px;letter-spacing:1px;" id="" class="ui button" onClick="closeAddOfficeBranch()" type="button" value="Cancel" /></td>
+					</tr>
+					
+				</table>
+				
+			</div>
+			
+		</div>
+		
 		<div id="confirmation-message-holder">
 			<div id="centered-holder">
 				<table>
@@ -153,6 +216,13 @@
 						</td>
 					</tr>
 				</table>
+			</div>
+		</div>
+		
+		<div id="notification-window">
+			<div>
+				<div id="notification-title">dsad sdad asd a dadjksla dsalkdsajd jadj lsad ksakd jald jasljd </div>
+				<div id="notification-content">d sha jdash jdshad haskd hasd kd sa hdsajd jashd sakhdakjd hsa daskd a</div>
 			</div>
 		</div>
 		
