@@ -97,7 +97,7 @@
 					
 						<th:block th:each="roomReservation : ${roomReservations}">
 							
-							<tr>
+							<tr th:attr="data-reservation-id=${roomReservation.id}">
 								<td th:text="${#dates.format(roomReservation.checkIn, 'dd.MMM.yyyy')}"> Check in </td> 
 								<td th:text="${#dates.format(roomReservation.checkOut, 'dd.MMM.yyyy')}"> Check in </td> 
 								<td th:text="${roomReservation.numOfGuests}"> Num of guests </td>
@@ -110,7 +110,7 @@
 								<td th:if="${roomReservation.additionalServices.empty}"> None </td>
 								
 								<td th:unless="${roomReservation.additionalServices.empty}" >
-									<button class="ui basic green button" th:attr="onclick=|reserveRoom('${roomReservation.id}')|" >
+									<button class="ui basic green button" th:attr="onclick=|addServices('${roomReservation.id}')|" >
 										View
 									</button>
 								</td>
@@ -134,11 +134,15 @@
 		
 		<!--  Additional services pop up div -->
 		<div id="additional-services-div" class="bottom-pop-up">
-			<table id="additional-services-table">
+		
+			<!--  TODO:
+			<button id="back-button" class="ui black basic button" onclick="closeAdditionalServices()"> BACK </button>
+			Back button -->
+		
+			<table id="additional-services-table" class="ui celled striped table">
 				
 				<thead>
 					<tr>
-						<td> </td>
 						<td>
 							<h2> Additional services  </h2>
 						<td>
