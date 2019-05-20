@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
+		
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/hotel-home.js"></script>
+		<script type="text/javascript" src="js/system-admin.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/hotel.css" />
+		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
+	
+	</head>
+	
+	<body>
+	
+		<!-- System admin navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('register-company.html')"> Register company </li>
+				<li onclick="loadPage('register-admin.html')"> Register admin </li>
+				<li onclick="loadPage('add-company-admins.html')"> Add admins to company </li>
+				<li onclick="loadPage('make-quick-reservation.html')"> Quick reservations </li>
+			</ul>
+			
+			<ul id="nav-bar-selection-2">
+				<li> My profile </li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')"> Logout </li>		
+			</ul>
+		</div>
+		
+		<div id="main-div" data-company-id="0">
+			<div class="center-content">
+				<div class="form-div">
+				
+					<!-- data-company-id -> id of the selected company  -->
+					<table id="quick-reservation-table">
+						
+						<tr>
+							<th> </th>
+							<th>
+								<h2> Make quick reservation </h2>
+							</th> 
+						</tr>
+						
+						<tr>
+							<td> Company type: </td>
+							<td id="company-type-holder">
+								<select id="company-type" class="ui dropdown" onchange="getCompanyNames()">
+									<option value="">Select type</option>
+									<option value="airline"> Airline </option>
+									<option value="hotel"> Hotel </option>
+									<option value="rent-a-car"> Rent a car service </option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr>
+							<td> Select company: </td>
+							<td id="company-names-holder">
+								<select id="company-name" class="ui dropdown" onchange="companyChanged()">
+									<option value="">Select company</option>
+								</select>
+							</td>
+						</tr>
+						
+						<tr class="initially-hidden-element">
+							<td> Check in/check out date: </td>			
+					
+							<td>
+								<div id="reservation-date" class="ui input">
+									<input type="text" id="daterange" name="daterange"  />
+								</div>
+							</td>
+						</tr>
+						
+						<tr class="initially-hidden-element">
+							<td> Enter number of guests </td>
+							
+							<td>
+								<div class="ui input">
+	 								<input type="number" id="guests-num" placeholder="Number of guests...">
+								</div>
+							</td>
+						</tr>
+					
+					</table>
+					
+					<!-- Available rooms -->
+				
+					<table id="available-rooms-table" class="ui celled striped table">
+						
+						<thead>
+							<tr>
+								<th colspan="100%">
+									<h2> Check the rooms you want to reserve </h2>
+								</th>
+							</tr>
+							
+							<tr>
+								<th> Room number </th>
+								<th> Room floor </th>
+								<th> Number of beds </th>
+								<th> Room type </th>
+								<th> On discount </th>
+								<th> Price per night </th>
+								<th> Check </th>
+							</tr>
+							
+						</thead>
+						
+						<tbody id="available-rooms-body">
+							
+						</tbody>
+						
+					</table>
+					
+					
+					<!-- Additional services -->
+					<table id="additional-services-table">
+						
+						<tr>
+							<td> Select the additional services you would like to include: </td>
+							
+						</tr>
+						
+						<tr>
+							<td>
+								
+								<select id="additional-services-select" class="ui fluid search dropdown" multiple="">
+									<option value=""> Additional service...</option>
+								</select>
+								
+							</td>
+						</tr>
+						
+						<tr>
+							<td>
+								<button class="ui positive button" onclick="reserveRooms('#main-div', 'data-company-id')">
+									Make reservation
+								</button>
+							</td>
+						</tr>
+						
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	
+	</body>
+	
+	<script>
+	
+		initializeDatePicker("#main-div", "data-company-id");
+		
+		$(".ui.dropdown")
+		  .dropdown();
+		
+	</script>
+	
+</html>

@@ -81,6 +81,32 @@ function addValuesToSelect(selectID, listOfValues, defaultText) {
 	
 }
 
+/** Used only for hotel additional services */
+function addServicesToSelect(selectID, listOfValues, defaultText) {
+	
+	$(selectID).dropdown('clear');
+	$(selectID).empty().append('<option value="">' + defaultText + '</option>');
+	
+	for(let i = 0; i < listOfValues.length; i++) {
+		$(selectID).append('<option value="' + listOfValues[i].service.toLowerCase() + '">'
+				+ listOfValues[i].service + ':  ' +  listOfValues[i].price + '</option>');
+	}
+	
+}
+
+function addValuesAndIDsToSelect(selectID, listOfValues, defaultText) {
+	
+	$(selectID).dropdown('clear');
+	$(selectID).empty().append('<option value="">' + defaultText + '</option>');
+	
+	for(let i = 0; i < listOfValues.length; i++) {
+		$(selectID).append('<option value="' + listOfValues[i].id + '">'
+				+ listOfValues[i].value + '</option>');
+		
+	}
+	
+}
+
 /** Inserts the room data in the table with tableID 
  * @param room - room to be inserted
  * @param tableID - '#' + id of the table body (<tbody>) that will contain the room
@@ -122,6 +148,30 @@ function insertAttrToRoomTable(room, tableID) {
 	
 	
 	return { "index" : index, "newRow": newRow };
+	
+	
+}
+
+
+function insertServiceToTable(serviceObject, tbodyID) {
+	
+	let tableRef = $(tbodyID)[0];
+	
+	// Insert a row in the table at the last row
+	let newRow = tableRef.insertRow(tableRef.rows.length);
+	
+	//add a cell for service type
+	let newCell  = newRow.insertCell(0);
+	let newText  = document.createTextNode(serviceObject.service);
+	newCell.appendChild(newText);
+	
+	//add a cell for service price
+	newCell = newRow.insertCell(1);
+	newText = document.createTextNode(serviceObject.servicePrice + ' \u20AC');
+	newCell.appendChild(newText);
+	
+	
+	return { "index": 2, "newRow": newRow };
 	
 	
 }

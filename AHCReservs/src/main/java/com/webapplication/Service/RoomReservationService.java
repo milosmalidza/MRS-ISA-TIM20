@@ -2,6 +2,8 @@ package com.webapplication.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapplication.JSONBeans.KeyAndValueBean;
 import com.webapplication.JSONBeans.RoomReservationBean;
 import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.HotelServiceType;
@@ -34,7 +37,34 @@ public class RoomReservationService {
 	@Autowired
 	RoomService roomSvc;
 	
-	/*public String reserveRooms(RoomReservationBean reservationData) {
+	@Autowired
+	SystemAdminService sysAdminSvc;
+	
+	
+	public String quickReservation(KeyAndValueBean data) {
+		
+		RoomReservation reservation = findOne(data.getKey()).get();
+		
+		if(reservation == null) {
+			return "Reservation not found";
+		}
+		
+		//find the user
+		RegisteredUser user = regUserSvc.findByUsername(data.getValue());
+		
+		if(user == null) {
+			return "You are not allowed to make a reservation";
+		}
+		
+		reservation.setUser(user);
+		
+		save(reservation);
+		
+		return "Success";
+		
+	}
+	
+	public String reserveRooms(RoomReservationBean reservationData) {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
 		Date checkInDate = null;
@@ -51,9 +81,14 @@ public class RoomReservationService {
 		
 		RegisteredUser user = regUserSvc.findByUsername(reservationData.getUsername());
 		
-		//if the user does not exist or the user is an admin
+		//if the user does not exist
 		if(user == null) {
-			return "You are not allowed to make a reservation";
+			
+			//Check if the user is a system admin (making a quick reservation)
+			if(sysAdminSvc.findByUsername(reservationData.getUsername()) == null) {
+				return "You are not allowed to make a reservation";
+			}
+			
 		}
 		
 		Set<HAdditionalService> additionalServices = new HashSet<HAdditionalService>();
@@ -65,7 +100,7 @@ public class RoomReservationService {
 		
 		
 		if(additionalServices == null) {
-			return "Something wen't wrong, please try again";
+			return "Something wen't wrong, please refresh the page and try again";
 		}
 		
 		Room room;
@@ -95,13 +130,12 @@ public class RoomReservationService {
 		}
 		
 		return "Reservation successful";
-	}*/
+	}
 	
 	
 	public Set<HAdditionalService> convertStringToAdditionalService(List<String> stringServices, Long hotelID) {
 		
 		//service string in format 'service: price currency', so I need to extract the 'service'
-		int indexOfColon = 0;
 		HotelServiceType serviceType;
 		HAdditionalService additionalService;
 		
@@ -109,15 +143,8 @@ public class RoomReservationService {
 		
 		for(String service: stringServices) {
 			
-			indexOfColon = service.indexOf(":");
-			
-			if(indexOfColon == -1) {
-				System.out.println(": not found in service string");
-				return null;
-			}
-			
 			//perform conversion
-			serviceType = hAdditionalServiceSvc.convertStringToService(service.substring(0, indexOfColon));
+			serviceType = hAdditionalServiceSvc.convertStringToService(service);
 			
 			if(serviceType == null) {
 				System.out.println("Exception during string to HotelServiceType conversion");
@@ -209,4 +236,22 @@ public class RoomReservationService {
 		return roomReservRep.findAll();
 	}
 	
+	public Collection<RoomReservation> getQuickReservations() {
+		
+		//return roomReservRep.findQuickReservations();
+		
+		ArrayList<RoomReservation> quickReservs = new ArrayList<RoomReservation>();
+		
+		for (RoomReservation roomReservation : findAll()) {
+			
+			if(roomReservation.getUser() == null) {
+				quickReservs.add(roomReservation);
+			}
+			
+		}
+		
+		return quickReservs;
+		
+	}
+
 }

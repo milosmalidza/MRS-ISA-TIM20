@@ -1,5 +1,4 @@
-var controllerPath = "/sysadmin";
-
+var sysAdminControllerPath = "/sysadmin";
 
 window.onload = function() {
 	
@@ -30,7 +29,7 @@ function registerCompany() {
 	}
 	
 	//send data to server
-	axios.post(controllerPath + "/registerCompany", getCompanyJson())
+	axios.post(sysAdminControllerPath + "/registerCompany", getCompanyJson())
 		.then(response => {
 			
 			toast(response.data); //print out the response to the user
@@ -105,7 +104,7 @@ async function getAdminsFromServer(serverMethodPath) {
 }
 
 async function axiosAdmins(serverMethodPath) {
-	return await axios.get(controllerPath + serverMethodPath);
+	return await axios.get(sysAdminControllerPath + serverMethodPath);
 }
 
 
@@ -113,15 +112,6 @@ async function viewAdmins() {
 
 	// clear displayed admins
 	clearSemanticMultiSelect("#available-admins", "Select admin");
-	
-	/*
-	$("#available-admins").dropdown('clear');
-	var multiSelect = document.getElementById("available-admins");
-	multiSelect.selectedIndex = -1;
-	$('#available-admins option:selected').remove();
-	$('#available-admins').empty().append('<option value="">Select admin</option>');
-	*/
-	
 	
 	/* Get admins */
 	let companyType = $("#company-type-form2").val();
@@ -158,7 +148,7 @@ async function addAdmins() {
 	} 
 	
 	//sending data to server
-	axios.post(controllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
+	axios.post(sysAdminControllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
 		.then(response => {
 			
 			toast(response.data); //print out the response to the user
@@ -194,7 +184,7 @@ async function companyExists(companyName) {
 async function axiosCompanyExists(companyName) {
 	
 	let companyNameJson = {"companyName": companyName };
-	return axios.post(controllerPath + "/companyExists", companyNameJson)
+	return axios.post(sysAdminControllerPath + "/companyExists", companyNameJson)
 
 }
 
@@ -236,7 +226,7 @@ function registerAdmin() {
 	//TODO: initialize loader
 	
 	//sending data to server
-	axios.post(controllerPath + "/registerAdmin", getAdminJson())
+	axios.post(sysAdminControllerPath + "/registerAdmin", getAdminJson())
 		.then(response => {
 			
 			toast(response.data);
@@ -264,3 +254,74 @@ function getAdminJson() {
 		"companyType": $("#admin-type").val()
 	};
 }
+
+
+function getCompanyNames() {
+	
+	clearSemanticSelect("company-names-holder", "company-name", "Select company");
+	
+	getCompanies($("#company-type").val());
+	
+}
+
+function getCompanies(companyType) {
+	
+	switch(companyType) {
+	
+	case "hotel":
+		getCompaniesFromServer("getHotels", companyType);
+		break;
+		
+	case "rent-a-car":
+		//getCompaniesFromServer("getRentACarServices", companyType);
+		break;
+		
+	}
+	
+}
+
+function getCompaniesFromServer(methodName, companyType) {
+	
+	axios.get(sysAdminControllerPath + "/" + methodName)
+		.then(response => {
+			
+			if(response.data != "" && response.data != null) {
+				
+				if(response.data.length === 0) {
+					toast("No" + companyType + "registered at the moment");
+				} else {
+					addValuesAndIDsToSelect("#company-name", getNamesAndIDsFromCompanies(response.data), "Select company");
+				}
+				
+			}
+			
+		});
+	
+}
+
+
+function getNamesAndIDsFromCompanies(companiesArray) {
+	
+	let companyNamesAndIDs = []
+	
+	for(let i = 0; i < companiesArray.length; i++) {
+		companyNamesAndIDs.push( {"value": companiesArray[i].name, "id": companiesArray[i].id} );
+	}
+	
+	return companyNamesAndIDs;
+}
+
+
+function companyChanged() {
+	
+	$("#available-rooms-table").hide();
+	$("#additional-services-table").hide();
+	
+	//memorize the id of the selected company
+	$("#main-div").attr("data-company-id", $("#company-name").val());
+	
+	$("tr.initially-hidden-element").show(); //display date picker
+	
+}
+
+
