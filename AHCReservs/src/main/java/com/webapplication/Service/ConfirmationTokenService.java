@@ -63,8 +63,9 @@ public class ConfirmationTokenService {
 		mail.setTo(admin.getEmailId());
 		mail.setSubject("Complete AHC Registration");
 		mail.setFrom("ahcreservation@gmail.com");
-		mail.setText("To confirm your account, please click the following link: "
-				+ " http://localhost:8080/sysadmin/confirmHotelAdminRegistration?token="+hotelToken.getConfirmationToken());
+		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
+				+ "\nTo confirm your account, please click the following link: \n"
+				+ " http://localhost:8080/sysadmin/confirmSysAdminRegistration?token="+hotelToken.getConfirmationToken());
 		
 		
 		try {
@@ -89,8 +90,9 @@ public class ConfirmationTokenService {
 		mail.setTo(admin.getEmailId());
 		mail.setSubject("Complete AHC Registration");
 		mail.setFrom("ahcreservation@gmail.com");
-		mail.setText("To confirm your account, please click the following link: "
-				+ " http://localhost:8080/sysadmin/confirmAirlineAdminRegistration?token="+airToken.getConfirmationToken());
+		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
+				+ "\nTo confirm your account, please click the following link: \n"
+				+ " http://localhost:8080/sysadmin/confirmSysAdminRegistration?token="+airToken.getConfirmationToken());
 		
 		
 		try{
@@ -115,8 +117,9 @@ public class ConfirmationTokenService {
 		mail.setTo(admin.getEmailId());
 		mail.setSubject("Complete AHC Registration");
 		mail.setFrom("ahcreservation@gmail.com");
-		mail.setText("To confirm your account, please click the following link: "
-				+ " http://localhost:8080/sysadmin/confirmRentACarAdminRegistration?token="+racToken.getConfirmationToken());
+		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
+				+ "\nTo confirm your account, please click the following link: \n"
+				+ " http://localhost:8080/sysadmin/confirmSysAdminRegistration?token="+racToken.getConfirmationToken());
 		
 		
 		try{
@@ -141,7 +144,8 @@ public class ConfirmationTokenService {
 		mail.setTo(admin.getEmailId());
 		mail.setSubject("Complete AHC Registration");
 		mail.setFrom("ahcreservation@gmail.com");
-		mail.setText("To confirm your account, please click the following link: "
+		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
+				+ "\nTo confirm your account, please click the following link: \n"
 				+ " http://localhost:8080/sysadmin/confirmSysAdminRegistration?token="+sysToken.getConfirmationToken());
 		
 		

@@ -23,7 +23,7 @@ public class Room {
 	@Column(name="id", unique=true, nullable=false)
 	private Long id;
 	
-	@Column(name="number", unique=true, nullable=false)
+	@Column(name="number", unique=false, nullable=false)
 	private int number;
 	
 	@Column(name="floor", unique=false, nullable=false)

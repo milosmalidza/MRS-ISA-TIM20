@@ -56,7 +56,7 @@ public class HotelHomeController {
 		
 	}
 	
-	/*@RequestMapping(
+	@RequestMapping(
 			value="/reserveRooms",
 			method=RequestMethod.POST,
 			produces=MediaType.APPLICATION_JSON_VALUE,
@@ -66,6 +66,6 @@ public class HotelHomeController {
 		return new ResponseEntity<>(roomReservSvc.reserveRooms(reservationData) , HttpStatus.CREATED);
 		
 	}
-	*/
+	
 
 }

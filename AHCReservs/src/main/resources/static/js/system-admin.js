@@ -223,7 +223,7 @@ function registerAdmin() {
 		return;
 	}
 	
-	//TODO: initialize loader
+	showDataLoader();
 	
 	//sending data to server
 	axios.post(sysAdminControllerPath + "/registerAdmin", getAdminJson())
@@ -237,7 +237,7 @@ function registerAdmin() {
 			}
 			
 			 
-			//TODO: hide loader
+			hideDataLoader();
 		});
 
 }

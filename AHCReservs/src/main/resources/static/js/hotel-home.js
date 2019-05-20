@@ -59,7 +59,7 @@ function getAvailableRooms(hotelID) {
 				$("#available-rooms-table").show();
 				displayAdditionalServices(hotelID);
 			} else {
-				toast("No rooms available at the moment");
+				notify("Room reservation", "No rooms available at the moment");
 				$("#available-rooms-body").empty();
 			}
 		});

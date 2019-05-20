@@ -76,10 +76,17 @@ div.bottom-pop-up {
 	background-color: white;
 	z-index: 5;
 	overflow-y: scroll;
+	box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);
 	
 	-webkit-transition: .7s;
 	transition: .7s;
 	
+}
+
+div.pop-up-content {
+	
+	width: 50%;
+    margin: 0 auto;
 }
 
 button#back-button {
@@ -90,6 +97,11 @@ button#back-button {
 	
 }
 
+.close-icon {
+	position: absolute;
+	top: 1em;
+	right: 1em;
+}
 
 
 /* Decorating buttons */
@@ -138,6 +150,7 @@ modal {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  box-shadow: 0px 0px 300px 200px rgba(0,0,0,1);
 }
 
 /* Modal Content/Box */

@@ -43,6 +43,7 @@ function getAdminHotel(user) {
 				fillSelectInputs();
 				
 			} else {
+				
 				alert("You haven't been assigned a hotel yet");
 				
 				//redirect the user to the home page and invalidate his session

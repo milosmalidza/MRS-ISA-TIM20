@@ -93,7 +93,7 @@
 						</tr>
 					</thead>
 					
-					<tbody>
+					<tbody id="room-reservations-body">
 					
 						<th:block th:each="roomReservation : ${roomReservations}">
 							
@@ -135,31 +135,33 @@
 		<!--  Additional services pop up div -->
 		<div id="additional-services-div" class="bottom-pop-up">
 		
-			<!--  TODO:
-			<button id="back-button" class="ui black basic button" onclick="closeAdditionalServices()"> BACK </button>
-			Back button -->
-		
-			<table id="additional-services-table" class="ui celled striped table">
+			<div class="pop-up-content"> 
+				<button class="circular ui basic icon button close-icon" onclick="closeAdditionalServices()">
+	  				<i class="window close icon"></i>
+				</button>
 				
-				<thead>
-					<tr>
-						<td>
-							<h2> Additional services  </h2>
-						<td>
-					</tr>
+				<table id="additional-services-table" class="ui celled striped table">
 					
-					<tr>
-						<th> Service type </th>
-						<th> Service price </th>
-					</tr>
+					<thead>
+						<tr>
+							<td colspan="100%">
+								<h2> Additional services  </h2>
+							<td>
+						</tr>
+						
+						<tr>
+							<th> Service type </th>
+							<th> Service price </th>
+						</tr>
+						
+					</thead>
 					
-				</thead>
+					<tbody id="additional-services-body">
+					
+					</tbody>
 				
-				<tbody id="additional-services-body">
-				
-				</tbody>
-			
-			</table>
+				</table>
+			</div>
 		</div>
 	</body>
 	
