@@ -4,6 +4,28 @@ var roomCheckInDate = null;
 var roomCheckOutDate = null;
 
 
+
+function initializeDatePicker(dataAttrHolder, dataAttrID) {
+	
+	$(function() {
+		$('input[name="daterange"]').daterangepicker({
+			timePicker: false,
+	    	opens: 'left',
+	    	minDate: 0
+	  	}, function(start, end, label) {
+	           console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+		       roomCheckInDate = start.format('DD.MM.YYYY.');
+		       roomCheckOutDate = end.format('DD.MM.YYYY.');
+		       
+		       let hotelID = $(dataAttrHolder).attr(dataAttrID);
+		       
+		       getAvailableRooms(hotelID);
+	    });
+	});
+	
+	
+}
+
 function makeReservation() {
 	
 	//check if the user is logged in
@@ -20,7 +42,7 @@ function makeReservation() {
 	
 }
 
-function getAvailableRooms() {
+function getAvailableRooms(hotelID) {
 	
 	if(roomCheckInDate == null || roomCheckOutDate == null) {
 		toast("Please select reservation date first");
@@ -29,21 +51,25 @@ function getAvailableRooms() {
 	
 	
 	//get available rooms from server
-	axios.post(controllerPath + "/getAvailableRooms", getDatesAndHotelJson())
+	axios.post(controllerPath + "/getAvailableRooms", getDatesAndHotelJson(hotelID))
 		.then(response => {
 			
 			if(response.data != "" && response.data != null) {
 				addAllRoomsToTable(response.data);
 				$("#available-rooms-table").show();
+				displayAdditionalServices(hotelID);
+			} else {
+				notify("Room reservation", "No rooms available at the moment");
+				$("#available-rooms-body").empty();
 			}
 		});
 	
 }
 
-function getDatesAndHotelJson() {
+function getDatesAndHotelJson(hotelID) {
 	
 	return {
-		"companyID": $("#main-content-holder").attr("data-hotel-id"),
+		"companyID": hotelID,
 		"strStartDate": roomCheckInDate,
 		"strEndDate": roomCheckOutDate
 	};
@@ -78,14 +104,12 @@ function addRoomToTable(room) {
 }
 
 
-function displayAdditionalServices() {
+function displayAdditionalServices(hotelID) {
 	
-	
-	//get additional services from server
-	let hotelID = $("#main-content-holder").attr("data-hotel-id");
 	
 	let hotelIDJson = { "key": hotelID };
 	
+	//get additional services from server
 	axios.post(controllerPath + "/getHotelAdditionalServices", hotelIDJson)
 		.then(response => {
 			
@@ -93,7 +117,6 @@ function displayAdditionalServices() {
 				
 				
 				if(response.data.length === 0) {
-					toast("The hotel does not have any additional services yet");
 					return;
 				}
 				
@@ -102,13 +125,14 @@ function displayAdditionalServices() {
 				//iterate through additional services
 				for(let i = 0; i < response.data.length; i++) {
 					
+					serviceJson = {"service": response.data[i].service, "price": response.data[i].servicePrice + ' \u20AC'};
 					//store the service type and price as a string to array
-					serviceTypesAndPrices.push(response.data[i].service + ':   ' + response.data[i].servicePrice + ' \u20AC'); 
+					serviceTypesAndPrices.push(serviceJson); 
 					
 				}
 				
 				//add the strings to the multi select tag
-				addValuesToSelect("#additional-services-select", serviceTypesAndPrices, "Additional services...");
+				addServicesToSelect("#additional-services-select", serviceTypesAndPrices, "Additional services...");
 				
 			}
 			
@@ -118,7 +142,7 @@ function displayAdditionalServices() {
 }
 
 
-function reserveRooms() {
+function reserveRooms(dataHolder, dataAttr) {
 	
 	var checkedRooms = getCheckedRooms("#available-rooms-table");
 	
@@ -137,24 +161,25 @@ function reserveRooms() {
 		return;
 	}
 	
+	let hotelID = $(dataHolder).attr(dataAttr);
 	
-	axios.post(controllerPath + "/reserveRooms", getReservationJson(checkedRooms))
+	axios.post(controllerPath + "/reserveRooms", getReservationJson(checkedRooms, hotelID))
 		.then(response => {
 			toast(response.data);
 			
-			getAvailableRooms(); //update changes in table
+			getAvailableRooms(hotelID); //update changes in table
 		});
 	
 	
 }
 
-function getReservationJson(checkedRooms) {
+function getReservationJson(checkedRooms, hotelID) {
 	
 	
 	let additionalServices = $("#additional-services-select").val();
 	
 	return {
-		"hotelID": $("#main-content-holder").attr("data-hotel-id"),
+		"hotelID": hotelID,
 		"strCheckInDate": roomCheckInDate,
 		"strCheckOutDate": roomCheckOutDate,
 		"numOfGuests": $("#guests-num").val(),
