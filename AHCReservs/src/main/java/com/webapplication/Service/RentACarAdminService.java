@@ -217,21 +217,32 @@ public class RentACarAdminService {
 		return "success";
 	}
 	
-	public String AddCar(String requestJson) throws IOException, NumberFormatException, IllegalArgumentException  {
+	public String AddCar(String json, String user) throws IOException, NumberFormatException, IllegalArgumentException  {
 
 		ObjectMapper mapper = new ObjectMapper();
-		JsonNode node = mapper.readTree(requestJson);
+		JsonNode userNode = mapper.readTree(user);
+		
+		RentACarAdmin admin = rentACarAdminRep.findByUsername(userNode.get("username").asText());
+		
+		if (admin == null) return "badRequest";
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		
+		RentACar service = rentRepository.findById(userNode.get("serviceId").asLong()).get();
+		
+		
+		JsonNode jsonNode = mapper.readTree(json);
 		
 		Vehicle vehicle = new Vehicle();
 		
 		vehicle.setArchived(false);
-		vehicle.setDescription(node.get("description").asText());
-		vehicle.setName(node.get("name").asText());
+		vehicle.setDescription(jsonNode.get("description").asText());
+		vehicle.setName(jsonNode.get("name").asText());
 		
-		vehicle.setNumOfDoors(Integer.parseInt(node.get("numberOfDoors").asText()));
-		vehicle.setNumOfSeats(Integer.parseInt(node.get("numberOfSeats").asText()));
-		vehicle.setVehicleType(VehicleType.valueOf(node.get("typeOfVehicle").asText()));
-		vehicle.setPricePerDay(Integer.parseInt(node.get("pricePerDay").asText()));
+		vehicle.setNumOfDoors(Integer.parseInt(jsonNode.get("numberOfDoors").asText()));
+		vehicle.setNumOfSeats(Integer.parseInt(jsonNode.get("numberOfSeats").asText()));
+		vehicle.setVehicleType(VehicleType.valueOf(jsonNode.get("typeOfVehicle").asText()));
+		vehicle.setPricePerDay(Integer.parseInt(jsonNode.get("pricePerDay").asText()));
+		vehicle.setRentACar(service);
 		
 		
 		

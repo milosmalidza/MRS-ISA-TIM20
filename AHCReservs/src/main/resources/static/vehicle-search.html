@@ -56,6 +56,20 @@
 				<form id="vehicle-search-form">
 				<table style="margin-bottom:50px;">
 					<tr>
+						<td>Start destination: </td>
+						<td><select  name="number-of-doors" class="ui dropdown" id="start-destination">
+							  <option th:each="office : ${offices}" th:attr="value=${office.id}" th:text="${office.name + ', ' +office.address}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>End destination: </td>
+						<td><select name="number-of-doors" class="ui dropdown" id="end-destination">
+							  <option th:each="office : ${offices}" th:attr="value=${office.id}" th:text="${office.name + ', ' +office.address}"></option>
+							</select>
+						</td>
+					</tr>
+					<tr>
 						<td style="width:45%">Date range: </td>
 						<td ><div id="dateinput" class="ui input"><input type="text" id="daterange" name="daterange"  /></div></td>
 					</tr>
@@ -138,7 +152,13 @@
 				</div>
 			
 			</div>
-		
+			
+		<div id="notification-window">
+			<div>
+				<div id="notification-title">dsad sdad asd a dadjksla dsalkdsajd jadj lsad ksakd jald jasljd </div>
+				<div id="notification-content">d sha jdash jdshad haskd hasd kd sa hdsajd jashd sakhdakjd hsa daskd a</div>
+			</div>
+		</div>
 		
 		<div id="exiting-page-animation"></div> <!-- Sluzi za animaciju pri izlasku sa stranice, stavlja se na dno html-a -->
 		
@@ -157,6 +177,10 @@
 			  });
 			});
 		$('#number-of-doors')
+		  .dropdown();
+		$('#start-destination')
+		  .dropdown();
+		$('#end-destination')
 		  .dropdown();
 		
 		$('#type-of-vehicle')

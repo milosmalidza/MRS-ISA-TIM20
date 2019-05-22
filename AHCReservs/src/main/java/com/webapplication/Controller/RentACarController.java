@@ -148,10 +148,11 @@ public class RentACarController {
 	}
 	
 	@RequestMapping(value = "/AddCar", method = RequestMethod.POST)
-	public String addCar(@RequestParam("json") String json) {
+	public String addCar(@RequestParam("json") String json,
+						@RequestParam("user") String user) {
 		
 		try {
-			return rentAdminService.AddCar(json);
+			return rentAdminService.AddCar(json, user);
 		} catch (NumberFormatException e) {
 			return "badNumber";
 		} catch (IllegalArgumentException e) {
