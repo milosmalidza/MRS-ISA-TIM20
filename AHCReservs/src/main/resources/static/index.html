@@ -32,7 +32,7 @@
 			
 			<div id="nav-bar">
 				<ul id="nav-bar-selection-2">
-					<li>About</li>
+					<li onclick="loadPage('user-profile.html')"> My profile </li>
 					<li onclick="loadPage('register-user.html')">Register</li>
 					<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
 				</ul>
@@ -125,7 +125,12 @@
 		</div>
 		
 		
-		
+		<div id="notification-window">
+			<div>
+				<div id="notification-title"> </div>
+				<div id="notification-content"></div>
+			</div>
+		</div>
 		
 		<div id="exiting-page-animation"></div> <!-- Sluzi za animaciju pri izlasku sa stranice -->
 	

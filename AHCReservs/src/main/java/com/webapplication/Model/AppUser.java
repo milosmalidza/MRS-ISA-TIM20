@@ -1,13 +1,12 @@
 package com.webapplication.Model;
 
 import javax.persistence.Column;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-
-import javax.persistence.Id;
+import com.webapplication.JSONBeans.UserBean;
 
 
 @MappedSuperclass
@@ -39,6 +38,7 @@ public class AppUser {
 	public AppUser() {
 		
 	}
+	
 
 	public AppUser(String username, String password, String firstName, String lastName, String emailId) {
 		
@@ -47,6 +47,16 @@ public class AppUser {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.emailId = emailId;
+	}
+	
+	
+	public void changeUserData(UserBean user) {
+
+		this.username = user.getUsername();
+		this.password = user.getPassword();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.emailId = user.getEmail();
 	}
 
 	public String getUsername() {

@@ -218,7 +218,7 @@ function registerAdmin() {
 	}
 	
 	//check whether email is valid
-	if(validateEmail($("#admin-email") === false)) {
+	if(validateEmail($("#admin-email").val()) === false) {
 		toast("Invalid email");
 		return;
 	}

@@ -2,7 +2,9 @@ package com.webapplication.Service;
 
 import java.util.ArrayList;
 
+
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,10 @@ public class AirlineAdminService {
 	
 	public AirlineAdmin findByUsername(String username) {
 		return airlineAdminRep.findByUsername(username);
+	}
+	
+	public Optional<AirlineAdmin> findOne(Long id) {
+		return airlineAdminRep.findOne(id);
 	}
 	
 	

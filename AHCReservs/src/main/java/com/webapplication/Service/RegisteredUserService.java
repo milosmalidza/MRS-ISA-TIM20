@@ -2,6 +2,7 @@ package com.webapplication.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,10 @@ public class RegisteredUserService {
 	
 	public RegisteredUser findByUsername(String username) {
 		return registeredUserRep.findByUsername(username);
+	}
+	
+	public Optional<RegisteredUser> findOne(Long id) {
+		return registeredUserRep.findOne(id);
 	}
 	
 }

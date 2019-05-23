@@ -1,11 +1,13 @@
 package com.webapplication.Service;
 
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.webapplication.JSONBeans.AdminToRegister;
 import com.webapplication.JSONBeans.CompanyInfo;
+import com.webapplication.JSONBeans.UserBean;
 import com.webapplication.Model.Airline;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.Hotel;
@@ -52,7 +54,7 @@ public class SystemAdminService {
 	ConfirmationTokenService confirmService;
 	
 	
-	public String registerAdmin(AdminToRegister admin) {
+	public String registerAdmin(UserBean admin) {
 		
 		if(admin.getCompanyType() == null) {
 			return "Company type undefined";
@@ -256,6 +258,10 @@ public class SystemAdminService {
 	
 	public SystemAdmin findByUsername(String username) {
 		return sysAdminRep.findByUsername(username);
+	}
+	
+	public Optional<SystemAdmin> findOne(Long id) {
+		return sysAdminRep.findOne(id);
 	}
 	
 	public void deleteByUsername(String username) {

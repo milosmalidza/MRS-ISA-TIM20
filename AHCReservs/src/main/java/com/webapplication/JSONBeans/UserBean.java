@@ -1,29 +1,39 @@
 package com.webapplication.JSONBeans;
 
 
-public class AdminToRegister {
+public class UserBean {
+	
+	private Long id;
 	
 	private String username;
 	private String password;
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String companyType;
 	
-	public AdminToRegister() {
+	private String companyType;
+	private String userType;
+	
+	public UserBean() {
 		
 	}
 
-	public AdminToRegister(String username, String password, String firstName, String lastName, String email,
-			String companyType) {
+	
+
+	public UserBean(Long id, String username, String password, String firstName, String lastName, String email,
+			String companyType, String userType) {
 		
+		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.companyType = companyType;
+		this.userType = userType;
 	}
+
+
 
 	public String getUsername() {
 		return username;
@@ -71,6 +81,22 @@ public class AdminToRegister {
 
 	public void setCompanyType(String companyType) {
 		this.companyType = companyType;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 	
 	

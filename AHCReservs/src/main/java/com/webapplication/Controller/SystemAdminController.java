@@ -1,6 +1,7 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.webapplication.JSONBeans.AdminToRegister;
+import com.webapplication.JSONBeans.UserBean;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.Hotel;
@@ -75,7 +76,7 @@ public class SystemAdminController {
 			method=RequestMethod.POST,
 			consumes=MediaType.APPLICATION_JSON_VALUE,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> registerAdmin(@RequestBody AdminToRegister admin) {
+	public ResponseEntity<String> registerAdmin(@RequestBody UserBean admin) {
 		
 		return new ResponseEntity<>(sysAdminSvc.registerAdmin(admin), HttpStatus.CREATED);
 

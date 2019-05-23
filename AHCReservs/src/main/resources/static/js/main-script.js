@@ -103,6 +103,11 @@ function loginUser() {
 var isPageLoading = false;
 function loadPage(url) {
 	
+	//if the user is not logged in don't redirect him to the user profile
+	if(url == 'user-profile.html' && sessionUser == null) {
+		notify("User profile", "Please login in order to proceed");
+		return;
+	}
 	
 	var animationDiv = document.getElementById("exiting-page-animation");
 	
