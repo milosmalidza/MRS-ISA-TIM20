@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
+import com.webapplication.Model.RentACarBranchOffice;
 import com.webapplication.Repository.RentACarAdminRepository;
+import com.webapplication.Repository.RentACarBranchOfficeRepository;
 import com.webapplication.Service.RentACarService;
 
 @Controller
@@ -23,6 +25,27 @@ public class CarServicesController {
 	
 	@Autowired
 	RentACarAdminRepository rentAdminRep;
+	
+	@Autowired
+	RentACarBranchOfficeRepository branchRep;
+	
+	@GetMapping("add-rent-a-car-vehicle.html")
+	public String returnAdminAddVehicle(Model model,
+			@RequestParam("username") String username,
+			@RequestParam("password") String password) {
+		
+		RentACarAdmin admin = rentAdminRep.findByUsername(username);
+		
+		if (admin == null || !admin.getPassword().equals(password)) {
+			return "login.html";
+		}
+		
+		RentACar service = rentService.rentACarRep.findOneById(admin.getRentACar().getId());
+		
+		model.addAttribute("service", service);
+		
+		return "add-rent-a-car-vehicle.html";
+	}
 	
 	@GetMapping("view-vehicles.html")
 	public String returnAdminVehicles(Model model,
@@ -91,11 +114,13 @@ public class CarServicesController {
 								Model model) {
 		RentACar service = rentService.rentACarRep.findOneById(Long.parseLong(id));
 		RegisteredUser user = rentService.userRepository.findByUsername(username);
+		List<RentACarBranchOffice> offices = branchRep.findAllByRentACar(service);
 		
 		double rating = rentService.getUserRating(service, user);
 		
 		
 		model.addAttribute("service", service);
+		model.addAttribute("offices", offices);
 		model.addAttribute("rating", rating);
 		return "vehicle-search.html";
 	}

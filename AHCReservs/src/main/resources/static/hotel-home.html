@@ -2,29 +2,29 @@
 <html>
 	<head>
 		<title>Hotel home</title>
-		
+
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js-libs/moment.min.js"></script>
 		<script type="text/javascript" src="js-libs/axios.js"></script>
 		<script type="text/javascript" src="js-libs/toast.js"></script>
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
-		
+
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/hotel-home.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
-		
+
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="js-libs/toast.css" />
 		<link rel="stylesheet" href="css/hotel.css" />
 		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
-	
+
 	</head>
 
 	<body>
-		
+
 		<!-- Navigation bar -->
 		<div id="nav-bar">
 			<ul id="nav-bar-selection-1">
@@ -42,25 +42,25 @@
 				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
 			</ul>
 		</div>
-		
-		
+
+
 		<!-- Hotel data -->
-		
+
 		<div id="main-content-holder" th:attr="data-hotel-id=${service.id}">
 			<div class="center-content">
-				
+
 				<h1 id="hotel-name" class="content-title" th:text="${service.name}"> Title </h1>
-				
+
 				<br/>
-				
+
 				<p id="hotel-description" th:text="${service.description}"> Description </p>
-				
+
 				<br/>
-				
+
 				<p id="hotel-address" th:text="${service.address}"> Address </p>
-				
+
 				<br/>
-				
+
 				<div class="ui labeled button" tabindex="0">
 					<div class="ui green button" onclick="makeReservation()">
 				    	<i class="handshake outline icon"></i> Make reservation
@@ -69,57 +69,57 @@
 				  		Rooms in hotel: [[*{availableRooms}]]
 				  	</a>
 			    </div>
-				
+
 			</div>
 		</div>
-		
-		
+
+
 		<!-- Pop-up div for reservation -->
-		
+
 		<div id="reservation-div" class="down-animation-div">
-			
+
 			<!-- Back button -->
 			<button id="back-button" class="ui green basic button" onclick="hideReservationDiv()"> BACK </button>
-			
+
 			<div class="center-content">
-			
+
 				<!-- Date picker for room reservation -->
 				<table id="reservation-date-table">
-				
+
 					<tr>
-						<td> Select check in and check out date: </td>			
-				
+						<td> Select check in and check out date: </td>
+
 						<td>
 							<div id="reservation-date" class="ui input">
 								<input type="text" id="daterange" name="daterange"  />
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<td> Enter number of guests </td>
-						
+
 						<td>
 							<div class="ui input">
  								<input type="number" id="guests-num" placeholder="Number of guests...">
 							</div>
 						</td>
 					</tr>
-					
+
 				</table>
-				
-				
+
+
 				<!-- Available rooms -->
-				
+
 				<table id="available-rooms-table" class="ui celled striped table">
-					
+
 					<thead>
 						<tr>
 							<th colspan="100%">
 								<h2> Check the rooms you want to reserve </h2>
 							</th>
 						</tr>
-						
+
 						<tr>
 							<th> Room number </th>
 							<th> Room floor </th>
@@ -129,33 +129,33 @@
 							<th> Price per night </th>
 							<th> Check </th>
 						</tr>
-						
+
 					</thead>
-					
+
 					<tbody id="available-rooms-body">
-						
+
 					</tbody>
-					
+
 				</table>
-				
+
 				<!-- Additional services -->
 				<table id="additional-services-table">
-					
+
 					<tr>
 						<td> Select the additional services you would like to include: </td>
-						
+
 					</tr>
-					
+
 					<tr>
 						<td>
-							
+
 							<select id="additional-services-select" class="ui fluid search dropdown" multiple="">
 								<option value=""> Additional service...</option>
 							</select>
-							
+
 						</td>
 					</tr>
-					
+
 					<tr>
 						<td>
 							<button class="ui positive button" onclick="reserveRooms('#main-content-holder', 'data-hotel-id')">
@@ -163,33 +163,33 @@
 							</button>
 						</td>
 					</tr>
-					
+
 				</table>
-				
+
 			</div>
-			
+
 		</div>
-		
+
 		<div id="notification-window">
 			<div>
 				<div id="notification-title"> </div>
 				<div id="notification-content"></div>
 			</div>
 		</div>
-		
+
 		<script>
-		
+
 			//Initialize datepicker
-		
+
 			initializeDatePicker("#main-content-holder", "data-hotel-id");
-		
+
 			//$(".ui.checkbox").checkbox();
-			
+
 			$("#additional-services-select")
 			  .dropdown();
-		
+
 		</script>
-		
+
 	</body>
-	
+
 </html>

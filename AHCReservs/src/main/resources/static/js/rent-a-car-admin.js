@@ -117,7 +117,7 @@ function addRentACarServiceCar() {
 	$.ajax({
 		type: "post",
 		url: "rentACarService/AddCar",
-		data: {json : JSON.stringify(json)},
+		data: {json : JSON.stringify(json), user : JSON.stringify(sessionUser)},
 		success: function(response) {
 			
 			if (response == "success") {
@@ -488,18 +488,18 @@ function rateService(value) {
 			console.log(response);
 			if (response == "noReservation") {
 				r_error = true;
-				alert("You are not allowed to rate us yet.");
+				notify("No reservation", "You are not allowed to rate us yet");
 				$("#service-rating").rating('clear rating');
 				
 			}
 			else if (response == "notLoggedIn") {
 				r_error = true;
-				alert("You are not logged in.");
+				notify("Not logged in", "Login first to rate us");
 				$("#service-rating").rating('clear rating');
 			}
 			
 			else if (response == "success") {
-				
+				notify("Rated", "Thank you for rating us");
 			}
 			
 			
@@ -737,6 +737,10 @@ function removeBranchOffice(element) {
 		}
 	})
 	
+}
+
+function addRentACarVehiclePage() {
+	loadPage('add-rent-a-car-vehicle.html?username=' + sessionUser.username + '&password=' + sessionUser.password);
 }
 
 
