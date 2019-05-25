@@ -1,5 +1,6 @@
 package com.webapplication.Model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 import com.webapplication.JSONBeans.UserBean;
@@ -7,6 +8,10 @@ import com.webapplication.JSONBeans.UserBean;
 @Entity
 public class SystemAdmin extends AppUser {
 
+	
+	@Column(name="passwordChanged", nullable = false)
+	private boolean passwordChanged;
+	
 	public SystemAdmin() {
 		
 	}
@@ -21,6 +26,14 @@ public class SystemAdmin extends AppUser {
 		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
 				admin.getLastName(), admin.getEmail());
 		
+	}
+
+	public boolean isPasswordChanged() {
+		return passwordChanged;
+	}
+
+	public void setPasswordChanged(boolean passwordChanged) {
+		this.passwordChanged = passwordChanged;
 	}
 	
 }

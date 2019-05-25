@@ -1,13 +1,13 @@
 --inicijalni admin
-insert into system_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(0, "sysadmin", "sysadmin", "Anonimus", "Anonimus", "anonimus@gmail.com", 1);
+insert into system_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(0, "sysadmin", "sysadmin", "Anonimus", "Anonimus", "anonimus@gmail.com", 1, 1);
 
 --dummy podaci za hotel admin-a
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 0);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, -1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1, -2);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-4, "ha4un", "ha4pw", "ha4fn", "ha4ln", "ha4@gmail.com", 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "ha5un", "ha5pw", "ha5fn", "ha5ln", "ha5@gmail.com", 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-6, "ha6un", "ha6pw", "ha6fn", "ha6ln", "ha6@gmail.com", 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 0, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, -1, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1, -2, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "ha4un", "ha4pw", "ha4fn", "ha4ln", "ha4@gmail.com", 1, 0);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "ha5un", "ha5pw", "ha5fn", "ha5ln", "ha5@gmail.com", 1, 0);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-6, "ha6un", "ha6pw", "ha6fn", "ha6ln", "ha6@gmail.com", 1, 0);
 
 --dummy podaci za hotele
 insert into hotel(id, address, description, name, rating) values (0, "Bulevar oslobodjenja 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit aliquam eleifend. In consectetur sed velit nec dapibus. Mauris nec mauris id diam hendrerit ultrices. Ut nec arcu et arcu porttitor fermentum. Nunc varius, arcu in vestibulum luctus, nunc lorem aliquet neque, at feugiat sem neque nec leo. Etiam bibendum erat quis tortor eleifend, sed bibendum libero feugiat. Nam feugiat ac diam ac tincidunt. Phasellus justo ex, ultrices vel volutpat quis, consectetur id quam. Quisque at ullamcorper augue, ut pretium odio.", "Royal Palace", 0);
@@ -24,18 +24,18 @@ insert into hotel(id, address, description, name, rating) values (-2, "Haile Sel
 
 
 --dummy podaci za airline admin-a
-insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "aa1un", "aa1pw", "aa1fn", "aa1ln", "aa1@gmail.com", 1);
-insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "aa2un", "aa2pw", "aa2fn", "aa2ln", "aa2@gmail.com", 1);
-insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-3, "aa3un", "aa3pw", "aa3fn", "aa3ln", "aa3@gmail.com", 1);
-insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-4, "aa4un", "aa4pw", "aa4fn", "aa4ln", "aa4@gmail.com", 1);
-insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "aa5un", "aa5pw", "aa5fn", "aa5ln", "aa5@gmail.com", 1);
+insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-1, "aa1un", "aa1pw", "aa1fn", "aa1ln", "aa1@gmail.com", 1, 0);
+insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-2, "aa2un", "aa2pw", "aa2fn", "aa2ln", "aa2@gmail.com", 1, 0);
+insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-3, "aa3un", "aa3pw", "aa3fn", "aa3ln", "aa3@gmail.com", 1, 0);
+insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "aa4un", "aa4pw", "aa4fn", "aa4ln", "aa4@gmail.com", 1, 0);
+insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "aa5un", "aa5pw", "aa5fn", "aa5ln", "aa5@gmail.com", 1, 0);
 
 --dummy podaci za rent a car admin-a
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, rent_a_car_id) values(-1, "ra1un", "ra1pw", "ra1fn", "ra1ln", "ra1@gmail.com", 1, 0);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "ra2un", "ra2pw", "ra2fn", "ra2ln", "ra2@gmail.com", 1);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-3, "ra3un", "ra3pw", "ra3fn", "ra3ln", "ra3@gmail.com", 1);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-4, "ra4un", "ra4pw", "ra4fn", "ra4ln", "ra4@gmail.com", 1);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled) values(-5, "ra5un", "ra5pw", "ra5fn", "ra5ln", "ra5@gmail.com", 1);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, rent_a_car_id, password_changed) values(-1, "ra1un", "ra1pw", "ra1fn", "ra1ln", "ra1@gmail.com", 1, 0, 1);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-2, "ra2un", "ra2pw", "ra2fn", "ra2ln", "ra2@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-3, "ra3un", "ra3pw", "ra3fn", "ra3ln", "ra3@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "ra4un", "ra4pw", "ra4fn", "ra4ln", "ra4@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "ra5un", "ra5pw", "ra5fn", "ra5ln", "ra5@gmail.com", 1, 0);
 
 
 insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidzaa@gmail.com", 1);

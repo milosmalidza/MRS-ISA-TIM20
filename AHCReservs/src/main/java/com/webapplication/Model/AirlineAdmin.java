@@ -1,6 +1,7 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -9,6 +10,9 @@ import com.webapplication.JSONBeans.UserBean;
 
 @Entity
 public class AirlineAdmin extends AppUser {
+	
+	@Column(name="passwordChanged", nullable = false)
+	private boolean passwordChanged;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Airline airline;
@@ -41,6 +45,14 @@ public class AirlineAdmin extends AppUser {
 
 	public void setAirline(Airline airline) {
 		this.airline = airline;
+	}
+
+	public boolean isPasswordChanged() {
+		return passwordChanged;
+	}
+
+	public void setPasswordChanged(boolean passwordChanged) {
+		this.passwordChanged = passwordChanged;
 	}
 	
 	

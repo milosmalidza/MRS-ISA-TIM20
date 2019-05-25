@@ -58,7 +58,11 @@ function loginUser() {
 				showFormMessage("Success.", 3000);
 				window.localStorage.setItem("user", response);
 				
-				if (data.user == "sysAdmin") {
+				if(data.user != "registeredUser" && data.passwordChanged === false) {
+					loadPage("password-change.html");
+				}
+				
+				else if (data.user == "sysAdmin") {
 					loadPage("register-company.html");
 				}
 				

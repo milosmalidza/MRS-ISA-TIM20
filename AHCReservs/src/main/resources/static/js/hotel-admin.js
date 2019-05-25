@@ -14,7 +14,7 @@ window.onload = function() {
 	let loggedUser = JSON.parse(user);
 	
 	//check the type of the user
-	if(loggedUser.user != "hotelAdmin") {
+	if(loggedUser.user != "hotelAdmin" || loggedUser.passwordChanged === false) {
 		history.back(); //redirect the user to the previous page
 	}
 	
