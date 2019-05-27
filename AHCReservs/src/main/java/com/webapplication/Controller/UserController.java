@@ -99,8 +99,7 @@ public class UserController {
 											@RequestParam("user") String user) {
 		
 		try {
-			return 
-        Service.cancelHotelReservation(json, user);
+			return registeredUserService.cancelHotelReservation(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "badRequest";
