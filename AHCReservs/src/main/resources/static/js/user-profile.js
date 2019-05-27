@@ -3,13 +3,21 @@ var controllerPath = "/user";
 window.onload = function() {
 	
 	let user = window.localStorage.getItem("user");
+	let parsedUser;
 	
 	if(user === "") {
 		history.back();
 		return;
 	}
 	
-	fillUserInputs(JSON.parse(user));
+	parsedUser = JSON.parse(user);
+	
+	if(parsedUser.passwordChanged === false) {
+		history.back();
+		return;
+	}
+	
+	fillUserInputs(parsedUser);
 }
 
 function fillUserInputs(user) {
@@ -74,8 +82,6 @@ function getUserJson(user) {
 		"lastName": $("#last-name").val(),
 		"email": $("#email").val(),
 		"userType": user.user
-	};
-	
-	
+	};	
 	
 }

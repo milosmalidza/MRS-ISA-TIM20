@@ -10,7 +10,7 @@ import com.webapplication.JSONBeans.UserBean;
 
 
 @MappedSuperclass
-public class AppUser {
+public abstract class AppUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)

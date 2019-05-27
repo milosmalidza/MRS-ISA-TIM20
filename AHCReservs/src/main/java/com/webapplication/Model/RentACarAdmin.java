@@ -1,6 +1,7 @@
 package com.webapplication.Model;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -11,6 +12,10 @@ import com.webapplication.JSONBeans.UserBean;
 @Entity
 public class RentACarAdmin extends AppUser {
 
+	
+	@Column(name="passwordChanged", nullable = false)
+	private boolean passwordChanged;
+	
 	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private RentACar rent_a_car;
@@ -43,6 +48,14 @@ public class RentACarAdmin extends AppUser {
 	@JsonIgnore
 	public void setRentACar(RentACar rentACar) {
 		this.rent_a_car = rentACar;
+	}
+
+	public boolean isPasswordChanged() {
+		return passwordChanged;
+	}
+
+	public void setPasswordChanged(boolean passwordChanged) {
+		this.passwordChanged = passwordChanged;
 	}
 
 	

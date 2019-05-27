@@ -3,7 +3,6 @@ package com.webapplication.Controller;
 
 import java.io.IOException;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +33,7 @@ import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Service.EmailSenderService;
+import com.webapplication.Service.UserService;
 import com.webapplication.Service.MultipleService;
 import com.webapplication.Service.RegisteredUserService;
 
@@ -64,10 +64,11 @@ public class UserController {
 	private EmailSenderService emailSenderService;
 	
 	@Autowired
-	private MultipleService mulSvc;
-  
+	private UserService userSvc;
+
   @Autowired
   private RegisteredUserService registeredUserService;
+
 	
 	
 	@RequestMapping(value="/updateProfile",
@@ -77,8 +78,18 @@ public class UserController {
 	public ResponseEntity<AppUser> updateProfile(@RequestBody UserBean user) {
 		
 		System.out.println(user.getUsername() + " " + user.getUserType());
-		return new ResponseEntity<>(mulSvc.updateProfile(user), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(userSvc.updateProfile(user), HttpStatus.ACCEPTED);
 		
+	}
+	
+	@RequestMapping(value="/changePassword",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppUser> changePassword(@RequestBody UserBean user) {
+
+		return new ResponseEntity<>(userSvc.changePassword(user), HttpStatus.ACCEPTED);
+
 	}
 	
 	
