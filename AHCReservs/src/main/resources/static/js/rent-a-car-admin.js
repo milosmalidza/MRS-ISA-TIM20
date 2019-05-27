@@ -261,10 +261,15 @@ function performReservation(element) {
 	
 	var parentNode = element.parentNode;
 	
+	var startElement = document.getElementById("start-destination");
+	var endElement = document.getElementById("end-destination");
+	
 	var id = {
 		id : parentNode.dataset.id,
 		startDate:  vehicleReservationStartDate,
-		endDate : vehicleReservationEndDate
+		endDate : vehicleReservationEndDate,
+		startLocation : startElement.options[startElement.selectedIndex].innerHTML,
+		endLocation : endElement.options[endElement.selectedIndex].innerHTML
 	};
 	
 	console.log(id);
