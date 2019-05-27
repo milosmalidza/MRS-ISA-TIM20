@@ -268,6 +268,132 @@ div#nav-bar {
 	
 }
 
+#my-reservations {
+	display: none;
+}
+
+#main-page-content {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	-webkit-transition: 1s;
+	transition: 1s;
+}
+
+.reservation-nav-bar {
+	position: absolute;
+	columns: 1;
+	left: 0;
+	top: 0;
+	width: 300px;
+	height: 100%;
+	border-right: 2px solid white;
+}
+
+#my-reservations-thread {
+	position: absolute;
+	top: 70px;
+	left: 100%;
+	width: 100%;
+	height: calc(100% - 70px);
+	border-top: 2px solid white;
+}
+
+.reservation-nav-bar > div {
+	position: relative;
+	width: 100%;
+	height: 33.33%;
+}
+
+.white-background {
+	background: white;
+}
+
+.transparent-background {
+	background: rgba(255,255,255,0.00);
+}
+
+.white-color {
+	color: white;
+}
+
+.black-color {
+	color: black;
+}
+
+.reservation-nav-bar-item {
+	text-align: center;
+	font-size: 34px;
+	letter-spacing: 1px;
+	font-weight: bold;
+	cursor: pointer;
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+.reservation-nav-bar-item:hover {
+	background: white;
+	color: black;
+}
+
+.nav-bar-item-text {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+	
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+
+.display-reservations {
+	position: absolute;
+	width: calc(100% - 300px);
+	left: 300px;
+	height: 100%;
+	overflow-y: auto;
+}
+
+#reservations-table {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	colro: white;
+	
+}
+
+#reservations-table tr:first-child td {
+    background: white;
+	color: black;
+	font-weight: bold;
+}
+
+#reservations-table td {
+	padding: 20px;
+	text-align: center;
+	font-size: 12px;
+	letter-spacing: 1px;
+	color: white;
+}
+
+.cancel-reservation-button {
+	background: white;
+	color: black;
+	border-radius: 15px;
+	padding: 10px 20px;
+	border: none;
+	outline: none;
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+.cancel-reservation-button:hover {
+	background: rgba(245,245,245,1.00);
+}
+
+
+
 
 
 

@@ -44,7 +44,7 @@ public class Vehicle {
 	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
 	
-	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<VehicleReservation> reservations;
 	
 	@Column(name = "pricePerDay", unique = false, nullable = false)

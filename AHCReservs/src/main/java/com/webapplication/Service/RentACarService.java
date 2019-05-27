@@ -349,12 +349,16 @@ public class RentACarService {
 				
 				Date startDate = format.parse(jsonNode.get("startDate").asText());
 				Date endDate = format.parse(jsonNode.get("endDate").asText());
+				String startLocation = jsonNode.get("startLocation").asText();
+				String endLocation = jsonNode.get("endLocation").asText();
 				
 				VehicleReservation reservation = new VehicleReservation();
 				reservation.setReservationDate(startDate);
 				reservation.setDueDate(endDate);
 				reservation.setVehicle(vehicle);
 				reservation.setUser(userObject);
+				reservation.setStartLocation(startLocation);
+				reservation.setEndLocation(endLocation);
 				
 				
 				
