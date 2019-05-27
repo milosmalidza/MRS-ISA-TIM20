@@ -335,6 +335,32 @@ div#nav-bar {
 	box-shadow: 0px 0px 35px 0px rgba(0,0,0,0.6);
 }
 
+#back-reservation {
+	display: none;
+	position: absolute;
+	left: 60px;
+	top: 50%;
+	font-size: 14px;
+	color: white;
+	font-weight: bold;
+	letter-spacing: 1px;
+	padding: 9px 18px;
+	border-radius: 20px;
+	cursor: pointer;
+	border-bottom: 2px solid transparent;
+	
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	-webkit-transition: .5s;
+	transition: .5s;
+}
+
+#back-reservation:hover {
+	background: white;
+	color: black;
+}
+
+
 #nav-bar-selection-1 {
 	position: absolute;
 	left: 0px;
@@ -342,6 +368,8 @@ div#nav-bar {
 	list-style: none;
 	font-size: 14px;
 }
+
+
 
 #nav-bar-selection-1 > li {
 	float: left;

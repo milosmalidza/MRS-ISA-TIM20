@@ -8,13 +8,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 public class RegisteredUser extends AppUser{
 
 	//@OneToMany(mappedBy="registereduser", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	//private List<Friendship> friendships;
 	
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<VehicleReservation> reservations;
 	
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -55,7 +57,7 @@ public class RegisteredUser extends AppUser{
 	public String toString() {
 		return super.toString();
 	}
-
+	
 	public Set<RoomReservation> getHotelReservations() {
 		return hotelReservations;
 	}
@@ -63,5 +65,16 @@ public class RegisteredUser extends AppUser{
 	public void setHotelReservations(Set<RoomReservation> hotelReservations) {
 		this.hotelReservations = hotelReservations;
 	}
+	
+	@JsonIgnore
+	public List<VehicleReservation> getReservations() {
+		return reservations;
+	}
+
+	public void setReservations(List<VehicleReservation> reservations) {
+		this.reservations = reservations;
+	}
+	
+	
 	
 }
