@@ -12,6 +12,8 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapplication.JSONBeans.KeyAndValueBean;
 import com.webapplication.JSONBeans.RoomReservationBean;
@@ -40,7 +42,7 @@ public class RoomReservationService {
 	@Autowired
 	SystemAdminService sysAdminSvc;
 	
-	
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public String quickReservation(KeyAndValueBean data) {
 		
 		RoomReservation reservation = findOne(data.getKey()).get();
@@ -56,11 +58,15 @@ public class RoomReservationService {
 			return "You are not allowed to make a reservation";
 		}
 		
-		reservation.setUser(user);
 		
+		if(reservation.getUser() != null) {
+			return "Someone already reserved this room.\n Please refresh the page.";
+		}
+		
+		reservation.setUser(user);
 		save(reservation);
 		
-		return "Success";
+		return "Reservation successful";
 		
 	}
 	
@@ -118,13 +124,14 @@ public class RoomReservationService {
 			
 			
 			//if the room hasn't been reserved in the mean time the reservation is successful
-			if(!isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
-				
-				room.setReservation(reservation);
-				save(reservation);
-				roomSvc.save(room);
+			if(isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
+				return "Someone already reserved the room.";
 				
 			}
+			
+			room.setReservation(reservation);
+			save(reservation);
+			roomSvc.save(room);
 			
 			
 		}
@@ -188,7 +195,7 @@ public class RoomReservationService {
 		
 	}
 	
-	/** Method determines whether the admin get edit or delete the room by checking whether
+	/** Method determines whether the admin can edit or delete the room by checking whether
 	 * the reservations have expired
 	 * @param room_id - id of the room to be checked
 	 * @return boolean indicating whether there are any reservations in the future */

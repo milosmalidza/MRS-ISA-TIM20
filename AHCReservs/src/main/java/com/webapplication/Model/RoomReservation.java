@@ -1,6 +1,7 @@
 package com.webapplication.Model;
 
 import java.util.Date;
+
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -51,6 +53,8 @@ public class RoomReservation {
 	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Set<HAdditionalService> additionalServices;
 	
+	@Version
+	private Long version;
 	
 	public RoomReservation() {
 		
@@ -162,6 +166,16 @@ public class RoomReservation {
 
 	public void setAdditionalServices(Set<HAdditionalService> additionalServices) {
 		this.additionalServices = additionalServices;
+	}
+
+
+	public Long getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	
