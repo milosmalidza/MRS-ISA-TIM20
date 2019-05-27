@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		
+		<script type="text/javascript" src="js/common.js"></script>
+		<script type="text/javascript" src="js/user-profile.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="js-libs/semantic.css" />
+		<link rel="stylesheet" href="js-libs/toast.css" />
+		
+		<link rel="stylesheet" href="css/user-style.css" />
+	
+	</head>
+	
+	<body>
+	
+		<div class="user-profile-background-holder">
+			<div class="background-teaser"></div>
+		</div>
+	
+		<div class="wrapper">
+			<div class="center-div">
+				<table id="user-data-table">
+						
+					<tr class="heading-row">
+						<td colspan="100%">
+							<h1> My profile </h1>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Username:  </td>
+						<td style="width:500px">
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" id="username" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td> Password:  </td>
+						<td>
+							<div class="ui input input-additional full-width-input">
+								<input id="password" type="password"/>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>Confirm password:  </td>
+						<td >
+							<div class="ui input input-additional full-width-input">
+								<input id="confirm-password" type="password" />
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>First name: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" id="first-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Last name: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" id="last-name" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						<td>Valid E-mail: </td>
+						<td>
+							<div class="input-additional full-width-input ui input ">
+								<input type="text" id="email" autocomplete="off"/>
+							</div>
+						</td>
+					</tr>
+					
+					<tr>
+						
+						<td> </td>
+						<td>
+							<button class="ui green right labeled icon button" onclick="updateProfile()">
+ 									<i class="right user icon"></i>
+								  Update profile
+							</button>
+						 </td>
+					</tr>
+					
+				</table>
+			</div>
+		</div>
+		
+	</body>
+
+</html>

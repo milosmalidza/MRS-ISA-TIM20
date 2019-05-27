@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
-import com.webapplication.JSONBeans.AdminToRegister;
+import com.webapplication.JSONBeans.UserBean;
 
 @Entity
 public class HotelAdmin extends AppUser {
@@ -28,7 +28,7 @@ public class HotelAdmin extends AppUser {
 		
 	}
 	
-	public HotelAdmin(AdminToRegister admin) {
+	public HotelAdmin(UserBean admin) {
 		
 		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
 				admin.getLastName(), admin.getEmail());

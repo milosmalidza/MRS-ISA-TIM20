@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
-import com.webapplication.JSONBeans.AdminToRegister;
+import com.webapplication.JSONBeans.UserBean;
 
 @Entity
 public class AirlineAdmin extends AppUser {
@@ -26,7 +26,7 @@ public class AirlineAdmin extends AppUser {
 	}
 	
 	//used when registering a new admin
-	public AirlineAdmin(AdminToRegister admin) {
+	public AirlineAdmin(UserBean admin) {
 		
 		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
 				admin.getLastName(), admin.getEmail());

@@ -6,7 +6,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.webapplication.JSONBeans.AdminToRegister;
+import com.webapplication.JSONBeans.UserBean;
 
 @Entity
 public class RentACarAdmin extends AppUser {
@@ -28,7 +28,7 @@ public class RentACarAdmin extends AppUser {
 	}
 	
 	//used when registering a new admin
-	public RentACarAdmin(AdminToRegister admin) {
+	public RentACarAdmin(UserBean admin) {
 		
 		super(admin.getUsername(), admin.getPassword(), admin.getFirstName(),
 				admin.getLastName(), admin.getEmail());

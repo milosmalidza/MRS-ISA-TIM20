@@ -1,9 +1,11 @@
 package com.webapplication.Service;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -290,7 +292,9 @@ public class RentACarAdminService {
 		return rentACarAdminRep.findByEmailIdIgnoreCase(emailid);
 	}
 
-	
+	public Optional<RentACarAdmin> findOne(Long id) {
+		return rentACarAdminRep.findOne(id);
+	}
 
 	
 }

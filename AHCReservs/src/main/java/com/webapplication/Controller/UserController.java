@@ -5,7 +5,11 @@ import java.io.IOException;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,7 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.webapplication.JSONBeans.UserBean;
 import com.webapplication.Model.AirlineAdmin;
+import com.webapplication.Model.AppUser;
 import com.webapplication.Model.ConfirmationToken;
 import com.webapplication.Model.HotelAdmin;
 import com.webapplication.Model.RegisteredUser;
@@ -28,6 +34,7 @@ import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Service.EmailSenderService;
+import com.webapplication.Service.MultipleService;
 import com.webapplication.Service.RegisteredUserService;
 
 
@@ -57,14 +64,32 @@ public class UserController {
 	private EmailSenderService emailSenderService;
 	
 	@Autowired
-	private RegisteredUserService registeredUserService;
+	private MultipleService mulSvc;
+  
+  @Autowired
+  private RegisteredUserService registeredUserService;
+	
+	
+	@RequestMapping(value="/updateProfile",
+					method=RequestMethod.POST,
+					consumes=MediaType.APPLICATION_JSON_VALUE,
+					produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<AppUser> updateProfile(@RequestBody UserBean user) {
+		
+		System.out.println(user.getUsername() + " " + user.getUserType());
+		return new ResponseEntity<>(mulSvc.updateProfile(user), HttpStatus.ACCEPTED);
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "cancelHotelReservation", method = RequestMethod.POST)
 	public String cancelHotelReservation(@RequestParam("json") String json,
 											@RequestParam("user") String user) {
 		
 		try {
-			return registeredUserService.cancelHotelReservation(json, user);
+			return 
+        Service.cancelHotelReservation(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "badRequest";

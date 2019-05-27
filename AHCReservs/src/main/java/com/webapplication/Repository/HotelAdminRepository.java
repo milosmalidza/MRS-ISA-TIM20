@@ -1,5 +1,8 @@
 package com.webapplication.Repository;
 
+import java.util.Optional;
+
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +16,9 @@ public interface HotelAdminRepository extends JpaRepository<HotelAdmin, Long> {
 	
 	@Query("select admin from HotelAdmin as admin where admin.username = ?1")
 	HotelAdmin findByUsername(String username);
+	
+	@Query("select admin from HotelAdmin as admin where admin.id = ?1")
+	public Optional<HotelAdmin> findOne(Long id);
 	
 	@Transactional
 	public void deleteByUsername(String username);

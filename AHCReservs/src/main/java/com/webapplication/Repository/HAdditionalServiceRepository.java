@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.webapplication.Model.HAdditionalService;
-import com.webapplication.Model.HotelServiceType;
 
 @Repository
 public interface HAdditionalServiceRepository extends JpaRepository<HAdditionalService, Long> {
