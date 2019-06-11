@@ -228,6 +228,7 @@ public class RoomReservationService {
 	}
 	
 	public RoomReservation save(RoomReservation reservation) {	
+		//ovde se triggeruje exception
 		return roomReservRep.save(reservation);
 	}
 	

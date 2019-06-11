@@ -2,21 +2,15 @@ package com.webapplication.Service;
 
 import java.io.IOException;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.RoomData;
-import com.webapplication.JSONBeans.UserBean;
-import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Hotel;
-import com.webapplication.Model.HotelAdmin;
-import com.webapplication.Model.RegisteredUser;
-import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.Room;
-import com.webapplication.Model.SystemAdmin;
 
 @Service
 public class MultipleService {
@@ -122,6 +116,7 @@ public class MultipleService {
 					return true;
 					
 				} else {
+					
 					return true;
 				}
 				
