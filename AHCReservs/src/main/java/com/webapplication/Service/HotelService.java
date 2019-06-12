@@ -244,23 +244,12 @@ public class HotelService {
 		//iterate through hotel rooms and find the available ones
 		for(Room room: hotel.getRooms()) {
 			
-			/*
-			//room is available if there is no reservation at all
-			if(room.getReservation() == null) {
-				System.out.println("No reservation at all");
+			//check whether the room is reserved
+			if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
+				System.out.println("Room available");
 				availableRooms.add(room);
-				continue;
-				
-			} else {*/
-				
-				//check whether the room is reserved
-				if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
-					System.out.println("Room available");
-					availableRooms.add(room);
-				}
-				
-			//}
-			
+			}
+						
 			System.out.println("Room reserved");
 			
 		}

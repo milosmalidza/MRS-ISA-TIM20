@@ -120,7 +120,6 @@ public class RoomReservationService {
 			//if the room hasn't been reserved in the mean time the reservation is successful
 			if(!isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
 				
-				//room.setReservation(reservation);
 				save(reservation);
 				roomSvc.save(room);
 				
