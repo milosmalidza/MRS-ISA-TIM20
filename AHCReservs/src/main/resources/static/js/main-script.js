@@ -85,6 +85,10 @@ function loginUser() {
 				
 			}
 			
+			else if (data.status == "notAssigned") {
+				showFormMessage("No company has been assigned to you.", 3000);
+			}
+			
 			else if (data.status == "notEnabled") {
 				showFormMessage("Account not activated.", 3000);
 			}
