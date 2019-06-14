@@ -45,12 +45,28 @@
 					 <form id="single-form">
 				<table style="margin-bottom:50px;">
 					<tr>
+						<td colspan="2" style="position: relative;padding-bottom: 60px;">
+							<div class="report-buttons">
+								<div class="report-button" style="border-right: 2px solid white;" onClick="displayServiceRating()">
+									<p class="report-button-text">Service rating</p>
+								</div>
+								<div class="report-button" style="border-right: 2px solid white;" onClick="displayVehicleRatings()">
+									<p class="report-button-text">Vehicle ratings</p>
+								</div>
+								<div class="report-button" style="border-right: 2px solid white;">
+									<p class="report-button-text">Vehicle reservations</p>
+								</div>
+								<div class="report-button" onClick="getProfitReport()">
+									<p class="report-button-text">Profit</p>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
 						
 						<td colspan="2" height="500px" style="position: relative;">
 							<canvas width="900" height="400" id="chart"></canvas>
-							<script>
-								
-							</script>
+							
 						</td>
 						
 						

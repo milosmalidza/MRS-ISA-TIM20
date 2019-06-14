@@ -1,9 +1,10 @@
 package com.webapplication.Service;
 
 import java.io.IOException;
-
+import java.text.DateFormatSymbols;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,10 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.RentACarBranchOffice;
 import com.webapplication.Model.Vehicle;
+import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Model.VehicleType;
 import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.RentACarBranchOfficeRepository;
@@ -38,6 +42,137 @@ public class RentACarAdminService {
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
 
+	
+	public String getServiceRating(String user) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(user);
+		
+		RentACar service = rentRepository.findById(jsonNode.get("serviceId").asLong()).get();
+		
+		JsonNode result = mapper.createObjectNode();
+		
+		double rating = service.getRating();
+		rating = rating*100;
+		rating = Math.round(rating);
+		rating = rating/100;
+		
+		((ObjectNode)result).put("rating", rating);
+		
+		return mapper.writeValueAsString(result);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String getVehicleRatings(String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(user);
+		
+		RentACar service = rentRepository.findOneById(jsonNode.get("serviceId").asLong());
+		
+		List<Vehicle> vehicles = service.getVehicles();
+		
+		ArrayNode vehicleNames = mapper.createArrayNode();
+		ArrayNode vehicleRatings = mapper.createArrayNode();
+		
+		for(Vehicle v : vehicles) {
+			double rating = 0;
+			int validRatings = 0;
+			for (VehicleReservation r : v.getReservations()) {
+				
+				rating += r.getRating();
+				
+				validRatings++;
+			}
+			
+			if (rating != 0) {
+				vehicleRatings.add(rating / validRatings);
+			}
+			else {
+				vehicleRatings.add(0);
+			}
+			vehicleNames.add(v.getName());
+		}
+		
+		JsonNode data = mapper.createObjectNode();
+		
+		
+		((ObjectNode)data).put("names", vehicleNames);
+		((ObjectNode)data).put("ratings", vehicleRatings);
+		
+		return mapper.writeValueAsString(data);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String getProfitReport(String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(user);
+		
+		RentACar service = rentRepository.findOneById(jsonNode.get("serviceId").asLong());
+		List<Vehicle> vehicles = service.getVehicles();
+		
+		Date date = new Date();
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		
+		c1.setTime(date);
+		c1.add(Calendar.MONTH, -11);
+		
+		ArrayNode months = mapper.createArrayNode();
+		ArrayNode profits = mapper.createArrayNode();
+		
+		for(int i = 0; i < 12; i++) {
+			double overral = 0;
+			for(Vehicle v : vehicles) {
+				for(VehicleReservation r : v.getReservations()) {
+					c2.setTime(r.getReservationDate());
+					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH)) {
+						overral += calculateReservation(r);
+					}
+				}
+			}
+			
+			months.add(this.getMonthForInt(c1.get(Calendar.MONTH)));
+			profits.add(overral);
+			
+			c1.add(Calendar.MONTH, 1);
+		}
+		
+		JsonNode data = mapper.createObjectNode();
+		
+		((ObjectNode)data).put("months", months);
+		((ObjectNode)data).put("profits", profits);
+		
+		
+		return mapper.writeValueAsString(data);
+	}
+	
+	double calculateReservation(VehicleReservation res) {
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(res.getReservationDate());
+		double overral = 0;
+		while (c1.getTime().before(res.getDueDate())) {
+			overral += res.getVehicle().getPricePerDay();
+			c1.add(Calendar.DATE, 1);
+			
+		}
+		
+		return overral;
+	}
+	
+	String getMonthForInt(int num) {
+        String month = "wrong";
+        DateFormatSymbols dfs = new DateFormatSymbols();
+        String[] months = dfs.getMonths();
+        if (num >= 0 && num <= 11 ) {
+            month = months[num];
+        }
+        return month;
+    }
+	
+	
+	
+	
 
 	public RentACarAdmin save(RentACarAdmin admin) {
 		return rentACarAdminRep.save(admin);
@@ -72,16 +207,7 @@ public class RentACarAdminService {
 	}
 	
 	
-	public String getProfitReport(String json) throws IOException {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode jsonNode = mapper.readTree(json);
-		
-		RentACar service = rentRepository.findById(jsonNode.get("id").asLong()).get();
-		
-		
-		return "ddd";
-	}
+	
 	
 	public String removeBranchOffice(String json, String user) throws IOException {
 		

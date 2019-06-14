@@ -30,11 +30,32 @@ public class RentACarController {
 	@Autowired
 	private RentACarService rentService;
 	
+	
+	@RequestMapping(value = "/getServiceRating", method = RequestMethod.POST)
+	public String getServiceRating(@RequestParam("user") String user) {
+		try {
+			return rentAdminService.getServiceRating(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/getVehicleRatings", method = RequestMethod.POST)
+	public String getVehicleRatings(@RequestParam("user") String user) {
+		try {
+			return rentAdminService.getVehicleRatings(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
 	@RequestMapping(value = "/getProfitReport", method = RequestMethod.POST)
-	public String getProfitReport(@RequestParam("json") String json) {
+	public String getProfitReport(@RequestParam("user") String user) {
 		
 		try {
-			return rentAdminService.getProfitReport(json);
+			return rentAdminService.getProfitReport(user);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
