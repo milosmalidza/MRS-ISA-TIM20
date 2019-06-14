@@ -750,9 +750,9 @@ function addRentACarVehiclePage() {
 
 
 
-
+var ctx;
 function initChart() {
-	var ctx = document.getElementById('chart').getContext('2d');
+	ctx = document.getElementById('chart').getContext('2d');
 	var myChart = new Chart(ctx, {
 		type: 'bar',
 		data: {

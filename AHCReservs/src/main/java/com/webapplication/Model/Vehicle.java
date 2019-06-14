@@ -58,6 +58,7 @@ public class Vehicle {
 	
 	
 	
+	
 	public Vehicle() {}
 	
 	public Vehicle(Long id, String name, String description, int numOfSeats, int numOfDoors, VehicleType vehicleType,

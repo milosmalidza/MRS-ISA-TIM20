@@ -31,6 +31,9 @@ public class VehicleReservation {
 	@Column(name = "start_location", nullable = true)
 	private String startLocation;
 	
+	@Column(name = "rating", nullable = false)
+	private int rating;
+	
 	@Column(name = "end_location", nullable = true)
 	private String endLocation;
 	
@@ -108,6 +111,14 @@ public class VehicleReservation {
 
 	public void setEndLocation(String endLocation) {
 		this.endLocation = endLocation;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 	
 	
