@@ -246,7 +246,7 @@ function showVehicleReservations() {
 					status = "Pending";
 				}
 				else if (items[i].status == "rateUs") {
-					status = '<div class="ui rating"  data-max-rating="5" data-rating="' + items[i].rating + '"></div>';
+					status = '<div class="ui star rating"  data-max-rating="5" data-rating="' + items[i].rating + '"></div>';
 				}
 				else {
 					status = "<input class='cancel-reservation-button' type='button' value='Cancel' onclick='cancelCarReservation(this)' />";
