@@ -1,13 +1,15 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+
+
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webapplication.Model.Vehicle;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.RentACarService;
 
@@ -200,6 +202,19 @@ public class RentACarController {
 			return "badRequest";
 		}
 		
+		
+	}
+	
+	
+
+	@RequestMapping(
+			value="/getRentACar",
+			method=RequestMethod.POST,
+			produces=MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE)
+	public String getRentACar(@RequestBody KeyBean keyBean) {
+		
+		return rentService.getRentACar(keyBean.getKey());
 		
 	}
 	

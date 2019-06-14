@@ -10,9 +10,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.webapplication.JSONBeans.MapPinData;
+import com.webapplication.Model.Hotel;
 import com.webapplication.Model.Rating;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
@@ -47,6 +50,10 @@ public class RentACarService {
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
 	
+	
+	public RentACar findOneById(Long id) {
+		return rentACarRep.findOneById(id);
+	}
 	
 	public RentACar save(RentACar rentACar) {
 		return rentACarRep.save(rentACar);
@@ -171,7 +178,60 @@ public class RentACarService {
 		return 0.0;
 	}
 	
+	public String saveRentACarPin(MapPinData pinData) {
+		
+		RentACar rentACar = findOneById(pinData.getCompanyID());
+		
+		if(rentACar == null) {
+			return "";
+		}
+		
+		rentACar.setLatitude(pinData.getLatitude());
+		rentACar.setLongitude(pinData.getLongitude());
+		
+		
+		save(rentACar);
+		
+		return "ok";
+		
+		
+	}
 	
+	
+	public String getRentACar(Long id) {
+		
+		RentACar rentACar = findOneById(id);
+		
+		if(rentACar == null) {
+			return "";
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode rentACarNode = mapper.createObjectNode();
+		
+		((ObjectNode)rentACarNode).put("id", rentACar.getId());
+		((ObjectNode)rentACarNode).put("name", rentACar.getName());
+		((ObjectNode)rentACarNode).put("description", rentACar.getDescription());
+		((ObjectNode)rentACarNode).put("address", rentACar.getAddress());
+		((ObjectNode)rentACarNode).put("latitude", rentACar.getLatitude());
+		((ObjectNode)rentACarNode).put("longitude", rentACar.getLongitude());
+		
+		
+		String rentACarJson = null;
+		
+		try {
+			rentACarJson = mapper.writeValueAsString(rentACarNode);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+		System.out.println(rentACarJson);
+		
+		return rentACarJson;
+		
+		
+	}
 	
 	public String getVehicleInfo(String json) throws IOException {
 		

@@ -4,6 +4,21 @@ var roomCheckInDate = null;
 var roomCheckOutDate = null;
 
 
+function getMap() {
+	
+	let hotelID = $("#main-content-holder").attr("data-hotel-id");
+	
+	let keyJson = {"key": hotelID};
+	
+	axios.post(controllerPath + "/getHotel", keyJson)
+		.then(response => {
+			
+			loadMap(response.data, "hotel", false);
+		});
+	
+}
+
+
 
 function initializeDatePicker(dataAttrHolder, dataAttrID) {
 	

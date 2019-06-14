@@ -1,7 +1,8 @@
 var controllerPath = "/hotelAdmin";
 var adminHotel = null;
 
-window.onload = function() {
+
+function validateAdminAndHotel() {
 	
 	//get the currently logged in user
 	let user = window.localStorage.getItem("user");
@@ -41,6 +42,7 @@ function getAdminHotel(user) {
 				addAllServicesToTable();
 				
 				fillSelectInputs();
+				loadMap(response.data, "hotel", true);
 				
 			} else {
 				

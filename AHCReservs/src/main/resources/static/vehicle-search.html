@@ -5,11 +5,21 @@
 		
 		<title>Search vehicles</title>
 		
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		
+		<!-- Bing map reference -->
+		<script type='text/javascript'
+				src='https://www.bing.com/api/maps/mapcontrol?key=AsnVGQUjYnTp8GjRsf6_cArYovm0MRd0KZsrJw9v0_vXA88qMHrscMy8WfyWEwFJ'>
+        </script>
+		
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js-libs/moment.min.js"></script>
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
 		<script type="text/javascript" src="js-libs/dropdown.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		
+		<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js/rent-a-car-admin.js"></script>
 		
@@ -24,7 +34,7 @@
 		
 	</head>
 	
-	<body style="overflow-y:auto;">
+	<body style="overflow-y:auto;" onload="getMapForUser();">
 	
 	
 			<div id="nav-bar">
@@ -123,6 +133,9 @@
 				</table>
 				</form>
 				
+				<!-- Bing map div -->
+				<h2>Rent a car service location</h2>
+				<div id="companyMap"></div>
 				
 			</div>
 			

@@ -33,6 +33,12 @@ public abstract class Company {
 	@Column(name="rating", nullable=true)
 	protected double rating;
 	
+	@Column(name="latitude", nullable=true)
+	protected Double latitude;
+	
+	@Column(name="longitude", nullable=true)
+	protected Double longitude;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Rating> ratings;
 	
@@ -110,6 +116,23 @@ public abstract class Company {
 		this.rating = Math.round((sum / ratings.size()) * 10) / 10;
 		
 	}
+
+	public Double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude;
+	}
+
+	public Double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude;
+	}
+	
 	
 	
 	
