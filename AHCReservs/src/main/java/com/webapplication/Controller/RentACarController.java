@@ -30,6 +30,17 @@ public class RentACarController {
 	@Autowired
 	private RentACarService rentService;
 	
+	@RequestMapping(value = "/getProfitReport", method = RequestMethod.POST)
+	public String getProfitReport(@RequestParam("json") String json) {
+		
+		try {
+			return rentAdminService.getProfitReport(json);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
 	
 	@RequestMapping(value = "/removeBranchOffice", method = RequestMethod.POST)
 	public String removeBranchOffice(@RequestParam("json") String json, @RequestParam("user") String user) {

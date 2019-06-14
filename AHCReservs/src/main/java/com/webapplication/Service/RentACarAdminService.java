@@ -71,6 +71,18 @@ public class RentACarAdminService {
 		rentACarAdminRep.deleteByUsername(username);
 	}
 	
+	
+	public String getProfitReport(String json) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(json);
+		
+		RentACar service = rentRepository.findById(jsonNode.get("id").asLong()).get();
+		
+		
+		return "ddd";
+	}
+	
 	public String removeBranchOffice(String json, String user) throws IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
