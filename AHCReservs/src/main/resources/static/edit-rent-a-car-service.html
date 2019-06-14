@@ -4,12 +4,13 @@
 	<head>
 		<title>Edit rent-a-car service</title>
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/Chart.js"></script>
 		
 		<script type="text/javascript" src="js-libs/semantic.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js/rent-a-car-admin.js"></script>
 		
-		
+		<link rel="stylesheet" href="js-libs/Chart.css" />
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		<link rel="stylesheet" href="js-libs/semantic.css" />
 		<link rel="stylesheet" href="css/main-style.css" />
@@ -17,7 +18,7 @@
 	
 	</head>
 
-	<body style="overflow-y:auto;">
+	<body style="overflow-y:auto;" onLoad="initChart()">
 	
 	
 		<div id="nav-bar">
@@ -43,6 +44,17 @@
 					   
 					 <form id="single-form">
 				<table style="margin-bottom:50px;">
+					<tr>
+						
+						<td colspan="2" height="500px" style="position: relative;">
+							<canvas width="900" height="400" id="chart"></canvas>
+							<script>
+								
+							</script>
+						</td>
+						
+						
+					</tr>
 					<tr>
 						<td style="width:45%">Company name:  </td>
 						<td>
