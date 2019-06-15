@@ -789,28 +789,6 @@ function initChart() {
 		});
 			
 	}});
-	/*var myChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-			datasets: [{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
-				backgroundColor: 'rgba(61, 198, 160, 0.5)',
-				borderColor: 'rgba(61, 198, 160, 1)',
-				borderWidth: 1
-			}]
-		},
-		options: {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero: true
-					}
-				}]
-			}
-		}
-	});*/
 }
 
 function displayServiceRating() {
@@ -823,8 +801,10 @@ function displayServiceRating() {
 		success: function(response) {
 			var data = JSON.parse(response);
 			console.log(data);
-			chart.type = 'bar';
-			chart.data = {
+			chart.destroy();
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
 				labels: ['Rating'],
 				datasets: [{
 					label: 'Rating',
@@ -833,8 +813,8 @@ function displayServiceRating() {
 					borderColor: 'rgba(61, 198, 160, 1)',
 					borderWidth: 1
 				}]
-			}
-			chart.options = {
+			},
+			options: {
 				scales: {
 					yAxes: [{
 						ticks: {
@@ -845,7 +825,8 @@ function displayServiceRating() {
 					}]
 				}
 			}
-			chart.update();
+		});
+			
 		}
 		
 	});
@@ -861,8 +842,10 @@ function displayVehicleRatings() {
 			var data = JSON.parse(response);
 			console.log(data);
 			
-			chart.type = 'bar';
-			chart.data = {
+			chart.destroy();
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
 				labels: data.names,
 				datasets: [{
 					label: 'Rating',
@@ -871,8 +854,8 @@ function displayVehicleRatings() {
 					borderColor: 'rgba(61, 198, 160, 1)',
 					borderWidth: 1
 				}]
-			}
-			chart.options = {
+			},
+			options: {
 				scales: {
 					yAxes: [{
 						ticks: {
@@ -883,7 +866,7 @@ function displayVehicleRatings() {
 					}]
 				}
 			}
-			chart.update();
+		});
 		}
 		
 	});
@@ -897,9 +880,10 @@ function getProfitReport() {
 		success: function(response) {
 			var data = JSON.parse(response);
 			console.log(data);
-			
-			chart.type = 'bar';
-			chart.data = {
+			chart.destroy();
+			chart = new Chart(ctx, {
+			type: 'line',
+			data: {
 				labels: data.months,
 				datasets: [{
 					label: 'Profit $',
@@ -908,8 +892,8 @@ function getProfitReport() {
 					borderColor: 'rgba(61, 198, 160, 1)',
 					borderWidth: 1
 				}]
-			}
-			chart.options = {
+			},
+			options: {
 				scales: {
 					yAxes: [{
 						ticks: {
@@ -919,7 +903,7 @@ function getProfitReport() {
 					}]
 				}
 			}
-			chart.update();
+		});
 		}
 		
 	});

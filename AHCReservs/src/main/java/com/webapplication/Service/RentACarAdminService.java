@@ -78,10 +78,11 @@ public class RentACarAdminService {
 			double rating = 0;
 			int validRatings = 0;
 			for (VehicleReservation r : v.getReservations()) {
-				
-				rating += r.getRating();
-				
-				validRatings++;
+				if (r.getRating() != 0) {
+					rating += r.getRating();
+					
+					validRatings++;
+				}
 			}
 			
 			if (rating != 0) {
