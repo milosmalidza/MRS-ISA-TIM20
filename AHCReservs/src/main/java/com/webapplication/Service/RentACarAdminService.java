@@ -86,7 +86,13 @@ public class RentACarAdminService {
 			}
 			
 			if (rating != 0) {
-				vehicleRatings.add(rating / validRatings);
+				
+				double r = rating / validRatings;
+				r = r*100;
+				r = Math.round(r);
+				r = r/100;
+				
+				vehicleRatings.add(r);
 			}
 			else {
 				vehicleRatings.add(0);
@@ -102,6 +108,108 @@ public class RentACarAdminService {
 		
 		return mapper.writeValueAsString(data);
 	}
+	
+	@SuppressWarnings("deprecation")
+	public String getReservationsReport(String user) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(user);
+		
+		RentACar service = rentRepository.findOneById(jsonNode.get("serviceId").asLong());
+		List<Vehicle> vehicles = service.getVehicles();
+		
+		Date date = new Date();
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		
+		c1.setTime(date);
+		c1.add(Calendar.MONTH, -11);
+		
+		ArrayNode months = mapper.createArrayNode();
+		ArrayNode reservations = mapper.createArrayNode();
+		
+		for(int i = 0; i < 12; i++) {
+			int overral = 0;
+			for(Vehicle v : vehicles) {
+				for(VehicleReservation r : v.getReservations()) {
+					c2.setTime(r.getReservationDate());
+					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH)) {
+						overral++;
+					}
+				}
+			}
+			
+			months.add(this.getMonthForInt(c1.get(Calendar.MONTH)));
+			reservations.add(overral);
+			
+			c1.add(Calendar.MONTH, 1);
+		}
+		
+		JsonNode data = mapper.createObjectNode();
+		
+		((ObjectNode)data).put("months", months);
+		((ObjectNode)data).put("reservations", reservations);
+		
+		
+		return mapper.writeValueAsString(data);
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String getReservationsByDay(String user, String json) throws IOException {
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode jsonNode = mapper.readTree(user);
+		JsonNode jsonData = mapper.readTree(json);
+		
+		RentACar service = rentRepository.findOneById(jsonNode.get("serviceId").asLong());
+		List<Vehicle> vehicles = service.getVehicles();
+		
+		Date date = new Date();
+		Calendar c1 = Calendar.getInstance();
+		Calendar c2 = Calendar.getInstance();
+		Calendar c3 = Calendar.getInstance();
+		
+		c1.setTime(date);
+		c1.add(Calendar.MONTH, jsonData.get("month").asInt()-11);
+		c1.set(Calendar.DAY_OF_MONTH, c1.getActualMinimum(Calendar.DAY_OF_MONTH));
+		
+		c2.setTime(date);
+		c2.add(Calendar.MONTH, jsonData.get("month").asInt()-11);
+		c2.set(Calendar.DAY_OF_MONTH, c1.getActualMaximum(Calendar.DAY_OF_MONTH));
+		c2.add(Calendar.DATE, 1);
+		
+		
+		ArrayNode days = mapper.createArrayNode();
+		ArrayNode reservations = mapper.createArrayNode();
+		
+		int index = 0;
+		while(c1.getTime().before(c2.getTime())) {
+			int overral = 0;
+			for(Vehicle v : vehicles) {
+				for(VehicleReservation r : v.getReservations()) {
+					c3.setTime(r.getReservationDate());
+					if (c3.get(Calendar.DAY_OF_MONTH) == c1.get(Calendar.DAY_OF_MONTH) &&
+							c3.get(Calendar.MONTH) == c1.get(Calendar.MONTH)) {
+						overral++;
+					}
+				}
+			}
+			index++;
+			days.add(index + ".");
+			reservations.add(overral);
+			
+			c1.add(Calendar.DATE, 1);
+		}
+		
+		JsonNode data = mapper.createObjectNode();
+		
+		((ObjectNode)data).put("days", days);
+		((ObjectNode)data).put("reservations", reservations);
+		
+		
+		return mapper.writeValueAsString(data);
+	}
+	
+	
+	
 	
 	@SuppressWarnings("deprecation")
 	public String getProfitReport(String user) throws IOException {

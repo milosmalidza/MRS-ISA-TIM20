@@ -51,13 +51,37 @@ public class RentACarController {
 		}
 	}
 	
+	
+	@RequestMapping(value = "/getReservationsReport", method = RequestMethod.POST)
+	public String getReservationsReport(@RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.getReservationsReport(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/getReservationsByDay", method = RequestMethod.POST)
+	public String getReservationsByDay(@RequestParam("user") String user,
+										@RequestParam("json") String json) {
+		
+		try {
+			return rentAdminService.getReservationsByDay(user, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	
 	@RequestMapping(value = "/getProfitReport", method = RequestMethod.POST)
 	public String getProfitReport(@RequestParam("user") String user) {
 		
 		try {
 			return rentAdminService.getProfitReport(user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -69,7 +93,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.removeBranchOffice(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -81,7 +104,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.updateBranchOffice(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -93,7 +115,6 @@ public class RentACarController {
 		try {
 			return rentService.getBranchOffices(json);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -105,7 +126,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.addOfficeBranch(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -118,7 +138,6 @@ public class RentACarController {
 		try {
 			return rentService.rateRentACar(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -132,7 +151,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.saveEditedVehicle(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -145,7 +163,6 @@ public class RentACarController {
 		try {
 			return rentService.getVehicleInfo(json);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -159,7 +176,6 @@ public class RentACarController {
 			JsonNode status = mapper.readTree(json);
 			return rentService.checkVehicle(status.get("id").asText());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -173,7 +189,6 @@ public class RentACarController {
 		try {
 			return rentService.removeVehicle(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}

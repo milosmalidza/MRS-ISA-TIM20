@@ -753,6 +753,7 @@ function addRentACarVehiclePage() {
 var ctx;
 var chart;
 function initChart() {
+	document.getElementById("chart").addEventListener("click", handleChart, false);
 	ctx = document.getElementById('chart').getContext('2d');
 	
 	$.ajax({
@@ -762,7 +763,7 @@ function initChart() {
 		success: function(response) {
 			var data = JSON.parse(response);
 			console.log(data);
-			
+			monthsArray = null;
 			chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
@@ -791,6 +792,10 @@ function initChart() {
 	}});
 }
 
+
+
+
+
 function displayServiceRating() {
 	
 	
@@ -802,6 +807,7 @@ function displayServiceRating() {
 			var data = JSON.parse(response);
 			console.log(data);
 			chart.destroy();
+			monthsArray = null;
 			chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
@@ -843,6 +849,7 @@ function displayVehicleRatings() {
 			console.log(data);
 			
 			chart.destroy();
+			monthsArray = null;
 			chart = new Chart(ctx, {
 			type: 'bar',
 			data: {
@@ -881,6 +888,7 @@ function getProfitReport() {
 			var data = JSON.parse(response);
 			console.log(data);
 			chart.destroy();
+			monthsArray = null;
 			chart = new Chart(ctx, {
 			type: 'line',
 			data: {
@@ -908,8 +916,98 @@ function getProfitReport() {
 		
 	});
 }
+var monthsArray = null;
+function getReservationsReport() {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getReservationsReport",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = data.months;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.months,
+				datasets: [{
+					label: 'Reservations',
+					data: data.reservations,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
 
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
 
+function handleChart(e) {
+	console.log(e);
+	var activeE = chart.getElementAtEvent(e);
+	var index = activeE[0]._index;
+	console.log(index);
+	
+	if (monthsArray != null) {
+		getReservationsByDay(index);
+	}
+	
+	
+}
+
+function getReservationsByDay(month) {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getReservationsByDay",
+		data: {user : JSON.stringify(sessionUser),
+			  json : JSON.stringify({
+				  month : month
+			  })},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.days,
+				datasets: [{
+					label: 'Reservations',
+					data: data.reservations,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
 
 
 
