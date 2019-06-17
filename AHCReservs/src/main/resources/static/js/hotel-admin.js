@@ -34,13 +34,26 @@ function getAdminHotel(user) {
 			
 			if(response.data != "" && response.data != null) {
 				adminHotel = response.data;
-				fillHotelProfileInputs(response.data); //fill the profile data
 				
-				//display rooms and prices
-				addAllRoomsToTable(); 
-				addAllServicesToTable();
+				let fileName = location.pathname.split("/").slice(-1)
 				
-				fillSelectInputs();
+				if(fileName == 'hotel-profile.html') {
+					
+					fillHotelProfileInputs(response.data); //fill the profile data
+					
+					//display rooms and prices
+					addAllRoomsToTable(); 
+					addAllServicesToTable();
+					
+					fillSelectInputs();
+				} else {
+					
+					$("#hotel-name").html(adminHotel.name);
+					
+					$("#hotel-rating").rating('disable', true);
+					$("#hotel-rating").rating('set rating', adminHotel.rating);
+				}
+				
 				
 			} else {
 				

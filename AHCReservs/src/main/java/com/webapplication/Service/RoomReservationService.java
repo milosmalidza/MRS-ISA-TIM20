@@ -1,18 +1,23 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.webapplication.JSONBeans.DateBean;
+import com.webapplication.JSONBeans.GraphData;
 import com.webapplication.JSONBeans.KeyAndValueBean;
 import com.webapplication.JSONBeans.RoomReservationBean;
 import com.webapplication.Model.HAdditionalService;
@@ -39,6 +44,99 @@ public class RoomReservationService {
 	
 	@Autowired
 	SystemAdminService sysAdminSvc;
+	
+	@Autowired
+	MultipleService mulSvc;
+	
+	
+	public GraphData getIncomeGraphData(DateBean dateBean) {
+		
+		GraphData graphData = new GraphData();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		
+		dateBean = mulSvc.parseDates(dateBean, sdf);
+		
+		if(dateBean == null) {
+			return null;
+		}
+		
+		Map<String, Double> graphMap = new TreeMap<String, Double>();
+		
+		for(RoomReservation roomReserv: findAll()) {
+			
+			if(roomReserv.getHotel().getId() == dateBean.getCompanyID()) {
+				
+				//check whether the reservation date fits into selected dates
+				if( roomReserv.getCheckIn().compareTo(dateBean.getStartDate()) >= 0 && roomReserv.getCheckIn().compareTo(dateBean.getEndDate()) <= 0) {
+					
+					if(graphMap.containsKey(sdf.format(roomReserv.getCheckIn()))) {
+						//updating the incomes
+						graphMap.put(sdf.format(roomReserv.getCheckIn()),
+								graphMap.get(sdf.format(roomReserv.getCheckIn())) + roomReserv.getReservedPrice());
+					} else {
+						//adding new income
+						graphMap.put(sdf.format(roomReserv.getCheckIn()), roomReserv.getReservedPrice());
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		graphData.setDataframes(new ArrayList<Double>(graphMap.values()));
+		graphData.setLabels(new ArrayList<String>(graphMap.keySet()));
+		
+		return graphData;
+		
+	}
+	
+	
+	public GraphData getVisitsGraphData(DateBean dateBean) {
+		
+		GraphData graphData = new GraphData();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		
+		dateBean = mulSvc.parseDates(dateBean, sdf);
+		
+		if(dateBean == null) {
+			return null;
+		}
+		
+		Map<String, Double> graphMap = new TreeMap<String, Double>(); //reservation date: number of guest
+		
+		for(RoomReservation roomReserv: findAll()) {
+			
+			if(roomReserv.getHotel().getId() == dateBean.getCompanyID()) {
+				
+				//check whether the reservation date fits into selected dates
+				if(roomReserv.getCheckIn().compareTo(dateBean.getStartDate()) >= 0 && roomReserv.getCheckIn().compareTo(dateBean.getEndDate()) <= 0) {
+					
+					//if the guest num for a reservation hasn't been added
+					if(!graphMap.containsKey(sdf.format(roomReserv.getCheckIn()))) {
+						
+						//updating the number of guests
+						graphMap.put(sdf.format(roomReserv.getCheckIn()), (double) roomReserv.getNumOfGuests());
+						
+					} else {
+						
+						//updating the number of guests
+						graphMap.put(sdf.format(roomReserv.getCheckIn()),
+								graphMap.get(sdf.format(roomReserv.getCheckIn())) + roomReserv.getNumOfGuests());
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		graphData.setDataframes(new ArrayList<Double>(graphMap.values()));
+		graphData.setLabels(new ArrayList<String>(graphMap.keySet()));
+		
+		return graphData;
+		
+	}
 	
 	
 	public String quickReservation(KeyAndValueBean data) {

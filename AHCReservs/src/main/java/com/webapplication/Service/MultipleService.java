@@ -1,22 +1,18 @@
 package com.webapplication.Service;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.RoomData;
-import com.webapplication.JSONBeans.UserBean;
-import com.webapplication.Model.AirlineAdmin;
-import com.webapplication.Model.AppUser;
 import com.webapplication.Model.Hotel;
-import com.webapplication.Model.HotelAdmin;
-import com.webapplication.Model.RegisteredUser;
-import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.Room;
-import com.webapplication.Model.SystemAdmin;
 
 @Service
 public class MultipleService {
@@ -100,6 +96,24 @@ public class MultipleService {
 		}
 		
 		return false;
+		
+	}
+	
+	
+	public DateBean parseDates(DateBean dateBean, SimpleDateFormat sdf) {
+		
+		if(sdf == null) {
+			sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		}
+		
+		try {
+			dateBean.setStartDate(sdf.parse(dateBean.getStrStartDate()));
+			dateBean.setEndDate(sdf.parse(dateBean.getStrEndDate()));
+		} catch (ParseException e) {
+			return null;
+		}
+		
+		return dateBean;	
 		
 	}
 	
