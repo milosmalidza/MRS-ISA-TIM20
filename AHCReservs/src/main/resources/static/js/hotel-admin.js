@@ -1,7 +1,8 @@
 var controllerPath = "/hotelAdmin";
 var adminHotel = null;
 
-window.onload = function() {
+
+function validateAdminAndHotel() {
 	
 	//get the currently logged in user
 	let user = window.localStorage.getItem("user");
@@ -46,6 +47,7 @@ function getAdminHotel(user) {
 					addAllServicesToTable();
 					
 					fillSelectInputs();
+          loadMap(response.data, "hotel", true);
 				} else {
 					
 					$("#hotel-name").html(adminHotel.name);
@@ -53,8 +55,7 @@ function getAdminHotel(user) {
 					$("#hotel-rating").rating('disable', true);
 					$("#hotel-rating").rating('set rating', adminHotel.rating);
 				}
-				
-				
+		
 			} else {
 				
 				alert("You haven't been assigned a hotel yet");

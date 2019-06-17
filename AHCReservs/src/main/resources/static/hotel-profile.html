@@ -1,6 +1,16 @@
+<!DOCTYPE html>
 <html>
 	
 	<head>
+		
+		 <title> AHC | Hotel profile</title>
+		 <meta http-equiv='Content-Type' content='text/html; charset=utf-8'/>
+		
+		<!-- Bing map reference -->
+		<script type='text/javascript'
+				src='https://www.bing.com/api/maps/mapcontrol?key=AsnVGQUjYnTp8GjRsf6_cArYovm0MRd0KZsrJw9v0_vXA88qMHrscMy8WfyWEwFJ'>
+        </script>
+		 	 	
 	
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js-libs/axios.js"></script>
@@ -9,6 +19,7 @@
 		
 		<script type="text/javascript" src="js/common.js"></script>
 		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/hotel-admin.js"></script>
 		<script type="text/javascript" src="js/hotel-reports.js"></script>
 		
@@ -22,10 +33,9 @@
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/hotel.css" />
 		
-	
 	</head>
 	
-	<body>
+	<body onload='validateAdminAndHotel();'>
 	
 	
 		<!-- Navigation bar -->
@@ -118,6 +128,13 @@
 						</tr>
 						
 					</table>
+					
+					
+					<h2> Hotel location </h2>
+					<p> Double click the map to set hotel location. </p>
+					<!-- Bing map div -->
+					<div id="companyMap"></div>
+				
 				</div>
 			</div>
 		</div>
@@ -369,65 +386,65 @@
 				
 			<div class="center-content">
 			
-			<table id="add-service-table">
-			
-			<tr>
-				<th> </th>
-				<th>
-					<h2> Configure prices </h2>
-				</th>
-			</tr>
-			
-			<tr>
-				<td> Service type: </td>
-				<td>
-					<select id="service-type" class="ui dropdown">
-						<option value=""> Select service </option>
-					</select>
-				</td>
-			</tr>
-			
-			<tr>
-				<td> Service price: </td>
-				<td>
-					<div class="ui input">
-						<input type="number" id="service-price" min="1"/>
-					</div>
-				</td>
-			</tr>	
-			
-			<tr>
-				<td> </td>
-				<td>
-					<input class="ui button" type="button" onclick="addService()" value="Add service"/>
-				</td>
-			</tr>
-			
-			</table>
-			
-			
-			<table id="all-services-table" class="ui celled table">
+				<table id="add-service-table">
 				
-				<thead>
-					<tr>
-						<td> </td>
-						<td>
-							<h2> Hotel services  </h2>
-						<td>
-					</tr>
+				<tr>
+					<th> </th>
+					<th>
+						<h2> Configure prices </h2>
+					</th>
+				</tr>
+				
+				<tr>
+					<td> Service type: </td>
+					<td>
+						<select id="service-type" class="ui dropdown">
+							<option value=""> Select service </option>
+						</select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td> Service price: </td>
+					<td>
+						<div class="ui input">
+							<input type="number" id="service-price" min="1"/>
+						</div>
+					</td>
+				</tr>	
+				
+				<tr>
+					<td> </td>
+					<td>
+						<input class="ui button" type="button" onclick="addService()" value="Add service"/>
+					</td>
+				</tr>
+				
+				</table>
+				
+				
+				<table id="all-services-table" class="ui celled table">
 					
-					<tr>
-						<th> Service type </th>
-						<th> Service price </th>
-						<th> * </th>
-					</tr>
-				</thead>
-				
-				<tbody id="all-services-body">
-				
-				</tbody>
-				
-			</table>
+					<thead>
+						<tr>
+							<td> </td>
+							<td>
+								<h2> Hotel services  </h2>
+							<td>
+						</tr>
+						
+						<tr>
+							<th> Service type </th>
+							<th> Service price </th>
+							<th> * </th>
+						</tr>
+					</thead>
+					
+					<tbody id="all-services-body">
+					
+					</tbody>
+					
+				</table>
 			
 			</div>
 			
@@ -454,6 +471,7 @@
 			  .dropdown();
 			
 		</script>
+		
 	
 	</body>
 	
