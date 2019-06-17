@@ -517,6 +517,15 @@ div#nav-bar {
 }
 
 
+/* Bing map style */
+#companyMap {
+	position: relative;
+	width: 1000px;
+	height: 600px;
+	margin-bottom: 40px;
+}
+
+
 
 
 

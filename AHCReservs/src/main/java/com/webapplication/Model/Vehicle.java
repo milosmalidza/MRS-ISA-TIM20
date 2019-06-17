@@ -2,6 +2,7 @@ package com.webapplication.Model;
 
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

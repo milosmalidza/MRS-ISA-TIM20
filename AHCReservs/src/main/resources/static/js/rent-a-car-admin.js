@@ -14,6 +14,32 @@ function showCompanyMessage(message, length) {
 	
 }
 
+function getMapForUser() {
+	
+	getMap(false);
+}
+
+function getMapForAdmin() {
+	getMap(true);
+}
+
+function getMap(isEditable) {
+	
+	let rentACarID = $("#main-div").attr("data-id");
+	
+	let rentACarKeyJson = {"key": rentACarID};
+	
+	axios.post("rentACarService/getRentACar", rentACarKeyJson)
+		.then(response => {
+			
+			if(response.data != "") {
+				loadMap(response.data, "rent a car", isEditable);
+			}
+			
+			
+		});
+}
+
 
 function changeCompanyInfo () {
 	var companyName = document.getElementById("company-name");

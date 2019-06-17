@@ -15,6 +15,7 @@ import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.JSONBeans.RoomReservationBean;
 import com.webapplication.Model.HAdditionalService;
+import com.webapplication.Model.Hotel;
 import com.webapplication.Model.Room;
 import com.webapplication.Service.HAdditionalServiceSvc;
 import com.webapplication.Service.HotelService;
@@ -33,6 +34,17 @@ public class HotelHomeController {
 	@Autowired
 	RoomReservationService roomReservSvc;
 	
+	
+	@RequestMapping(
+			value="/getHotel",
+			method=RequestMethod.POST,
+			produces=MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Hotel> getHotel(@RequestBody KeyBean keyBean) {
+		
+		return new ResponseEntity<>(hotelSvc.findOne(keyBean.getKey()).get(), HttpStatus.OK);
+		
+	}
 	
 	@RequestMapping(
 			value="/getAvailableRooms",
