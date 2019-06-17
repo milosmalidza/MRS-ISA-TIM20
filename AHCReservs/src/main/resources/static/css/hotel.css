@@ -132,7 +132,7 @@ table#room-reservations-table {
 	display: none;
 }
 
-tr.initially-hidden-element {
+.initially-hidden-element {
 	display: none;
 }
 
@@ -188,4 +188,3 @@ table#edit-room-table {
 textarea#hotel-description {
 	font-family: Montserrat;
 }
-

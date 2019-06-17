@@ -171,8 +171,8 @@ function reserveRooms(dataHolder, dataAttr) {
 		return;
 	}
 	
-	if($("#guests-num").val() === "") {
-		toast("You haven't selected the number of guests");
+	if($("#guests-num").val() === "" || $("#guests-num").val() < 1) {
+		toast("Please select a valid number of guests");
 		return;
 	}
 	

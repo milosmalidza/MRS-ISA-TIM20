@@ -21,12 +21,14 @@
 		<script type="text/javascript" src="js/main-script.js"></script>
 		<script type="text/javascript" src="js/map.js"></script>
 		<script type="text/javascript" src="js/hotel-admin.js"></script>
+		<script type="text/javascript" src="js/hotel-reports.js"></script>
 		
 		<link rel="stylesheet" href="css/bootstrap.min.css" />
 		
 		<link rel="stylesheet" href="js-libs/icon.css" />
 		<link rel="stylesheet" href="js-libs/toast.css"/>
 		<link rel="stylesheet" href="js-libs/semantic.css" />
+		
 		
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/hotel.css" />
@@ -39,8 +41,8 @@
 		<!-- Navigation bar -->
 		<div id="nav-bar">
 			<ul id="nav-bar-selection-1">
-				<li> Hotel profile </li>
-				<li> Reports </li>
+				<li onclick="loadPage('hotel-profile.html')"> Hotel profile </li>
+				<li onclick="loadPage('hotel-reports.html')"> Reports </li>
 			</ul>
 			
 			<ul id="nav-bar-selection-2">
