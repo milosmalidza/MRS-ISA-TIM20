@@ -382,8 +382,14 @@ public class UserController {
 				
 				String userJson = mapper.writeValueAsString(carAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
-				((ObjectNode) jsonNode).put("serviceId", carAdmin.getRentACar().getId());
-				((ObjectNode) jsonNode).put("status", "success");
+				if (carAdmin.getRentACar() != null) {
+					((ObjectNode) jsonNode).put("status", "success");
+					((ObjectNode) jsonNode).put("serviceId", carAdmin.getRentACar().getId());
+				}
+				else {
+					((ObjectNode) jsonNode).put("status", "notAssigned");
+				}
+				
 				((ObjectNode) jsonNode).put("user", "carAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				
