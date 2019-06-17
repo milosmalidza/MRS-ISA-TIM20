@@ -36,6 +36,21 @@ public class RegisteredUserService {
 	@Autowired
 	private RentACarService rentACarService;
 	
+	public String rateVehicleReservation(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode jsonNode = mapper.readTree(json);
+		
+		VehicleReservation res = rentACarService.reservationRep.findOneById(jsonNode.get("id").asLong());
+		
+		res.setRating(jsonNode.get("value").asInt());
+		
+		rentACarService.reservationRep.save(res);
+		
+		return "success";
+	}
+	
 	
 	public String cancelHotelReservation(String json, String user) throws IOException {
 		
@@ -149,10 +164,14 @@ public class RegisteredUserService {
 			((ObjectNode)node).put("endDate", dateFormat.format(r.getDueDate()));
 			((ObjectNode)node).put("startLocation", r.getStartLocation());
 			((ObjectNode)node).put("endLocation", r.getEndLocation());
+			((ObjectNode)node).put("rating", r.getRating());
 			
 			long milis = r.getReservationDate().getTime() - currentDate.getTime();
 			long days = TimeUnit.DAYS.convert(milis, TimeUnit.MILLISECONDS);
-			if (days <= 2) {
+			if (r.getDueDate().before(currentDate)) {
+				((ObjectNode)node).put("status", "rateUs");
+			}
+			else if (days <= 2) {
 				((ObjectNode)node).put("status", "notAllowed");
 			}
 			else {

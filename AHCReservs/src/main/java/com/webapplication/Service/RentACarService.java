@@ -345,7 +345,8 @@ public class RentACarService {
 					Date endDate = format.parse(node.get("endDate").asText());
 					
 					if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
-							!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate()))) {
+							!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
+							startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
 						System.out.println("skip");
 						isReserved = true;
 						break;

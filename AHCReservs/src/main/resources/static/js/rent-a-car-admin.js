@@ -776,34 +776,264 @@ function addRentACarVehiclePage() {
 
 
 
-
+var ctx;
+var chart;
 function initChart() {
-	var ctx = document.getElementById('chart').getContext('2d');
-	var myChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-			datasets: [{
-				label: '# of Votes',
-				data: [12, 19, 3, 5, 2, 3],
-				backgroundColor: 'rgba(61, 198, 160, 0.5)',
-				borderColor: 'rgba(61, 198, 160, 1)',
-				borderWidth: 1
-			}]
-		},
-		options: {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero: true
-					}
+	document.getElementById("chart").addEventListener("click", handleChart, false);
+	ctx = document.getElementById('chart').getContext('2d');
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getServiceRating",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ['Rating'],
+				datasets: [{
+					label: 'Rating',
+					data: [data.rating],
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
 				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							max: 5
+
+						}
+					}]
+				}
 			}
-		}
-	});
+		});
+			
+	}});
 }
 
 
+
+
+
+function displayServiceRating() {
+	
+	
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getServiceRating",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: ['Rating'],
+				datasets: [{
+					label: 'Rating',
+					data: [data.rating],
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							max: 5
+
+						}
+					}]
+				}
+			}
+		});
+			
+		}
+		
+	});
+	
+}
+
+function displayVehicleRatings() {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getVehicleRatings",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			
+			chart.destroy();
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.names,
+				datasets: [{
+					label: 'Rating',
+					data: data.ratings,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							max: 5
+
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
+
+function getProfitReport() {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getProfitReport",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'line',
+			data: {
+				labels: data.months,
+				datasets: [{
+					label: 'Profit $',
+					data: data.profits,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
+var monthsArray = null;
+function getReservationsReport() {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getReservationsReport",
+		data: {user : JSON.stringify(sessionUser)},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = data.months;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.months,
+				datasets: [{
+					label: 'Reservations',
+					data: data.reservations,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
+
+function handleChart(e) {
+	console.log(e);
+	var activeE = chart.getElementAtEvent(e);
+	var index = activeE[0]._index;
+	console.log(index);
+	
+	if (monthsArray != null) {
+		getReservationsByDay(index);
+	}
+	
+	
+}
+
+function getReservationsByDay(month) {
+	$.ajax({
+		type : "post",
+		url : "rentACarService/getReservationsByDay",
+		data: {user : JSON.stringify(sessionUser),
+			  json : JSON.stringify({
+				  month : month
+			  })},
+		success: function(response) {
+			var data = JSON.parse(response);
+			console.log(data);
+			chart.destroy();
+			monthsArray = null;
+			chart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: data.days,
+				datasets: [{
+					label: 'Reservations',
+					data: data.reservations,
+					backgroundColor: 'rgba(61, 198, 160, 0.5)',
+					borderColor: 'rgba(61, 198, 160, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true
+
+						}
+					}]
+				}
+			}
+		});
+		}
+		
+	});
+}
 
 
 

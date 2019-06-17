@@ -70,6 +70,7 @@ public class UserController {
   private RegisteredUserService registeredUserService;
 
 	
+  	
 	
 	@RequestMapping(value="/updateProfile",
 					method=RequestMethod.POST,
@@ -92,7 +93,19 @@ public class UserController {
 
 	}
 	
-	
+	@RequestMapping(value = "rateVehicleReservation", method = RequestMethod.POST)
+	public String rateVehicleReservation(@RequestParam("json") String json,
+											@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.rateVehicleReservation(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
 	
 	@RequestMapping(value = "cancelHotelReservation", method = RequestMethod.POST)
 	public String cancelHotelReservation(@RequestParam("json") String json,
