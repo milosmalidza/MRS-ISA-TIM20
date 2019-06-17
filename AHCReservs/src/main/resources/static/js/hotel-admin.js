@@ -47,7 +47,7 @@ function getAdminHotel(user) {
 					addAllServicesToTable();
 					
 					fillSelectInputs();
-          loadMap(response.data, "hotel", true);
+					loadMap(response.data, "hotel", true);
 				} else {
 					
 					$("#hotel-name").html(adminHotel.name);
