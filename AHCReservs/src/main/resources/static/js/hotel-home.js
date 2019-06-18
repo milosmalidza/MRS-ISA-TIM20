@@ -3,6 +3,12 @@ var controllerPath = "/hotelHome";
 var roomCheckInDate = null;
 var roomCheckOutDate = null;
 
+var totalPrice = 0;
+var additionalServicesPrice = 0;
+var numOfCheckedRooms = 0;
+
+var additionalServices = null;
+
 
 function getMap() {
 	
@@ -76,6 +82,7 @@ function getAvailableRooms(hotelID) {
 			} else {
 				notify("Room reservation", "No rooms available at the moment");
 				$("#available-rooms-body").empty();
+				$("#additional-services-select").dropdown('clear');
 			}
 		});
 	
@@ -112,10 +119,47 @@ function addRoomToTable(room) {
 	
 	var checkbox = document.createElement('input');
 	checkbox.type = "checkbox";
-	checkbox.id = "id";
 	checkbox.setAttribute("data-room-id", room.id);
+	checkbox.addEventListener("click", roomChecked, false);
 	
 	checkBoxCell.appendChild(checkbox);
+}
+
+
+function roomChecked(e) {
+	
+	var caller = e.target || e.srcElement;
+    let roomId = caller.getAttribute("data-room-id");
+    
+    let keyJson = { "key": roomId };
+    axios.post(controllerPath + "/getRoom", keyJson)
+    	.then(response => {
+    			
+			if(caller.checked === true) {
+				
+				if(numOfCheckedRooms == 0) {
+					totalPrice += response.data.roomPrice;
+				} else {
+					totalPrice += response.data.roomPrice  + additionalServicesPrice;
+				}
+				
+				numOfCheckedRooms += 1;
+				
+			} else {
+				
+				if(numOfCheckedRooms == 1) {
+					totalPrice -= response.data.roomPrice;
+				} else {
+					totalPrice -= response.data.roomPrice + additionalServicesPrice;
+				}
+				
+				numOfCheckedRooms -= 1;
+			}
+			
+			$("#total-price").html(totalPrice + ' &euro;');
+    		
+    	});
+	
 }
 
 
@@ -135,6 +179,7 @@ function displayAdditionalServices(hotelID) {
 					return;
 				}
 				
+				additionalServices = response.data;
 				let serviceTypesAndPrices = []
 				
 				//iterate through additional services
@@ -183,6 +228,12 @@ function reserveRooms(dataHolder, dataAttr) {
 			toast(response.data);
 			
 			getAvailableRooms(hotelID); //update changes in table
+			
+			numOfCheckedRooms = 0;
+			additionalServicesPrice = 0;
+			totalPrice = 0;
+			$("#total-price").html(totalPrice + '&euro;');
+			
 		});
 	
 	
@@ -243,5 +294,40 @@ function showReservationDiv() {
 function hideReservationDiv() {
 	
 	document.getElementById("reservation-div").style.height = "0%";
+	
+}
+
+
+function additionalServiceSelected(value) {
+	
+	if(numOfCheckedRooms > 0) {
+		totalPrice -= additionalServicesPrice * numOfCheckedRooms;
+	} else {
+		totalPrice -= additionalServicesPrice;
+	}
+	
+	additionalServicesPrice = 0;
+	
+	if(value == "") {
+		$("#total-price").html(totalPrice + '&euro;');
+		return;
+	}
+	
+	for(let i = 0; i < additionalServices.length; i++) {
+		
+		if(value.includes(additionalServices[i].service.toLowerCase())) {
+			additionalServicesPrice += additionalServices[i].servicePrice;
+		}
+		
+	}
+	
+	if(numOfCheckedRooms > 0) {
+		totalPrice += additionalServicesPrice * numOfCheckedRooms;
+	} else {
+		totalPrice += additionalServicesPrice;
+	}
+	
+	
+	$("#total-price").html(totalPrice + ' &euro;');
 	
 }

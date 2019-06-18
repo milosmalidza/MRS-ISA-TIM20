@@ -201,6 +201,8 @@ public class RoomReservationService {
 			return "Something wen't wrong, please refresh the page and try again";
 		}
 		
+		double servicesPrice = calculateServicesPrice(additionalServices);
+		
 		Room room;
 		//for every room selected create a Room reservation
 		for(Long roomID: reservationData.getSelectedRooms()) {
@@ -212,7 +214,7 @@ public class RoomReservationService {
 			}
 			
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
-					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
+					room.getRoomPrice() + servicesPrice, room.getHotel(), user, room, additionalServices);
 			
 			
 			//if the room hasn't been reserved in the mean time the reservation is successful
@@ -227,6 +229,19 @@ public class RoomReservationService {
 		}
 		
 		return "Reservation successful";
+	}
+	
+	
+	public double calculateServicesPrice(Set<HAdditionalService> services) {
+		
+		double totalPrice = 0;
+		
+		for (HAdditionalService service : services) {
+			totalPrice += service.getServicePrice();
+		}
+		
+		return totalPrice;
+		
 	}
 	
 	
