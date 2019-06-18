@@ -9,6 +9,8 @@ var numOfCheckedRooms = 0;
 
 var additionalServices = null;
 
+var pinAdded = false;
+
 
 function getMap() {
 	
@@ -19,11 +21,25 @@ function getMap() {
 	axios.post(controllerPath + "/getHotel", keyJson)
 		.then(response => {
 			
-			loadMap(response.data, "hotel", false);
+			if(loadMap(response.data, "hotel", false) == null) {
+				pinAdded = false;
+			} else {
+				pinAdded = true;
+			}
 		});
 	
 }
 
+
+function viewHotelLocation() {
+	
+	if(pinAdded) {
+		$(".initially-hidden-element").toggle();
+	} else {
+		notify("Map service", "The hotel location hasn't been added yet");
+	}
+	
+}
 
 
 function initializeDatePicker(dataAttrHolder, dataAttrID) {

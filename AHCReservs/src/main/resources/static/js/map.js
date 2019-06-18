@@ -25,16 +25,16 @@ function loadMap(cmpny, type, editing) {
 		return;
 	}*/
 	
+	let loadedPin = initMap(); //map initialization
 	
-	initMap(); //map initialization
+	if(editingMap === false) {
+		return loadedPin;
+	}
 	
 	//adding event listeners to map
 	Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
 		
-		console.log(e);
-		if(editingMap === true) {
-			addPushPin(e.location);
-		}
+		addPushPin(e.location);
 		
 	});
 }
@@ -55,6 +55,8 @@ function initMap() {
 		});
 		map.entities.push(loadedPin);
 	}	
+	
+	return loadedPin;
 	
 }
 

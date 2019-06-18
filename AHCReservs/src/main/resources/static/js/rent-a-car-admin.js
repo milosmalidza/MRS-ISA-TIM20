@@ -1,3 +1,4 @@
+var pinLoaded = false;
 
 var companyMessageTimeout = null;
 function showCompanyMessage(message, length) {
@@ -16,6 +17,7 @@ function showCompanyMessage(message, length) {
 
 function getMapForUser() {
 	
+	$(".initially-hidden-element").hide();
 	getMap(false);
 }
 
@@ -33,11 +35,26 @@ function getMap(isEditable) {
 		.then(response => {
 			
 			if(response.data != "") {
-				loadMap(response.data, "rent a car", isEditable);
+				
+				if(loadMap(response.data, "rent a car", isEditable) == null) {
+					pinLoaded = false;
+				} else {
+					pinLoaded = true;
+				}
 			}
 			
 			
 		});
+}
+
+function viewRentACarLocation() {
+	
+	if(pinLoaded) {
+		$(".initially-hidden-element").toggle();
+	} else {
+		notify("Map service", "The rent a car location hasn't been added yet");
+	}
+	
 }
 
 

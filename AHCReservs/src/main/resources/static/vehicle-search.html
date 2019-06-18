@@ -29,9 +29,6 @@
 		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
 		
 		
-		
-		
-		
 	</head>
 	
 	<body style="overflow-y:auto;" onload="getMapForUser();">
@@ -133,9 +130,15 @@
 				</table>
 				</form>
 				
+				
+				<button class="ui basic green labeled icon button" onclick="viewRentACarLocation()">
+  					<i class="map marker alternate icon"></i>
+  					View Location
+				</button>
+				
 				<!-- Bing map div -->
-				<h2>Rent a car service location</h2>
-				<div id="companyMap"></div>
+				<h2 class="initially-hidden-element">Rent a car service location</h2>
+				<div id="companyMap" class="initially-hidden-element"></div>
 				
 			</div>
 			
