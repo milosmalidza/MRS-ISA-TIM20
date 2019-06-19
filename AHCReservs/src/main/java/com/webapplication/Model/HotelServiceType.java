@@ -2,7 +2,8 @@ package com.webapplication.Model;
 
 public enum HotelServiceType {
 
-	TRANSFER,
+	AIR_CONDITIONING,
+	USE_OF_GYM,
 	PARKING,
 	USE_OF_POOL,
 	RESTAURANT,

@@ -11,6 +11,7 @@ public class RoomReservationBean {
 	private String username;
 	private List<Long> selectedRooms;
 	private List<String> selectedAdditionalServices;
+	private int numOfNights;
 	
 	public RoomReservationBean() {
 		
@@ -86,6 +87,18 @@ public class RoomReservationBean {
 
 	public void setHotelID(Long hotelID) {
 		this.hotelID = hotelID;
+	}
+
+
+
+	public int getNumOfNights() {
+		return numOfNights;
+	}
+
+
+
+	public void setNumOfNights(int numOfNights) {
+		this.numOfNights = numOfNights;
 	}
 	
 	
