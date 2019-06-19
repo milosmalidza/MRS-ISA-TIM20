@@ -1,5 +1,6 @@
 package com.webapplication.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -19,6 +20,9 @@ public interface HotelAdminRepository extends JpaRepository<HotelAdmin, Long> {
 	
 	@Query("select admin from HotelAdmin as admin where admin.id = ?1")
 	public Optional<HotelAdmin> findOne(Long id);
+	
+	@Query("select admin from HotelAdmin as admin where admin.hotel is null and admin.isEnabled = true")
+	public List<HotelAdmin> getAvailableAdmins();
 	
 	@Transactional
 	public void deleteByUsername(String username);

@@ -2,7 +2,6 @@ package com.webapplication.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -43,7 +42,7 @@ public class RoomReservationService {
 	SystemAdminService sysAdminSvc;
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public String quickReservation(KeyAndValueBean data) {
+	public String quickReservation(KeyAndValueBean data) throws Exception{
 		
 		RoomReservation reservation = findOne(data.getKey()).get();
 		
@@ -246,19 +245,7 @@ public class RoomReservationService {
 	
 	public Collection<RoomReservation> getQuickReservations() {
 		
-		//return roomReservRep.findQuickReservations();
-		
-		ArrayList<RoomReservation> quickReservs = new ArrayList<RoomReservation>();
-		
-		for (RoomReservation roomReservation : findAll()) {
-			
-			if(roomReservation.getUser() == null) {
-				quickReservs.add(roomReservation);
-			}
-			
-		}
-		
-		return quickReservs;
+		return roomReservRep.findQuickReservations();
 		
 	}
 

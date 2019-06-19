@@ -11,6 +11,6 @@ import com.webapplication.Model.RoomReservation;
 @Repository
 public interface RoomReservationRepository extends JpaRepository<RoomReservation, Long> {
 
-	@Query("select reservation from RoomReservation as reservation where reservation.user = null")
+	@Query("select reservation from RoomReservation as reservation where reservation.user is null")
 	public Collection<RoomReservation> findQuickReservations();
 }

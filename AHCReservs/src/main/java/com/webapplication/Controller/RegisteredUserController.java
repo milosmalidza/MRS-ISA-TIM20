@@ -35,7 +35,12 @@ public class RegisteredUserController {
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> quickRoomReservation(@RequestBody KeyAndValueBean data) {
 		
-		return new ResponseEntity<>(roomReservSvc.quickReservation(data), HttpStatus.OK);
+		try {
+			return new ResponseEntity<>(roomReservSvc.quickReservation(data), HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Oops, someone beat you to the reservation.\nPlease refresh the page.", HttpStatus.CONFLICT);
+		}
 		
 	}
 	
