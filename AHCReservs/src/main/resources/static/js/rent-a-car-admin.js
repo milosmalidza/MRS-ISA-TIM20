@@ -1053,7 +1053,9 @@ function getReservationsByDay(month) {
 }
 
 
-
+function loadTools() {
+	loadPage("edit-rent-a-car-service.html?username=" + sessionUser.username + "&password=" + sessionUser.password);
+}
 
 
 
