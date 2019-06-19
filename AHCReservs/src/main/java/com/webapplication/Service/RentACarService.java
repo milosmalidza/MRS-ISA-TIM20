@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.JSONBeans.MapPinData;
 import com.webapplication.Model.Hotel;
@@ -21,11 +23,13 @@ import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.RentACarBranchOffice;
+import com.webapplication.Model.SystemAdmin;
 import com.webapplication.Model.Vehicle;
 import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RentACarBranchOfficeRepository;
 import com.webapplication.Repository.RentACarRepository;
+import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Repository.VehicleRepository;
 import com.webapplication.Repository.VehicleReservationRepository;
 
@@ -50,6 +54,9 @@ public class RentACarService {
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
 	
+	@Autowired
+	public SystemAdminRepository sysRep;
+	
 	
 	public RentACar findOneById(Long id) {
 		return rentACarRep.findOneById(id);
@@ -73,6 +80,124 @@ public class RentACarService {
 		return branchRep.findAllByRentACar(rentACar);
 	}
 	
+	public boolean isReservationOk(Date startDate, Date endDate, List<VehicleReservation> reservations) {
+		for (VehicleReservation reservation : reservations) {
+			
+			if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
+					!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
+					startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
+				System.out.println("skip");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public String quickVehicleReservation(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		JsonNode userNode = mapper.readTree(user);
+		
+		RegisteredUser ruser = userRepository.findByUsername(userNode.get("username").asText());
+		
+		if (ruser == null) return "badRequest";
+		if (!ruser.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		
+		JsonNode jsonNode = mapper.readTree(json);
+		
+		VehicleReservation reservation = reservationRep.findOneById(jsonNode.get("id").asLong());
+		reservation.setUser(ruser);
+		reservationRep.save(reservation);
+		
+		return "success";
+	}
+	
+	public Collection<VehicleReservation> getQuickVehicleReservations() {
+		
+		List<VehicleReservation> reses = reservationRep.findAll();
+		
+		List<VehicleReservation> quick = new ArrayList<VehicleReservation>();
+		
+		for (VehicleReservation r : reses) {
+			if (r.getUser() == null) {
+				quick.add(r);
+			}
+		}
+		
+		return quick;
+	}
+	
+	public String makeVehicleReservations(String json, String user) throws IOException, ParseException {
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode userNode = mapper.readTree(user);
+		
+		SystemAdmin admin = sysRep.findByUsername(userNode.get("username").asText());
+		
+		if (admin == null) return "badRequest";
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		
+		JsonNode jsonNode = mapper.readTree(json);
+		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy.");
+		
+		RentACar rent = this.findOneById(jsonNode.get("serviceId").asLong());
+		List<Vehicle> vehicles = rent.getVehicles();
+		
+		ArrayNode badRes = mapper.createArrayNode();
+		
+		for(JsonNode node : jsonNode.get("checked")) {
+			
+			for (Vehicle v : vehicles) {
+				if (node.get("vehicleId").asLong() == v.getId()) {
+					List<VehicleReservation> res = v.getReservations();
+					
+					VehicleReservation r = new VehicleReservation();
+					Date d1 = format.parse(node.get("startDate").asText());
+					Date d2 = format.parse(node.get("endDate").asText());
+					if (!isReservationOk(d1, d2, res)) {
+						JsonNode n = mapper.createObjectNode();
+						((ObjectNode)n).put("name", v.getName());
+						badRes.add(n);
+						break;
+					}
+					
+					r.setReservationDate(d1);
+					r.setDueDate(d2);
+					r.setStartLocation(node.get("startLocation").asText());
+					r.setEndLocation(node.get("endLocation").asText());
+					r.setUser(null);
+					r.setVehicle(v);
+					
+					reservationRep.save(r);
+					
+					break;
+				}
+			}
+			
+		}
+		if (badRes.size() > 0) return mapper.writeValueAsString(badRes);
+		else return "success";
+		
+	}
+	
+	
+	public ArrayNode getRentACarNameAndId() {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayNode retval = mapper.createArrayNode();
+		
+		List<RentACar> racs = this.findAll();
+		
+		for(RentACar r : racs) {
+			JsonNode node = mapper.createObjectNode();
+			
+			((ObjectNode)node).put("name", r.getName());
+			((ObjectNode)node).put("id", r.getId());
+			retval.add(node);
+		}
+		
+		
+		return retval;
+	}
 	
 	
 	public String getBranchOffices(String json) throws IOException {
@@ -313,6 +438,65 @@ public class RentACarService {
 		return "success";
 	}
 	
+	
+	
+	public String returnServiceCars(String json) throws IOException, ParseException {
+		
+		List<Vehicle> allVehicles = vehicleRep.findAll();
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode node = mapper.readTree(json);
+		
+		Long id = Long.parseLong(node.get("companyid").asText());
+		
+		List<JsonNode> vehicles = new ArrayList<JsonNode>();
+		
+		for (Vehicle vehicle : allVehicles) {
+			
+			if (id == vehicle.getRentACar().getId()) {
+				
+				boolean isReserved = false;
+				List<VehicleReservation> reservations = vehicle.getReservations();
+				for (VehicleReservation reservation : reservations) {
+					SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+					Date startDate = format.parse(node.get("startDate").asText());
+					Date endDate = format.parse(node.get("endDate").asText());
+					
+					if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
+							!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
+							startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
+						System.out.println("skip");
+						isReserved = true;
+						break;
+					}
+				}
+				
+				if (isReserved) {
+					continue;
+				}
+					
+				
+				JsonNode n = mapper.createObjectNode();
+				
+				((ObjectNode)n).put("id", vehicle.getId());
+				((ObjectNode)n).put("name", vehicle.getName());
+				((ObjectNode)n).put("description", vehicle.getDescription());
+				((ObjectNode)n).put("numOfSeats", vehicle.getNumOfSeats());
+				((ObjectNode)n).put("numOfDoors", vehicle.getNumOfDoors());
+				((ObjectNode)n).put("vehicleType", vehicle.getVehicleType().toString());
+				((ObjectNode)n).put("pricePerDay", vehicle.getPricePerDay());
+				
+				vehicles.add(n);
+				
+			}
+			
+		}
+		
+		String returnJson = mapper.writeValueAsString(vehicles);
+		
+		return returnJson;
+	}
 	
 	public String returnSearchResults(String json) throws IOException, ParseException {
 		

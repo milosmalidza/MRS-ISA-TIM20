@@ -41,7 +41,7 @@ public class RentACarAdminService {
 	
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
-
+	
 	
 	public String getServiceRating(String user) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();

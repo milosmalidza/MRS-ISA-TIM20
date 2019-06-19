@@ -22,6 +22,8 @@
 		<link rel="stylesheet" href="css/main-style.css" />
 		<link rel="stylesheet" href="css/hotel.css" />
 		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
+		
+		<title>Quick reservations</title>
 	
 	</head>
 	
@@ -77,7 +79,7 @@
 							</td>
 						</tr>
 						
-						<tr class="initially-hidden-element">
+						<tr class="initially-hidden-element common-row">
 							<td> Check in/check out date: </td>			
 					
 							<td>
@@ -87,7 +89,7 @@
 							</td>
 						</tr>
 						
-						<tr class="initially-hidden-element">
+						<tr class="initially-hidden-element hotel-row">
 							<td> Enter number of guests </td>
 							
 							<td>
@@ -96,7 +98,27 @@
 								</div>
 							</td>
 						</tr>
+						<tr class="initially-hidden-element car-row">
+							<td>Start destination: </td>
+							<td><select  name="number-of-doors" class="ui dropdown" id="start-destination">
+								  
+								</select>
+							</td>
+						</tr>
+						<tr class="initially-hidden-element car-row">
+							<td>End destination: </td>
+							<td><select name="number-of-doors" class="ui dropdown" id="end-destination">
+								  
+								</select>
+							</td>
+						</tr>
 					
+					</table>
+					
+					<!-- Available cars -->
+					
+					<table id="available-cars-table">
+						
 					</table>
 					
 					<!-- Available rooms -->

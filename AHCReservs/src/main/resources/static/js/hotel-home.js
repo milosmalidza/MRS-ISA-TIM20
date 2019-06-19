@@ -32,9 +32,29 @@ function initializeDatePicker(dataAttrHolder, dataAttrID) {
 		       roomCheckInDate = start.format('DD.MM.YYYY.');
 		       roomCheckOutDate = end.format('DD.MM.YYYY.');
 		       
-		       let hotelID = $(dataAttrHolder).attr(dataAttrID);
+			if ($("#company-type").val() == "hotel") {
+				let hotelID = $(dataAttrHolder).attr(dataAttrID);
+				getAvailableRooms(hotelID);
+			}
+			else if ($("#company-type").val() == "rent-a-car") {
+				var rentACarID = $(dataAttrHolder).attr(dataAttrID);
+				$.ajax({
+					type : "post",
+					url : sysAdminControllerPath + "/returnServiceCars",
+					data : {json : JSON.stringify({
+						companyid : rentACarID,
+						startDate : roomCheckInDate,
+						endDate : roomCheckOutDate
+					})},
+					success : function(response) {
+						var data = JSON.parse(response);
+						listServiceVehicles(data);
+					}
+				});
+				
+			}
+			
 		       
-		       getAvailableRooms(hotelID);
 	    });
 	});
 	
