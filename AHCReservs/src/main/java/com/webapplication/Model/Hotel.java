@@ -60,6 +60,7 @@ public class Hotel extends Company {
 		this.admins = new HashSet<HotelAdmin>();
 		this.rooms = new HashSet<Room>();
 		this.pricelist = new HashSet<HAdditionalService>();
+		
 	}
 	
 	@JsonIgnore //ignoring to avoid infinite recursion when returning json

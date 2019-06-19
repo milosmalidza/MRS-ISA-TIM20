@@ -1,6 +1,7 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.HotelData;
 import com.webapplication.JSONBeans.HotelServiceData;
+import com.webapplication.JSONBeans.MapPinData;
 import com.webapplication.JSONBeans.RoomData;
 import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.Hotel;
@@ -244,27 +246,36 @@ public class HotelService {
 		//iterate through hotel rooms and find the available ones
 		for(Room room: hotel.getRooms()) {
 			
-			//room is available if there is no reservation at all
-			if(room.getReservation() == null) {
-				System.out.println("No reservation at all");
+			//check whether the room is reserved
+			if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
+				System.out.println("Room available");
 				availableRooms.add(room);
-				continue;
-				
-			} else {
-				
-				//check whether the room is reserved
-				if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
-					System.out.println("Room available");
-					availableRooms.add(room);
-				}
-				
 			}
-			
+						
 			System.out.println("Room reserved");
 			
 		}
 		
 		return availableRooms;
+		
+	}
+	
+	
+	
+	public Hotel saveHotelPin(MapPinData pinData) {
+		
+		Hotel hotel = findOne(pinData.getCompanyID()).get();
+		
+		if(hotel == null) {
+			return null;
+		}
+		
+		hotel.setLatitude(pinData.getLatitude());
+		hotel.setLongitude(pinData.getLongitude());
+		
+		
+		return save(hotel);
+		
 		
 	}
 	

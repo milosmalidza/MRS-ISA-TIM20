@@ -14,9 +14,9 @@ insert into hotel(id, address, description, name, rating) values (0, "Bulevar os
 insert into room(id, discount, floor, num_of_beds, number, room_type, hotel_id, room_price) values (-1, 0, 1, 1, 101, 0, 0, 10);
 insert into room(id, discount, floor, num_of_beds, number, room_type, hotel_id, room_price) values (-2, 0, 1, 2, 102, 1, 0, 18);
 insert into room(id, discount, floor, num_of_beds, number, room_type, hotel_id, room_price) values (-3, 0, 1, 2, 103, 1, 0, 20);
-insert into hadditional_service(id, service, service_price, hotel_id) values (-1, 0, 15, 0);
-insert into hadditional_service(id, service, service_price, hotel_id) values (-2, 1, 8, 0);
-insert into hadditional_service(id, service, service_price, hotel_id) values (-3, 2, 10, 0);
+insert into hadditional_service(id, service, service_price, hotel_id) values (-1, 0, 5, 0);
+insert into hadditional_service(id, service, service_price, hotel_id) values (-2, 1, 2, 0);
+insert into hadditional_service(id, service, service_price, hotel_id) values (-3, 2, 5, 0);
 
 insert into hotel(id, address, description, name, rating) values (-1, "Vladimira Popovica 10", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dignissim augue eleifend ante sagittis, quis dapibus ex molestie. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Nunc tempus commodo nibh, vel pharetra metus laoreet ut. Nulla et ante vel diam auctor mollis. Vivamus vulputate mattis lacus, ut tempor neque posuere at. Donec a tortor suscipit velit venenatis iaculis. Aliquam et ex rutrum, pellentesque ipsum at, dictum nibh. Integer arcu mi, pellentesque et urna in, vestibulum interdum mauris. Integer ut velit gravida, ullamcorper mauris vitae, imperdiet leo. Nam consequat, leo et porta ultricies, tortor velit rutrum tortor, venenatis commodo ipsum sapien sed nisi. Integer ut congue dolor. Nulla lacinia molestie purus. In at dui nec sem faucibus vestibulum. Curabitur et libero auctor, sodales leo non, auctor ex. Maecenas egestas odio orci, nec feugiat lorem posuere eget. Suspendisse rhoncus ligula in rhoncus pretium.", "Crowne Plaza Belgrade", 0);
 insert into hotel(id, address, description, name, rating) values (-2, "Haile Selassie Ave", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nunc tortor, tincidunt et blandit a, porttitor sed lorem. Nam accumsan vehicula lectus ac imperdiet. Sed enim tellus, mattis eget tempor at, aliquam id massa. Fusce quis tortor libero. Donec vel tincidunt dui, ut rutrum massa. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Cras sodales eget libero gravida egestas.", "InterContinental Lusaka", 0);
@@ -42,11 +42,11 @@ insert into registered_user(id, username, password, firstName, lastName, email_i
 insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "user", "user", "User", "Userish", "user@gmail.com", 1);
 
 insert into rentacar(id, address, description, name, rating) values(0, "dummy address", "Lorem ipsum dolor sit amet, consectetur voluptate velit esse cillum dolore eu fugiat nulla pariatur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-						et dolore magna aliqua.", "Belgrade Rent a car", 0);
+						et dolore magna aliqua.", "Economy Car Rentals", 0);
 insert into rentacar(id, address, description, name, rating) values(-1, "dummy address", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-						et dolore magna aliqua.", "Novi Sad Rent a car", 0);
-insert into rentacar(id, address, description, name, rating) values(-2, "Neka adresa", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doquat. Duis aute irure dolot esse cillum dolore eu fugiat nulla pariatur.", "Mika Vozilo", 0);
-insert into rentacar(id, address, description, name, rating) values(-3, "dummy address", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, voluptate velit esse cillum dolore eu fugiat nulla pariatur is aute irure dolor in  esse cillum dolore eu fugiat nulla pariatur.", "Besplatna Vozila (skoro)", 0);
+						et dolore magna aliqua.", "Rent A Car Novi Sad", 0);
+insert into rentacar(id, address, description, name, rating) values(-2, "dummy address", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed doquat. Duis aute irure dolot esse cillum dolore eu fugiat nulla pariatur.", "Rent A Car Beograd", 0);
+
 
 insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(0, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Mazda 3 2019", 5, 5, 15, 0, 0);
@@ -54,6 +54,10 @@ insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats
 						et dolore magna aliqua.", "Maruti Suzuki Ciaz", 5, 5, 17, 1, 0);
 insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-2, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Datsun GO+", 5, 5, 12, 2, 0);
+                        
+insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-9, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+						et dolore magna aliqua.", "Mazda 6 2018", 5, 5, 25, 0, 0);
+
                         
 insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-3, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Mazda 3 2019", 3, 5, 15, 0, 0);
@@ -70,7 +74,9 @@ insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats
 insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats, price_per_day, vehicle_type, rentacar_id) values(-8, 0, "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Suzuki Vitara", 5, 5, 12, 2, -1);
                     
-                    
+insert into rentacar_branch_office(id, address, name, rentacar_id) values(-1, "1225  Layman Avenue", "Statesboro", 0);
+
+insert into rentacar_branch_office(id, address, name, rentacar_id) values(-2, "4393  Chandler Hollow Road", "Pittsburgh", 0);
                     
                     
                     

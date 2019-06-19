@@ -2,6 +2,7 @@ package com.webapplication.Model;
 
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -44,7 +46,7 @@ public class Vehicle {
 	@Column(name = "vehicleType", unique = false, nullable = false)
 	private VehicleType vehicleType;
 	
-	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "vehicle", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
 	private List<VehicleReservation> reservations;
 	
 	@Column(name = "pricePerDay", unique = false, nullable = false)
@@ -55,6 +57,7 @@ public class Vehicle {
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private RentACar rentACar;
+	
 	
 	
 	

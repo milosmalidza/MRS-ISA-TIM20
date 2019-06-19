@@ -22,13 +22,20 @@ public class VehicleReservation {
 	@Column(name="id", unique=true, nullable=false)
 	private Long id;
 	
-	@Temporal(TemporalType.DATE)
-	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date reservationDate;
 	
-	@Temporal(TemporalType.DATE)
-	@Basic
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dueDate;
+	
+	@Column(name = "start_location", nullable = true)
+	private String startLocation;
+	
+	@Column(name = "rating", nullable = false)
+	private int rating;
+	
+	@Column(name = "end_location", nullable = true)
+	private String endLocation;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private RegisteredUser user;
@@ -88,6 +95,30 @@ public class VehicleReservation {
 
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
+	}
+
+	public String getStartLocation() {
+		return startLocation;
+	}
+
+	public void setStartLocation(String startLocation) {
+		this.startLocation = startLocation;
+	}
+
+	public String getEndLocation() {
+		return endLocation;
+	}
+
+	public void setEndLocation(String endLocation) {
+		this.endLocation = endLocation;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
 	}
 	
 	

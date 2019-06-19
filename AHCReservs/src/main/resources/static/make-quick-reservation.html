@@ -155,6 +155,15 @@
 							</td>
 						</tr>
 						
+						<tr>
+						<td>
+							Total price:
+							<div class="ui input">
+  								<label id="total-price"> 0 &euro; </label>
+							</div>
+						</td>
+					</tr>
+						
 					</table>
 					
 				</div>
@@ -174,8 +183,14 @@
 	
 		initializeDatePicker("#main-div", "data-company-id");
 		
-		$(".ui.dropdown")
-		  .dropdown();
+		$("#company-type").dropdown();
+		$("#company-name").dropdown();
+		
+		$("#additional-services-select").dropdown( {
+			onChange: function(val) {
+				additionalServiceSelected(val);
+			}
+		});
 		
 	</script>
 	

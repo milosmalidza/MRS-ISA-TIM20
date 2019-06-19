@@ -34,6 +34,8 @@ import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.SystemAdminRepository;
 import com.webapplication.Service.EmailSenderService;
 import com.webapplication.Service.UserService;
+import com.webapplication.Service.MultipleService;
+import com.webapplication.Service.RegisteredUserService;
 
 
 @RestController
@@ -61,10 +63,14 @@ public class UserController {
 	@Autowired
 	private EmailSenderService emailSenderService;
 	
-	
 	@Autowired
 	private UserService userSvc;
+
+  @Autowired
+  private RegisteredUserService registeredUserService;
+
 	
+  	
 	
 	@RequestMapping(value="/updateProfile",
 					method=RequestMethod.POST,
@@ -87,6 +93,67 @@ public class UserController {
 
 	}
 	
+	@RequestMapping(value = "rateVehicleReservation", method = RequestMethod.POST)
+	public String rateVehicleReservation(@RequestParam("json") String json,
+											@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.rateVehicleReservation(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
+	@RequestMapping(value = "cancelHotelReservation", method = RequestMethod.POST)
+	public String cancelHotelReservation(@RequestParam("json") String json,
+											@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.cancelHotelReservation(json, user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "getHotelReservations", method = RequestMethod.POST)
+	public String getHotelReservations(@RequestParam("user") String user) {
+	
+		try {
+			return registeredUserService.getUserHotelReservations(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+		
+		
+	@RequestMapping(value = "cancelVehicleReservation", method = RequestMethod.POST)
+	public String cancelVehicleReservation(@RequestParam("json") String json,
+											@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.cancelVehicleReservation(json, user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "getVehicleReservations", method = RequestMethod.POST)
+	public String getVehicleReservations(@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.getUserVehicleReservations(user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
 	
 	@RequestMapping(value = "/registerUser", method = RequestMethod.POST)
 	public String registerUser(@RequestParam("json") String json) throws IOException {
@@ -328,8 +395,14 @@ public class UserController {
 				
 				String userJson = mapper.writeValueAsString(carAdmin);
 				JsonNode jsonNode = mapper.readTree(userJson);
-				((ObjectNode) jsonNode).put("serviceId", carAdmin.getRentACar().getId());
-				((ObjectNode) jsonNode).put("status", "success");
+				if (carAdmin.getRentACar() != null) {
+					((ObjectNode) jsonNode).put("status", "success");
+					((ObjectNode) jsonNode).put("serviceId", carAdmin.getRentACar().getId());
+				}
+				else {
+					((ObjectNode) jsonNode).put("status", "notAssigned");
+				}
+				
 				((ObjectNode) jsonNode).put("user", "carAdmin");
 				System.out.println(mapper.writeValueAsString(jsonNode));
 				

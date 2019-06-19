@@ -1,13 +1,15 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+
+
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webapplication.Model.Vehicle;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.RentACarService;
 
@@ -31,13 +33,68 @@ public class RentACarController {
 	private RentACarService rentService;
 	
 	
+	@RequestMapping(value = "/getServiceRating", method = RequestMethod.POST)
+	public String getServiceRating(@RequestParam("user") String user) {
+		try {
+			return rentAdminService.getServiceRating(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/getVehicleRatings", method = RequestMethod.POST)
+	public String getVehicleRatings(@RequestParam("user") String user) {
+		try {
+			return rentAdminService.getVehicleRatings(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	
+	@RequestMapping(value = "/getReservationsReport", method = RequestMethod.POST)
+	public String getReservationsReport(@RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.getReservationsReport(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	@RequestMapping(value = "/getReservationsByDay", method = RequestMethod.POST)
+	public String getReservationsByDay(@RequestParam("user") String user,
+										@RequestParam("json") String json) {
+		
+		try {
+			return rentAdminService.getReservationsByDay(user, json);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
+	
+	@RequestMapping(value = "/getProfitReport", method = RequestMethod.POST)
+	public String getProfitReport(@RequestParam("user") String user) {
+		
+		try {
+			return rentAdminService.getProfitReport(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "badRequest";
+		}
+	}
+	
 	@RequestMapping(value = "/removeBranchOffice", method = RequestMethod.POST)
 	public String removeBranchOffice(@RequestParam("json") String json, @RequestParam("user") String user) {
 		
 		try {
 			return rentAdminService.removeBranchOffice(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -49,7 +106,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.updateBranchOffice(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -61,7 +117,6 @@ public class RentACarController {
 		try {
 			return rentService.getBranchOffices(json);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -73,7 +128,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.addOfficeBranch(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -86,7 +140,6 @@ public class RentACarController {
 		try {
 			return rentService.rateRentACar(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -100,7 +153,6 @@ public class RentACarController {
 		try {
 			return rentAdminService.saveEditedVehicle(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -113,7 +165,6 @@ public class RentACarController {
 		try {
 			return rentService.getVehicleInfo(json);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -127,7 +178,6 @@ public class RentACarController {
 			JsonNode status = mapper.readTree(json);
 			return rentService.checkVehicle(status.get("id").asText());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
@@ -141,17 +191,17 @@ public class RentACarController {
 		try {
 			return rentService.removeVehicle(json, user);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return "badRequest";
 		}
 	}
 	
 	@RequestMapping(value = "/AddCar", method = RequestMethod.POST)
-	public String addCar(@RequestParam("json") String json) {
+	public String addCar(@RequestParam("json") String json,
+						@RequestParam("user") String user) {
 		
 		try {
-			return rentAdminService.AddCar(json);
+			return rentAdminService.AddCar(json, user);
 		} catch (NumberFormatException e) {
 			return "badNumber";
 		} catch (IllegalArgumentException e) {
@@ -199,6 +249,19 @@ public class RentACarController {
 			return "badRequest";
 		}
 		
+		
+	}
+	
+	
+
+	@RequestMapping(
+			value="/getRentACar",
+			method=RequestMethod.POST,
+			produces=MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE)
+	public String getRentACar(@RequestBody KeyBean keyBean) {
+		
+		return rentService.getRentACar(keyBean.getKey());
 		
 	}
 	

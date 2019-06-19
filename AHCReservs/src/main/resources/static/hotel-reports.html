@@ -1,0 +1,131 @@
+<html>
+	
+	<head>
+	
+		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
+		<script type="text/javascript" src="js-libs/moment.min.js"></script>
+		<script type="text/javascript" src="js-libs/axios.js"></script>
+		<script type="text/javascript" src="js-libs/toast.js"></script>
+		<script type="text/javascript" src="js-libs/semantic.js"></script>
+		<script type="text/javascript" src="js-libs/Chart.js"></script>
+		<script type="text/javascript" src="js-libs/daterangepicker.js"></script>
+		
+		<script type="text/javascript" src="js/main-script.js"></script>
+		<script type="text/javascript" src="js/hotel-admin.js"></script>
+		<script type="text/javascript" src="js/hotel-reports.js"></script>
+		
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		
+		<link rel="stylesheet" href="js-libs/icon.css" />
+		<link rel="stylesheet" href="js-libs/toast.css"/>
+		<link rel="stylesheet" href="js-libs/semantic.css"/>
+		<link rel="stylesheet" href="js-libs/Chart.css" />
+		<link rel="stylesheet" href="js-libs/daterangepicker.css" />
+		
+		<link rel="stylesheet" href="css/main-style.css" />
+		<link rel="stylesheet" href="css/hotel.css" />
+		
+	
+	</head>
+	
+	<body onload='validateAdminAndHotel();'>
+	
+	
+		<!-- Navigation bar -->
+		<div id="nav-bar">
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('hotel-profile.html')"> Hotel profile </li>
+				<li onclick="loadPage('hotel-reports.html')"> Reports </li>
+			</ul>
+			
+			<ul id="nav-bar-selection-2">
+				<li onclick="loadPage('user-profile.html')"> My profile </li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')"> Logout </li>		
+			</ul>
+		</div>
+		
+		
+		<div id="main-div">
+			<div class="center-content">
+				
+				<div class="profile-div">
+					
+					<table>
+					
+						<tr>
+							<td colspan="2" align="center">
+								<h1 id="hotel-name"> Heading </h1>
+							</td>
+						</tr>
+						
+						<tr> </tr>
+					
+						<tr>
+							
+							<td colspan="2" align="center" style='font-size: 20px'>
+								Hotel rating:
+								<div class="ui huge star rating" id="hotel-rating" data-rating="0"> </div>
+							</td>
+						</tr>
+						
+						<tr> </tr>
+						
+						<tr>
+							<td> Choose report: </td>
+							
+							<td>
+								<select id="report-type" class="ui dropdown">
+									<option value="">Select type</option>
+									<option value="visits"> Visits </option>
+									<option value="incomes"> Incomes </option>
+								</select>
+							</td>
+						</tr>
+					</table>
+					
+					
+					<table id="income-dates-table">
+					
+						<tr>
+							<td> Start and end date: </td>			
+					
+							<td>
+								<div id="incomes-date" class="ui input">
+									<input type="text" id="daterange" name="daterange"  />
+								</div>
+							</td>
+						</tr>
+					</table>
+					
+					
+					<table id="button-table">
+						<tr>
+							<td align="center">
+								<button class="ui green button" onclick="getReport()">View report</button>
+							</td>
+						</tr>
+					</table>
+					
+					<!--  chart -->
+					<canvas id="myChart" width="400" height="300"></canvas>
+					
+				</div>
+				
+			</div>
+		</div>
+		
+		
+		<script>
+			$("#hotel-rating").rating({
+				maxRating: 5
+			});
+			
+			$(".ui.dropdown").dropdown();
+			
+			initDatePicker();
+			
+		</script>
+		
+	</body>
+	
+</html>

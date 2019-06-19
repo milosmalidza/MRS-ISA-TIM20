@@ -21,10 +21,7 @@
 	
 		<div id="nav-bar">
 			<ul id="nav-bar-selection-1">
-				<li onclick="loadPage('index.html')">Home</li>
-				<li>Airline companies</li>
-				<li onclick="loadPage('hotels-display.html')">Hotels</li>
-				<li onclick="loadPage('cars.html')">Rent-a-car services</li>
+				<li>Tools</li>
 				
 			</ul>
 			<ul id="nav-bar-selection-2">
@@ -66,7 +63,7 @@
 						<td>Number of seats:  </td>
 						<td >
 							<div class="ui input input-additional full-width-input">
-								<input type="number" id="number-of-seats" type="text" name="number-of-seats" min="1"/>
+								<input type="number" id="number-of-seats" name="number-of-seats" min="1"/>
 							</div>
 						</td>
 					</tr>
@@ -99,7 +96,7 @@
 						<td>Price per day: </td>
 						<td>
 							<div class="input-additional full-width-input ui input ">
-								<input type="text" name="price-per-day" autocomplete="off"/>
+								<input type="number" name="price-per-day" autocomplete="off" min="1"/>
 							</div>
 						</td>
 					</tr>
