@@ -278,7 +278,7 @@ function getCompanies(companyType) {
 		break;
 		
 	case "rent-a-car":
-		//getCompaniesFromServer("getRentACarServices", companyType);
+		getCompaniesFromServer("getRentACarServices", companyType);
 		break;
 		
 	}
@@ -319,14 +319,183 @@ function getNamesAndIDsFromCompanies(companiesArray) {
 
 function companyChanged() {
 	
+	
+	$(".initially-hidden-element").hide();
 	$("#available-rooms-table").hide();
+	$("#available-cars-table").hide();
 	$("#additional-services-table").hide();
 	
 	//memorize the id of the selected company
 	$("#main-div").attr("data-company-id", $("#company-name").val());
 	
-	$("tr.initially-hidden-element").show(); //display date picker
+	$(".initially-hidden-element.common-row").show(); //display date picker
+	
+	if ($("#company-type").val() == "hotel") {
+		$(".initially-hidden-element.hotel-row").show();
+	}
+	else if ($("#company-type").val() == "rent-a-car") {
+		
+		$.ajax({
+			type : "post",
+			url : sysAdminControllerPath + "/getRentACarServiceBranches",
+			data : {json : JSON.stringify({
+				serviceId : $("#main-div").attr("data-company-id")
+			})},
+			success : function(response) {
+				
+				var data = JSON.parse(response);
+				var values = [];
+				for (var i = 0; i < data.length; i++) {
+					values.push({
+						id : data[i].id,
+						value : data[i].name + ", " + data[i].address
+					});
+				}
+				
+				addValuesAndIDsToSelect("#start-destination", values, null);
+				addValuesAndIDsToSelect("#end-destination", values, null);
+				
+				$(".initially-hidden-element.car-row").show();
+			}
+		})
+		
+		
+	}
 	
 }
 
+function listServiceVehicles(vehicles) {
+	var table = document.getElementById("available-cars-table");
+	console.log(vehicles);
+	var content = "<tr>" +
+		"<td>Name</td>" +
+		"<td>Doors</td>" +
+		"<td>Max people</td>" + 
+		"<td>Price per day</td>" + 
+		"<td>Vehicle type</td>" +
+		"<td>Check</td>" +
+	"</tr>";
+	
+	vehicles.forEach(function(item, index) {
+		content += "<tr>" +
+			"<td>" + item.name + "</td>" +
+			"<td>" + item.numOfDoors + "</td>" +
+			"<td>" + item.numOfSeats + "</td>" + 
+			"<td>" + item.pricePerDay +"</td>" + 
+			"<td>" + item.vehicleType + "</td>" +
+			"<td><input class='vehicle-checkbox' type='checkbox' data-vehicle-id='" + item.id + "' /></td>" +
+		"</tr>";
+	});
+	
+	content += "<tr><td colspan='6'><input type='button' class='ui positive button'" +
+				"value='Make reservation' style='width: 400px !important;' onclick='makeVehicleReservations()'/></td></tr>";
+	
+	table.innerHTML = content;
+	$("#available-cars-table").show();
+	
+}
+		
+function makeVehicleReservations() {
+	var checkboxes = document.getElementsByClassName("vehicle-checkbox");
+	console.log(checkboxes);
+	var startLocation = document.getElementById("start-destination");
+	var endLocation = document.getElementById("end-destination");
+	var checked = []
+	for (var i = 0; i < checkboxes.length; i++) {
+		if (checkboxes[i].checked) {
+			checked.push({
+				vehicleId : checkboxes[i].getAttribute("data-vehicle-id"),
+				startDate : roomCheckInDate,
+				endDate : roomCheckOutDate,
+				startLocation : startLocation.options[startLocation.selectedIndex].innerHTML,
+				endLocation : endLocation.options[endLocation.selectedIndex].innerHTML
+			});
+		}
+	}
+	
+	if (checked.length == 0) return;
+	
+	var json = {
+		serviceId : $("#main-div").attr("data-company-id"),
+		checked : checked
+	};
+	
+	$.ajax({
+		type : "post",
+		url : sysAdminControllerPath + "/makeVehicleReservations",
+		data : {json : JSON.stringify(json),
+			   user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			console.log(response);
+			for (var i = 0; i < checkboxes.length; i++) {
+				if (checkboxes[i].checked) {
+					checkboxes[i].checked = false;
+					$(checkboxes[i].parentNode.parentNode).hide();
+				}
+			}
+			if (response == "success") {
+				notify("Success", "Successfully made quick reservations");
+				
+			}
+			else {
+				try {
+					var data = JSON.parse(response);
+					var t = "";
+					
+					for (var i = 0; i < data.length; i++) {
+						if (i < data.length - 1) {
+							t += data[i].name + ", ";
+						}
+						else {
+							t += data[i].name;
+						}
+						
+					}
+					
+					notify("Partial success", "Coludn't make reservations for this vehicles: " + t);
+					
+					
+				}
+				catch(e) {
+					notify("Something went wrong", "Please login again")
+				}
+			}
+		}
+	})
+	
+	
+	console.log(checked);
+}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
+		
+		
+		

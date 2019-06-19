@@ -69,6 +69,54 @@
 					
 				</table>
 				
+				<table id="vehicle-reservations-table" style="display: none;" class="ui celled striped table displayed-element">
+					<thead>
+						<tr>
+							<th colspan="100%">
+								<h2> Room reservations </h2>
+							</th>
+						</tr>
+						
+						<tr>
+							<th> Service name </th>
+							<th> Vehicle name </th>
+							<th> Start date </th>
+							<th> End date </th>
+							<th> Start location </th>
+							<th> End location </th>
+							<th> Price per day </th>
+							<th> Action </th>
+							
+						</tr>
+					</thead>
+					
+					<tbody id="vehicle-reservations-body">
+					
+						<th:block th:each="vehicleReservation : ${vehicleReservations}">
+							
+							<tr th:attr="data-reservation-id=${vehicleReservation.id}">
+								<td th:text="${vehicleReservation.vehicle.rentACar.name}"> Room number </td>
+								<td th:text="${vehicleReservation.vehicle.name}"> Number of beds </td>
+								<td th:text="${#dates.format(vehicleReservation.reservationDate, 'dd.MMM.yyyy')}"> Check in </td> 
+								<td th:text="${#dates.format(vehicleReservation.dueDate, 'dd.MMM.yyyy')}"> Check in </td> 
+								<td th:text="${vehicleReservation.startLocation}"> Num of guests </td>
+								<td th:text="${vehicleReservation.endLocation}"> Price </td>
+								<td th:text="${vehicleReservation.vehicle.pricePerDay}"> Hotel name </td>
+								
+								<td>
+									<button class="ui positive button" th:attr="onclick=|reserveVehicle('${vehicleReservation.id}',this)|" >
+										Reserve
+									</button>
+								</td>
+								
+							</tr>
+							
+						</th:block>
+					
+					</tbody>
+					
+				</table>
+				
 				
 				<table id="room-reservations-table" class="ui celled striped table displayed-element">
 					
