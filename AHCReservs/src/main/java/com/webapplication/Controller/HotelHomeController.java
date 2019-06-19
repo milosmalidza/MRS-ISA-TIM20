@@ -20,6 +20,7 @@ import com.webapplication.Model.Room;
 import com.webapplication.Service.HAdditionalServiceSvc;
 import com.webapplication.Service.HotelService;
 import com.webapplication.Service.RoomReservationService;
+import com.webapplication.Service.RoomService;
 
 @RestController
 @RequestMapping("/hotelHome")
@@ -27,6 +28,9 @@ public class HotelHomeController {
 	
 	@Autowired
 	HotelService hotelSvc;
+	
+	@Autowired
+	RoomService roomSvc;
 	
 	@Autowired
 	HAdditionalServiceSvc additionalServiceSvc;
@@ -43,6 +47,17 @@ public class HotelHomeController {
 	public ResponseEntity<Hotel> getHotel(@RequestBody KeyBean keyBean) {
 		
 		return new ResponseEntity<>(hotelSvc.findOne(keyBean.getKey()).get(), HttpStatus.OK);
+		
+	}
+	
+	@RequestMapping(
+			value="/getRoom",
+			method=RequestMethod.POST,
+			produces=MediaType.APPLICATION_JSON_VALUE,
+			consumes=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Room> getRoom(@RequestBody KeyBean keyBean) {
+		
+		return new ResponseEntity<>(roomSvc.findById(keyBean.getKey()).get(), HttpStatus.OK);
 		
 	}
 	

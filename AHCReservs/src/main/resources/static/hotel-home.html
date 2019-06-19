@@ -66,7 +66,12 @@
 				<br/>
 				
 				
-				<p id="hotel-address" th:text="${service.address}"> Address </p>
+				<p id="hotel-address" th:text="${service.address}"> Address </p>			
+				
+				<button class="ui basic green labeled icon button" onclick="viewHotelLocation()">
+  					<i class="map marker alternate icon"></i>
+  					View Location
+				</button>
 
 				<br/> <br/> <br/>
 
@@ -80,9 +85,9 @@
 			    </div>
 			    
 			    
-			    <h2> Hotel location </h2>
+			    <h2 class="initially-hidden-element"> Hotel location </h2>
 				<!-- Bing map div -->
-				<div id="companyMap"></div>
+				<div id="companyMap" class="initially-hidden-element"></div>
 			    
 			</div>
 		</div>
@@ -169,12 +174,22 @@
 
 						</td>
 					</tr>
-
+					
 					<tr>
 						<td>
 							<button class="ui positive button" onclick="reserveRooms('#main-content-holder', 'data-hotel-id')">
 								Make reservation
 							</button>
+						</td>
+			
+					</tr>
+					
+					<tr>
+						<td>
+							Total price:
+							<div class="ui input">
+  								<label id="total-price"> 0 &euro; </label>
+							</div>
 						</td>
 					</tr>
 
@@ -199,8 +214,11 @@
 
 			//$(".ui.checkbox").checkbox();
 
-			$("#additional-services-select")
-			  .dropdown();
+			$("#additional-services-select").dropdown( {
+				onChange: function(val) {
+					additionalServiceSelected(val);
+				}
+			});
 
 		</script>
 

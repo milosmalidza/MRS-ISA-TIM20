@@ -1,7 +1,6 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,6 +25,8 @@ import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.Room;
 import com.webapplication.Model.RoomReservation;
 import com.webapplication.Repository.RoomReservationRepository;
+
+import comparators.StrDateComparator;
 
 @Service
 public class RoomReservationService {
@@ -60,7 +61,7 @@ public class RoomReservationService {
 			return null;
 		}
 		
-		Map<String, Double> graphMap = new TreeMap<String, Double>();
+		Map<String, Double> graphMap = new TreeMap<String, Double>(new StrDateComparator());
 		
 		for(RoomReservation roomReserv: findAll()) {
 			
@@ -103,7 +104,7 @@ public class RoomReservationService {
 			return null;
 		}
 		
-		Map<String, Double> graphMap = new TreeMap<String, Double>(); //reservation date: number of guest
+		Map<String, Double> graphMap = new TreeMap<String, Double>(new StrDateComparator()); //reservation date: number of guest
 		
 		for(RoomReservation roomReserv: findAll()) {
 			
@@ -201,6 +202,8 @@ public class RoomReservationService {
 			return "Something wen't wrong, please refresh the page and try again";
 		}
 		
+		double servicesPrice = calculateServicesPrice(additionalServices);
+		
 		Room room;
 		//for every room selected create a Room reservation
 		for(Long roomID: reservationData.getSelectedRooms()) {
@@ -211,8 +214,10 @@ public class RoomReservationService {
 				return "Room not found";
 			}
 			
+			System.out.println("NUM OF NIGHTS: " + reservationData.getNumOfNights());
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
-					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
+					(room.getRoomPrice() + servicesPrice) * reservationData.getNumOfNights(),
+					room.getHotel(), user, room, additionalServices);
 			
 			
 			//if the room hasn't been reserved in the mean time the reservation is successful
@@ -227,6 +232,19 @@ public class RoomReservationService {
 		}
 		
 		return "Reservation successful";
+	}
+	
+	
+	public double calculateServicesPrice(Set<HAdditionalService> services) {
+		
+		double totalPrice = 0;
+		
+		for (HAdditionalService service : services) {
+			totalPrice += service.getServicePrice();
+		}
+		
+		return totalPrice;
+		
 	}
 	
 	

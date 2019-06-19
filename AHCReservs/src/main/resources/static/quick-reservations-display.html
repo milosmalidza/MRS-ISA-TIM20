@@ -4,6 +4,8 @@
 
 	<head>
 	
+		<title> AHC | Quick reservations </title>
+	
 		<script type="text/javascript" src="js-libs/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="js-libs/moment.min.js"></script>
 		<script type="text/javascript" src="js-libs/axios.js"></script>
@@ -129,12 +131,13 @@
 							<th> Check in </th>
 							<th> Check out </th>
 							<th> Number of guests </th>
-							<th> Reservation price </th>
+							<th> TOTAL price</th>
 							<th> Hotel name </th>
 							<th> Room number </th>
 				
 							<th> Number of beds </th>
 							<th> Room type </th>
+							<th> Room's price </th>
 							<th> Additional services </th>
 							
 							
@@ -154,6 +157,7 @@
 								<td th:text="${roomReservation.room.number}"> Room number </td>
 								<td th:text="${roomReservation.room.numOfBeds}"> Number of beds </td>
 								<td th:text="${roomReservation.room.roomType}"> Room type </td>
+								<td th:text="|${roomReservation.room.roomPrice} &euro;|"> Room price </td>
 								
 								<td th:if="${roomReservation.additionalServices.empty}"> None </td>
 								

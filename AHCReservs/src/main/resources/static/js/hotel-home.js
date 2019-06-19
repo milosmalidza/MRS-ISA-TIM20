@@ -1,7 +1,17 @@
 var controllerPath = "/hotelHome";
 
+var numOfNights = 0;
 var roomCheckInDate = null;
 var roomCheckOutDate = null;
+
+var totalPrice = 0;
+var additionalServicesPrice = 0;
+var numOfCheckedRooms = 0;
+
+var additionalServices = null;
+
+var pinAdded = false;
+var dateValid = true;
 
 
 function getMap() {
@@ -13,11 +23,25 @@ function getMap() {
 	axios.post(controllerPath + "/getHotel", keyJson)
 		.then(response => {
 			
-			loadMap(response.data, "hotel", false);
+			if(loadMap(response.data, "hotel", false) == null) {
+				pinAdded = false;
+			} else {
+				pinAdded = true;
+			}
 		});
 	
 }
 
+
+function viewHotelLocation() {
+	
+	if(pinAdded) {
+		$(".initially-hidden-element").toggle();
+	} else {
+		notify("Map service", "The hotel location hasn't been added yet");
+	}
+	
+}
 
 
 function initializeDatePicker(dataAttrHolder, dataAttrID) {
@@ -26,14 +50,29 @@ function initializeDatePicker(dataAttrHolder, dataAttrID) {
 		$('input[name="daterange"]').daterangepicker({
 			timePicker: false,
 	    	opens: 'left',
-	    	minDate: 0
+	    	minDate: new Date()
 	  	}, function(start, end, label) {
 	           console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
 		       roomCheckInDate = start.format('DD.MM.YYYY.');
 		       roomCheckOutDate = end.format('DD.MM.YYYY.');
 		       
 			if ($("#company-type").val() == "hotel") {
-				let hotelID = $(dataAttrHolder).attr(dataAttrID);
+				numOfNights = end.diff(start, "days"); 
+         console.log(numOfNights);
+
+         if(numOfNights === 0) {
+           notify("Hotel service", "You must rent a room at least for one night");
+           dateValid = false;
+           return;
+         } else {
+           dateValid = true;
+         }
+
+         additionalServicesPrice = 0;
+         totalPrice = 0;
+         numOfCheckedRooms = 0;
+
+         let hotelID = $(dataAttrHolder).attr(dataAttrID);
 				getAvailableRooms(hotelID);
 			}
 			else if ($("#company-type").val() == "rent-a-car") {
@@ -96,6 +135,7 @@ function getAvailableRooms(hotelID) {
 			} else {
 				notify("Room reservation", "No rooms available at the moment");
 				$("#available-rooms-body").empty();
+				$("#additional-services-select").dropdown('clear');
 			}
 		});
 	
@@ -132,10 +172,47 @@ function addRoomToTable(room) {
 	
 	var checkbox = document.createElement('input');
 	checkbox.type = "checkbox";
-	checkbox.id = "id";
 	checkbox.setAttribute("data-room-id", room.id);
+	checkbox.addEventListener("click", roomChecked, false);
 	
 	checkBoxCell.appendChild(checkbox);
+}
+
+
+function roomChecked(e) {
+	
+	var caller = e.target || e.srcElement;
+    let roomId = caller.getAttribute("data-room-id");
+    
+    let keyJson = { "key": roomId };
+    axios.post(controllerPath + "/getRoom", keyJson)
+    	.then(response => {
+    			
+			if(caller.checked === true) {
+				
+				if(numOfCheckedRooms == 0) {
+					totalPrice += response.data.roomPrice * numOfNights;
+				} else {
+					totalPrice += (response.data.roomPrice  + additionalServicesPrice) * numOfNights;
+				}
+				
+				numOfCheckedRooms += 1;
+				
+			} else {
+				
+				if(numOfCheckedRooms == 1) {
+					totalPrice -= response.data.roomPrice * numOfNights;
+				} else {
+					totalPrice -= (response.data.roomPrice + additionalServicesPrice) * numOfNights;
+				}
+				
+				numOfCheckedRooms -= 1;
+			}
+			
+			$("#total-price").html(totalPrice + ' &euro;');
+    		
+    	});
+	
 }
 
 
@@ -155,6 +232,7 @@ function displayAdditionalServices(hotelID) {
 					return;
 				}
 				
+				additionalServices = response.data;
 				let serviceTypesAndPrices = []
 				
 				//iterate through additional services
@@ -181,6 +259,11 @@ function reserveRooms(dataHolder, dataAttr) {
 	
 	var checkedRooms = getCheckedRooms("#available-rooms-table");
 	
+	if(dateValid === false) {
+		notify("Hotel service", "You must rent a room at least for one night");
+		return;
+	}
+	
 	if(checkedRooms.length === 0) {
 		toast("You must select at least 1 room in order to reserve it");
 		return;
@@ -203,6 +286,12 @@ function reserveRooms(dataHolder, dataAttr) {
 			toast(response.data);
 			
 			getAvailableRooms(hotelID); //update changes in table
+			
+			numOfCheckedRooms = 0;
+			additionalServicesPrice = 0;
+			totalPrice = 0;
+			$("#total-price").html(totalPrice + '&euro;');
+			
 		});
 	
 	
@@ -220,7 +309,8 @@ function getReservationJson(checkedRooms, hotelID) {
 		"numOfGuests": $("#guests-num").val(),
 		"username": JSON.parse(window.localStorage.getItem("user")).username,
 		"selectedRooms": checkedRooms,
-		"selectedAdditionalServices": additionalServices
+		"selectedAdditionalServices": additionalServices,
+		"numOfNights": numOfNights
 	}
 	
 }
@@ -263,5 +353,40 @@ function showReservationDiv() {
 function hideReservationDiv() {
 	
 	document.getElementById("reservation-div").style.height = "0%";
+	
+}
+
+
+function additionalServiceSelected(value) {
+	
+	if(numOfCheckedRooms > 0) {
+		totalPrice -= additionalServicesPrice * numOfCheckedRooms * numOfNights;
+	} else {
+		totalPrice -= additionalServicesPrice * numOfNights;
+	}
+	
+	additionalServicesPrice = 0;
+	
+	if(value == "") {
+		$("#total-price").html(totalPrice + ' &euro;');
+		return;
+	}
+	
+	for(let i = 0; i < additionalServices.length; i++) {
+		
+		if(value.includes(additionalServices[i].service.toLowerCase())) {
+			additionalServicesPrice += additionalServices[i].servicePrice;
+		}
+		
+	}
+	
+	if(numOfCheckedRooms > 0) {
+		totalPrice += additionalServicesPrice * numOfCheckedRooms * numOfNights;
+	} else {
+		totalPrice += additionalServicesPrice * numOfNights;
+	}
+	
+	
+	$("#total-price").html(totalPrice + ' &euro;');
 	
 }

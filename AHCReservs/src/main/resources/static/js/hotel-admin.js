@@ -355,8 +355,6 @@ function removeRoom(removeBtn) {
 	
 	let roomToRemove = getRoom(roomID);
 	
-	//TODO: proveri na serveru da li je soba rezervisana
-	
 	if(roomToRemove.reserved === true) {
 		toast("Can't remove a reserved room");
 		return;

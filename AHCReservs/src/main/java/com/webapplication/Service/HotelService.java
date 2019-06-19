@@ -1,11 +1,9 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +22,8 @@ import com.webapplication.Model.HotelServiceType;
 import com.webapplication.Model.Room;
 import com.webapplication.Model.RoomType;
 import com.webapplication.Repository.HotelRepository;
+
+import comparators.RoomNumComparator;
 
 
 @Service
@@ -255,6 +255,8 @@ public class HotelService {
 			System.out.println("Room reserved");
 			
 		}
+		
+		availableRooms.sort(new RoomNumComparator());
 		
 		return availableRooms;
 		

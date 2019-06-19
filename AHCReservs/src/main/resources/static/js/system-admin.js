@@ -217,6 +217,11 @@ function registerAdmin() {
 		return;
 	}
 	
+	if($("#admin-password").val().length < 6) {
+		toast("Password must be at least 6 characters long");
+		return;
+	}
+	
 	//check whether email is valid
 	if(validateEmail($("#admin-email").val()) === false) {
 		toast("Invalid email");
