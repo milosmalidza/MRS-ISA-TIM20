@@ -52,30 +52,34 @@ function initializeDatePicker(dataAttrHolder, dataAttrID) {
 	    	opens: 'left',
 	    	minDate: new Date()
 	  	}, function(start, end, label) {
-	           console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+	           
 		       roomCheckInDate = start.format('DD.MM.YYYY.');
 		       roomCheckOutDate = end.format('DD.MM.YYYY.');
 		       
-			if ($("#company-type").val() == "hotel") {
+		       let fileName = location.href.split("/").slice(-1); 
+		       
+			if ($("#company-type").val() == undefined || $("#company-type").val() == "hotel") {
+				
 				numOfNights = end.diff(start, "days"); 
-         console.log(numOfNights);
+				console.log(numOfNights);
 
-         if(numOfNights === 0) {
-           notify("Hotel service", "You must rent a room at least for one night");
-           dateValid = false;
-           return;
-         } else {
-           dateValid = true;
-         }
-
-         additionalServicesPrice = 0;
-         totalPrice = 0;
-         numOfCheckedRooms = 0;
-
-         let hotelID = $(dataAttrHolder).attr(dataAttrID);
-				getAvailableRooms(hotelID);
-			}
-			else if ($("#company-type").val() == "rent-a-car") {
+		         if(numOfNights === 0) {
+		           notify("Hotel service", "You must rent a room at least for one night");
+		           dateValid = false;
+		           return;
+		         } else {
+		           dateValid = true;
+		         }
+		
+		         additionalServicesPrice = 0;
+		         totalPrice = 0;
+		         numOfCheckedRooms = 0;
+		
+		         let hotelID = $(dataAttrHolder).attr(dataAttrID);
+				 getAvailableRooms(hotelID);
+				 
+			} else if ($("#company-type").val() == "rent-a-car") {
+				
 				var rentACarID = $(dataAttrHolder).attr(dataAttrID);
 				$.ajax({
 					type : "post",
