@@ -38,6 +38,8 @@ public class RoomReservation {
 	@Column(name="reservedPrice", unique=false, nullable=false)
 	private double reservedPrice; //the price of the room at the moment of reservation
 	
+	@Column(name="rating", nullable=false)
+	private double rating;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Hotel hotel;
@@ -162,6 +164,16 @@ public class RoomReservation {
 
 	public void setAdditionalServices(Set<HAdditionalService> additionalServices) {
 		this.additionalServices = additionalServices;
+	}
+
+
+	public double getRating() {
+		return rating;
+	}
+
+
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
 	
