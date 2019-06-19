@@ -54,6 +54,7 @@ public class RoomReservation {
 	private Set<HAdditionalService> additionalServices;
 	
 	@Version
+	@Column(name="version", unique=false, nullable=false)
 	private Long version;
 	
 	public RoomReservation() {

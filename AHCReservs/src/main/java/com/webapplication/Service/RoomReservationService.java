@@ -1,6 +1,7 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
@@ -40,6 +41,7 @@ public class RoomReservationService {
 	
 	@Autowired
 	SystemAdminService sysAdminSvc;
+
 	
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public String quickReservation(KeyAndValueBean data) throws Exception{
@@ -57,7 +59,6 @@ public class RoomReservationService {
 			return "You are not allowed to make a reservation";
 		}
 		
-		
 		if(reservation.getUser() != null) {
 			return "Someone already reserved this room.\n Please refresh the page.";
 		}
@@ -69,7 +70,8 @@ public class RoomReservationService {
 		
 	}
 	
-	public String reserveRooms(RoomReservationBean reservationData) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public String reserveRooms(RoomReservationBean reservationData) throws Exception {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
 		Date checkInDate = null;
@@ -109,24 +111,27 @@ public class RoomReservationService {
 		}
 		
 		Room room;
+		
+		//EntityManager em = factory.createEntityManager();
+		
 		//for every room selected create a Room reservation
 		for(Long roomID: reservationData.getSelectedRooms()) {
 			
 			room = roomSvc.findById(roomID).get();
+			//em.lock(room, LockModeType.PESSIMISTIC_WRITE);
 			
 			if(room == null) {
 				return "Room not found";
 			}
-			
-			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
-					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
-			
 			
 			//if the room hasn't been reserved in the mean time the reservation is successful
 			if(isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
 				return "Someone already reserved the room.";
 				
 			}
+			
+			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
+					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
 			
 			room.setReservation(reservation);
 			save(reservation);
@@ -226,8 +231,7 @@ public class RoomReservationService {
 		return roomReservRep.findById(id);
 	}
 	
-	public RoomReservation save(RoomReservation reservation) {	
-		//ovde se triggeruje exception
+	public RoomReservation save(RoomReservation reservation) throws Exception{	
 		return roomReservRep.save(reservation);
 	}
 	
