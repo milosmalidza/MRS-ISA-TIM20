@@ -140,12 +140,13 @@ async function addAdmins() {
 	
 	let companyName = $("#admins-company-name").val();
 	
+	/*
 	//check if the company exists
 	let exists = await this.companyExists(companyName);
 	if(exists === false) {
 		toast("Company does not exist");
 		return;
-	} 
+	} */
 	
 	//sending data to server
 	axios.post(sysAdminControllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
@@ -166,14 +167,14 @@ function getCompanyAdminsJson() {
 	var admins = $("#available-admins").val();
 	
 	return {
-		"name": $("#admins-company-name").val(),
+		"companyId": $("#company-name :selected").val(),
 		"type":  $("#company-type-form2 :selected").val(),
 		"usernames": admins
 	}; 
 	
 }
 		
-
+/*
 async function companyExists(companyName) {
 	
 	var response = await this.axiosCompanyExists(companyName);
@@ -186,7 +187,7 @@ async function axiosCompanyExists(companyName) {
 	let companyNameJson = {"companyName": companyName };
 	return axios.post(sysAdminControllerPath + "/companyExists", companyNameJson)
 
-}
+}*/
 
 
 function getCompanyJson() {
@@ -261,11 +262,11 @@ function getAdminJson() {
 }
 
 
-function getCompanyNames() {
+function getCompanyNames(companyTypeId) {
 	
 	clearSemanticSelect("company-names-holder", "company-name", "Select company");
 	
-	getCompanies($("#company-type").val());
+	getCompanies($(companyTypeId).val());
 	
 }
 

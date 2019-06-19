@@ -58,7 +58,7 @@
 						<tr>
 							<td> Company type: </td>
 							<td>
-								<select id="company-type-form2" class="ui dropdown" onchange="viewAdmins()">
+								<select id="company-type-form2" class="ui dropdown" onchange="viewAdmins();getCompanyNames('#company-type-form2')">
 									<option value="">Select type</option>
 									<option value="airline"> Airline </option>
 									<option value="hotel"> Hotel </option>
@@ -78,13 +78,12 @@
 						</tr>
 						
 						<tr>
-							<td> Company name: </td>
-							<td>
-								<div class="input-additional full-width-input ui input ">
-									<input type="text" id="admins-company-name"/>
-								</div>
+							<td> Select company: </td>
+							<td id="company-names-holder">
+								<select id="company-name" class="ui dropdown">
+									<option value="">Select company</option>
+								</select>
 							</td>
-							
 						</tr>
 						
 						<tr>
@@ -117,6 +116,8 @@
 		
 		$("#available-admins")
 		  .dropdown();
+		
+		$("#company-name").dropdown();
 
 		</script>
 
