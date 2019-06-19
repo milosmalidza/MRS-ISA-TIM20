@@ -189,7 +189,7 @@ public class SystemAdminService {
 		
 		case "hotel":
 			
-			Hotel hotel = hotelSvc.findByName(companyInfo.getName()); //get hotel
+			Hotel hotel = hotelSvc.findOne(companyInfo.getCompanyId()).get(); //get hotel
 			
 			//iterate through admins and set their hotels
 			for(String username: companyInfo.getUsernames()) {
@@ -226,7 +226,7 @@ public class SystemAdminService {
 			
 		case "rent-a-car":
 			
-			RentACar rentACar = rentACarSvc.findByName(companyInfo.getName()); //get airline
+			RentACar rentACar = rentACarSvc.findOneById(companyInfo.getCompanyId());
 			
 			//iterate through admins and set their airline
 			for(String username: companyInfo.getUsernames()) {
