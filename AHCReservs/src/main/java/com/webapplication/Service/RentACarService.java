@@ -247,7 +247,11 @@ public class RentACarService {
 		
 		for (Vehicle v : service.getVehicles()) {
 			for (VehicleReservation r : v.getReservations()) {
-				if (r.getUser().getId() == ruser.getId() && currentDate.after(r.getDueDate())) {
+				RegisteredUser currentUser = r.getUser();
+				if (currentUser == null) {
+					continue;
+				}
+				if (currentUser.getId() == ruser.getId() && currentDate.after(r.getDueDate())) {
 					
 					reservation = r;
 					break;
