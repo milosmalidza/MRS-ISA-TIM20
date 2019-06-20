@@ -84,7 +84,7 @@ public class RegisteredUserService {
 		
 		JsonNode jsonNode = mapper.readTree(json);
 		
-		RoomReservation reservation = roomReservSvc.roomReservRep.findById(jsonNode.get("id").asLong()).get();
+		RoomReservation reservation = roomReservSvc.findOne(jsonNode.get("id").asLong()).get();
 		
 		Date currentDate = new Date();
 		long milis = reservation.getCheckIn().getTime() - currentDate.getTime();

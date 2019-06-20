@@ -268,7 +268,7 @@ function roomChecked(e) {
 				numOfCheckedRooms -= 1;
 			}
 			
-			$("#total-price").html(totalPrice + ' €');
+			$("#total-price").html(totalPrice + ' &euro;');
     		
     	});
 	
@@ -349,7 +349,7 @@ function reserveRooms(dataHolder, dataAttr) {
 			numOfCheckedRooms = 0;
 			additionalServicesPrice = 0;
 			totalPrice = 0;
-			$("#total-price").html(totalPrice + '€');
+			$("#total-price").html(totalPrice + ' &euro;');
 			
 		});
 	
@@ -427,7 +427,7 @@ function additionalServiceSelected(value) {
 	additionalServicesPrice = 0;
 	
 	if(value == "") {
-		$("#total-price").html(totalPrice + ' €');
+		$("#total-price").html(totalPrice + ' &euro;');
 		return;
 	}
 	
@@ -446,6 +446,6 @@ function additionalServiceSelected(value) {
 	}
 	
 	
-	$("#total-price").html(totalPrice + ' €');
+	$("#total-price").html(totalPrice + ' &euro;');
 	
 }

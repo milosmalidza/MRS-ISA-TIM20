@@ -13,6 +13,6 @@ import com.webapplication.Model.Room;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-	@Lock(LockModeType.PESSIMISTIC_WRITE)
+	@Lock(LockModeType.PESSIMISTIC_READ)
 	public Optional<Room> findById(Long id);
 }
