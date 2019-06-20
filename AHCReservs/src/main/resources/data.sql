@@ -1,6 +1,11 @@
+
+--drop system admin if he exists
+delete from `system_admin` where `id` = 0;
+
 --inicijalni admin
 insert into system_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(0, "sysadmin", "sysadmin", "Anonimus", "Anonimus", "anonimus@gmail.com", 1, 1);
 
+/*
 --dummy podaci za hotel admin-a
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 0, 1);
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, -1, 1);
@@ -89,7 +94,7 @@ insert into room_reservation(id, check_in, check_out, num_of_guests, rating, res
 								-3, "2018.10.13", "2018.10.16", 2, 0, 80, 0, -2, -1, 0);
                     
                     
-                    
+     */               
                     
                     
                     

@@ -78,6 +78,11 @@ public class HotelService {
 		boolean canRate = false;
 		
 		for (RoomReservation r : roomReservations) {
+			
+			if (r.getUser() == null) {
+				continue;
+			}
+			
 			if (r.getHotel().getId() == hotel.getId() &&
 					r.getUser().getId() == ruser.getId() &&
 					currentDate.after(r.getCheckOut())) {

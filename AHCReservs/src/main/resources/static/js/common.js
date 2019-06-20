@@ -1,5 +1,8 @@
 var userControllerPath = "/user"; //used to get currencies
 
+
+//TODO: iteriraj kroz sve input type = number i proveri da li je svugde broj
+
 /** Function for validating input fields by checking whether they're empty 
  *  @tableID - # + id of the table where the inputs are located */
 function validateInputFields(tableID) {

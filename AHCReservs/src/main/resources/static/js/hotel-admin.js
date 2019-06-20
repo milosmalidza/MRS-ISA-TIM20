@@ -16,7 +16,9 @@ function validateAdminAndHotel() {
 	
 	//check the type of the user
 	if(loggedUser.user != "hotelAdmin" || loggedUser.passwordChanged === false) {
-		history.back(); //redirect the user to the previous page
+		window.localStorage.setItem("user", "");
+		window.location.href = "index.html";
+		return;
 	}
 	
 	getAdminHotel(user);
@@ -584,6 +586,11 @@ function editService() {
 	
 	if(validateInputFields("#edit-service-table") === false) {
 		toast("Empty field detected");
+		return;
+	}
+	
+	if($("#edit-service-price").val() < 0) {
+		toast("Service price must be > 0");
 		return;
 	}
 	
