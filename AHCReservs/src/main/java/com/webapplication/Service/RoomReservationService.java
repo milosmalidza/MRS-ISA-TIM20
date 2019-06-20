@@ -13,6 +13,9 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -55,6 +58,9 @@ public class RoomReservationService {
 	
 	@Autowired
 	HotelService hotelSvc;
+	
+	@PersistenceContext
+	EntityManager em;
 	
 	
 	public GraphData getIncomeGraphData(DateBean dateBean) {
@@ -232,7 +238,7 @@ public class RoomReservationService {
 		
 	}
 	
-	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	@Transactional
 	public String reserveRooms(RoomReservationBean reservationData) throws Exception {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
@@ -276,13 +282,10 @@ public class RoomReservationService {
 		
 		Room room;
 		
-		//EntityManager em = factory.createEntityManager();
-		
 		//for every room selected create a Room reservation
 		for(Long roomID: reservationData.getSelectedRooms()) {
 			
 			room = roomSvc.findById(roomID).get();
-			//em.lock(room, LockModeType.PESSIMISTIC_WRITE);
 			
 			if(room == null) {
 				return "Room not found";
@@ -299,7 +302,6 @@ public class RoomReservationService {
 					room.getHotel(), user, room, additionalServices);
 			
 			save(reservation);
-			roomSvc.save(room);
 			
 			
 		}
