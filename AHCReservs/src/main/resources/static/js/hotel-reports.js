@@ -3,6 +3,8 @@ var reportControllerPath = "/hotelReports";
 var startDate = null;
 var endDate = null;
 
+var myChart;
+
 
 function initDatePicker() {
 	
@@ -30,31 +32,50 @@ function getReport() {
 		return;
 	}
 	
-	if(startDate == null || endDate == null) {
-		toast("Please select a start and end date");
-		return;
+	if(reportTypeSelected != "room-ratings") {
+		if(startDate == null || endDate == null) {
+			toast("Please select a start and end date");
+			return;
+		}
 	}
 	
+
+	switch(reportTypeSelected) {
 	
-	if(reportTypeSelected == "incomes") {
-		getGraphData("/getIncomeGraph", "Incomes for selected period");
-	} else {
-		getGraphData("/getVisitsGraph", "Visits for selected period");
+	case "incomes":
+		getGraphData("/getIncomeGraph", "Incomes for selected period", getGraphDataJson());
+		break;
+		
+	case "visits":
+		getGraphData("/getVisitsGraph", "Visits for selected period", getGraphDataJson());
+		break;
+		
+	case "room-ratings":
+		getGraphData("/getRoomRatingsGraph", "Room ratings", getHotelIdJson());
+		break;
+	
 	}
+
 	
 }
 
 
-function getGraphData(methodPath, chartTitle) {
+function getGraphData(methodPath, chartTitle, json) {
 	
-	axios.post(reportControllerPath + methodPath, getGraphDataJson())
+	axios.post(reportControllerPath + methodPath, json)
 		.then(response => {
 			
 			if(response.data != "" && response.data != null) {
-				drawGraph(chartTitle, response.data.labels, response.data.dataframes);
+				
+				if(chartTitle.toLowerCase() == "room ratings") {
+					drawGraph('bar', chartTitle, response.data.labels, response.data.dataframes, 'rgba(30, 165, 9, 1)');
+				} else {
+					drawGraph('line', chartTitle, response.data.labels, response.data.dataframes, 'rgba(255, 255, 255, 0)');
+				}
+				
 			}
 			
-		})
+		});
 	
 }
 
@@ -67,21 +88,29 @@ function getGraphDataJson() {
 	}
 	
 }
+
+function getHotelIdJson() {
+	return {"key": adminHotel.id}
+}
+	
+
+function drawGraph(graphType, chartTitle, graphLabels, graphData, backgroundColor) {
 	
 	
+	if(myChart != undefined) {
+		myChart.destroy();
+	}
 	
-function drawGraph(chartTitle, graphLabels, graphData) {
 	
 	let ctx = document.getElementById('myChart').getContext('2d');
-	
-	var myChart = new Chart(ctx, {
-	    type: 'line',
+	myChart = new Chart(ctx, {
+	    type: graphType,
 	    data: {
 	        labels: graphLabels,
 	        datasets: [{
 	            label: chartTitle,
 	            data: graphData,
-	            backgroundColor: 'rgba(255, 255, 255, 0)',
+	            backgroundColor: backgroundColor,
 	            borderColor: 'rgba(2, 91, 10, 1)',
 	            borderWidth: 3
 	        }]

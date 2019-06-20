@@ -45,6 +45,11 @@ function updateProfile() {
 		return;
 	}
 	
+	if($("#password").val().length < 6) {
+		toast("Password must be at least 6 characters long");
+		return;
+	}
+	
 	//check whether email is valid
 	if(validateEmail($("#email").val()) === false) {
 		toast("Invalid email");

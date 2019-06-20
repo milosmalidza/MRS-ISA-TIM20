@@ -81,6 +81,12 @@ insert into rentacar_branch_office(id, address, name, rentacar_id) values(-2, "4
 
 insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
 								-1, "2018.11.13", "2018.11.16", 2, 0, 80, 0, -1, -1);
+								
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
+								-2, "2018.12.13", "2018.12.16", 2, 0, 80, 0, -1, -1);
+								
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
+								-3, "2018.10.13", "2018.10.16", 2, 0, 80, 0, -2, -1);
                     
                     
                     
