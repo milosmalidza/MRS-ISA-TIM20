@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.GraphData;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.Service.RoomReservationService;
 
 @RestController
@@ -40,6 +41,18 @@ public class HotelReportsController {
 	public ResponseEntity<GraphData> getVisitsGraph(@RequestBody DateBean dateBean) {
 		
 		return new ResponseEntity<>(roomReservSvc.getVisitsGraphData(dateBean), HttpStatus.OK);
+		
+	}
+	
+	
+	@RequestMapping(
+			value="/getRoomRatingsGraph",
+			method=RequestMethod.POST,
+			consumes=MediaType.APPLICATION_JSON_VALUE,
+			produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<GraphData> getRoomRatingsGraph(@RequestBody KeyBean keyBean) {
+		
+		return new ResponseEntity<>(roomReservSvc.getRoomRatingGraphData(keyBean), HttpStatus.OK);
 		
 	}
 

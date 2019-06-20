@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.GraphData;
 import com.webapplication.JSONBeans.KeyAndValueBean;
+import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.JSONBeans.RoomReservationBean;
 import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.HotelServiceType;
@@ -48,6 +50,9 @@ public class RoomReservationService {
 	
 	@Autowired
 	MultipleService mulSvc;
+	
+	@Autowired
+	HotelService hotelSvc;
 	
 	
 	public GraphData getIncomeGraphData(DateBean dateBean) {
@@ -128,6 +133,64 @@ public class RoomReservationService {
 					
 				}
 				
+			}
+			
+		}
+		
+		graphData.setDataframes(new ArrayList<Double>(graphMap.values()));
+		graphData.setLabels(new ArrayList<String>(graphMap.keySet()));
+		
+		return graphData;
+		
+	}
+	
+	public GraphData getRoomRatingGraphData(KeyBean keyBean) {
+		
+		GraphData graphData = new GraphData();
+		
+		HashMap<String, Double> roomRatings = new HashMap<String, Double>();
+		HashMap<String, Integer> roomRatingsNum = new HashMap<String, Integer>();
+		
+		for(RoomReservation roomReserv: findAll()) {
+			
+			if(roomReserv.getHotel().getId() == keyBean.getKey()) {
+				
+				if(roomRatings.containsKey(Integer.toString(roomReserv.getRoom().getNumber()))) {
+					
+					//0 ratings have no effect on average grade
+					if(roomReserv.getRating() > 0) {
+						roomRatings.put(Integer.toString(roomReserv.getRoom().getNumber()),
+								roomRatings.get(Integer.toString(roomReserv.getRoom().getNumber())) + roomReserv.getRating());
+						
+						roomRatingsNum.put(Integer.toString(roomReserv.getRoom().getNumber()),
+								roomRatingsNum.get(Integer.toString(roomReserv.getRoom().getNumber())) + 1);
+					}
+					
+					
+				} else {
+					
+					roomRatings.put(Integer.toString(roomReserv.getRoom().getNumber()), roomReserv.getRating());
+					roomRatingsNum.put(Integer.toString(roomReserv.getRoom().getNumber()), 1);
+					
+				}
+				
+			}
+			
+		}
+		
+		//Merging ratings/num of ratings into graph map
+		Map<String, Double> graphMap = new TreeMap<String, Double>(roomRatings);
+		
+		for(Room room: hotelSvc.findOne(keyBean.getKey()).get().getRooms()) {
+			
+			//if the room wasn't in the reservations at all, it's rating is 0
+			if(!graphMap.containsKey(Integer.toString(room.getNumber()))) {
+				graphMap.put(Integer.toString(room.getNumber()), 0.0);
+			} else {
+				
+				//calculating average value of room (sum of all ratings / num of ratings)
+				graphMap.put(Integer.toString(room.getNumber()),
+						graphMap.get(Integer.toString(room.getNumber())) / roomRatingsNum.get(Integer.toString(room.getNumber())));
 			}
 			
 		}
