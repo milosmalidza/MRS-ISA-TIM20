@@ -43,6 +43,7 @@ function changePassword() {
 				//add the user with new data to session
 				response.data.user = user.user;
 				response.data.status = user.status;
+				response.data.serviceId = user.serviceId;
 				window.localStorage.setItem("user", JSON.stringify(response.data));
 				
 				redirectAdmin(response.data);
