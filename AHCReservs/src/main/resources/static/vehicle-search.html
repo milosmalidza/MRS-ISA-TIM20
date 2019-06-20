@@ -35,19 +35,21 @@
 	
 	
 			<div id="nav-bar">
-				<ul id="nav-bar-selection-1">
-					<li onclick="loadPage('index.html')">Home</li>
-					<li>Airline companies</li>
-					<li onclick="loadPage('hotels-display.html')">Hotels</li>
-					<li onclick="loadPage('car-services.html')">Rent-a-car services</li>
-					
-				</ul>
-				<ul id="nav-bar-selection-2">
-					<li onclick="loadPage('user-profile.html')"> My profile </li>
-					<li onclick="loadPage('register-user.html')">Register</li>
-					<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
-				</ul>
-			</div>
+			<ul id="nav-bar-selection-1">
+				<li onclick="loadPage('index.html')">Home | <span><i class="home icon"></i></span></li>
+				<li>Airline companies | <span><i class="plane icon"></i></span></li>
+				<li onclick="loadPage('hotels-display.html')">Hotels | <span><i class="hotel icon"></i></span></li>
+				<li onclick="loadPage('car-services.html')">Rent-a-car services | <span><i class="car icon"></i></span></li>
+				<li onclick="loadPage('quick-reservations-display.html')">
+					Quick reservations | <span> <i class="handshake icon"> </i></span>
+				</li>
+			</ul>
+			<ul id="nav-bar-selection-2">
+				<li onclick="loadPage('user-profile.html')"> My profile </li>
+				<li onclick="loadPage('register-user.html')">Register</li>
+				<li id="nav-bar-login-button" onclick="loadPage('login.html')">Login</li>
+			</ul>
+		</div>
 		<div id="main-div" th:attr="data-id=${service.id}">
 			
 			<div id="main-content-holder">
