@@ -1,7 +1,5 @@
 package com.webapplication.Service;
 
-import java.util.ArrayList;
-
 
 import java.util.List;
 import java.util.Optional;
@@ -37,18 +35,9 @@ public class AirlineAdminService {
 	}
 	
 	
-	//returns the hotel admins that aren't currenly assigned to any hotel
 	public List<AirlineAdmin> getAvailableAdmins() {
 		
-		List<AirlineAdmin> availableAdmins = new ArrayList<AirlineAdmin>();
-		
-		for(AirlineAdmin airlineAdmin: findAll()) {
-			if(airlineAdmin.getAirline() == null && airlineAdmin.isEnabled()) {
-				availableAdmins.add(airlineAdmin);
-			}
-		}
-		
-		return availableAdmins;
+		return airlineAdminRep.getAvailableAdmins();
 	}
 	
 	

@@ -298,18 +298,10 @@ public class RentACarAdminService {
 		return rentACarAdminRep.findByUsername(username);
 	}
 	
-	//returns the hotel admins that aren't currenly assigned to any hotel
+	
 	public List<RentACarAdmin> getAvailableAdmins() {
-
-		List<RentACarAdmin> availableAdmins = new ArrayList<RentACarAdmin>();
-
-		for(RentACarAdmin rentACarAdmin: findAll()) {
-			if(rentACarAdmin.getRentACar() == null && rentACarAdmin.isEnabled()) {
-				availableAdmins.add(rentACarAdmin);
-			}
-		}
-
-		return availableAdmins;
+		
+		return rentACarAdminRep.getAvailableAdmins();
 	}
 
 

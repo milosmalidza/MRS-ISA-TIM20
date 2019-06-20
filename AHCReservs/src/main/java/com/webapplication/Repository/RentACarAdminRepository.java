@@ -1,5 +1,7 @@
 package com.webapplication.Repository;
 
+import java.util.List;
+
 import java.util.Optional;
 
 
@@ -19,6 +21,9 @@ public interface RentACarAdminRepository extends JpaRepository<RentACarAdmin, Lo
 	
 	@Query("select admin from RentACarAdmin as admin where admin.id = ?1")
 	public Optional<RentACarAdmin> findOne(Long id);
+	
+	@Query("select admin from RentACarAdmin as admin where admin.rent_a_car is null and admin.isEnabled = true")
+	public List<RentACarAdmin> getAvailableAdmins();
 	
 	@Transactional
 	public void deleteByUsername(String username);

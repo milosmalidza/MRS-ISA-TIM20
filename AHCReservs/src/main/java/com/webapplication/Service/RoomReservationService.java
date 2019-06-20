@@ -1,8 +1,8 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -14,6 +14,8 @@ import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.GraphData;
@@ -45,7 +47,7 @@ public class RoomReservationService {
 	
 	@Autowired
 	SystemAdminService sysAdminSvc;
-	
+  
 	@Autowired
 	MultipleService mulSvc;
 	
@@ -140,7 +142,8 @@ public class RoomReservationService {
 	}
 	
 	
-	public String quickReservation(KeyAndValueBean data) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public String quickReservation(KeyAndValueBean data) throws Exception {
 		
 		RoomReservation reservation = findOne(data.getKey()).get();
 		
@@ -155,15 +158,19 @@ public class RoomReservationService {
 			return "You are not allowed to make a reservation";
 		}
 		
-		reservation.setUser(user);
+		if(reservation.getUser() != null) {
+			return "Someone already reserved this room.\n Please refresh the page.";
+		}
 		
+		reservation.setUser(user);
 		save(reservation);
 		
-		return "Success";
+		return "Reservation successful";
 		
 	}
 	
-	public String reserveRooms(RoomReservationBean reservationData) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public String reserveRooms(RoomReservationBean reservationData) throws Exception {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
 		Date checkInDate = null;
@@ -205,28 +212,34 @@ public class RoomReservationService {
 		double servicesPrice = calculateServicesPrice(additionalServices);
 		
 		Room room;
+		
+		//EntityManager em = factory.createEntityManager();
+		
 		//for every room selected create a Room reservation
 		for(Long roomID: reservationData.getSelectedRooms()) {
 			
 			room = roomSvc.findById(roomID).get();
+			//em.lock(room, LockModeType.PESSIMISTIC_WRITE);
 			
 			if(room == null) {
 				return "Room not found";
 			}
 			
+			//if the room hasn't been reserved in the mean time the reservation is successful
+			if(isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
+				return "Someone already reserved the room.";
+
 			System.out.println("NUM OF NIGHTS: " + reservationData.getNumOfNights());
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
 					(room.getRoomPrice() + servicesPrice) * reservationData.getNumOfNights(),
 					room.getHotel(), user, room, additionalServices);
 			
+			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
+					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
 			
-			//if the room hasn't been reserved in the mean time the reservation is successful
-			if(!isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
-				
-				save(reservation);
-				roomSvc.save(room);
-				
-			}
+			room.setReservation(reservation);
+			save(reservation);
+			roomSvc.save(room);
 			
 			
 		}
@@ -303,7 +316,7 @@ public class RoomReservationService {
 		
 	}
 	
-	/** Method determines whether the admin get edit or delete the room by checking whether
+	/** Method determines whether the admin can edit or delete the room by checking whether
 	 * the reservations have expired
 	 * @param room_id - id of the room to be checked
 	 * @return boolean indicating whether there are any reservations in the future */
@@ -335,7 +348,7 @@ public class RoomReservationService {
 		return roomReservRep.findById(id);
 	}
 	
-	public RoomReservation save(RoomReservation reservation) {	
+	public RoomReservation save(RoomReservation reservation) throws Exception{	
 		return roomReservRep.save(reservation);
 	}
 	
@@ -353,19 +366,7 @@ public class RoomReservationService {
 	
 	public Collection<RoomReservation> getQuickReservations() {
 		
-		//return roomReservRep.findQuickReservations();
-		
-		ArrayList<RoomReservation> quickReservs = new ArrayList<RoomReservation>();
-		
-		for (RoomReservation roomReservation : findAll()) {
-			
-			if(roomReservation.getUser() == null) {
-				quickReservs.add(roomReservation);
-			}
-			
-		}
-		
-		return quickReservs;
+		return roomReservRep.findQuickReservations();
 		
 	}
 
