@@ -11,13 +11,6 @@ public class HotelData {
 		
 	}
 
-	public HotelData(Long id, String name, String description, String address) {
-		
-		this.id = id;
-		this.name = name;
-		this.description = description;
-		this.address = address;
-	}
 
 	public String getName() {
 		return name;

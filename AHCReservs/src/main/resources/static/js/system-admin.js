@@ -140,14 +140,6 @@ async function addAdmins() {
 	
 	let companyName = $("#admins-company-name").val();
 	
-	/*
-	//check if the company exists
-	let exists = await this.companyExists(companyName);
-	if(exists === false) {
-		toast("Company does not exist");
-		return;
-	} */
-	
 	//sending data to server
 	axios.post(sysAdminControllerPath + "/addAdminsToCompany", getCompanyAdminsJson())
 		.then(response => {
@@ -173,21 +165,7 @@ function getCompanyAdminsJson() {
 	}; 
 	
 }
-		
-/*
-async function companyExists(companyName) {
 	
-	var response = await this.axiosCompanyExists(companyName);
-	return response.data;
-		
-}
-
-async function axiosCompanyExists(companyName) {
-	
-	let companyNameJson = {"companyName": companyName };
-	return axios.post(sysAdminControllerPath + "/companyExists", companyNameJson)
-
-}*/
 
 
 function getCompanyJson() {

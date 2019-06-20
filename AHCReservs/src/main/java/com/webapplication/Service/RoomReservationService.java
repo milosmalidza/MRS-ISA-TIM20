@@ -37,6 +37,9 @@ import comparators.StrDateComparator;
 
 @Service
 public class RoomReservationService {
+	
+	
+	public final String DATE_FORMAT = "dd.MM.yyyy.";
 
 	@Autowired
 	RoomReservationRepository roomReservRep;
@@ -66,7 +69,7 @@ public class RoomReservationService {
 	public GraphData getIncomeGraphData(DateBean dateBean) {
 		
 		GraphData graphData = new GraphData();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		
 		dateBean = mulSvc.parseDates(dateBean, sdf);
 		
@@ -109,7 +112,7 @@ public class RoomReservationService {
 	public GraphData getVisitsGraphData(DateBean dateBean) {
 		
 		GraphData graphData = new GraphData();
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		
 		dateBean = mulSvc.parseDates(dateBean, sdf);
 		
@@ -241,7 +244,7 @@ public class RoomReservationService {
 	@Transactional
 	public String reserveRooms(RoomReservationBean reservationData) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy.");
+		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
 		Date checkInDate = null;
 		Date checkOutDate = null;
 		
@@ -296,7 +299,6 @@ public class RoomReservationService {
 				return "Someone already reserved the room.";
 			}
 
-			System.out.println("NUM OF NIGHTS: " + reservationData.getNumOfNights());
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
 					(room.getRoomPrice() + servicesPrice) * reservationData.getNumOfNights(),
 					room.getHotel(), user, room, additionalServices);
@@ -337,7 +339,6 @@ public class RoomReservationService {
 			serviceType = hAdditionalServiceSvc.convertStringToService(service);
 			
 			if(serviceType == null) {
-				System.out.println("Exception during string to HotelServiceType conversion");
 				return null; //exception during conversion
 			}
 			
@@ -345,7 +346,6 @@ public class RoomReservationService {
 			additionalService = hAdditionalServiceSvc.findOneForHotel(hotelID, serviceType);
 			
 			if(additionalService == null) {
-				System.out.println("Additional service not found");
 				return null;
 			}
 			

@@ -1,6 +1,7 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
+
 import java.text.ParseException;
 import java.util.Collection;
 
@@ -21,7 +22,6 @@ import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
-import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
 import com.webapplication.Service.ConfirmationTokenService;
@@ -200,7 +200,6 @@ public class SystemAdminController {
 		try {
 			return new ResponseEntity<>(racSvc.getBranchOffices(json), HttpStatus.OK);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
@@ -224,7 +223,6 @@ public class SystemAdminController {
 		try {
 			return new ResponseEntity<>(racSvc.makeVehicleReservations(json, user), HttpStatus.OK);
 		} catch (IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}

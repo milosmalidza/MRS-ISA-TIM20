@@ -54,6 +54,14 @@ public class SystemAdminService {
 	ConfirmationTokenService confirmService;
 	
 	
+	/* Constants */
+	
+	public final String HOTEL_CASE = "hotel";
+	public final String AIRLINE_CASE = "airline";
+	public final String RENT_A_CAR_CASE = "rent-a-car";
+	public final String SYSTEM_CASE = "system";
+	
+	
 	public String registerAdmin(UserBean admin) {
 		
 		if(admin.getCompanyType() == null) {
@@ -72,7 +80,7 @@ public class SystemAdminService {
 		//check which type of admin I'm registering
 		switch(admin.getCompanyType()) {
 		
-		case "hotel":
+		case HOTEL_CASE:
 			HotelAdmin hotelAdmin = new HotelAdmin(admin);
 			hotelAdminSvc.save(hotelAdmin);
 			
@@ -83,7 +91,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case "airline":
+		case AIRLINE_CASE:
 			AirlineAdmin airlineAdmin = new AirlineAdmin(admin);
 			airlineAdminSvc.save(airlineAdmin);
 			
@@ -94,7 +102,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case "rent-a-car":
+		case RENT_A_CAR_CASE:
 			RentACarAdmin rent_a_car_admin = new RentACarAdmin(admin);
 			rentACarAdminSvc.save(rent_a_car_admin);
 			
@@ -105,7 +113,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case "system":
+		case SYSTEM_CASE:
 			SystemAdmin sysAdmin = new SystemAdmin(admin);
 			save(sysAdmin);
 			
@@ -137,10 +145,9 @@ public class SystemAdminService {
 		
 		switch(companyInfo.getType().toLowerCase()) {
 		
-		case "hotel":
+		case HOTEL_CASE:
 			
 			HotelAdmin hotelAdmin = hotelAdminSvc.findByUsername(companyInfo.getAdminUsername());
-			System.out.println("Found admin: " + hotelAdmin.toString());
 			
 			Hotel hotel = new Hotel(companyInfo);
 			hotelAdmin.setHotel(hotel);
@@ -149,10 +156,9 @@ public class SystemAdminService {
 			
 			return "Hotel successfully registered";
 			
-		case "airline":
+		case AIRLINE_CASE:
 			
 			AirlineAdmin airlineAdmin = airlineAdminSvc.findByUsername(companyInfo.getAdminUsername());
-			System.out.println("Found admin: " + airlineAdmin.toString());
 			
 			Airline airline = new Airline(companyInfo);
 			airlineAdmin.setAirline(airline);
@@ -161,10 +167,9 @@ public class SystemAdminService {
 			
 			return "Airline successfully registered";
 			
-		case "rent-a-car":
+		case RENT_A_CAR_CASE:
 			
 			RentACarAdmin rentACarAdmin = rentACarAdminSvc.findByUsername(companyInfo.getAdminUsername());
-			System.out.println("Found admin: " + rentACarAdmin.toString());
 			
 			RentACar rentACar = new RentACar(companyInfo);
 			rentACarAdmin.setRentACar(rentACar);
@@ -172,6 +177,9 @@ public class SystemAdminService {
 			rentACarAdminSvc.save(rentACarAdmin);
 			
 			return "Rent a car service successfully registered";
+			
+		default:
+			break;
 
 		}
 		
@@ -187,7 +195,7 @@ public class SystemAdminService {
 		//determine company type
 		switch(companyInfo.getType().toLowerCase()) {
 		
-		case "hotel":
+		case HOTEL_CASE:
 			
 			Hotel hotel = hotelSvc.findOne(companyInfo.getCompanyId()).get(); //get hotel
 			
@@ -206,7 +214,7 @@ public class SystemAdminService {
 			
 			return "Admins and their companies successfully saved";
 			
-		case "airline":
+		case AIRLINE_CASE:
 			
 			Airline airline = airlineSvc.findByName(companyInfo.getName()); //get airline
 			
@@ -224,7 +232,7 @@ public class SystemAdminService {
 			
 			return "Admins and their companies successfully saved";
 			
-		case "rent-a-car":
+		case RENT_A_CAR_CASE:
 			
 			RentACar rentACar = rentACarSvc.findOneById(companyInfo.getCompanyId());
 			

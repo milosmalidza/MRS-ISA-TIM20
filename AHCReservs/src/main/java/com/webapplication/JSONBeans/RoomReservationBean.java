@@ -17,21 +17,6 @@ public class RoomReservationBean {
 		
 	}
 
-	
-
-	public RoomReservationBean(Long hotelID, String strCheckInDate, String strCheckOutDate, int numOfGuests,
-			String username, List<Long> selectedRooms, List<String> selectedAdditionalServices) {
-		
-		this.hotelID = hotelID;
-		this.strCheckInDate = strCheckInDate;
-		this.strCheckOutDate = strCheckOutDate;
-		this.numOfGuests = numOfGuests;
-		this.username = username;
-		this.selectedRooms = selectedRooms;
-		this.selectedAdditionalServices = selectedAdditionalServices;
-	}
-
-
 
 	public String getStrCheckInDate() {
 		return strCheckInDate;

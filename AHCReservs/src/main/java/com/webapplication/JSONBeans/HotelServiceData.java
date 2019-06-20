@@ -14,16 +14,6 @@ public class HotelServiceData {
 		
 	}
 
-	
-	public HotelServiceData(Long hotelID, String serviceTypeString, HotelServiceType serviceType, double price) {
-		super();
-		this.hotelID = hotelID;
-		this.serviceTypeString = serviceTypeString;
-		this.serviceType = serviceType;
-		this.price = price;
-		
-	}
-
 
 	public String getServiceTypeString() {
 		return serviceTypeString;

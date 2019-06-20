@@ -19,21 +19,6 @@ public class RoomData {
 		
 	}
 
-
-	public RoomData(Long hotelID, Long roomID, int number, int floor, int numOfBeds, RoomType roomType,
-			String roomTypeString, double price) {
-		super();
-		this.hotelID = hotelID;
-		this.roomID = roomID;
-		this.number = number;
-		this.floor = floor;
-		this.numOfBeds = numOfBeds;
-		this.roomType = roomType;
-		this.roomTypeString = roomTypeString;
-		this.price = price;
-	}
-
-
 	public Long getHotelID() {
 		return hotelID;
 	}

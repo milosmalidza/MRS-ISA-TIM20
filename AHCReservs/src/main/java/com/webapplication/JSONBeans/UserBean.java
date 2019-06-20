@@ -18,22 +18,6 @@ public class UserBean {
 		
 	}
 
-	
-
-	public UserBean(Long id, String username, String password, String firstName, String lastName, String email,
-			String companyType, String userType) {
-		
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.companyType = companyType;
-		this.userType = userType;
-	}
-
-
 
 	public String getUsername() {
 		return username;

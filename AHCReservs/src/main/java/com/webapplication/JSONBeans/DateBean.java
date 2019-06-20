@@ -18,26 +18,9 @@ public class DateBean {
 
 	
 	
-	
-
-	public DateBean(Long companyID, Date startDate, Date endDate, String strStartDate, String strEndDate) {
-		
-		this.companyID = companyID;
-		this.startDate = startDate;
-		this.endDate = endDate;
-		this.strStartDate = strStartDate;
-		this.strEndDate = strEndDate;
-	}
-
-
-
-
-
 	public Long getCompanyID() {
 		return companyID;
 	}
-
-
 
 	public void setCompanyID(Long companyID) {
 		this.companyID = companyID;

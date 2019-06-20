@@ -287,7 +287,6 @@ public class HotelService {
 		Hotel hotel = findOne(serviceData.getHotelID()).get();
 		
 		if(hotel == null) {
-			System.out.println("Can't find hotel");
 			return null;
 		}
 		
@@ -343,11 +342,9 @@ public class HotelService {
 			
 			//check whether the room is reserved
 			if(!roomReservSvc.isRoomReserved(room.getId(), dateBean.getStartDate(), dateBean.getEndDate())) {
-				System.out.println("Room available");
 				availableRooms.add(room);
 			}
 						
-			System.out.println("Room reserved");
 			
 		}
 		
