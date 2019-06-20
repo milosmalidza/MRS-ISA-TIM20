@@ -160,7 +160,7 @@ public class HotelService {
 		if(!hotelData.getName().equals(hotel.getName())) {
 				
 			//if the new name already exists in the hotels
-			if (findByName(hotel.getName()) != null) {
+			if (findByName(hotelData.getName()) != null) {
 				return null;
 			}
 		}
