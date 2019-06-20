@@ -505,6 +505,11 @@ function checkVehicle(id, callback) {
 	
 }
 
+function setUpRating() {
+	if (sessionUser != null) {
+		$("#rating-row").show();
+	}
+}
 
 var r_error = false;
 function rateService(value) {
@@ -522,7 +527,7 @@ function rateService(value) {
 	var user = sessionUser;
 	if (user == null) {
 		r_error = true;
-		alert("Not logged in.");
+		notify("Not logged in", "Please login first");
 		$("#service-rating").rating('clear rating');
 		return;
 	}

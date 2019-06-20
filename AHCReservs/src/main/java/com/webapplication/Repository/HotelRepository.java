@@ -8,6 +8,8 @@ import com.webapplication.Model.Hotel;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 	
+	Hotel findOneById(Long id);
+	
 	Hotel findOneByName(String name);
 
 }

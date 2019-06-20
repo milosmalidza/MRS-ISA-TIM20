@@ -223,7 +223,6 @@ function showHotelReservtions() {
 						value : value,
 						id : element.getAttribute("data-id")
 					};
-					console.log(element);
 					$.ajax({
 						type: "post",
 						url: "user/rateRoomReservation",
@@ -251,7 +250,6 @@ function showVehicleReservations() {
 		data : {user : JSON.stringify(sessionUser)},
 		success : function(response) {
 			
-			console.log(response);
 			
 			if (response == "badRequest") {
 				alert("Something went wrong");
@@ -304,7 +302,6 @@ function showVehicleReservations() {
 						value : value,
 						id : element.getAttribute("data-id")
 					};
-					console.log(element);
 					$.ajax({
 						type: "post",
 						url: "user/rateVehicleReservation",

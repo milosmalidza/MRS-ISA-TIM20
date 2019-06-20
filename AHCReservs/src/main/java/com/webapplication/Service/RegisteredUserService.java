@@ -40,7 +40,7 @@ public class RegisteredUserService {
 	@Autowired
 	RoomReservationRepository roomResRep;
 	
-public String rateRoomReservation(String json, String user) throws IOException {
+	public String rateRoomReservation(String json, String user) throws IOException {
 		
 		ObjectMapper mapper = new ObjectMapper();
 		

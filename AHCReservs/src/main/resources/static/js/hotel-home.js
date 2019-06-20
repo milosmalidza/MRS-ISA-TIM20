@@ -13,6 +13,61 @@ var additionalServices = null;
 var pinAdded = false;
 var dateValid = true;
 
+function setUpRating() {
+	
+	if (sessionUser == null) {
+		return;
+	}
+	else {
+		$.ajax({
+			type : "post",
+			url : controllerPath + "/getHotelRating",
+			data : {json : JSON.stringify({
+				hotelId : $("#main-content-holder").attr("data-hotel-id")
+			}), user : JSON.stringify(sessionUser)},
+			success : function(response) {
+				console.log(response);
+				var data = JSON.parse(response);
+				
+				$('.ui.rating').attr("data-rating", data.rating);
+				$("#rate-us-text").css("display", "table-cell");
+				$('.ui.rating').rating({
+					onRate: function(value) {
+						
+						if (value == "0") {
+							return;
+						}
+						
+						$.ajax({
+							type : "post",
+							url : controllerPath + "/setHotelRating",
+							data : {json : JSON.stringify({
+								rating : value,
+								hotelId : $("#main-content-holder").attr("data-hotel-id")
+							}), user : JSON.stringify(sessionUser)},
+							success : function(response) {
+								console.log(response);
+								if (response == "success"){
+									notify("Rated", "Thank you for rating us");
+								}
+								else if (response == "noReservation") {
+									notify("No reservation", "You are not allowed to rate us yet");
+									$("#service-rating").rating('set rating', '0');
+								}
+								else {
+									$("#service-rating").rating('set rating', '0');
+								}
+							}
+						});
+					}
+				});
+			}
+		});
+	}
+	
+	
+	
+}
 
 function getMap() {
 	
@@ -213,7 +268,7 @@ function roomChecked(e) {
 				numOfCheckedRooms -= 1;
 			}
 			
-			$("#total-price").html(totalPrice + ' &euro;');
+			$("#total-price").html(totalPrice + ' €');
     		
     	});
 	
@@ -294,7 +349,7 @@ function reserveRooms(dataHolder, dataAttr) {
 			numOfCheckedRooms = 0;
 			additionalServicesPrice = 0;
 			totalPrice = 0;
-			$("#total-price").html(totalPrice + '&euro;');
+			$("#total-price").html(totalPrice + '€');
 			
 		});
 	
@@ -372,7 +427,7 @@ function additionalServiceSelected(value) {
 	additionalServicesPrice = 0;
 	
 	if(value == "") {
-		$("#total-price").html(totalPrice + ' &euro;');
+		$("#total-price").html(totalPrice + ' €');
 		return;
 	}
 	
@@ -391,6 +446,6 @@ function additionalServiceSelected(value) {
 	}
 	
 	
-	$("#total-price").html(totalPrice + ' &euro;');
+	$("#total-price").html(totalPrice + ' €');
 	
 }

@@ -1,16 +1,21 @@
 package com.webapplication.Service;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.JSONBeans.DateBean;
 import com.webapplication.JSONBeans.HotelData;
 import com.webapplication.JSONBeans.HotelServiceData;
@@ -19,9 +24,13 @@ import com.webapplication.JSONBeans.RoomData;
 import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelServiceType;
+import com.webapplication.Model.Rating;
+import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.Room;
+import com.webapplication.Model.RoomReservation;
 import com.webapplication.Model.RoomType;
 import com.webapplication.Repository.HotelRepository;
+import com.webapplication.Repository.RegisteredUserRepository;
 
 import comparators.RoomNumComparator;
 
@@ -44,6 +53,87 @@ public class HotelService {
 	@Autowired
 	RoomReservationService roomReservSvc;
 	
+	@Autowired
+	RegisteredUserRepository rUserRep;
+	
+	public String setHotelRating(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode userNode = mapper.readTree(user);
+		
+		RegisteredUser ruser = rUserRep.findByUsername(userNode.get("username").asText());
+		
+		if (ruser == null) return "badRequest";
+		if (!ruser.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		
+		
+		JsonNode jsonNode = mapper.readTree(json);
+		Hotel hotel = hotelRep.findOneById(jsonNode.get("hotelId").asLong());
+		
+		Date currentDate = new Date();
+		
+		List<RoomReservation> roomReservations = roomReservSvc.findAll();
+		
+		boolean canRate = false;
+		
+		for (RoomReservation r : roomReservations) {
+			if (r.getHotel().getId() == hotel.getId() &&
+					r.getUser().getId() == ruser.getId() &&
+					currentDate.after(r.getCheckOut())) {
+				canRate = true;
+			}
+		}
+		
+		if (!canRate) return "noReservation";
+		
+		
+		
+		Rating rating = null;
+		for (Rating r : hotel.getRatings()) {
+			if (r.getUserId() == ruser.getId()) {
+				rating = r;
+				break;
+			}
+		}
+		
+		if (rating != null) {
+			rating.setRating(jsonNode.get("rating").asDouble());
+		}
+		else {
+			rating = new Rating();
+			rating.setUserId(ruser.getId());
+			rating.setRating(jsonNode.get("rating").asDouble());
+			hotel.getRatings().add(rating);
+		}
+		
+		hotel.updateRating();
+		
+		hotelRep.save(hotel);
+		
+		return "success";
+	}
+	
+	public String getHotelRating(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode userNode = mapper.readTree(user);
+		JsonNode jsonNode = mapper.readTree(json);
+		
+		
+		Hotel hotel = hotelRep.findOneById(jsonNode.get("hotelId").asLong());
+		JsonNode data = mapper.createObjectNode();
+		((ObjectNode)data).put("rating", 0);
+		
+		for(Rating r : hotel.getRatings()) {
+			if (userNode.get("id").asLong() == r.getUserId()) {
+				((ObjectNode)data).put("rating", r.getRating());
+			}
+		}
+		
+		return mapper.writeValueAsString(data);
+	}
 	
 	public Hotel updateProfile(HotelData hotelData) {
 		
@@ -304,4 +394,6 @@ public class HotelService {
 	public List<Hotel> findAll() {
 		return hotelRep.findAll();
 	}
+
+	
 }
