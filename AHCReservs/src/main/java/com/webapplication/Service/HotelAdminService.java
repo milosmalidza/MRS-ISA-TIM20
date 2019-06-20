@@ -1,6 +1,5 @@
 package com.webapplication.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,15 +50,7 @@ public class HotelAdminService {
 	//returns the hotel admins that aren't currenly assigned to any hotel
 	public List<HotelAdmin> getAvailableAdmins() {
 		
-		List<HotelAdmin> availableAdmins = new ArrayList<HotelAdmin>();
-		
-		for(HotelAdmin hotelAdmin: findAll()) {
-			if(hotelAdmin.getHotel() == null && hotelAdmin.isEnabled()) {
-				availableAdmins.add(hotelAdmin);
-			}
-		}
-		
-		return availableAdmins;
+		return hotelAdminRep.getAvailableAdmins();
 	}
 	
 	

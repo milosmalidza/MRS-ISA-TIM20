@@ -117,7 +117,12 @@ public class HotelHomeController {
 			consumes=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> reserveRooms(@RequestBody RoomReservationBean reservationData) {
 		
-		return new ResponseEntity<>(roomReservSvc.reserveRooms(reservationData) , HttpStatus.CREATED);
+		try {
+			return new ResponseEntity<>(roomReservSvc.reserveRooms(reservationData) , HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Someone already reserved the room.\nPlease refresh the page" , HttpStatus.CONFLICT);
+		}
 		
 	}
 	

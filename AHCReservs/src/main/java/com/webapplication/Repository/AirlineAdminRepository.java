@@ -1,5 +1,7 @@
 package com.webapplication.Repository;
 
+import java.util.List;
+
 import java.util.Optional;
 
 
@@ -19,6 +21,9 @@ public interface AirlineAdminRepository extends JpaRepository<AirlineAdmin, Long
 	
 	@Query("select admin from AirlineAdmin as admin where admin.id = ?1")
 	public Optional<AirlineAdmin> findOne(Long id);
+	
+	@Query("select admin from AirlineAdmin as admin where admin.airline is null and admin.isEnabled = true")
+	public List<AirlineAdmin> getAvailableAdmins();
 	
 	@Transactional
 	public void deleteByUsername(String username);

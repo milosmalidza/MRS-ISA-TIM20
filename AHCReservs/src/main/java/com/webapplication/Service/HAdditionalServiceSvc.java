@@ -1,6 +1,5 @@
 package com.webapplication.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,33 +69,14 @@ public class HAdditionalServiceSvc {
 	
 	public List<HAdditionalService> findAllForHotel(Long hotelID) {
 		
-		List<HAdditionalService> hotelAdditionalServices = new ArrayList<HAdditionalService>();
-		
-		for(HAdditionalService additionalSvc: findAll()) {
-			
-			if(additionalSvc.getHotel().getId() == hotelID) {
-				hotelAdditionalServices.add(additionalSvc);
-			}
-			
-		}
-		
-		return hotelAdditionalServices;
+		return hServiceRep.findAllForHotel(hotelID);
 		
 	}
 	
 	
 	public HAdditionalService findOneForHotel(Long hotelID, HotelServiceType serviceType) {
 		
-		
-		for(HAdditionalService additionalSvc: findAllForHotel(hotelID)) {
-			
-			if(additionalSvc.getService() == serviceType) {
-				return additionalSvc;
-			}
-			
-		}
-		
-		return null;
+		return hServiceRep.findOneForHotel(hotelID, serviceType);
 		
 	}
 	

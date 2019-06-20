@@ -39,7 +39,7 @@ insert into rentacar_admin(id, username, password, firstName, lastName, email_id
 
 
 insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidzaa@gmail.com", 1);
-
+insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "user", "user", "User", "Userish", "user@gmail.com", 1);
 
 insert into rentacar(id, address, description, name, rating) values(0, "dummy address", "Lorem ipsum dolor sit amet, consectetur voluptate velit esse cillum dolore eu fugiat nulla pariatur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Economy Car Rentals", 0);
@@ -81,6 +81,12 @@ insert into rentacar_branch_office(id, address, name, rentacar_id) values(-2, "4
 
 insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
 								-1, "2018.11.13", "2018.11.16", 2, 0, 80, 0, -1, -1);
+								
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
+								-2, "2018.12.13", "2018.12.16", 2, 0, 80, 0, -1, -1);
+								
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
+								-3, "2018.10.13", "2018.10.16", 2, 0, 80, 0, -2, -1);
                     
                     
                     

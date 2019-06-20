@@ -57,7 +57,7 @@ function reserveRoom(reservationID) {
 			
 			toast(response.data);
 			
-			if(response.data.toLowerCase() == "success") {
+			if(response.data.toLowerCase().includes("success")) {
 				removeReservation(reservationID);
 			}
 			
