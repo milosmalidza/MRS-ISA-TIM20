@@ -2,7 +2,6 @@ package com.webapplication.Service;
 
 import java.io.IOException;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -41,6 +40,9 @@ public class RentACarAdminService {
 	
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
+	
+	private static final String badRequest = "badRequest";
+	private static final String success = "success";
 	
 	
 	public String getServiceRating(String user) throws IOException {
@@ -320,8 +322,8 @@ public class RentACarAdminService {
 		
 		RentACarAdmin admin = rentACarAdminRep.findByUsername(userNode.get("username").asText());
 		
-		if (admin == null) return "badRequest";
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		if (admin == null) return badRequest;
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
 		
 		JsonNode dataNode = mapper.readTree(json);
 		
@@ -333,11 +335,11 @@ public class RentACarAdminService {
 		for (RentACarBranchOffice office : offices) {
 			if (office.getId() == dataNode.get("id").asLong()) {
 				branchRep.delete(office);
-				return "success";
+				return success;
 			}
 		}
 		
-		return "badRequest";
+		return badRequest;
 		
 		
 	}
@@ -351,10 +353,10 @@ public class RentACarAdminService {
 		RentACarAdmin admin = rentACarAdminRep.findByUsername(userNode.get("username").asText());
 		
 		if (admin == null) {
-			return "badRequest";
+			return badRequest;
 		}
 		
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
 		
 		RentACar service = rentRepository.findById(userNode.get("serviceId").asLong()).get();
 		
@@ -376,7 +378,7 @@ public class RentACarAdminService {
 		
 		branchRep.save(o);
 		
-		return "success";
+		return success;
 	}
 	
 	
@@ -390,10 +392,10 @@ public class RentACarAdminService {
 		RentACarAdmin admin = rentACarAdminRep.findByUsername(userNode.get("username").asText());
 		
 		if (admin == null) {
-			return "badRequest";
+			return badRequest;
 		}
 		
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
 		
 		
 		RentACar carService = rentRepository.findById(userNode.get("serviceId").asLong()).get();
@@ -415,7 +417,7 @@ public class RentACarAdminService {
 		
 		rentRepository.save(carService);
 		
-		return "success";
+		return success;
 	}
 	
 	public String saveEditedVehicle(String json, String user) throws IOException {
@@ -429,10 +431,10 @@ public class RentACarAdminService {
 		RentACarAdmin admin = rentACarAdminRep.findByUsername(jsonUser.get("username").asText());
 		
 		if (admin == null) {
-			return "badRequest";
+			return badRequest;
 		}
 		
-		if (!admin.getPassword().equals(jsonUser.get("password").asText())) return "badRequest";
+		if (!admin.getPassword().equals(jsonUser.get("password").asText())) return badRequest;
 		
 		Long id = jsonData.get("id").asLong();
 		String name = jsonData.get("name").asText();
@@ -454,10 +456,7 @@ public class RentACarAdminService {
 		vehicleRepository.save(vehicle);
 		
 		
-		
-		
-		
-		return "success";
+		return success;
 	}
 	
 	public String AddCar(String json, String user) throws IOException, NumberFormatException, IllegalArgumentException  {
@@ -467,8 +466,8 @@ public class RentACarAdminService {
 		
 		RentACarAdmin admin = rentACarAdminRep.findByUsername(userNode.get("username").asText());
 		
-		if (admin == null) return "badRequest";
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		if (admin == null) return badRequest;
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
 		
 		RentACar service = rentRepository.findById(userNode.get("serviceId").asLong()).get();
 		
@@ -491,7 +490,7 @@ public class RentACarAdminService {
 		
 		vehicleRepository.save(vehicle);
 		
-		return "success";
+		return success;
 	}
 
 	//Change company info with new data
@@ -525,7 +524,7 @@ public class RentACarAdminService {
 		
 		rentRepository.save(company);
 		
-		return "success";
+		return success;
 	}
 	
 

@@ -1,7 +1,6 @@
 package com.webapplication.Controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,6 +36,8 @@ public class CarServicesController {
 	@Autowired
 	public RegisteredUserRepository userRepository;
 	
+	private static final String loginHtml = "login.html";
+	
 	@GetMapping("add-rent-a-car-vehicle.html")
 	public String returnAdminAddVehicle(Model model,
 			@RequestParam("username") String username,
@@ -45,7 +46,7 @@ public class CarServicesController {
 		RentACarAdmin admin = rentAdminRep.findByUsername(username);
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return "login.html";
+			return loginHtml;
 		}
 		
 		RentACar service = rentService.rentACarRep.findOneById(admin.getRentACar().getId());
@@ -64,7 +65,7 @@ public class CarServicesController {
 		
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return "login.html";
+			return loginHtml;
 		}
 		
 		RentACar service = rentService.rentACarRep.findOneById(admin.getRentACar().getId());
@@ -96,7 +97,7 @@ public class CarServicesController {
 		
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return "login.html";
+			return loginHtml;
 		}
 		
 		
