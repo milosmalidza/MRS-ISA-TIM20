@@ -56,10 +56,10 @@ public class SystemAdminService {
 	
 	/* Constants */
 	
-	public final String HOTEL_CASE = "hotel";
-	public final String AIRLINE_CASE = "airline";
-	public final String RENT_A_CAR_CASE = "rent-a-car";
-	public final String SYSTEM_CASE = "system";
+	public static final String HOTELCASE = "hotel";
+	public static final String AIRLINECASE = "airline";
+	public static final String RENTCARCASE = "rent-a-car";
+	public static final String SYSTEMCASE = "system";
 	
 	
 	public String registerAdmin(UserBean admin) {
@@ -67,8 +67,6 @@ public class SystemAdminService {
 		if(admin.getCompanyType() == null) {
 			return "Company type undefined";
 		}
-		
-		//TODO: Check whether email already exists
 		
 		
 		if(mulSvc.usernameExist(admin.getUsername())) {
@@ -80,7 +78,7 @@ public class SystemAdminService {
 		//check which type of admin I'm registering
 		switch(admin.getCompanyType()) {
 		
-		case HOTEL_CASE:
+		case HOTELCASE:
 			HotelAdmin hotelAdmin = new HotelAdmin(admin);
 			hotelAdminSvc.save(hotelAdmin);
 			
@@ -91,7 +89,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case AIRLINE_CASE:
+		case AIRLINECASE:
 			AirlineAdmin airlineAdmin = new AirlineAdmin(admin);
 			airlineAdminSvc.save(airlineAdmin);
 			
@@ -102,7 +100,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case RENT_A_CAR_CASE:
+		case RENTCARCASE:
 			RentACarAdmin rent_a_car_admin = new RentACarAdmin(admin);
 			rentACarAdminSvc.save(rent_a_car_admin);
 			
@@ -113,7 +111,7 @@ public class SystemAdminService {
 			
 			return response;
 			
-		case SYSTEM_CASE:
+		case SYSTEMCASE:
 			SystemAdmin sysAdmin = new SystemAdmin(admin);
 			save(sysAdmin);
 			
@@ -145,7 +143,7 @@ public class SystemAdminService {
 		
 		switch(companyInfo.getType().toLowerCase()) {
 		
-		case HOTEL_CASE:
+		case HOTELCASE:
 			
 			HotelAdmin hotelAdmin = hotelAdminSvc.findByUsername(companyInfo.getAdminUsername());
 			
@@ -156,7 +154,7 @@ public class SystemAdminService {
 			
 			return "Hotel successfully registered";
 			
-		case AIRLINE_CASE:
+		case AIRLINECASE:
 			
 			AirlineAdmin airlineAdmin = airlineAdminSvc.findByUsername(companyInfo.getAdminUsername());
 			
@@ -167,7 +165,7 @@ public class SystemAdminService {
 			
 			return "Airline successfully registered";
 			
-		case RENT_A_CAR_CASE:
+		case RENTCARCASE:
 			
 			RentACarAdmin rentACarAdmin = rentACarAdminSvc.findByUsername(companyInfo.getAdminUsername());
 			
@@ -195,7 +193,7 @@ public class SystemAdminService {
 		//determine company type
 		switch(companyInfo.getType().toLowerCase()) {
 		
-		case HOTEL_CASE:
+		case HOTELCASE:
 			
 			Hotel hotel = hotelSvc.findOne(companyInfo.getCompanyId()).get(); //get hotel
 			
@@ -214,7 +212,7 @@ public class SystemAdminService {
 			
 			return "Admins and their companies successfully saved";
 			
-		case AIRLINE_CASE:
+		case AIRLINECASE:
 			
 			Airline airline = airlineSvc.findByName(companyInfo.getName()); //get airline
 			
@@ -232,7 +230,7 @@ public class SystemAdminService {
 			
 			return "Admins and their companies successfully saved";
 			
-		case RENT_A_CAR_CASE:
+		case RENTCARCASE:
 			
 			RentACar rentACar = rentACarSvc.findOneById(companyInfo.getCompanyId());
 			
