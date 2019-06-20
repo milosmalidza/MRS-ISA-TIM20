@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.webapplication.Model.RoomReservation;
 
@@ -15,5 +16,10 @@ public interface RoomReservationRepository extends JpaRepository<RoomReservation
 	
 	@Query("select reservation from RoomReservation as reservation where reservation.user is null")
 	public Collection<RoomReservation> findQuickReservations();
+	
+	
+	
+	@Transactional
+	public void deleteById(Long id);
   
 }

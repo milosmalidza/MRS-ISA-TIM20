@@ -83,8 +83,8 @@ public class RegisteredUserService {
 		if (!ruser.getPassword().equals(userNode.get("password").asText())) return "badRequest";
 		
 		JsonNode jsonNode = mapper.readTree(json);
-		
-		RoomReservation reservation = roomReservSvc.findOne(jsonNode.get("id").asLong()).get();
+		Long id = jsonNode.get("id").asLong();
+		RoomReservation reservation = roomReservSvc.findOne(id).get();
 		
 		Date currentDate = new Date();
 		long milis = reservation.getCheckIn().getTime() - currentDate.getTime();
@@ -93,7 +93,7 @@ public class RegisteredUserService {
 			return "notAllowed";
 		}
 		
-		roomReservSvc.roomReservRep.delete(reservation);
+		roomResRep.deleteById(reservation.getId());
 		
 		
 		return "success";
