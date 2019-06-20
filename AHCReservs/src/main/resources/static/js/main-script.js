@@ -18,6 +18,13 @@ window.addEventListener("load", function() {
 		
 		var path = window.location.pathname;
 		var page = path.split("/").pop();
+		if (sessionUser.user == "carAdmin") {
+			if (page == "" || page == "index.html") {
+				loadPage("edit-rent-a-car-service.html?username=" + sessionUser.username + "&password=" + sessionUser.password);
+				return;
+			}
+		}
+		
 		if (page == "login.html") {
 			window.location.href = "index.html";
 		}

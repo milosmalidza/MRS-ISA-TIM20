@@ -333,7 +333,7 @@
 #search-form {
 	position: absolute;
 	display: grid;
-	grid-template-columns: 33.3% auto 33.3%;
+	grid-template-columns: 60% auto;
 	width: 0px; /*600px*/
 	height: 40px;
 	background: white;
