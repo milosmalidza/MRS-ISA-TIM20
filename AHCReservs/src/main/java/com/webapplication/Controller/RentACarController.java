@@ -34,7 +34,7 @@ public class RentACarController {
 	@Autowired
 	private VehicleReservationService vehResServ;
 	
-	private static final String badRequest = "badRequest";
+	private static final String BADREQUEST = "badRequest";
 	
 	
 	@RequestMapping(value = "/getServiceRating", method = RequestMethod.POST)
@@ -43,7 +43,7 @@ public class RentACarController {
 			return rentAdminService.getServiceRating(user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -53,7 +53,7 @@ public class RentACarController {
 			return rentAdminService.getVehicleRatings(user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -65,7 +65,7 @@ public class RentACarController {
 			return rentAdminService.getReservationsReport(user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -77,7 +77,7 @@ public class RentACarController {
 			return rentAdminService.getReservationsByDay(user, json);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -89,7 +89,7 @@ public class RentACarController {
 			return rentAdminService.getProfitReport(user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -100,7 +100,7 @@ public class RentACarController {
 			return rentAdminService.removeBranchOffice(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -111,7 +111,7 @@ public class RentACarController {
 			return rentAdminService.updateBranchOffice(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -122,7 +122,7 @@ public class RentACarController {
 			return rentService.getBranchOffices(json);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class RentACarController {
 			return rentAdminService.addOfficeBranch(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -145,7 +145,7 @@ public class RentACarController {
 			return rentService.rateRentACar(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -158,7 +158,7 @@ public class RentACarController {
 			return rentAdminService.saveEditedVehicle(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -170,7 +170,7 @@ public class RentACarController {
 			return rentService.getVehicleInfo(json);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -183,7 +183,7 @@ public class RentACarController {
 			return rentService.checkVehicle(status.get("id").asText());
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -196,7 +196,7 @@ public class RentACarController {
 			return rentService.removeVehicle(json, user);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 	}
 	
@@ -211,7 +211,7 @@ public class RentACarController {
 		} catch (IllegalArgumentException e) {
 			return "badType";
 		} catch (IOException e) {
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 	}
@@ -223,7 +223,7 @@ public class RentACarController {
 		try {
 			return rentAdminService.ChangeCompanyInfo(json, user);
 		} catch (IOException e) {
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 		
@@ -236,7 +236,7 @@ public class RentACarController {
 		try {
 			return rentService.returnSearchResults(json);
 		} catch (IOException | ParseException e) {
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 		
@@ -250,7 +250,7 @@ public class RentACarController {
 		} catch (IOException | ParseException e) {
 			
 			e.printStackTrace();
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 		

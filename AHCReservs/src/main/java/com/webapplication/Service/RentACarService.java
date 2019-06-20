@@ -56,7 +56,7 @@ public class RentACarService {
 	@Autowired
 	public SystemAdminRepository sysRep;
 	
-	private static final String badRequest = "badRequest";
+	public static final String BADREQUEST = "badRequest";
 	
 	
 	public RentACar findOneById(Long id) {
@@ -116,8 +116,8 @@ public class RentACarService {
 		
 		SystemAdmin admin = sysRep.findByUsername(userNode.get("username").asText());
 		
-		if (admin == null) return badRequest;
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
+		if (admin == null) return BADREQUEST;
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return BADREQUEST;
 		
 		JsonNode jsonNode = mapper.readTree(json);
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy.");
@@ -374,7 +374,7 @@ public class RentACarService {
 		
 		Vehicle vehicle = vehicleRep.findById(vid).get();
 		
-		if (vehicle == null) return badRequest;
+		if (vehicle == null) return BADREQUEST;
 		
 		Date currentDate = new Date();
 		List<VehicleReservation> reses = vehicle.getReservations();
@@ -396,7 +396,7 @@ public class RentACarService {
 		RentACarAdmin admin = rentAdminService.findByUsername(userNode.get("username").asText());
 		
 		if (admin == null || !admin.getPassword().equals(userNode.get("password").asText())) {
-			return badRequest;
+			return BADREQUEST;
 		}
 		
 		

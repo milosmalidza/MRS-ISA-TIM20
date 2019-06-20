@@ -36,7 +36,7 @@ public class CarServicesController {
 	@Autowired
 	public RegisteredUserRepository userRepository;
 	
-	private static final String loginHtml = "login.html";
+	public static final String LOGINHTML = "login.html";
 	
 	@GetMapping("add-rent-a-car-vehicle.html")
 	public String returnAdminAddVehicle(Model model,
@@ -46,7 +46,7 @@ public class CarServicesController {
 		RentACarAdmin admin = rentAdminRep.findByUsername(username);
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return loginHtml;
+			return LOGINHTML;
 		}
 		
 		RentACar service = rentService.rentACarRep.findOneById(admin.getRentACar().getId());
@@ -65,7 +65,7 @@ public class CarServicesController {
 		
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return loginHtml;
+			return LOGINHTML;
 		}
 		
 		RentACar service = rentService.rentACarRep.findOneById(admin.getRentACar().getId());
@@ -97,7 +97,7 @@ public class CarServicesController {
 		
 		
 		if (admin == null || !admin.getPassword().equals(password)) {
-			return loginHtml;
+			return LOGINHTML;
 		}
 		
 		
