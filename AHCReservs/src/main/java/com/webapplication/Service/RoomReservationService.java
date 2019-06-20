@@ -1,8 +1,8 @@
 package com.webapplication.Service;
 
 import java.text.ParseException;
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -291,16 +291,13 @@ public class RoomReservationService {
 			//if the room hasn't been reserved in the mean time the reservation is successful
 			if(isRoomReserved(room.getId(), checkInDate, checkOutDate)) {
 				return "Someone already reserved the room.";
+			}
 
 			System.out.println("NUM OF NIGHTS: " + reservationData.getNumOfNights());
 			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
 					(room.getRoomPrice() + servicesPrice) * reservationData.getNumOfNights(),
 					room.getHotel(), user, room, additionalServices);
 			
-			RoomReservation reservation = new RoomReservation(checkInDate, checkOutDate, reservationData.getNumOfGuests(),
-					room.getRoomPrice(), room.getHotel(), user, room, additionalServices);
-			
-			room.setReservation(reservation);
 			save(reservation);
 			roomSvc.save(room);
 			

@@ -178,6 +178,7 @@ public class RoomReservation {
 
 	public void setVersion(Long version) {
 		this.version = version;
+	}
 
 	public double getRating() {
 		return rating;
