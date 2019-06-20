@@ -10,9 +10,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -20,7 +17,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.webapplication.JSONBeans.MapPinData;
-import com.webapplication.Model.Hotel;
 import com.webapplication.Model.Rating;
 import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
@@ -59,6 +55,8 @@ public class RentACarService {
 	
 	@Autowired
 	public SystemAdminRepository sysRep;
+	
+	private static final String badRequest = "badRequest";
 	
 	
 	public RentACar findOneById(Long id) {
@@ -118,8 +116,8 @@ public class RentACarService {
 		
 		SystemAdmin admin = sysRep.findByUsername(userNode.get("username").asText());
 		
-		if (admin == null) return "badRequest";
-		if (!admin.getPassword().equals(userNode.get("password").asText())) return "badRequest";
+		if (admin == null) return badRequest;
+		if (!admin.getPassword().equals(userNode.get("password").asText())) return badRequest;
 		
 		JsonNode jsonNode = mapper.readTree(json);
 		SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy.");
@@ -339,7 +337,6 @@ public class RentACarService {
 			e.printStackTrace();
 		}
 		
-		System.out.println(rentACarJson);
 		
 		return rentACarJson;
 		
@@ -377,7 +374,7 @@ public class RentACarService {
 		
 		Vehicle vehicle = vehicleRep.findById(vid).get();
 		
-		if (vehicle == null) return "badRequest";
+		if (vehicle == null) return badRequest;
 		
 		Date currentDate = new Date();
 		List<VehicleReservation> reses = vehicle.getReservations();
@@ -399,7 +396,7 @@ public class RentACarService {
 		RentACarAdmin admin = rentAdminService.findByUsername(userNode.get("username").asText());
 		
 		if (admin == null || !admin.getPassword().equals(userNode.get("password").asText())) {
-			return "badRequest";
+			return badRequest;
 		}
 		
 		
@@ -409,10 +406,7 @@ public class RentACarService {
 		Vehicle vehicle = vehicleRep.findById(vehicleId).get();
 		RentACar service = rentACarRep.findById(serviceId).get();
 		
-		System.out.println(service.getVehicles().size());
 		service.getVehicles().remove(vehicle);
-		System.out.println(service.getVehicles().size());
-		//rentACarRep.save(service);
 		
 		Date currentDate = new Date();
 		
@@ -454,7 +448,7 @@ public class RentACarService {
 					if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
 							!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
 							startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
-						System.out.println("skip");
+						
 						isReserved = true;
 						break;
 					}
@@ -519,7 +513,7 @@ public class RentACarService {
 					if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
 							!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
 							startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
-						System.out.println("skip");
+						
 						isReserved = true;
 						break;
 					}
@@ -550,65 +544,6 @@ public class RentACarService {
 		
 		return returnJson;
 	}
-	/*
-	public String returnReservationResults(String json, String user) throws IOException, ParseException {
-		
-		if (user == null || user.equals("null")) {
-			return "notLoggedIn";
-		}
-		
-		
-		ObjectMapper mapper = new ObjectMapper();
-		
-		JsonNode userNode = mapper.readTree(user);
-		JsonNode jsonNode = mapper.readTree(json);
-		
-		RegisteredUser userObject = userRepository.findByUsername(userNode.get("username").asText());
-		if (userObject == null) {
-			return "notLoggedIn";
-		}
-		else if (!userObject.getPassword().equals(userNode.get("password").asText())) {
-			return "badRequest";
-		}
-		
-		
-		Long id = Long.parseLong(jsonNode.get("id").asText());
-		Vehicle vehicle = vehicleRep.findOneById(id);
-		
-		if (vehicle != null) {
-			
-			
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm");
-			
-			Date startDate = format.parse(jsonNode.get("startDate").asText());
-			Date endDate = format.parse(jsonNode.get("endDate").asText());
-			
-			if (!isReservationOk(startDate, endDate, vehicle.getReservations())) {
-				return "reserved";
-			}
-			
-			
-			String startLocation = jsonNode.get("startLocation").asText();
-			String endLocation = jsonNode.get("endLocation").asText();
-			
-			VehicleReservation reservation = new VehicleReservation();
-			reservation.setReservationDate(startDate);
-			reservation.setDueDate(endDate);
-			reservation.setVehicle(vehicle);
-			reservation.setUser(userObject);
-			reservation.setStartLocation(startLocation);
-			reservation.setEndLocation(endLocation);
-			
-			
-			
-			reservationRep.save(reservation);
-			
-			return "success";
-		}
-		
-		return "fail";
-		
-	}*/
 
 
 	public String getServiceName(List<RentACar> findAll) {

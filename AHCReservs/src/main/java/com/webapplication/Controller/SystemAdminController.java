@@ -21,7 +21,6 @@ import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.Hotel;
 import com.webapplication.Model.HotelAdmin;
-import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Service.AirlineAdminService;
 import com.webapplication.Service.ConfirmationTokenService;
