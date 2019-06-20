@@ -22,6 +22,8 @@ Javascript, frontend biblioteke:
 
 Uputstvo za pokretanje putem Eclipse-a:
 - Import projekta kao Maven projekat
+- Konfiguracija MySql baze na lokalnoj mašini
+- U src/main/resources -> application.properties se mogu podesiti parametri za konekciju i email autentifikaciju
 - Startovanjem WebApplication metode iz com.webapplication.WebApplication paketa se pokreće server
 - U pretraživaču ukucati adresu: "localhost:8080"
 
