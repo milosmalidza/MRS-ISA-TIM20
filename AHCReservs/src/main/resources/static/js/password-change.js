@@ -25,23 +25,28 @@ function changePassword() {
 		return;
 	}
 	
+	if($("#password").val().length < 6) {
+		toast("Password must be at least 6 characters long");
+		return;
+	}
+	
 	
 	let user = JSON.parse(window.localStorage.getItem("user"));
 	
 	axios.post(controllerPath + "/changePassword", getUserJson(user))
-	.then(response => {
+		.then(response => {
 		
-		if(response.data === "" || response.data === null) {
-			toast("You must use a different password");
-		} else {
-			
-			//add the user with new data to session
-			response.data.user = user.user;
-			response.data.status = user.status;
-			window.localStorage.setItem("user", JSON.stringify(response.data));
-			
-			redirectAdmin(response.data);
-		}
+			if(response.data === "" || response.data === null) {
+				toast("You must use a different password");
+			} else {
+				
+				//add the user with new data to session
+				response.data.user = user.user;
+				response.data.status = user.status;
+				window.localStorage.setItem("user", JSON.stringify(response.data));
+				
+				redirectAdmin(response.data);
+			}
 		
 	});
 	
@@ -77,7 +82,8 @@ function redirectAdmin(admin) {
 		
 	case "carAdmin":
 		//TODO: redirekcija rent a car admin-a
-		window.location.href = "index.html";
+		let user = JSON.parse(window.localStorage.getItem("user"));
+		window.location.href = "edit-rent-a-car-service.html?username=" + user.username + "&password=" + user.password;
 		return;
 	
 	}
