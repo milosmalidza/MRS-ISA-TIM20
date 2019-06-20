@@ -333,6 +333,9 @@ function performReservation(element) {
 			else if (response == "badRequest") {
 				showReservationMessage("Bad request.", 3000);
 			}
+			else if (response == "reserved") {
+				notify("Reserved", "That vehicle is already reserved");
+			}
 			
 			
 			console.log(response);

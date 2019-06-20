@@ -10,6 +10,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -80,37 +83,18 @@ public class RentACarService {
 		return branchRep.findAllByRentACar(rentACar);
 	}
 	
-	public boolean isReservationOk(Date startDate, Date endDate, List<VehicleReservation> reservations) {
+	public static boolean isReservationOk(Date startDate, Date endDate, List<VehicleReservation> reservations) {
 		for (VehicleReservation reservation : reservations) {
 			
 			if (!(startDate.before(reservation.getReservationDate()) || startDate.after(reservation.getDueDate())) ||
 					!(endDate.before(reservation.getReservationDate()) || endDate.after(reservation.getDueDate())) ||
 					startDate.before(reservation.getReservationDate()) && endDate.after(reservation.getDueDate())) {
-				System.out.println("skip");
 				return false;
 			}
 		}
 		return true;
 	}
 	
-	public String quickVehicleReservation(String json, String user) throws IOException {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		JsonNode userNode = mapper.readTree(user);
-		
-		RegisteredUser ruser = userRepository.findByUsername(userNode.get("username").asText());
-		
-		if (ruser == null) return "badRequest";
-		if (!ruser.getPassword().equals(userNode.get("password").asText())) return "badRequest";
-		
-		JsonNode jsonNode = mapper.readTree(json);
-		
-		VehicleReservation reservation = reservationRep.findOneById(jsonNode.get("id").asLong());
-		reservation.setUser(ruser);
-		reservationRep.save(reservation);
-		
-		return "success";
-	}
 	
 	public Collection<VehicleReservation> getQuickVehicleReservations() {
 		
@@ -566,7 +550,7 @@ public class RentACarService {
 		
 		return returnJson;
 	}
-	
+	/*
 	public String returnReservationResults(String json, String user) throws IOException, ParseException {
 		
 		if (user == null || user.equals("null")) {
@@ -587,39 +571,44 @@ public class RentACarService {
 			return "badRequest";
 		}
 		
-		List<Vehicle> vehicles = vehicleRep.findAll();
 		
 		Long id = Long.parseLong(jsonNode.get("id").asText());
-		for (Vehicle vehicle : vehicles) {
-			if (vehicle.getId() == id) {
-				
-				
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm");
-				
-				Date startDate = format.parse(jsonNode.get("startDate").asText());
-				Date endDate = format.parse(jsonNode.get("endDate").asText());
-				String startLocation = jsonNode.get("startLocation").asText();
-				String endLocation = jsonNode.get("endLocation").asText();
-				
-				VehicleReservation reservation = new VehicleReservation();
-				reservation.setReservationDate(startDate);
-				reservation.setDueDate(endDate);
-				reservation.setVehicle(vehicle);
-				reservation.setUser(userObject);
-				reservation.setStartLocation(startLocation);
-				reservation.setEndLocation(endLocation);
-				
-				
-				
-				reservationRep.save(reservation);
-				
-				return "success";
+		Vehicle vehicle = vehicleRep.findOneById(id);
+		
+		if (vehicle != null) {
+			
+			
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm");
+			
+			Date startDate = format.parse(jsonNode.get("startDate").asText());
+			Date endDate = format.parse(jsonNode.get("endDate").asText());
+			
+			if (!isReservationOk(startDate, endDate, vehicle.getReservations())) {
+				return "reserved";
 			}
+			
+			
+			String startLocation = jsonNode.get("startLocation").asText();
+			String endLocation = jsonNode.get("endLocation").asText();
+			
+			VehicleReservation reservation = new VehicleReservation();
+			reservation.setReservationDate(startDate);
+			reservation.setDueDate(endDate);
+			reservation.setVehicle(vehicle);
+			reservation.setUser(userObject);
+			reservation.setStartLocation(startLocation);
+			reservation.setEndLocation(endLocation);
+			
+			
+			
+			reservationRep.save(reservation);
+			
+			return "success";
 		}
 		
 		return "fail";
 		
-	}
+	}*/
 
 
 	public String getServiceName(List<RentACar> findAll) {

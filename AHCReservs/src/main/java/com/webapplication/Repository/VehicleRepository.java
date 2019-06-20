@@ -10,6 +10,8 @@ import com.webapplication.Model.Vehicle;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 	
+	public Vehicle findOneById(Long id);
+	
 	public Vehicle findAllByName(String name);
 	
 	@Transactional

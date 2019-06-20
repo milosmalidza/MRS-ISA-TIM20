@@ -13,8 +13,10 @@ import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RentACar;
 import com.webapplication.Model.RentACarAdmin;
 import com.webapplication.Model.RentACarBranchOffice;
+import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RentACarAdminRepository;
 import com.webapplication.Repository.RentACarBranchOfficeRepository;
+import com.webapplication.Repository.RentACarRepository;
 import com.webapplication.Service.RentACarService;
 
 @Controller
@@ -28,6 +30,12 @@ public class CarServicesController {
 	
 	@Autowired
 	RentACarBranchOfficeRepository branchRep;
+	
+	@Autowired
+	public RentACarRepository rentACarRep;
+	
+	@Autowired
+	public RegisteredUserRepository userRepository;
 	
 	@GetMapping("add-rent-a-car-vehicle.html")
 	public String returnAdminAddVehicle(Model model,
@@ -112,8 +120,8 @@ public class CarServicesController {
 	public String vehicleSearch(@RequestParam("id") String id,
 								@RequestParam("u") String username,
 								Model model) {
-		RentACar service = rentService.rentACarRep.findOneById(Long.parseLong(id));
-		RegisteredUser user = rentService.userRepository.findByUsername(username);
+		RentACar service = rentACarRep.findOneById(Long.parseLong(id));
+		RegisteredUser user = userRepository.findByUsername(username);
 		List<RentACarBranchOffice> offices = branchRep.findAllByRentACar(service);
 		
 		double rating = rentService.getUserRating(service, user);

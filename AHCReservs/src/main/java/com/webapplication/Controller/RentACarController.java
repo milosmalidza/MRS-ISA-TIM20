@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webapplication.JSONBeans.KeyBean;
 import com.webapplication.Service.RentACarAdminService;
 import com.webapplication.Service.RentACarService;
+import com.webapplication.Service.VehicleReservationService;
 
 @RestController
 @RequestMapping("/rentACarService")
@@ -31,6 +32,9 @@ public class RentACarController {
 	
 	@Autowired
 	private RentACarService rentService;
+	
+	@Autowired
+	private VehicleReservationService vehResServ;
 	
 	
 	@RequestMapping(value = "/getServiceRating", method = RequestMethod.POST)
@@ -242,7 +246,7 @@ public class RentACarController {
 	public String reserveVehicle(@RequestParam("json") String json, @RequestParam("user") String user) {
 		
 		try {
-			return rentService.returnReservationResults(json, user);
+			return vehResServ.returnReservationResults(json, user);
 		} catch (IOException | ParseException e) {
 			
 			e.printStackTrace();

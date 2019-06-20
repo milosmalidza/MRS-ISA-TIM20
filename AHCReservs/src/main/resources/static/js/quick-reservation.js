@@ -34,9 +34,16 @@ function reserveVehicle(id, element) {
 			id : id
 		}), user : JSON.stringify(sessionUser)},
 		success : function(response) {
-			$(element.parentNode.parentNode).hide();
+			
 			if (response == "success") {
 				notify("Success", "You have successfully reserved a vehicle");
+				$(element.parentNode.parentNode).hide();
+			}
+			else if (response == "reserved") {
+				notify("Reserved", "That vehicle is already reserved");
+			}
+			else {
+				notify("Something went wrong", "Please try again later");
 			}
 		}
 	})

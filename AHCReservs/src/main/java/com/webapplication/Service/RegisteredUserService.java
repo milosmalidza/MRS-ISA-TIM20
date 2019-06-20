@@ -24,6 +24,7 @@ import com.webapplication.Model.RoomReservation;
 import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Repository.RegisteredUserRepository;
 import com.webapplication.Repository.RoomReservationRepository;
+import com.webapplication.Repository.VehicleReservationRepository;
 
 @Service
 public class RegisteredUserService {
@@ -39,6 +40,9 @@ public class RegisteredUserService {
 	
 	@Autowired
 	RoomReservationRepository roomResRep;
+	
+	@Autowired
+	public VehicleReservationRepository reservationRep;
 	
 	public String rateRoomReservation(String json, String user) throws IOException {
 		

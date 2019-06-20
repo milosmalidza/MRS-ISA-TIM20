@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 
 @Entity
 public class VehicleReservation {
@@ -42,6 +43,10 @@ public class VehicleReservation {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	private Vehicle vehicle;
+	
+	@Version
+	@Column(name="version", unique=false, nullable=false)
+	private Long version;
 
 	public VehicleReservation() {}
 	
@@ -119,6 +124,14 @@ public class VehicleReservation {
 
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 	
 	

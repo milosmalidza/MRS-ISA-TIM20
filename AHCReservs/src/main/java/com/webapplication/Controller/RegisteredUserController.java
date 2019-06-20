@@ -19,6 +19,7 @@ import com.webapplication.Model.HAdditionalService;
 import com.webapplication.Service.RegisteredUserService;
 import com.webapplication.Service.RentACarService;
 import com.webapplication.Service.RoomReservationService;
+import com.webapplication.Service.VehicleReservationService;
 
 @RestController
 @RequestMapping("/regUser")
@@ -33,13 +34,16 @@ public class RegisteredUserController {
 	@Autowired
 	RegisteredUserService regUserSvc;
 	
+	@Autowired
+	VehicleReservationService vehResServ;
+	
 	
 	@RequestMapping(value = "/quickVehicleReservation", method = RequestMethod.POST)
 	public ResponseEntity<String> quickVehicleReservation(@RequestParam("json") String json,
 											@RequestParam("user") String user) {
 		
 		try {
-			return new ResponseEntity<>(rentService.quickVehicleReservation(json, user), HttpStatus.OK);
+			return new ResponseEntity<>(vehResServ.quickVehicleReservation(json, user), HttpStatus.OK);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
