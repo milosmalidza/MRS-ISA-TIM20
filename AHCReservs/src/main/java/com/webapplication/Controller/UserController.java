@@ -93,6 +93,20 @@ public class UserController {
 
 	}
 	
+	@RequestMapping(value = "rateRoomReservation", method = RequestMethod.POST)
+	public String rateRoomReservation(@RequestParam("json") String json,
+											@RequestParam("user") String user) {
+		
+		try {
+			return registeredUserService.rateRoomReservation(json, user);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "badRequest";
+		}
+		
+	}
+	
 	@RequestMapping(value = "rateVehicleReservation", method = RequestMethod.POST)
 	public String rateVehicleReservation(@RequestParam("json") String json,
 											@RequestParam("user") String user) {

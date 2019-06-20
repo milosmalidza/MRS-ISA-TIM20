@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.webapplication.Model.RoomReservation;
+import com.webapplication.Model.VehicleReservation;
+import com.webapplication.Service.RentACarService;
 import com.webapplication.Service.RoomReservationService;
 
 @Controller	
@@ -16,15 +18,19 @@ public class QuickReservationsController {
 	@Autowired
 	RoomReservationService roomReservSvc;
 	
+	@Autowired
+	RentACarService rentService;
+	
 	
 	@GetMapping("/quick-reservations-display.html")
 	public String getReservations(Model model) {
 		
 		Collection<RoomReservation> roomReservs = roomReservSvc.getQuickReservations();
-		//TODO: dobaviti sve brze rezervacije za vozila
+		Collection<VehicleReservation> vehicleReservs = rentService.getQuickVehicleReservations();
+		
 		
 		model.addAttribute("roomReservations", roomReservs);
-		//TODO: postaviti atribut za rezervacije vozila
+		model.addAttribute("vehicleReservations", vehicleReservs);
 		
 		return "quick-reservations-display.html";
 	}

@@ -97,7 +97,13 @@ function addServicesToSelect(selectID, listOfValues, defaultText) {
 function addValuesAndIDsToSelect(selectID, listOfValues, defaultText) {
 	
 	$(selectID).dropdown('clear');
-	$(selectID).empty().append('<option value="">' + defaultText + '</option>');
+	if (defaultText != null) {
+		$(selectID).empty().append('<option value="">' + defaultText + '</option>');
+	}
+	else {
+		$(selectID).empty();
+	}
+	
 	
 	for(let i = 0; i < listOfValues.length; i++) {
 		$(selectID).append('<option value="' + listOfValues[i].id + '">'

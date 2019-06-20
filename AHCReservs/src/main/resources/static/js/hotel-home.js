@@ -13,6 +13,61 @@ var additionalServices = null;
 var pinAdded = false;
 var dateValid = true;
 
+function setUpRating() {
+	
+	if (sessionUser == null) {
+		return;
+	}
+	else {
+		$.ajax({
+			type : "post",
+			url : controllerPath + "/getHotelRating",
+			data : {json : JSON.stringify({
+				hotelId : $("#main-content-holder").attr("data-hotel-id")
+			}), user : JSON.stringify(sessionUser)},
+			success : function(response) {
+				console.log(response);
+				var data = JSON.parse(response);
+				
+				$('.ui.rating').attr("data-rating", data.rating);
+				$("#rate-us-text").css("display", "table-cell");
+				$('.ui.rating').rating({
+					onRate: function(value) {
+						
+						if (value == "0") {
+							return;
+						}
+						
+						$.ajax({
+							type : "post",
+							url : controllerPath + "/setHotelRating",
+							data : {json : JSON.stringify({
+								rating : value,
+								hotelId : $("#main-content-holder").attr("data-hotel-id")
+							}), user : JSON.stringify(sessionUser)},
+							success : function(response) {
+								console.log(response);
+								if (response == "success"){
+									notify("Rated", "Thank you for rating us");
+								}
+								else if (response == "noReservation") {
+									notify("No reservation", "You are not allowed to rate us yet");
+									$("#service-rating").rating('set rating', '0');
+								}
+								else {
+									$("#service-rating").rating('set rating', '0');
+								}
+							}
+						});
+					}
+				});
+			}
+		});
+	}
+	
+	
+	
+}
 
 function getMap() {
 	
@@ -52,28 +107,52 @@ function initializeDatePicker(dataAttrHolder, dataAttrID) {
 	    	opens: 'left',
 	    	minDate: new Date()
 	  	}, function(start, end, label) {
-	           console.log("A new date selection was made: " + start.format('YYYY-MM-DD HH-mm') + ' to ' + end.format('YYYY-MM-DD HH-mm'));
+	           
 		       roomCheckInDate = start.format('DD.MM.YYYY.');
 		       roomCheckOutDate = end.format('DD.MM.YYYY.');
 		       
-		       numOfNights = end.diff(start, "days"); 
-		       console.log(numOfNights);
+		       let fileName = location.href.split("/").slice(-1); 
 		       
-		       if(numOfNights === 0) {
-		    	   notify("Hotel service", "You must rent a room at least for one night");
-		    	   dateValid = false;
-		    	   return;
-		       } else {
-		    	   dateValid = true;
-		       }
+			if ($("#company-type").val() == undefined || $("#company-type").val() == "hotel") {
+				
+				numOfNights = end.diff(start, "days"); 
+				console.log(numOfNights);
+
+		         if(numOfNights === 0) {
+		           notify("Hotel service", "You must rent a room at least for one night");
+		           dateValid = false;
+		           return;
+		         } else {
+		           dateValid = true;
+		         }
+		
+		         additionalServicesPrice = 0;
+		         totalPrice = 0;
+		         numOfCheckedRooms = 0;
+		
+		         let hotelID = $(dataAttrHolder).attr(dataAttrID);
+				 getAvailableRooms(hotelID);
+				 
+			} else if ($("#company-type").val() == "rent-a-car") {
+				
+				var rentACarID = $(dataAttrHolder).attr(dataAttrID);
+				$.ajax({
+					type : "post",
+					url : sysAdminControllerPath + "/returnServiceCars",
+					data : {json : JSON.stringify({
+						companyid : rentACarID,
+						startDate : roomCheckInDate,
+						endDate : roomCheckOutDate
+					})},
+					success : function(response) {
+						var data = JSON.parse(response);
+						listServiceVehicles(data);
+					}
+				});
+				
+			}
+			
 		       
-		       additionalServicesPrice = 0;
-		       totalPrice = 0;
-		       numOfCheckedRooms = 0;
-		       
-		       let hotelID = $(dataAttrHolder).attr(dataAttrID);
-		       
-		       getAvailableRooms(hotelID);
 	    });
 	});
 	
@@ -189,7 +268,7 @@ function roomChecked(e) {
 				numOfCheckedRooms -= 1;
 			}
 			
-			$("#total-price").html(totalPrice + ' &euro;');
+			$("#total-price").html(totalPrice + ' €');
     		
     	});
 	
@@ -270,7 +349,7 @@ function reserveRooms(dataHolder, dataAttr) {
 			numOfCheckedRooms = 0;
 			additionalServicesPrice = 0;
 			totalPrice = 0;
-			$("#total-price").html(totalPrice + '&euro;');
+			$("#total-price").html(totalPrice + '€');
 			
 		});
 	
@@ -348,7 +427,7 @@ function additionalServiceSelected(value) {
 	additionalServicesPrice = 0;
 	
 	if(value == "") {
-		$("#total-price").html(totalPrice + ' &euro;');
+		$("#total-price").html(totalPrice + ' €');
 		return;
 	}
 	
@@ -367,6 +446,6 @@ function additionalServiceSelected(value) {
 	}
 	
 	
-	$("#total-price").html(totalPrice + ' &euro;');
+	$("#total-price").html(totalPrice + ' €');
 	
 }

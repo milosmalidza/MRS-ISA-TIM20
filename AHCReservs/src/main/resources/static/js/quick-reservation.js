@@ -14,11 +14,32 @@ function changeDisplay() {
 		break;
 		
 	case "rent-a-car":
-		//$("#room-reservation-table").show();
+		$("#vehicle-reservations-table").show();
 		break;
 	
 	}
 	
+}
+
+
+function reserveVehicle(id, element) {
+	if (sessionUser == null) {
+		notify("Unsuccessful", "You must be logged in");
+	}
+	
+	$.ajax({
+		type : "post",
+		url : controllerPath + "/quickVehicleReservation",
+		data : {json : JSON.stringify({
+			id : id
+		}), user : JSON.stringify(sessionUser)},
+		success : function(response) {
+			$(element.parentNode.parentNode).hide();
+			if (response == "success") {
+				notify("Success", "You have successfully reserved a vehicle");
+			}
+		}
+	})
 }
 
 

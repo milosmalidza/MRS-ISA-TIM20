@@ -78,8 +78,9 @@ insert into rentacar_branch_office(id, address, name, rentacar_id) values(-1, "1
 
 insert into rentacar_branch_office(id, address, name, rentacar_id) values(-2, "4393  Chandler Hollow Road", "Pittsburgh", 0);
                     
-                    
-                    
+
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id) values(
+								-1, "2018.11.13", "2018.11.16", 2, 0, 80, 0, -1, -1);
                     
                     
                     

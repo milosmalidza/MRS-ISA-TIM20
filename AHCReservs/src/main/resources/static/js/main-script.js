@@ -202,6 +202,13 @@ function registerUser() {
 		return;
 	}
 	
+	if(pass.value.length < 6) {
+		pass.parentNode.classList.add("error");
+		showFormMessage("Password must be at least 6 characters long.", 3000);
+		hideDataLoader();
+		return;
+	}
+	
 	
 	
 	var formData = new FormData(registerForm);

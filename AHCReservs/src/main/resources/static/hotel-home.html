@@ -31,7 +31,7 @@
 
 	</head>
 
-	<body onload='getMap();'>
+	<body onload='getMap();setUpRating();'>
 
 		<!-- Navigation bar -->
 		<div id="nav-bar">
@@ -84,6 +84,17 @@
 				  	</a>
 			    </div>
 			    
+			    <!-- Hotel rating ---------------------------------------->
+			    <table style="margin-top: 20px;">
+			    	<tr>
+			    		<td id="rate-us-text" style="display: none;width: 100px;">Rate us:</td>
+			    		<td><div id="service-rating" style="margin-left: 15px;float:left;" class="ui star rating" data-rating="0" data-max-rating="5"></div></td>
+			    		
+			    	</tr>
+			    </table>
+			   
+			    
+			   
 			    
 			    <h2 class="initially-hidden-element"> Hotel location </h2>
 				<!-- Bing map div -->

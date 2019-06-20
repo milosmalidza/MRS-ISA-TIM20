@@ -23,6 +23,7 @@ import com.webapplication.Model.RegisteredUser;
 import com.webapplication.Model.RoomReservation;
 import com.webapplication.Model.VehicleReservation;
 import com.webapplication.Repository.RegisteredUserRepository;
+import com.webapplication.Repository.RoomReservationRepository;
 
 @Service
 public class RegisteredUserService {
@@ -35,6 +36,24 @@ public class RegisteredUserService {
 	
 	@Autowired
 	private RentACarService rentACarService;
+	
+	@Autowired
+	RoomReservationRepository roomResRep;
+	
+	public String rateRoomReservation(String json, String user) throws IOException {
+		
+		ObjectMapper mapper = new ObjectMapper();
+		
+		JsonNode jsonNode = mapper.readTree(json);
+		
+		RoomReservation res = roomResRep.findOneById(jsonNode.get("id").asLong());
+		
+		res.setRating(jsonNode.get("value").asInt());
+		
+		roomResRep.save(res);
+		
+		return "success";
+	}
 	
 	public String rateVehicleReservation(String json, String user) throws IOException {
 		
@@ -127,10 +146,14 @@ public class RegisteredUserService {
 			((ObjectNode)node).put("room", r.getRoom().getNumber());
 			((ObjectNode)node).put("startDate", dateFormat.format(r.getCheckIn()));
 			((ObjectNode)node).put("endDate", dateFormat.format(r.getCheckOut()));
+			((ObjectNode)node).put("rating", r.getRating());
 			
 			long milis = r.getCheckIn().getTime() - currentDate.getTime();
 			long days = TimeUnit.DAYS.convert(milis, TimeUnit.MILLISECONDS);
-			if (days <= 2) {
+			if (r.getCheckOut().before(currentDate)) {
+				((ObjectNode)node).put("status", "rateUs");
+			}
+			else if (days <= 2) {
 				((ObjectNode)node).put("status", "notAllowed");
 			}
 			else {

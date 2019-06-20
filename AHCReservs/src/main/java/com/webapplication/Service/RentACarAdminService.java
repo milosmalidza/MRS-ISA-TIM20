@@ -41,7 +41,7 @@ public class RentACarAdminService {
 	
 	@Autowired
 	public RentACarBranchOfficeRepository branchRep;
-
+	
 	
 	public String getServiceRating(String user) throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
@@ -122,7 +122,7 @@ public class RentACarAdminService {
 		Calendar c2 = Calendar.getInstance();
 		
 		c1.setTime(date);
-		c1.add(Calendar.MONTH, -11);
+		c1.add(Calendar.MONTH, -9);
 		
 		ArrayNode months = mapper.createArrayNode();
 		ArrayNode reservations = mapper.createArrayNode();
@@ -132,7 +132,8 @@ public class RentACarAdminService {
 			for(Vehicle v : vehicles) {
 				for(VehicleReservation r : v.getReservations()) {
 					c2.setTime(r.getReservationDate());
-					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH)) {
+					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH) &&
+							c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR)) {
 						overral++;
 					}
 				}
@@ -168,11 +169,11 @@ public class RentACarAdminService {
 		Calendar c3 = Calendar.getInstance();
 		
 		c1.setTime(date);
-		c1.add(Calendar.MONTH, jsonData.get("month").asInt()-11);
+		c1.add(Calendar.MONTH, jsonData.get("month").asInt()-9);
 		c1.set(Calendar.DAY_OF_MONTH, c1.getActualMinimum(Calendar.DAY_OF_MONTH));
 		
 		c2.setTime(date);
-		c2.add(Calendar.MONTH, jsonData.get("month").asInt()-11);
+		c2.add(Calendar.MONTH, jsonData.get("month").asInt()-9);
 		c2.set(Calendar.DAY_OF_MONTH, c1.getActualMaximum(Calendar.DAY_OF_MONTH));
 		c2.add(Calendar.DATE, 1);
 		
@@ -235,7 +236,8 @@ public class RentACarAdminService {
 			for(Vehicle v : vehicles) {
 				for(VehicleReservation r : v.getReservations()) {
 					c2.setTime(r.getReservationDate());
-					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH)) {
+					if (c2.get(Calendar.MONTH) == c1.get(Calendar.MONTH) &&
+							c2.get(Calendar.YEAR) == c1.get(Calendar.YEAR)) {
 						overral += calculateReservation(r);
 					}
 				}

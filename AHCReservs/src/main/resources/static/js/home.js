@@ -192,7 +192,16 @@ function showHotelReservtions() {
 			table.appendChild(firstRow);
 			
 			for (var i = 0; i < items.length; i++) {
-				var status = items[i].status == "notAllowed" ? "Not allowed" : "<input class='cancel-reservation-button' type='button' value='Cancel' onclick='cancelHotelReservation(this)' />";
+				var status = null;
+				if (items[i].status == "notAllowed") {
+					status = "Pending";
+				}
+				else if (items[i].status == "rateUs") {
+					status = '<div class="ui star rating"  data-max-rating="5" data-rating="' + items[i].rating + '"></div>';
+				}
+				else {
+					status = "<input class='cancel-reservation-button' type='button' value='Cancel' onclick='cancelHotelReservation(this)' />";
+				}
 				
 				
 				
@@ -206,6 +215,26 @@ function showHotelReservtions() {
 				table.appendChild(row);
 				
 			}
+			
+			$('.ui.rating').rating({
+				onRate: function(value) {
+					var element = this.parentNode.parentNode;
+					var json = {
+						value : value,
+						id : element.getAttribute("data-id")
+					};
+					$.ajax({
+						type: "post",
+						url: "user/rateRoomReservation",
+						data : {json : JSON.stringify(json),
+							   user : JSON.stringify(sessionUser)},
+						success : function(response) {
+							console.log(response);
+						}
+						
+					});
+				}
+			});
 			
 			
 			
@@ -221,7 +250,6 @@ function showVehicleReservations() {
 		data : {user : JSON.stringify(sessionUser)},
 		success : function(response) {
 			
-			console.log(response);
 			
 			if (response == "badRequest") {
 				alert("Something went wrong");
@@ -274,7 +302,6 @@ function showVehicleReservations() {
 						value : value,
 						id : element.getAttribute("data-id")
 					};
-					console.log(element);
 					$.ajax({
 						type: "post",
 						url: "user/rateVehicleReservation",

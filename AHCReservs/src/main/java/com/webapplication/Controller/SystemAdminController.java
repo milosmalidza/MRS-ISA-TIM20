@@ -1,7 +1,7 @@
 package com.webapplication.Controller;
 
 import java.io.IOException;
-
+import java.text.ParseException;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.webapplication.JSONBeans.UserBean;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.webapplication.JSONBeans.CompanyInfo;
 import com.webapplication.Model.AirlineAdmin;
 import com.webapplication.Model.Hotel;
@@ -187,13 +188,47 @@ public class SystemAdminController {
 			value="/getRentACarServices",
 			method=RequestMethod.GET,
 			produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Collection<RentACar>> getRentACarServices() {
+	public ResponseEntity<ArrayNode> getRentACarServices() {
 		
-		return new ResponseEntity<>(racSvc.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(racSvc.getRentACarNameAndId(), HttpStatus.OK);
 		
 	}
 	
+	@RequestMapping(value = "/getRentACarServiceBranches", method = RequestMethod.POST)
+	public ResponseEntity<String> getRentACarServiceBranches(@RequestParam("json") String json) {
+		
+		try {
+			return new ResponseEntity<>(racSvc.getBranchOffices(json), HttpStatus.OK);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
+	@RequestMapping(value = "/returnServiceCars", method = RequestMethod.POST)
+	public ResponseEntity<String> returnServiceCars(@RequestParam("json") String json) {
+		
+			try {
+				return new ResponseEntity<>(racSvc.returnServiceCars(json), HttpStatus.OK);
+			} catch (IOException | ParseException e) {
+				e.printStackTrace();
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+			}
+		
+	}
+	
+	@RequestMapping(value = "/makeVehicleReservations", method = RequestMethod.POST)
+	public ResponseEntity<String> makeVehicleReservations(@RequestParam("json") String json,
+			@RequestParam("user") String user) {
+		try {
+			return new ResponseEntity<>(racSvc.makeVehicleReservations(json, user), HttpStatus.OK);
+		} catch (IOException | ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 
 }

@@ -4,6 +4,8 @@ import java.util.List;
 
 public class CompanyInfo {
 	
+	private Long companyId;
+	
 	private String name;
 	private String type;
 	private String adminUsername;
@@ -66,6 +68,14 @@ public class CompanyInfo {
 	@Override
 	public String toString() {
 		return this.name + "; " + this.type + "; " + this.adminUsername + ";";
+	}
+
+	public Long getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(Long companyId) {
+		this.companyId = companyId;
 	}
 
 }

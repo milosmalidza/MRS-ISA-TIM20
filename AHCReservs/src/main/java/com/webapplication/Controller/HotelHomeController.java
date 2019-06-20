@@ -1,5 +1,6 @@
 package com.webapplication.Controller;
 
+import java.io.IOException;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.webapplication.JSONBeans.DateBean;
@@ -38,6 +40,31 @@ public class HotelHomeController {
 	@Autowired
 	RoomReservationService roomReservSvc;
 	
+	@RequestMapping(value = "/setHotelRating", method = RequestMethod.POST)
+	public ResponseEntity<String> setHotelRating(@RequestParam("json") String json,
+												@RequestParam("user") String user) {
+		
+		try {
+			return new ResponseEntity<>(hotelSvc.setHotelRating(json, user), HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
+	
+	@RequestMapping(value = "/getHotelRating", method = RequestMethod.POST)
+	public ResponseEntity<String> getHotelRating(@RequestParam("json") String json,
+												@RequestParam("user") String user) {
+		
+		try {
+			return new ResponseEntity<>(hotelSvc.getHotelRating(json, user), HttpStatus.OK);
+		} catch (IOException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		
+	}
 	
 	@RequestMapping(
 			value="/getHotel",
