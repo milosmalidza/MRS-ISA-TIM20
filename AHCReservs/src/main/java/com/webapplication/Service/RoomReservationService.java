@@ -39,7 +39,7 @@ import comparators.StrDateComparator;
 public class RoomReservationService {
 	
 	
-	public final String DATE_FORMAT = "dd.MM.yyyy.";
+	public static final String DATEFORMAT = "dd.MM.yyyy.";
 
 	@Autowired
 	RoomReservationRepository roomReservRep;
@@ -69,7 +69,7 @@ public class RoomReservationService {
 	public GraphData getIncomeGraphData(DateBean dateBean) {
 		
 		GraphData graphData = new GraphData();
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATEFORMAT);
 		
 		dateBean = mulSvc.parseDates(dateBean, sdf);
 		
@@ -112,7 +112,7 @@ public class RoomReservationService {
 	public GraphData getVisitsGraphData(DateBean dateBean) {
 		
 		GraphData graphData = new GraphData();
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATEFORMAT);
 		
 		dateBean = mulSvc.parseDates(dateBean, sdf);
 		
@@ -244,7 +244,7 @@ public class RoomReservationService {
 	@Transactional
 	public String reserveRooms(RoomReservationBean reservationData) throws Exception {
 		
-		SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+		SimpleDateFormat sdf = new SimpleDateFormat(DATEFORMAT);
 		Date checkInDate = null;
 		Date checkOutDate = null;
 		
