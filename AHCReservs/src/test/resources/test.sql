@@ -1,3 +1,5 @@
+-- Clear data and insert queries
+
 truncate table hotel_admin;
 truncate table hotel;
 
