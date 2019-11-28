@@ -19,13 +19,13 @@ public interface HotelAdminRepository extends JpaRepository<HotelAdmin, Long> {
 	HotelAdmin findByUsername(String username);
 	
 	@Query("select admin from HotelAdmin as admin where admin.id = ?1")
-	public Optional<HotelAdmin> findOne(Long id);
+	Optional<HotelAdmin> findOne(Long id);
 	
 	@Query("select admin from HotelAdmin as admin where admin.hotel is null and admin.isEnabled = true")
-	public List<HotelAdmin> getAvailableAdmins();
+	List<HotelAdmin> getAvailableAdmins();
 	
 	@Transactional
-	public void deleteByUsername(String username);
+	void deleteByUsername(String username);
 	
-	public HotelAdmin findByEmailIdIgnoreCase(String emailid);
+	HotelAdmin findByEmailIdIgnoreCase(String emailId);
 }

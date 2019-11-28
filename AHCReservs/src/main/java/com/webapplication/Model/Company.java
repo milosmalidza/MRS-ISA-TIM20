@@ -113,7 +113,12 @@ public abstract class Company {
 			sum += r.getRating();
 		}
 		
-		this.rating = Math.round((sum / ratings.size()) * 10) / 10;
+		this.rating = sum/ratings.size();
+		this.rating = this.rating * 10;
+		this.rating = Math.round(this.rating);
+		this.rating = this.rating / 10;
+		
+		//this.rating = Math.round((sum / ratings.size()) * 10) / 10;
 		
 	}
 

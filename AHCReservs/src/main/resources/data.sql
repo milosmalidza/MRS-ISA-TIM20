@@ -7,13 +7,24 @@ insert into system_admin(id, username, password, firstName, lastName, email_id, 
 
 /*
 --dummy podaci za hotel admin-a
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 0, 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, -1, 1);
-insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, hotel_id, password_changed) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1, -2, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-1, "ha1un", "ha1pw", "ha1fn", "ha1ln", "ha1@gmail.com", 1, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-2, "ha2un", "ha2pw", "ha2fn", "ha2ln", "ha2@gmail.com", 1, 1);
+insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-3, "ha3un", "ha3pw", "ha3fn", "ha3ln", "ha3@gmail.com", 1, 1);
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "ha4un", "ha4pw", "ha4fn", "ha4ln", "ha4@gmail.com", 1, 0);
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "ha5un", "ha5pw", "ha5fn", "ha5ln", "ha5@gmail.com", 1, 0);
 insert into hotel_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-6, "ha6un", "ha6pw", "ha6fn", "ha6ln", "ha6@gmail.com", 1, 0);
 
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-1, "ra1un", "ra1pw", "ra1fn", "ra1ln", "ra1@gmail.com", 1, 1);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-2, "ra2un", "ra2pw", "ra2fn", "ra2ln", "ra2@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-3, "ra3un", "ra3pw", "ra3fn", "ra3ln", "ra3@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "ra4un", "ra4pw", "ra4fn", "ra4ln", "ra4@gmail.com", 1, 0);
+insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "ra5un", "ra5pw", "ra5fn", "ra5ln", "ra5@gmail.com", 1, 0);
+
+
+insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidzaa@gmail.com", 1);
+insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "user", "user", "User", "Userish", "user@gmail.com", 1);
+*/
+/*
 --dummy podaci za hotele
 insert into hotel(id, address, description, name, rating) values (0, "Bulevar oslobodjenja 1", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque suscipit aliquam eleifend. In consectetur sed velit nec dapibus. Mauris nec mauris id diam hendrerit ultrices. Ut nec arcu et arcu porttitor fermentum. Nunc varius, arcu in vestibulum luctus, nunc lorem aliquet neque, at feugiat sem neque nec leo. Etiam bibendum erat quis tortor eleifend, sed bibendum libero feugiat. Nam feugiat ac diam ac tincidunt. Phasellus justo ex, ultrices vel volutpat quis, consectetur id quam. Quisque at ullamcorper augue, ut pretium odio.", "Royal Palace", 0);
 insert into room(id, discount, floor, num_of_beds, number, room_type, hotel_id, room_price) values (-1, 0, 1, 1, 101, 0, 0, 10);
@@ -36,15 +47,7 @@ insert into airline_admin(id, username, password, firstName, lastName, email_id,
 insert into airline_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "aa5un", "aa5pw", "aa5fn", "aa5ln", "aa5@gmail.com", 1, 0);
 
 --dummy podaci za rent a car admin-a
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, rent_a_car_id, password_changed) values(-1, "ra1un", "ra1pw", "ra1fn", "ra1ln", "ra1@gmail.com", 1, 0, 1);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-2, "ra2un", "ra2pw", "ra2fn", "ra2ln", "ra2@gmail.com", 1, 0);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-3, "ra3un", "ra3pw", "ra3fn", "ra3ln", "ra3@gmail.com", 1, 0);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-4, "ra4un", "ra4pw", "ra4fn", "ra4ln", "ra4@gmail.com", 1, 0);
-insert into rentacar_admin(id, username, password, firstName, lastName, email_id, is_enabled, password_changed) values(-5, "ra5un", "ra5pw", "ra5fn", "ra5ln", "ra5@gmail.com", 1, 0);
 
-
-insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-1, "malidzo", "dsa", "Milos", "Malidza", "milosmalidzaa@gmail.com", 1);
-insert into registered_user(id, username, password, firstName, lastName, email_id, is_enabled) values(-2, "user", "user", "User", "Userish", "user@gmail.com", 1);
 
 insert into rentacar(id, address, description, name, rating) values(0, "dummy address", "Lorem ipsum dolor sit amet, consectetur voluptate velit esse cillum dolore eu fugiat nulla pariatur adipiscing elit, sed do eiusmod tempor incididunt ut labore
 						et dolore magna aliqua.", "Economy Car Rentals", 0);
@@ -82,20 +85,21 @@ insert into vehicle(id, archived, description, name, num_of_doors, numb_of_seats
 insert into rentacar_branch_office(id, address, name, rentacar_id) values(-1, "1225  Layman Avenue", "Statesboro", 0);
 
 insert into rentacar_branch_office(id, address, name, rentacar_id) values(-2, "4393  Chandler Hollow Road", "Pittsburgh", 0);
-                    
+                   
 
 insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id, version) values(
-								-1, "2018.11.13", "2018.11.16", 2, 0, 80, 0, -1, -1, 0);
+								-1, "2018.11.13", "2018.11.16", 2, 0, 80, 1, 4, -1, 0);
 								
 insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id, version) values(
-								-2, "2018.12.13", "2018.12.16", 2, 0, 80, 0, -1, -1, 0);
+								-2, "2018.12.13", "2018.12.16", 2, 0, 80, 1, 5, -1, 0);
 								
 insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id, version) values(
-								-3, "2018.10.13", "2018.10.16", 2, 0, 80, 0, -2, -1, 0);
-                    
-                    
-     */               
-                    
+								-3, "2018.10.13", "2018.10.16", 2, 0, 80, 2, 10, -2, 0);
+                
+         
+insert into room_reservation(id, check_in, check_out, num_of_guests, rating, reserved_price, hotel_id, room_id, user_id, version) values(
+								-4, "2018.09.13", "2018.09.16", 2, 0, 80, 1, 4, -2, 0);
+*/                    
                     
                     
                     

@@ -45,7 +45,7 @@ public class HotelAdminController {
 			produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Hotel> getHotel(@RequestBody Username username) {
 		
-		return new ResponseEntity<>(hotelAdminSvc.getHotel(username.getUsername()), HttpStatus.OK);
+		return new ResponseEntity<>(hotelAdminSvc.getHotelForAdmin(username.getUsername()), HttpStatus.OK);
 	}
 	
 	

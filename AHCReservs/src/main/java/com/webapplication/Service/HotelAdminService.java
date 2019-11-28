@@ -17,7 +17,7 @@ public class HotelAdminService {
 	HotelAdminRepository hotelAdminRep;
 	
 	
-	public Hotel getHotel(String username) {
+	public Hotel getHotelForAdmin(String username) {
 		
 		HotelAdmin admin = hotelAdminRep.findByUsername(username);
 		
