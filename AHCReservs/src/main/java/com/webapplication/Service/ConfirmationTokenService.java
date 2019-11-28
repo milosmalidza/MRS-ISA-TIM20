@@ -50,6 +50,8 @@ public class ConfirmationTokenService {
 	@Autowired
 	SystemAdminService sysAdminSvc;
 	
+	public static final String WEBDOMAIN = "https://ahc-reservation.herokuapp.com/";
+	
 	
 	/* Mail nofitication senders */
 
@@ -65,7 +67,7 @@ public class ConfirmationTokenService {
 		mail.setFrom("ahcreservation@gmail.com");
 		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
 				+ "\nTo confirm your account, please click the following link: \n"
-				+ " http://localhost:8080/sysadmin/confirmHotelAdminRegistration?token="+hotelToken.getConfirmationToken());
+				+ WEBDOMAIN + "sysadmin/confirmHotelAdminRegistration?token="+hotelToken.getConfirmationToken());
 		
 		
 		try {
@@ -92,7 +94,7 @@ public class ConfirmationTokenService {
 		mail.setFrom("ahcreservation@gmail.com");
 		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
 				+ "\nTo confirm your account, please click the following link: \n"
-				+ " http://localhost:8080/sysadmin/confirmAirlineAdminRegistration?token="+airToken.getConfirmationToken());
+				+ WEBDOMAIN + "sysadmin/confirmAirlineAdminRegistration?token="+airToken.getConfirmationToken());
 		
 		
 		try{
@@ -119,7 +121,7 @@ public class ConfirmationTokenService {
 		mail.setFrom("ahcreservation@gmail.com");
 		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
 				+ "\nTo confirm your account, please click the following link: \n"
-				+ " http://localhost:8080/sysadmin/confirmRentACarAdminRegistration?token="+racToken.getConfirmationToken());
+				+ WEBDOMAIN + "sysadmin/confirmRentACarAdminRegistration?token="+racToken.getConfirmationToken());
 		
 		
 		try{
@@ -146,7 +148,7 @@ public class ConfirmationTokenService {
 		mail.setFrom("ahcreservation@gmail.com");
 		mail.setText("Your username is '" + admin.getUsername() + "'.\nYour initial password is '" + admin.getPassword() + "'"
 				+ "\nTo confirm your account, please click the following link: \n"
-				+ " http://localhost:8080/sysadmin/confirmSysAdminRegistration?token="+sysToken.getConfirmationToken());
+				+ WEBDOMAIN + "sysadmin/confirmSysAdminRegistration?token="+sysToken.getConfirmationToken());
 		
 		
 		try{

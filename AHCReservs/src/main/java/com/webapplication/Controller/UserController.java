@@ -68,7 +68,7 @@ public class UserController {
   @Autowired
   private RegisteredUserService registeredUserService;
 
-	
+  public static final String WEBDOMAIN = "https://ahc-reservation.herokuapp.com/";
   	
 	
 	@RequestMapping(value="/updateProfile",
@@ -213,7 +213,7 @@ public class UserController {
 			mail.setSubject("Complete AHC Registration");
 			mail.setFrom("ahcreservation@gmail.com");
 			mail.setText("To confirm your account, please click the following link: "
-					+ " http://localhost:8080/user/confirmRegistration?token="+token.getConfirmationToken());
+					+ WEBDOMAIN + "user/confirmRegistration?token="+token.getConfirmationToken());
 			try{
 				emailSenderService.sendEmail(mail);
 			}
